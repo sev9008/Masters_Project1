@@ -10,6 +10,7 @@ public class buttonevent_parent : MonoBehaviour, IPointerDownHandler, IPointerUp
     public GameObject Dot;
     private bool down;
     private Vector3 oldpos;
+    private bool downtest;
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -24,6 +25,7 @@ public class buttonevent_parent : MonoBehaviour, IPointerDownHandler, IPointerUp
     public void Start()
     {
         oldpos = transform.position;
+        downtest = true;
     }
 
 
@@ -31,13 +33,15 @@ public class buttonevent_parent : MonoBehaviour, IPointerDownHandler, IPointerUp
     {
         if (down)
         {
-            oldpos = transform.position;
+            oldpos = Canvas.transform.position;
+            downtest = true;
         }
-        if (!down)
+        if (!down && downtest)
         {
             Canvas.transform.parent = null;
             Canvas.transform.position = oldpos;
             Debug.Log(oldpos);
+            downtest = false;
         }
     }
 }
