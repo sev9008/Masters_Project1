@@ -13,6 +13,9 @@ public class Pointer : MonoBehaviour
     private LineRenderer lineRenderer = null;
     private VRInputModule inputModule = null;
 
+    private float colliderDistance;
+    private float canvasDistance;
+
     private void Awake()
     {
         Camera = GetComponent<Camera>();
@@ -34,14 +37,20 @@ public class Pointer : MonoBehaviour
 
     private void UpdateLine()
     {
-        // Use default or distance
-        PointerEventData data = inputModule.Data;
-        RaycastHit hit = CreateRaycast();
+        if (dot.transform.childCount > 0)
+        {
 
-        // If nothing is hit, set do default length
-        float colliderDistance = hit.distance == 0 ? defaultLength : hit.distance;
-        float canvasDistance = data.pointerCurrentRaycast.distance == 0 ? defaultLength : data.pointerCurrentRaycast.distance;
+        }
+        else
+        {         
+            // Use default or distance
+            PointerEventData data = inputModule.Data;
+            RaycastHit hit = CreateRaycast();
 
+            // If nothing is hit, set do default length
+            colliderDistance = hit.distance == 0 ? defaultLength : hit.distance;
+            canvasDistance = data.pointerCurrentRaycast.distance == 0 ? defaultLength : data.pointerCurrentRaycast.distance;
+        }
         // Get the closest one
         float targetLength = Mathf.Min(colliderDistance, canvasDistance);
 

@@ -20,33 +20,33 @@ public class ButtonTransition : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        print("Enter");
+        //print("Enter");
 
         image.color = HoverColor;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        print("Exit");
+        //print("Exit");
 
         image.color = NormalColor;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        print("Down");
+        //print("Down");
 
         image.color = DownColor;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        print("Up");
+        //print("Up");
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        print("Click");
+        //print("Click");
 
         image.color = HoverColor;
     }
