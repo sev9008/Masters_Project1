@@ -24,6 +24,8 @@ public class buttonevent_parent : MonoBehaviour, IPointerDownHandler, IPointerUp
     }
     public void Start()
     {
+        Dot = GameObject.FindWithTag("Dot");
+
         oldpos = transform.position;
         downtest = true;
     }

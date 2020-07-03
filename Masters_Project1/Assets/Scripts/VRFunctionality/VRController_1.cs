@@ -12,7 +12,7 @@ public class VRController_1 : MonoBehaviour
     public float rotateincr = 5f;
 
     public SteamVR_Action_Boolean RotatePress = null;
-
+    public SteamVR_Action_Boolean SpawnPress = null;
     public SteamVR_Action_Boolean Movepress = null;
     public SteamVR_Action_Vector2 MoveValue = null;
 
@@ -21,6 +21,9 @@ public class VRController_1 : MonoBehaviour
     private CharacterController CharController = null;
     private Transform CameraRig = null;
     private Transform Head = null;
+
+    public Transform Spawnpos;
+    public GameObject CanvasObject;
 
     private void Awake()
     {
@@ -39,6 +42,7 @@ public class VRController_1 : MonoBehaviour
         HandleHieght();
         CalculateMovement();
         SnapRotation();
+        HandleCanvasSpawn();
     }
 
     private void HandleHead()
@@ -128,4 +132,14 @@ public class VRController_1 : MonoBehaviour
 
         transform.RotateAround(Head.position, Vector3.up, snapValue);
     }
+
+    private void HandleCanvasSpawn()
+    {
+        if (SpawnPress.GetStateDown(SteamVR_Input_Sources.RightHand))
+        {
+            Vector3 newpos = Spawnpos.transform.position;
+            newpos.y -= 1;
+            Instantiate(CanvasObject, newpos, Spawnpos.transform.rotation);
+        }
+    }    
 }

@@ -9,6 +9,11 @@ public class Button_MoveAway : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     public Transform Player;
     public GameObject canvas;
     private bool down;
+    private void Start()
+    {
+        GameObject cam = GameObject.FindWithTag("Camera");
+        Player = cam.transform;
+    }
 
     public void OnPointerDown(PointerEventData eventData)
     {

@@ -10,6 +10,12 @@ public class Button_MoveTowards : MonoBehaviour, IPointerDownHandler, IPointerUp
     public GameObject canvas;
     private bool down;
 
+    private void Start()
+    {
+        GameObject cam = GameObject.FindWithTag("Camera");
+        Player = cam.transform;
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         down = true;
