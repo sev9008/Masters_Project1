@@ -18,7 +18,4 @@ public class Button_NewMenu1 : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     public void OnPointerUp(PointerEventData eventData)
     {    }
-
-
-
 }
