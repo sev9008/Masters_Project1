@@ -12,7 +12,6 @@ public class Button_NewMenu1 : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     public void OnPointerDown(PointerEventData eventData)
     {
         Vector3 newpos = spawnpos.transform.position;
-        newpos.y -= .8f;
         Instantiate(CanvasObject, newpos, spawnpos.transform.rotation);
     }
 

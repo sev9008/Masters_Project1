@@ -14,7 +14,6 @@ public class start_sel_sort : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     public void OnPointerDown(PointerEventData eventData)
     {
         Vector3 newpos = spawnpos.transform.position;
-        newpos.y -= .8f;
         if (selsortcan == null)
         {
             selsortcan = Instantiate(Sel_sort_CanvasObject, newpos, spawnpos.transform.rotation);
