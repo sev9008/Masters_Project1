@@ -17,13 +17,13 @@ public class start_sel_sort : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         if (selsortcan == null)
         {
             selsortcan = Instantiate(Sel_sort_CanvasObject, newpos, spawnpos.transform.rotation);
-            selsortcan.GetComponent<selsort_arrayholder>().arr = arrayKeeper.arr;
-            selsortcan.GetComponent<selsort_arrayholder>().size = arrayKeeper.size;
+            selsortcan.GetComponentInChildren<selsort_arrayholder>().arr = arrayKeeper.arr;
+            selsortcan.GetComponentInChildren<selsort_arrayholder>().size = arrayKeeper.size;
         }
         else 
         {
-            selsortcan.GetComponent<selsort_arrayholder>().arr = arrayKeeper.arr;
-            selsortcan.GetComponent<selsort_arrayholder>().size = arrayKeeper.size;
+            selsortcan.GetComponentInChildren<selsort_arrayholder>().arr = arrayKeeper.arr;
+            selsortcan.GetComponentInChildren<selsort_arrayholder>().size = arrayKeeper.size;
         }
 
     }

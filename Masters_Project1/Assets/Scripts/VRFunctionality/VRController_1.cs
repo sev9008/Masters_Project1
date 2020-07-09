@@ -22,7 +22,7 @@ public class VRController_1 : MonoBehaviour
     private Transform CameraRig = null;
     private Transform Head = null;
 
-    public Transform Spawnpos;
+    public GameObject Spawnpos;
     public GameObject CanvasObject;
 
     private void Awake()
@@ -138,8 +138,8 @@ public class VRController_1 : MonoBehaviour
         if (SpawnPress.GetStateDown(SteamVR_Input_Sources.RightHand))
         {
             Vector3 newpos = Spawnpos.transform.position;
-            newpos.y -= 1;
-            Instantiate(CanvasObject, newpos, Spawnpos.transform.rotation);
+            GameObject newob = Instantiate(CanvasObject, newpos, Spawnpos.transform.rotation);
+            newob.transform.position = newpos;
         }
     }    
 }

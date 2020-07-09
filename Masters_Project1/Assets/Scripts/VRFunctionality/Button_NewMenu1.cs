@@ -13,8 +13,10 @@ public class Button_NewMenu1 : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     public void OnPointerDown(PointerEventData eventData)
     {
         Vector3 newpos = spawnpos.transform.position;
-        Instantiate(CanvasObject, newpos, spawnpos.transform.rotation);
-        Destroy(spawnpos);
+        Debug.Log(spawnpos.transform.position);
+        GameObject newob = Instantiate(CanvasObject, newpos, spawnpos.transform.rotation);
+        newob.transform.position = newpos;
+        //Destroy(spawnpos);
     }
 
     public void OnPointerUp(PointerEventData eventData)
