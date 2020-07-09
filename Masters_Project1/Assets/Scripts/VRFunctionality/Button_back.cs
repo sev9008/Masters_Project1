@@ -1,0 +1,20 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
+public class Button_back : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+{
+    public GameObject CanvasObject;
+    public GameObject spawnpos;
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        Vector3 newpos = spawnpos.transform.position;
+        Instantiate(CanvasObject, newpos, spawnpos.transform.rotation);
+        Destroy(spawnpos);
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    { }
+}
