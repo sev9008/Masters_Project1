@@ -10,8 +10,8 @@ public class Button_Close : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        //Canvas.SetActive(false);
-        Destroy(Canvas);
+        Canvas.SetActive(false);
+        //Destroy(Canvas);
     }
 
     public void OnPointerUp(PointerEventData eventData)

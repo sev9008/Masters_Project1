@@ -139,7 +139,6 @@ public class VRController_1 : MonoBehaviour
         {
             Vector3 newpos = Spawnpos.transform.position;
             GameObject newob = Instantiate(CanvasObject, newpos, Spawnpos.transform.rotation);
-            newob.transform.position = newpos;
         }
     }    
 }

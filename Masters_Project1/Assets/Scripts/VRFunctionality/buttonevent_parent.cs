@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class buttonevent_parent : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    public GameObject Canvas; //Drag your breaklight here
+    public GameObject Canvas; 
+    public GameObject Panel; 
     public GameObject Dot;
     private bool down;
     private Vector3 oldpos;
@@ -14,7 +15,7 @@ public class buttonevent_parent : MonoBehaviour, IPointerDownHandler, IPointerUp
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Canvas.transform.parent = Dot.transform;
+        Panel.transform.parent = Dot.transform;
         down = true;
     }
 
@@ -24,24 +25,19 @@ public class buttonevent_parent : MonoBehaviour, IPointerDownHandler, IPointerUp
     }
     public void Start()
     {
-        Dot = GameObject.FindWithTag("Dot");
-
-        oldpos = transform.position;
-        downtest = true;
+        Dot = GameObject.FindWithTag("DotCan");
     }
-
 
     private void Update()
     {
         if (down)
         {
-            oldpos = Canvas.transform.position;
+            oldpos = Panel.transform.position;
             downtest = true;
         }
         if (!down && downtest)
         {
-            Canvas.transform.parent = null;
-            Canvas.transform.position = oldpos;
+            Panel.transform.SetParent(Canvas.transform, true);
             Debug.Log(oldpos);
             downtest = false;
         }
