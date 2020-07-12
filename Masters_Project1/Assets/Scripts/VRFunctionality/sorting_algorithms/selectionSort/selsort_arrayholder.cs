@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,20 +9,9 @@ public class selsort_arrayholder : MonoBehaviour
     public List<int> arr;
     public Text Txt_Text;
     public int size;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        arr.Sort();
-        Display();
-    }
-
+    public float speed;
+    public float waittime;
+    public Text Step;
 
     public void Display()
     {
@@ -38,5 +28,34 @@ public class selsort_arrayholder : MonoBehaviour
                 Txt_Text.text += ", " + arr[i].ToString();
             }
         }
+    }
+
+    public IEnumerator Selection(List<int> arr)
+    {
+        int i, j;
+        int iMin;
+        for (j = 0; j < size - 1; j++)
+        {
+            iMin = j;
+            for (i = j + 1; i < size; i++)
+            {
+                if (arr[i] < arr[iMin])
+                {
+                    iMin = i;
+                }
+            }
+            if (iMin != j)
+            {
+                int temp = arr[j];
+                arr[j] = arr[iMin];
+                arr[iMin] = temp;
+                Debug.Log("run");
+                Step.text = "Swap " + arr[j] + " and " + arr[iMin];
+                Display();
+                yield return new WaitForSeconds(2);
+            }
+        }
+        Step.text = "Finished";
+        Display();
     }
 }

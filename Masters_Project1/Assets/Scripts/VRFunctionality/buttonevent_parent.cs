@@ -38,7 +38,7 @@ public class buttonevent_parent : MonoBehaviour, IPointerDownHandler, IPointerUp
         if (!down && downtest)
         {
             Panel.transform.SetParent(Canvas.transform, true);
-            Debug.Log(oldpos);
+            //Debug.Log(oldpos);
             downtest = false;
         }
     }

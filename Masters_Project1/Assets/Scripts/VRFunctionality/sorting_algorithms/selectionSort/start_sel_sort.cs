@@ -6,26 +6,14 @@ using UnityEngine.UI;
 
 public class start_sel_sort : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    public GameObject Sel_sort_CanvasObject;
-    public GameObject spawnpos;
     public ArrayKeeper arrayKeeper;
     public GameObject selsortcan;
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Vector3 newpos = spawnpos.transform.position;
-        if (selsortcan == null)
-        {
-            selsortcan = Instantiate(Sel_sort_CanvasObject, newpos, spawnpos.transform.rotation);
-            selsortcan.GetComponentInChildren<selsort_arrayholder>().arr = arrayKeeper.arr;
-            selsortcan.GetComponentInChildren<selsort_arrayholder>().size = arrayKeeper.size;
-        }
-        else 
-        {
-            selsortcan.GetComponentInChildren<selsort_arrayholder>().arr = arrayKeeper.arr;
-            selsortcan.GetComponentInChildren<selsort_arrayholder>().size = arrayKeeper.size;
-        }
-
+        selsortcan.GetComponentInChildren<selsort_arrayholder>().arr = arrayKeeper.arr;
+        selsortcan.GetComponentInChildren<selsort_arrayholder>().size = arrayKeeper.size;
+        selsortcan.GetComponentInChildren<selsort_arrayholder>().Display();
     }
     public void OnPointerUp(PointerEventData eventData)
     { }
