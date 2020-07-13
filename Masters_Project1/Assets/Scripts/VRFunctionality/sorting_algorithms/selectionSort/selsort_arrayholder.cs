@@ -13,6 +13,16 @@ public class selsort_arrayholder : MonoBehaviour
     public float waittime;
     public Text Step;
 
+    public GameObject image1;
+    public GameObject image2;
+    public GameObject image3;
+    public bool paused;
+
+    private void Start()
+    {
+        paused = false;
+    }
+
     public void Display()
     {
         Txt_Text.text = "";
@@ -34,28 +44,85 @@ public class selsort_arrayholder : MonoBehaviour
     {
         int i, j;
         int iMin;
-        for (j = 0; j < size - 1; j++)
+        for (i = 0; i < size - 1; i++)
         {
-            iMin = j;
-            for (i = j + 1; i < size; i++)
+            iMin = i;
+            image1.SetActive(true);
+            image2.SetActive(false);
+            image3.SetActive(false);
+            Step.text = "increment i = " + i + ", reset iMin to i = " + iMin;
+            while (paused)
             {
-                if (arr[i] < arr[iMin])
+                yield return null;
+            }
+            yield return new WaitForSeconds(1);
+            for (j = i + 1; j < size; j++)
+            {
+                if (arr[j] < arr[iMin])
                 {
-                    iMin = i;
+                    iMin = j;
                 }
+                Step.text = "i = " + arr[i] + ", j = " + arr[j] + ", min = " + iMin;
+                image1.SetActive(false);
+                image2.SetActive(true);
+                image3.SetActive(false);
+                while (paused)
+                {
+                    yield return null;
+                }
+                yield return new WaitForSeconds(1);
             }
-            if (iMin != j)
+            if (iMin != i)
             {
-                int temp = arr[j];
-                arr[j] = arr[iMin];
+                int temp = arr[i];
+                arr[i] = arr[iMin];
                 arr[iMin] = temp;
-                Debug.Log("run");
-                Step.text = "Swap " + arr[j] + " and " + arr[iMin];
+                Step.text = "Swap " + arr[i] + " and " + arr[iMin];
                 Display();
-                yield return new WaitForSeconds(2);
+                image1.SetActive(false);
+                image2.SetActive(false);
+                image3.SetActive(true);
+                while (paused)
+                {
+                    yield return null;
+                }
+                yield return new WaitForSeconds(1);
             }
+
         }
         Step.text = "Finished";
-        Display();
+        Display(); 
+        image1.SetActive(false);
+        image2.SetActive(false);
+        image3.SetActive(false);
+        yield return new WaitForSeconds(1);
     }
 }
+
+
+
+/*
+ * 
+void SelectSort()
+{
+	int i, j;
+	int iMin;
+	for (i = 0; i < size - 1; i++)
+	{
+		iMin = i;
+		for (j = i + 1; j < size; j++)
+		{
+			if (arr[j] < arr[iMin])
+			{
+				iMin = j;
+			}
+		}
+		if (iMin != i)
+		{
+			int temp = arr[i];
+			arr[i] = arr[iMin];
+			arr[iMin] = temp;
+		}
+	}
+}
+ */

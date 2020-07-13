@@ -15,5 +15,6 @@ public class lookat : MonoBehaviour
     {
         // Rotate the camera every frame so it keeps looking at the target
         transform.rotation = Quaternion.LookRotation(transform.position - Player.transform.position);
+        transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
     }
 }
