@@ -9,9 +9,11 @@ public class selsort_arrayholder : MonoBehaviour
     public List<int> arr;
     public Text Txt_Text;
     public int size;
-    public float speed;
     public float waittime;
     public Text Step;
+    public float speed;
+
+    public Slider slider;
 
     public GameObject image1;
     public GameObject image2;
@@ -21,6 +23,11 @@ public class selsort_arrayholder : MonoBehaviour
     private void Start()
     {
         paused = false;
+    }
+
+    public void Update()
+    {
+        speed = slider.value;
     }
 
     public void Display()
@@ -55,7 +62,7 @@ public class selsort_arrayholder : MonoBehaviour
             {
                 yield return null;
             }
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(speed);
             for (j = i + 1; j < size; j++)
             {
                 if (arr[j] < arr[iMin])
@@ -70,7 +77,7 @@ public class selsort_arrayholder : MonoBehaviour
                 {
                     yield return null;
                 }
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(speed);
             }
             if (iMin != i)
             {
@@ -86,7 +93,7 @@ public class selsort_arrayholder : MonoBehaviour
                 {
                     yield return null;
                 }
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(speed);
             }
 
         }
@@ -95,7 +102,7 @@ public class selsort_arrayholder : MonoBehaviour
         image1.SetActive(false);
         image2.SetActive(false);
         image3.SetActive(false);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(speed);
     }
 }
 

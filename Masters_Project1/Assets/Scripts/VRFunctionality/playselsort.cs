@@ -17,11 +17,7 @@ public class playselsort : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (M_selsort_Arrayholder.arr.Equals(null))
-        {
-            M_selsort_Arrayholder.speed = 0;
-        }
-        else if (pressed)
+        if (pressed)
         {
             pressed = false;
 
