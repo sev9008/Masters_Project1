@@ -380,10 +380,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NormalColor:
     serializedVersion: 2
-    rgba: 3191618620
+    rgba: 4282137660
   HoverColor:
     serializedVersion: 2
-    rgba: 3196553095
+    rgba: 4287072135
   DownColor:
     serializedVersion: 2
     rgba: 4282137660
@@ -552,10 +552,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NormalColor:
     serializedVersion: 2
-    rgba: 3191618620
+    rgba: 4282137660
   HoverColor:
     serializedVersion: 2
-    rgba: 3196553095
+    rgba: 4287072135
   DownColor:
     serializedVersion: 2
     rgba: 4282137660
@@ -762,8 +762,8 @@ GameObject:
   - component: {fileID: 2552447174879043499}
   - component: {fileID: 2552447174879043498}
   - component: {fileID: 2552447174879043497}
-  - component: {fileID: 2552447174879043496}
   - component: {fileID: 2552447174879043479}
+  - component: {fileID: 5343037800065234016}
   m_Layer: 5
   m_Name: Button_close
   m_TagString: Untagged
@@ -885,26 +885,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NormalColor:
     serializedVersion: 2
-    rgba: 3191618620
+    rgba: 4282137660
   HoverColor:
     serializedVersion: 2
-    rgba: 3196553095
+    rgba: 4287072135
   DownColor:
     serializedVersion: 2
     rgba: 4282137660
---- !u!114 &2552447174879043496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2552447174879043477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62272cc0379c3bb4bb34057388ddbdc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Canvas: {fileID: 2552447174548105300}
 --- !u!114 &2552447174879043479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -920,6 +907,19 @@ MonoBehaviour:
   m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
+--- !u!114 &5343037800065234016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2552447174879043477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9551a4e00fa98dd4c86622bdc0a90053, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Canvas: {fileID: 0}
 --- !u!1 &2552447174909950796
 GameObject:
   m_ObjectHideFlags: 0
@@ -1056,10 +1056,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NormalColor:
     serializedVersion: 2
-    rgba: 3191618620
+    rgba: 4282137660
   HoverColor:
     serializedVersion: 2
-    rgba: 3196553095
+    rgba: 4287072135
   DownColor:
     serializedVersion: 2
     rgba: 4282137660
@@ -1228,10 +1228,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NormalColor:
     serializedVersion: 2
-    rgba: 3191618620
+    rgba: 4282137660
   HoverColor:
     serializedVersion: 2
-    rgba: 3196553095
+    rgba: 4287072135
   DownColor:
     serializedVersion: 2
     rgba: 4282137660
@@ -1263,7 +1263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PanelObject: {fileID: 0}
-  spawnpos: {fileID: 2552447174807472095}
+  spawnpos: {fileID: 2552447174548105300}
 --- !u!1 &2552447175421409051
 GameObject:
   m_ObjectHideFlags: 0
@@ -1400,10 +1400,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NormalColor:
     serializedVersion: 2
-    rgba: 3191618620
+    rgba: 4282137660
   HoverColor:
     serializedVersion: 2
-    rgba: 3196553095
+    rgba: 4287072135
   DownColor:
     serializedVersion: 2
     rgba: 4282137660
@@ -2183,10 +2183,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NormalColor:
     serializedVersion: 2
-    rgba: 3191618620
+    rgba: 4282137660
   HoverColor:
     serializedVersion: 2
-    rgba: 3196553095
+    rgba: 4287072135
   DownColor:
     serializedVersion: 2
     rgba: 4282137660

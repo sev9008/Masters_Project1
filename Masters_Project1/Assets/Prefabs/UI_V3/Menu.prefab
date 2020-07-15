@@ -136,10 +136,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NormalColor:
     serializedVersion: 2
-    rgba: 3191618620
+    rgba: 4282137660
   HoverColor:
     serializedVersion: 2
-    rgba: 3196553095
+    rgba: 4287072135
   DownColor:
     serializedVersion: 2
     rgba: 4282137660
@@ -602,8 +602,8 @@ GameObject:
   - component: {fileID: 5608546391307966062}
   - component: {fileID: 5608546391307966063}
   - component: {fileID: 7943409840352393679}
-  - component: {fileID: 7943409840283223568}
   - component: {fileID: 8830249421396658437}
+  - component: {fileID: 1280576328515850136}
   m_Layer: 5
   m_Name: Button_close
   m_TagString: Untagged
@@ -725,26 +725,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NormalColor:
     serializedVersion: 2
-    rgba: 3191618620
+    rgba: 4282137660
   HoverColor:
     serializedVersion: 2
-    rgba: 3196553095
+    rgba: 4287072135
   DownColor:
     serializedVersion: 2
     rgba: 4282137660
---- !u!114 &7943409840283223568
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5608546391307966058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62272cc0379c3bb4bb34057388ddbdc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Canvas: {fileID: 8137529076030373560}
 --- !u!114 &8830249421396658437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -760,6 +747,19 @@ MonoBehaviour:
   m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
+--- !u!114 &1280576328515850136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5608546391307966058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9551a4e00fa98dd4c86622bdc0a90053, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Canvas: {fileID: 0}
 --- !u!1 &5608546391454881723
 GameObject:
   m_ObjectHideFlags: 0
@@ -1122,10 +1122,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NormalColor:
     serializedVersion: 2
-    rgba: 3191618620
+    rgba: 4282137660
   HoverColor:
     serializedVersion: 2
-    rgba: 3196553095
+    rgba: 4287072135
   DownColor:
     serializedVersion: 2
     rgba: 4282137660
@@ -1451,10 +1451,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NormalColor:
     serializedVersion: 2
-    rgba: 3191618620
+    rgba: 4282137660
   HoverColor:
     serializedVersion: 2
-    rgba: 3196553095
+    rgba: 4287072135
   DownColor:
     serializedVersion: 2
     rgba: 4282137660
@@ -1623,10 +1623,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NormalColor:
     serializedVersion: 2
-    rgba: 3191618620
+    rgba: 4282137660
   HoverColor:
     serializedVersion: 2
-    rgba: 3196553095
+    rgba: 4287072135
   DownColor:
     serializedVersion: 2
     rgba: 4282137660
@@ -1675,7 +1675,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8137529076030373543
 RectTransform:
   m_ObjectHideFlags: 0
