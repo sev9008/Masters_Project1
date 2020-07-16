@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 1533662102}
   - component: {fileID: 1533662101}
   m_Layer: 5
-  m_Name: SelectionSort (1)
+  m_Name: CompareSort
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
