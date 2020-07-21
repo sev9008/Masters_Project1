@@ -15,10 +15,11 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 	public Slider slider;
 
 	public GameObject image1;
-	public GameObject image1_1;
 	public GameObject image2;
 	public GameObject image3;
+	public GameObject image4;
 	public bool paused;
+	public bool swapped;
 
 	private void Start()
 	{
@@ -46,6 +47,82 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 		}
 	}
 
+	public IEnumerator Bubble(List<int> arr)
+	{
+		int i, j;
+		for (i = 0; i < size - 1; i++)
+		{
+			image1.SetActive(true);
+			image2.SetActive(false);
+			image3.SetActive(false);
+			image4.SetActive(false);
+
+			Step.text = "This loop will run n times until the sholea rray ahs been processed";
+			while (paused)
+			{
+				yield return null;
+			}
+			yield return new WaitForSeconds(speed);
+
+			for (j = 0; j < size - i - 1; j++)
+			{
+				image1.SetActive(false);
+				image2.SetActive(true);
+				image3.SetActive(false);
+				image4.SetActive(false);
+
+				Step.text = "this loop will iterate over j and j+1";
+				while (paused)
+				{
+					yield return null;
+				}
+				yield return new WaitForSeconds(speed);
+
+				if (arr[j] > arr[j + 1])
+				{
+					Step.text = arr[j] + " > " + arr[j+1] + " the algorithm will perform a swap";
+
+					int temp = arr[j];
+					arr[j] = arr[j + 1];
+					arr[j + 1] = temp;
+					swapped = true;
+
+					Display();
+					image1.SetActive(false);
+					image2.SetActive(true);
+					image3.SetActive(false);
+					image4.SetActive(false);
+					while (paused)
+					{
+						yield return null;
+					}
+					yield return new WaitForSeconds(speed);
+				}
+			}
+
+			if (swapped == false)
+			{
+				Step.text = "No swaps occured.  The algorithm is complete";
+				image1.SetActive(false);
+				image2.SetActive(false);
+				image3.SetActive(false);
+				image4.SetActive(true);
+				while (paused)
+				{
+					yield return null;
+				}
+				yield return new WaitForSeconds(speed);
+
+				break;
+			}
+		}
+		image1.SetActive(false);
+		image2.SetActive(false);
+		image3.SetActive(false);
+		image4.SetActive(false);
+		Step.text = "Finished";
+	}
+	/*
 	public IEnumerator Bubble(List<int> arr)
 	{
 		int n = size + 1;
@@ -118,4 +195,5 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 		image3.SetActive(false);
 		Display();
 	}
+	*/
 }

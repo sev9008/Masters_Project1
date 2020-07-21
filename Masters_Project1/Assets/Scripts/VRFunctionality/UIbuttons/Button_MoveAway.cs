@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Button_MoveAway : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public Transform Player;
-    public GameObject canvas;
+    public GameObject panel;
     private bool down;
     private void Start()
     {
@@ -31,7 +31,7 @@ public class Button_MoveAway : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         if (down)
         {
             float step = -1 * Time.deltaTime;
-            canvas.transform.position = Vector3.MoveTowards(canvas.transform.position, Player.position, step);
+            panel.transform.position = Vector3.MoveTowards(panel.transform.position, Player.position, step);
         }
     }
 }

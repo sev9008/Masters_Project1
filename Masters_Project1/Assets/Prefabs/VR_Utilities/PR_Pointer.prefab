@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17679bcfcf3af3a469c6fd2ba436eac5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultLength: 5
+  defaultLength: 7
   dot: {fileID: 9100554738409605426}
 --- !u!1 &9100554738409605426
 GameObject:

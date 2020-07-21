@@ -75,7 +75,7 @@ MonoBehaviour:
   m_MinSize: {x: 232, y: 492}
   m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
-  controlID: 76
+  controlID: 64
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -334,23 +334,23 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 323a0000
-      m_LastClickedID: 14898
-      m_ExpandedIDs: 30f9ffff0cfbffff4cfbffff56fbffff6efbffff70fbffff5a3a0000
+      m_SelectedIDs: 14350000
+      m_LastClickedID: 0
+      m_ExpandedIDs: 7475fcff9275fcff1c77fcff7ae1ffff14e3ffff22f9ffffdcf9ffff08faffffdafaffff66fbffff6efbffff70fbffffa0390000a4390000ce390000f8390000063a0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: CanvasSpawnPoint
+        m_OriginalName: CanvasSpawnPoint
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: 14840
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 4}
       m_SearchString: 
@@ -397,7 +397,7 @@ MonoBehaviour:
     m_PrefName: Preview_InspectorPreview
   m_PreviewWindow: {fileID: 0}
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 112
+  m_LastVerticalScrollValue: 0
 --- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -437,20 +437,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs/VR_Utilities
+    - Assets/Scripts/VRFunctionality/UIbuttons
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Prefabs/VR_Utilities
+  - Assets/Scripts/VRFunctionality/UIbuttons
   m_LastFoldersGridSize: -1
   m_LastProjectPath: E:\Program Files\GitHubProjects\Masters_Project1\Masters_Project1
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 466a0000
-    m_LastClickedID: 27206
-    m_ExpandedIDs: 000000002c6a00002e6a0000306a0000326a0000346a0000366a0000386a00003a6a00003c6a000000ca9a3b
+    m_SelectedIDs: 3a6a0000
+    m_LastClickedID: 27194
+    m_ExpandedIDs: 000000002a6a00002c6a00002e6a0000306a0000326a0000346a0000386a00003a6a000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -478,7 +478,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000002c6a00002e6a0000306a0000326a0000346a0000366a0000386a00003a6a00003c6a0000
+    m_ExpandedIDs: 000000002a6a00002c6a00002e6a0000306a0000326a0000346a0000366a0000386a00003a6a0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -585,8 +585,8 @@ MonoBehaviour:
     vZoomLockedByDefault: 0
     m_HBaseRangeMin: -600.5
     m_HBaseRangeMax: 600.5
-    m_VBaseRangeMin: -232
-    m_VBaseRangeMax: 232
+    m_VBaseRangeMin: -221.5
+    m_VBaseRangeMax: 221.5
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -603,11 +603,11 @@ MonoBehaviour:
     m_DrawArea:
       serializedVersion: 2
       x: 0
-      y: 0
+      y: 21
       width: 1201
-      height: 464
+      height: 443
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 600.5, y: 232}
+    m_Translation: {x: 600.5, y: 221.5}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
@@ -615,9 +615,9 @@ MonoBehaviour:
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
       x: -600.5
-      y: -232
+      y: -221.5
       width: 1201
-      height: 464
+      height: 443
     m_MinimalGUI: 1
   m_defaultScale: 1
   m_LastWindowPixelSize: {x: 1201, y: 464}
@@ -662,9 +662,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 2.456408, y: 0.7983896, z: 1.5897785}
+    m_Target: {x: 1.8746281, y: 0.6166769, z: 1.0782297}
     speed: 2
-    m_Value: {x: 825.625, y: 213.76, z: -224.30238}
+    m_Value: {x: 1.8746281, y: 0.6166769, z: 1.0782297}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -710,13 +710,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.111063555, y: 0.22719778, z: -0.026060501, w: 0.96731156}
+    m_Target: {x: 0.11749517, y: 0.32832342, z: -0.041197475, w: 0.93650866}
     speed: 2
-    m_Value: {x: 0.06537277, y: -0.1627181, z: 0.0108177, w: 0.9844451}
+    m_Value: {x: 0.11753644, y: 0.32686156, z: -0.041014068, w: 0.9368375}
   m_Size:
-    m_Target: 1.4132726
+    m_Target: 2.010198
     speed: 2
-    m_Value: 465.65875
+    m_Value: 1.7101982
   m_Ortho:
     m_Target: 0
     speed: 2
