@@ -11,6 +11,7 @@ ScriptsOnlyBuild:
     - Button_NewMenu1
     - Button_back
     - Button_pause
+    - EnablePanel
     - FindPointerCanvas
     - InsertSort_arrayHolder
     - MergeSort_arrHolder
@@ -23,6 +24,7 @@ ScriptsOnlyBuild:
     - Play_BubbleSort
     - Pointer
     - QuickSort_arrayHolder
+    - SelectionAni
     - SlideBack_Button
     - SlideNext_Button
     - SlideShowController
@@ -30,6 +32,7 @@ ScriptsOnlyBuild:
     - StartInsertSort
     - StartMergeSort
     - StartQuickSort
+    - StartSelectiongraphani
     - Start_BubbleSort
     - SteamInputModule_tut
     - VRController_1
@@ -274,6 +277,12 @@ ScriptsOnlyBuild:
       Script: {instanceID: 13672}
     - Class: 114
       Script: {instanceID: 13674}
+    - Class: 114
+      Script: {instanceID: 62432}
+    - Class: 114
+      Script: {instanceID: 70138}
+    - Class: 114
+      Script: {instanceID: 324204}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
@@ -1807,6 +1816,24 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 68b3341b9d1eefc68ec50eee1555ebae
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: EnablePanel
+  - hash:
+      serializedVersion: 2
+      Hash: fe1bd4d4ec92c13a5b49e1d78f5e86dc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SelectionAni
+  - hash:
+      serializedVersion: 2
+      Hash: ebd92ea5ceba0fa46f726dfdaf03d22d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: StartSelectiongraphani
   platform: 19
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
