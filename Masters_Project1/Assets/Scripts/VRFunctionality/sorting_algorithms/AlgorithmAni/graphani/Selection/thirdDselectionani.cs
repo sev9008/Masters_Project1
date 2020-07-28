@@ -55,8 +55,8 @@ public class thirdDselectionani : MonoBehaviour
             GameObject.Destroy(child.gameObject);
         }
         float graphHeight = graphContainer.sizeDelta.y;
-        float yMaximum = 70f;
-        float xsize = 30f;
+        float yMaximum = 100f;
+        float xsize = 17f;
         for (int i = 0; i < arr.Count; i++)
         {
             float xPosition = xsize + i * xsize;
