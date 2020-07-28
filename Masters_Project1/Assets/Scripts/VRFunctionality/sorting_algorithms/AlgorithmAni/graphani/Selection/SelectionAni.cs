@@ -9,29 +9,9 @@ public class SelectionAni : MonoBehaviour
     [SerializeField] private Sprite circleSprite;
     private RectTransform graphContainer;
 
-    public List<int> arr;
-    public int size;
-
-    public float speed;
-
-    public Slider slider;
-
     private void Awake()
     {
         graphContainer = transform.Find("graphContainer").GetComponent<RectTransform>();
-        size = 30;
-        for (int i = 0; i < size; i++)
-        {
-            arr.Add(Random.Range(0, 100));
-        }
-        ShowGraph();
-
-        //StartCoroutine(SelectSort(arr));
-    }
-
-    public void Update()
-    {
-        speed = slider.value;
     }
 
     private void CreateCircle(Vector2 anchoredPosition)
@@ -46,7 +26,7 @@ public class SelectionAni : MonoBehaviour
         rectTransform.anchorMax = new Vector2(0, 0);
     }
 
-    private void ShowGraph()
+    public void ShowGraph(List<int> arr)
     {
         foreach (Transform child in graphContainer.transform)
         {
@@ -61,31 +41,5 @@ public class SelectionAni : MonoBehaviour
             float yPosition = (arr[i] / yMaximum) * graphHeight;
             CreateCircle(new Vector2(xPosition, yPosition));
         }
-    }
-
-    public IEnumerator SelectSort()
-    {
-        int i, j;
-        int iMin;
-        for (i = 0; i < size - 1; i++)
-        {
-            iMin = i;
-            for (j = i + 1; j < size; j++)
-            {
-                if (arr[j] < arr[iMin])
-                {
-                    iMin = j;
-                }
-            }
-            if (iMin != i)
-            {
-                int temp = arr[i];
-                arr[i] = arr[iMin];
-                arr[iMin] = temp;
-                ShowGraph();
-                yield return new WaitForSeconds(speed);
-            }
-        }
-        ShowGraph();
     }
 }

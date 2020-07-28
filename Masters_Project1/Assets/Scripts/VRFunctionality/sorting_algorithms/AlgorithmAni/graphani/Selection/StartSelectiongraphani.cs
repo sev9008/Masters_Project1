@@ -5,16 +5,24 @@ using UnityEngine.EventSystems;
 
 public class StartSelectiongraphani : MonoBehaviour, IPointerDownHandler
 {
-    public SelectionAni m_selectionAni;
-    public thirdDselectionani m_thirdDselectionani;
+    public thirdDselectionani thirdDselectionani;
+    public List<int> arr;
+    public ArrayKeeper arrayKeeper;
+
     public bool running;
     public void OnPointerDown(PointerEventData eventData)
     {
+        List<int> arr = arrayKeeper.arr;
+        thirdDselectionani.ShowGraph(arr);
         if (!running)
         {
-            StartCoroutine(m_selectionAni.SelectSort());
-            StartCoroutine(m_thirdDselectionani.SelectSort());
             running = true;
         }
     }
+    public IEnumerator startani()
+    {
+        yield return StartCoroutine(thirdDselectionani.SelectSort(arr));
+        running = false;
+    }
+
 }

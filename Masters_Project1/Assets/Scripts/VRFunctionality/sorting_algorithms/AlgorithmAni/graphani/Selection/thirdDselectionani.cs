@@ -7,9 +7,8 @@ public class thirdDselectionani : MonoBehaviour
 {
     public GameObject box;
     private RectTransform graphContainer;
-    public SelectionAni m_selectionAni;
 
-    public List<int> arr;
+    //public List<int> arr;
     public int size;
 
     public float speed;
@@ -20,27 +19,17 @@ public class thirdDselectionani : MonoBehaviour
     {
         graphContainer = transform.Find("graphContainer").GetComponent<RectTransform>();
         size = 30;
-
-        //StartCoroutine(SelectSort(arr));
     }
 
     public void Update()
     {
         speed = slider.value;
-        if (arr.Count == 0)
-        {
-            arr = m_selectionAni.arr;
-            ShowGraph();
-            Debug.Log("hit");
-        }
     }
 
     private void CreateCircle(Vector2 anchoredPosition)
     {
-        //GameObject gameObject = new GameObject("circle", typeof(GameObject));
         GameObject gameObject = Instantiate(box);
         gameObject.transform.SetParent(graphContainer, false);
-        //gameObject.GetComponent<Image>().sprite = circleSprite;
         RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
         rectTransform.anchoredPosition = anchoredPosition;
         rectTransform.sizeDelta = new Vector2(10, 10);
@@ -48,7 +37,7 @@ public class thirdDselectionani : MonoBehaviour
         rectTransform.anchorMax = new Vector2(0, 0);
     }
 
-    private void ShowGraph()
+    public void ShowGraph(List<int> arr)
     {
         foreach (Transform child in graphContainer.transform)
         {
@@ -65,7 +54,7 @@ public class thirdDselectionani : MonoBehaviour
         }
     }
 
-    public IEnumerator SelectSort()
+    public IEnumerator SelectSort(List<int> arr)
     {
         int i, j;
         int iMin;
@@ -84,10 +73,10 @@ public class thirdDselectionani : MonoBehaviour
                 int temp = arr[i];
                 arr[i] = arr[iMin];
                 arr[iMin] = temp;
-                ShowGraph();
+                ShowGraph(arr);
                 yield return new WaitForSeconds(speed);
             }
         }
-        ShowGraph();
+        ShowGraph(arr);
     }
 }

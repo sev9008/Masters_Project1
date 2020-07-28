@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class selsort_arrayholder : MonoBehaviour
 {
-    public List<int> arr;
+    //public List<int> arr;
     public Text Txt_Text;
-    public int size;
+    //public int size;
     public float waittime;
     public Text Step;
     public float speed;
@@ -19,6 +19,9 @@ public class selsort_arrayholder : MonoBehaviour
     public GameObject image2;
     public GameObject image3;
     public bool paused;
+    public bool running;
+
+    public SelectionAni m_selectionAni;
 
     private void Start()
     {
@@ -30,7 +33,7 @@ public class selsort_arrayholder : MonoBehaviour
         speed = slider.value;
     }
 
-    public void Display()
+    public void Display(List<int> arr, int size)
     {
         Txt_Text.text = "";
         int Tmpsize = size - 1;
@@ -47,8 +50,10 @@ public class selsort_arrayholder : MonoBehaviour
         }
     }
 
-    public IEnumerator Selection(List<int> arr)
+    public IEnumerator Selection(List<int> arr, int size)
     {
+        running = true;
+        m_selectionAni.ShowGraph(arr);
         int i, j;
         int iMin;
         for (i = 0; i < size - 1; i++)
@@ -85,7 +90,8 @@ public class selsort_arrayholder : MonoBehaviour
                 arr[i] = arr[iMin];
                 arr[iMin] = temp;
                 Step.text = "Swap " + arr[i] + " and " + arr[iMin];
-                Display();
+                m_selectionAni.ShowGraph(arr);
+                Display(arr, size);
                 image1.SetActive(false);
                 image2.SetActive(false);
                 image3.SetActive(true);
@@ -98,38 +104,12 @@ public class selsort_arrayholder : MonoBehaviour
 
         }
         Step.text = "Finished";
-        Display(); 
+        Display(arr, size); 
         image1.SetActive(false);
         image2.SetActive(false);
         image3.SetActive(false);
+        m_selectionAni.ShowGraph(arr);
         yield return new WaitForSeconds(speed);
+        running = false;
     }
 }
-
-
-
-/*
- * 
-void SelectSort()
-{
-	int i, j;
-	int iMin;
-	for (i = 0; i < size - 1; i++)
-	{
-		iMin = i;
-		for (j = i + 1; j < size; j++)
-		{
-			if (arr[j] < arr[iMin])
-			{
-				iMin = j;
-			}
-		}
-		if (iMin != i)
-		{
-			int temp = arr[i];
-			arr[i] = arr[iMin];
-			arr[iMin] = temp;
-		}
-	}
-}
- */

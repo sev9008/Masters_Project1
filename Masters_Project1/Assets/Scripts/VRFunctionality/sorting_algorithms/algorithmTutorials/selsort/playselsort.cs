@@ -25,7 +25,7 @@ public class playselsort : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         else if (!pressed)
         {
             pressed = true;
-            M_selsort_Arrayholder.StartCoroutine(M_selsort_Arrayholder.Selection(M_selsort_Arrayholder.arr));
+           // M_selsort_Arrayholder.StartCoroutine(M_selsort_Arrayholder.Selection());
         }
     }
 

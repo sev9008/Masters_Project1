@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,20 +8,41 @@ public class ArrayKeeper : MonoBehaviour
     public List<int> arr;
     public Text Txt_Text;
     public int size;
+    public selsort_arrayholder m_selsort_Arrayholder;
 
     public void push(int txt_to_push)
     {
-        arr.Add(txt_to_push);
-        //arr.Sort();
-        size += 1;
-        Display();
+        if (!m_selsort_Arrayholder.running)
+        {
+            arr.Add(txt_to_push);
+            size += 1;
+            Display();
+        }
     }
 
     public void pop()
     {
-        arr.RemoveAt(size - 1);
-        size -= 1;
-        Display();
+        if (!m_selsort_Arrayholder.running)
+        {
+            arr.RemoveAt(size - 1);
+            size -= 1;
+            Display();
+        }
+    }
+
+    public void randomNum()
+    {
+        if (!m_selsort_Arrayholder.running)
+        {
+            arr.Clear();
+            size = 30;
+            for (int i = 0; i < size; i++)
+            {
+                int n = UnityEngine.Random.Range(1,99);
+                arr.Add(n);
+            }
+            Display();
+        }
     }
 
     public void Display()
