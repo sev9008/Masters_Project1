@@ -9,7 +9,7 @@ public class thirdDselectionani : MonoBehaviour
     private RectTransform graphContainer;
 
     //public List<int> arr;
-    public int size;
+    //public int size;
 
     public float speed;
 
@@ -18,7 +18,6 @@ public class thirdDselectionani : MonoBehaviour
     private void Awake()
     {
         graphContainer = transform.Find("graphContainer").GetComponent<RectTransform>();
-        size = 30;
     }
 
     public void Update()
@@ -54,7 +53,7 @@ public class thirdDselectionani : MonoBehaviour
         }
     }
 
-    public IEnumerator SelectSort(List<int> arr)
+    public IEnumerator SelectSort(List<int> arr, int size)
     {
         int i, j;
         int iMin;
@@ -74,6 +73,7 @@ public class thirdDselectionani : MonoBehaviour
                 arr[i] = arr[iMin];
                 arr[iMin] = temp;
                 ShowGraph(arr);
+                Debug.Log("hit?");
                 yield return new WaitForSeconds(speed);
             }
         }

@@ -62,5 +62,5 @@ MonoBehaviour:
   pointer: {fileID: 0}
   TargetSource: 2
   ClickAction:
-    actionPath: /actions/default/in/Teleport
+    actionPath: /actions/default/in/InteractUI
     needsReinit: 0

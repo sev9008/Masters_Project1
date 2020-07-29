@@ -12,37 +12,46 @@ public class ArrayKeeper : MonoBehaviour
 
     public void push(int txt_to_push)
     {
-        if (!m_selsort_Arrayholder.running)
+        if (size < 30)
         {
             arr.Add(txt_to_push);
             size += 1;
             Display();
         }
+        //if (!m_selsort_Arrayholder.running)
+        //{
+
+        //}
     }
 
     public void pop()
     {
-        if (!m_selsort_Arrayholder.running)
+        if (size > 0)
         {
             arr.RemoveAt(size - 1);
             size -= 1;
             Display();
         }
+        //if (!m_selsort_Arrayholder.running)
+        //{
+
+        //}
     }
 
     public void randomNum()
     {
-        if (!m_selsort_Arrayholder.running)
+        arr.Clear();
+        size = 30;
+        for (int i = 0; i < size; i++)
         {
-            arr.Clear();
-            size = 30;
-            for (int i = 0; i < size; i++)
-            {
-                int n = UnityEngine.Random.Range(1,99);
-                arr.Add(n);
-            }
-            Display();
+            int n = UnityEngine.Random.Range(1, 99);
+            arr.Add(n);
         }
+        Display();
+        //if (!m_selsort_Arrayholder.running)
+        //{
+
+        //}
     }
 
     public void Display()
