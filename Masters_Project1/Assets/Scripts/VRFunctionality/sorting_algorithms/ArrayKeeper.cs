@@ -18,10 +18,6 @@ public class ArrayKeeper : MonoBehaviour
             size += 1;
             Display();
         }
-        //if (!m_selsort_Arrayholder.running)
-        //{
-
-        //}
     }
 
     public void pop()
@@ -32,10 +28,6 @@ public class ArrayKeeper : MonoBehaviour
             size -= 1;
             Display();
         }
-        //if (!m_selsort_Arrayholder.running)
-        //{
-
-        //}
     }
 
     public void randomNum()
@@ -48,10 +40,6 @@ public class ArrayKeeper : MonoBehaviour
             arr.Add(n);
         }
         Display();
-        //if (!m_selsort_Arrayholder.running)
-        //{
-
-        //}
     }
 
     public void Display()

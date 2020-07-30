@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class buttonevent_parent : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    public GameObject Canvas; 
-    public GameObject Panel; 
+    public GameObject parent; 
+    public GameObject obj; 
     public GameObject Dot;
     private bool down;
     private Vector3 oldpos;
@@ -15,7 +15,7 @@ public class buttonevent_parent : MonoBehaviour, IPointerDownHandler, IPointerUp
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Panel.transform.parent = Dot.transform;
+        obj.transform.parent = Dot.transform;
         down = true;
     }
 
@@ -32,12 +32,12 @@ public class buttonevent_parent : MonoBehaviour, IPointerDownHandler, IPointerUp
     {
         if (down)
         {
-            oldpos = Panel.transform.position;
+            oldpos = obj.transform.position;
             downtest = true;
         }
         if (!down && downtest)
         {
-            Panel.transform.SetParent(Canvas.transform, true);
+            obj.transform.SetParent(parent.transform, true);
             //Debug.Log(oldpos);
             downtest = false;
         }

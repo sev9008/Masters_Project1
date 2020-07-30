@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class Pointer : MonoBehaviour
 {
-    [SerializeField] private float defaultLength = 5.0f;
+    [SerializeField] public float defaultLength = 5.0f;
     [SerializeField] private GameObject dot = null;
 
     public Camera Camera { get; private set; } = null;
