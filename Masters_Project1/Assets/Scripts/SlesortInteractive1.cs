@@ -11,10 +11,15 @@ public class SlesortInteractive1 : MonoBehaviour
     public List<MyStruct> arr;
     public List<GameObject> b;
     public List<GameObject> pos;
+    public Material Donesort;
+    public Material Nextsort;
+    public Material Unsorted;
 
     public bool sorted;
 
     public int step;
+
+    public Text Step;
 
     public class MyStruct
     {
@@ -22,8 +27,24 @@ public class SlesortInteractive1 : MonoBehaviour
         public int value;
     }
 
-    public void Start()
+    private void Start()
     {
+        Begin();
+    }
+
+    public void Update()
+    {
+        if (sorted)
+        {
+            EnableTrigger(0);
+            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Selction Sort Operates."  + "\nThe Algorithm locks the positions that have already been sorted, and chooses the next smallest element to swap.";
+            sorted = false;
+        }
+    }
+
+    public void Begin()
+    {
+        Step.text = "Welcome!  This interacvtive minigame is designed to teach you how to perform Selection Sort." + "\nIf the block is blue it is Sorted and can not be interacted with." + "\nIf a block is red It must be swapped with the smallest value from the unsorted array.";
         for (int i = 0; i < 9; i++)
         {
             int n = UnityEngine.Random.Range(1, 99);
@@ -31,13 +52,8 @@ public class SlesortInteractive1 : MonoBehaviour
             t.text = n.ToString();
         }
         updatePos();
-
         sorted = false;
         checksort();
-        if (sorted)
-        {
-            Start();
-        }
     }
 
     public void checksort()
@@ -69,21 +85,36 @@ public class SlesortInteractive1 : MonoBehaviour
         j += 1;
         for (int i = 0; i < 9; i++)
         {
-            if (i == j - 1)
-            {
-                b[i].GetComponent<MoveInteractionBLock>().enabled = false;
-            }
-            else if (i < j)
+            if (sorted)
             {
                 b[i].GetComponent<BoxCollider>().enabled = false;
                 b[i].GetComponent<MoveInteractionBLock>().enabled = false;
                 pos[i].GetComponent<BoxCollider>().enabled = false;
+                b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
             }
             else
             {
-                b[i].GetComponent<BoxCollider>().enabled = true;
-                b[i].GetComponent<MoveInteractionBLock>().enabled = true;
-                pos[i].GetComponent<BoxCollider>().enabled = true;
+                if (i == j - 1)
+                {
+                    b[i].GetComponent<MoveInteractionBLock>().enabled = false;
+                    b[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                    b[i].GetComponent<BoxCollider>().enabled = false;
+                    pos[i].GetComponent<BoxCollider>().enabled = true;
+                }
+                else if (i < j)
+                {
+                    b[i].GetComponent<BoxCollider>().enabled = false;
+                    b[i].GetComponent<MoveInteractionBLock>().enabled = false;
+                    pos[i].GetComponent<BoxCollider>().enabled = false;
+                    b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+                }
+                else
+                {
+                    b[i].GetComponent<BoxCollider>().enabled = true;
+                    b[i].GetComponent<MoveInteractionBLock>().enabled = true;
+                    pos[i].GetComponent<BoxCollider>().enabled = false;
+                    b[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+                }
             }
         }
     }

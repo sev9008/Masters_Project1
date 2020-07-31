@@ -27,6 +27,7 @@ public class MoveInteractionBLock : MonoBehaviour, IPointerDownHandler, IPointer
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        obj.transform.parent = parent.transform;
         down = false;
         pointer.defaultLength = 7f;
         slesortInteractive.updatePos();
@@ -41,31 +42,51 @@ public class MoveInteractionBLock : MonoBehaviour, IPointerDownHandler, IPointer
         if (down)
         {
             oldpos = obj.transform.position;
-            downtest = true;
+            //downtest = true;
         }
-        if (!down && downtest)
+        if (!down) //&& downtest)
         {
-            obj.transform.SetParent(parent.transform, true);
-            downtest = false;
+            //obj.transform.parent = parent.transform;
+
+            //obj.transform.SetParent(parent.transform, true);
+            //downtest = false;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        hit = true;
-        if (down && other.gameObject.tag == "1" || other.gameObject.tag == "2" || other.gameObject.tag == "3" || other.gameObject.tag == "4" || other.gameObject.tag == "5" || other.gameObject.tag == "6" || other.gameObject.tag == "7" || other.gameObject.tag == "8" || other.gameObject.tag == "9")
+        int tempnum, tempnum2;
+        int.TryParse(other.gameObject.tag, out tempnum);
+        int.TryParse(this.gameObject.tag, out tempnum2);
+
+        if (tempnum > 0 && tempnum < 9)
         {
-            if (other.transform.parent == parent.transform)
+            Debug.Log("hit");
+
+            obj.transform.parent = parent.transform;
+            down = false;
+            pointer.defaultLength = 7f;
+            slesortInteractive.updatePos();
+            try
             {
-                Debug.Log("hit");
-                int tempnum, tempnum2;
-                int.TryParse(other.gameObject.tag, out tempnum);
-                int.TryParse(this.gameObject.tag, out tempnum2);
-                if (tempnum != tempnum2 && tempnum > 0 && tempnum <= 9 && tempnum2 > 0 && tempnum2 <= 9)
-                {
-                    slesortInteractive.SwapValues(tempnum2 - 1, tempnum - 1);
-                }
+                slesortInteractive.SwapValues(tempnum2 - 1, tempnum - 1);
             }
+            catch { }
         }
+
+
+
+        //hit = true;
+        //if (down && other.gameObject.tag == "1" || other.gameObject.tag == "2" || other.gameObject.tag == "3" || other.gameObject.tag == "4" || other.gameObject.tag == "5" || other.gameObject.tag == "6" || other.gameObject.tag == "7" || other.gameObject.tag == "8" || other.gameObject.tag == "9")
+        //{
+        //    if (other.transform.parent == parent.transform)
+        //    {
+        //        Debug.Log("hit");
+
+        //        if (tempnum != tempnum2 && tempnum > 0 && tempnum <= 9 && tempnum2 > 0 && tempnum2 <= 9)
+        //        {
+        //        }
+        //    }
+        //}
     }
 }
