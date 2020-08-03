@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MoveInteractionBLock : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -15,7 +16,10 @@ public class MoveInteractionBLock : MonoBehaviour, IPointerDownHandler, IPointer
     private Vector3 oldpos;
     private bool downtest;
 
+
     public bool hit;
+
+    bool correctvalue;
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -42,14 +46,14 @@ public class MoveInteractionBLock : MonoBehaviour, IPointerDownHandler, IPointer
         if (down)
         {
             oldpos = obj.transform.position;
-            //downtest = true;
         }
-        if (!down) //&& downtest)
-        {
-            //obj.transform.parent = parent.transform;
 
-            //obj.transform.SetParent(parent.transform, true);
-            //downtest = false;
+        if (!down){ }
+
+        if (correctvalue && !down)
+        {
+            //slesortInteractive.Step.text = "Incorrect.  The block you attempted to swap was not the smallest value in the unsorted array.";
+            //correctvalue = false;
         }
     }
 
@@ -59,6 +63,8 @@ public class MoveInteractionBLock : MonoBehaviour, IPointerDownHandler, IPointer
         int.TryParse(other.gameObject.tag, out tempnum);
         int.TryParse(this.gameObject.tag, out tempnum2);
 
+
+
         if (tempnum > 0 && tempnum < 9)
         {
             Debug.Log("hit");
@@ -67,26 +73,23 @@ public class MoveInteractionBLock : MonoBehaviour, IPointerDownHandler, IPointer
             down = false;
             pointer.defaultLength = 7f;
             slesortInteractive.updatePos();
-            try
+
+
+            float.TryParse(this.GetComponentInChildren<Text>().text, out float thisvalue);
+            if (thisvalue == slesortInteractive.currentSmallest)
             {
-                slesortInteractive.SwapValues(tempnum2 - 1, tempnum - 1);
+                correctvalue = true;
+                try
+                {
+                    slesortInteractive.SwapValues(tempnum2 - 1, tempnum - 1);
+                }
+                catch { }
             }
-            catch { }
+            else 
+            {
+                slesortInteractive.Step.text = "Incorrect.  The block you attempted to swap was not the smallest value in the unsorted array.";
+            }
+
         }
-
-
-
-        //hit = true;
-        //if (down && other.gameObject.tag == "1" || other.gameObject.tag == "2" || other.gameObject.tag == "3" || other.gameObject.tag == "4" || other.gameObject.tag == "5" || other.gameObject.tag == "6" || other.gameObject.tag == "7" || other.gameObject.tag == "8" || other.gameObject.tag == "9")
-        //{
-        //    if (other.transform.parent == parent.transform)
-        //    {
-        //        Debug.Log("hit");
-
-        //        if (tempnum != tempnum2 && tempnum > 0 && tempnum <= 9 && tempnum2 > 0 && tempnum2 <= 9)
-        //        {
-        //        }
-        //    }
-        //}
     }
 }
