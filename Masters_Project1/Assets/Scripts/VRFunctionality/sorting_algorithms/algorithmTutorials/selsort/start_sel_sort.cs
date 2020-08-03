@@ -47,7 +47,12 @@ public class start_sel_sort : MonoBehaviour, IPointerDownHandler
     }
     public IEnumerator startani()
     {
-        yield return sho = StartCoroutine(m_selsort_Arrayholder.Selection(arr2, size));
+        m_selsort_Arrayholder.arr3.Clear();
+        for (int i = 0; i < arr2.Count; i++)
+        {
+            m_selsort_Arrayholder.arr3.Add(arr2[i]);
+        }
+        yield return sho = StartCoroutine(m_selsort_Arrayholder.Selection());
 
         running = false;
     }

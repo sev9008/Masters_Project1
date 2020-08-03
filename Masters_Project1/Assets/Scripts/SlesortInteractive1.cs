@@ -8,7 +8,7 @@ using Valve.VR.InteractionSystem.Sample;
 
 public class SlesortInteractive1 : MonoBehaviour
 {
-    public List<MyStruct> arr;
+    //public List<MyStruct> arr;
     public List<GameObject> b;
     public List<GameObject> pos;
     public Material Donesort;
@@ -21,11 +21,8 @@ public class SlesortInteractive1 : MonoBehaviour
 
     public Text Step;
 
-    public class MyStruct
-    {
-        public GameObject obj;
-        public int value;
-    }
+
+    public float currentSmallest;
 
     private void Start()
     {
@@ -117,6 +114,21 @@ public class SlesortInteractive1 : MonoBehaviour
                 }
             }
         }
+
+        //get the currect smallest value in the unsorted array
+        currentSmallest = 101;
+        for (int i = j; i < 9; i++)
+        {
+            float ti;
+            //float tj;
+            float.TryParse(b[i].GetComponentInChildren<Text>().text, out ti);
+            //float.TryParse(b[i+1].GetComponentInChildren<Text>().text, out tj);
+
+            if ( currentSmallest > ti)
+            {
+                currentSmallest = ti;
+            }
+        }
     }
 
     public void SwapValues(int i, int j)
@@ -128,6 +140,8 @@ public class SlesortInteractive1 : MonoBehaviour
 
         ti.text = tj.text;
         tj.text = n;
+        Step.text = "Correct! " + ti.text + " and " + tj.text + "will swap and index" + j + " will be locked.";
+
         checksort();
     }
 
