@@ -120,9 +120,7 @@ public class SlesortInteractive1 : MonoBehaviour
         for (int i = j; i < 9; i++)
         {
             float ti;
-            //float tj;
             float.TryParse(b[i].GetComponentInChildren<Text>().text, out ti);
-            //float.TryParse(b[i+1].GetComponentInChildren<Text>().text, out tj);
 
             if ( currentSmallest > ti)
             {
