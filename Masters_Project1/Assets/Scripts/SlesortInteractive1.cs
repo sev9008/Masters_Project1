@@ -24,8 +24,11 @@ public class SlesortInteractive1 : MonoBehaviour
 
     public float currentSmallest;
 
+    public GameObject arrow;
+
     private void Start()
     {
+        arrow.SetActive(false);
         Begin();
     }
 
@@ -48,6 +51,7 @@ public class SlesortInteractive1 : MonoBehaviour
             Text t = b[i].GetComponentInChildren<Text>();
             t.text = n.ToString();
         }
+        //b[0].GetComponentInChildren<Text>().text = "1";
         updatePos();
         sorted = false;
         checksort();
@@ -97,6 +101,10 @@ public class SlesortInteractive1 : MonoBehaviour
                     b[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
                     b[i].GetComponent<BoxCollider>().enabled = false;
                     pos[i].GetComponent<BoxCollider>().enabled = true;
+
+                    //reset arrow position
+                    arrow.transform.position = b[i].transform.position;
+                    arrow.GetComponent<RectTransform>().anchoredPosition = new Vector2(arrow.GetComponent<RectTransform>().anchoredPosition.x, arrow.GetComponent<RectTransform>().anchoredPosition.y + 40);
                 }
                 else if (i < j)
                 {

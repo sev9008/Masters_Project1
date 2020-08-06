@@ -29,6 +29,11 @@ public class SelsortInteractive2 : MonoBehaviour
 
     private bool sorted;
 
+    public GameObject arrow;
+
+    public Text step;
+    public int dontchange;
+
     private void Start()
     {
         Begin();
@@ -36,6 +41,7 @@ public class SelsortInteractive2 : MonoBehaviour
 
     public void Begin()
     {
+        arrow.SetActive(true);
         for (int i = 0; i < 9; i++)
         {
             int n = UnityEngine.Random.Range(1, 99);
@@ -59,33 +65,36 @@ public class SelsortInteractive2 : MonoBehaviour
 
     public IEnumerator SelectionInteractive2()
     {
+        //structarr = new List<MyStruct>();
         running = true;
         int i, j;
-        int iMin;
-        float n, m, o;
+        float n, m;
+        int iMin = 0;
         for (i = 0; i < b.Count - 1; i++)
         {
             iMin = i;
-            int tmp = 0;
             for (j = i + 1; j < b.Count; j++)
             {
                 float.TryParse(b[j].GetComponentInChildren<Text>().text, out n);
                 float.TryParse(b[iMin].GetComponentInChildren<Text>().text, out m);
-                if(b[j].GetComponentInChildren<MeshRenderer>().material != Nextsort)
-                b[j].GetComponentInChildren<MeshRenderer>().material = checksmall;
+                if (j != dontchange)
+                {
+                    b[j].GetComponentInChildren<MeshRenderer>().material = checksmall;
+                }
                 if (n < m)
                 {
-                    yield return new WaitForSeconds(speed);
-                    if (tmp > 0)
+                    if (iMin != i)
                     {
-                        b[iMin].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+                        if (iMin != dontchange)
+                        {
+                            b[iMin].GetComponentInChildren<MeshRenderer>().material = checksmall;
+                        }
                     }
-                    tmp++;
                     iMin = j;
-                    b[iMin].GetComponentInChildren<MeshRenderer>().material = smallest;
+                    b[j].GetComponentInChildren<MeshRenderer>().material = smallest;
                 }
                 yield return new WaitForSeconds(speed);
-                if (j != iMin)
+                if (b[j].GetComponentInChildren<MeshRenderer>().material == checksmall)
                 {
                     b[j].GetComponentInChildren<MeshRenderer>().material = Unsorted;
                 }
@@ -96,10 +105,11 @@ public class SelsortInteractive2 : MonoBehaviour
             }
         }
         sorted = true;
-        EnableTrigger(0);
-        running = false;
+        //EnableTrigger(0);
         yield return new WaitForSeconds(speed);
-    }
+        running = false;
+        arrow.SetActive(false);
+}
 
     public void Update()
     {
@@ -114,6 +124,13 @@ public class SelsortInteractive2 : MonoBehaviour
             {
                 moving = false;
             }
+        }
+
+        if (sorted)
+        {
+            EnableTrigger(0);
+            step.text = "The array is now Sorted!" + "\nThis is Generally how Selction Sort Operates." + "\nThe Algorithm locks the positions that have already been sorted, and chooses the next smallest element to swap.";
+            sorted = false;
         }
     }
 
@@ -163,17 +180,24 @@ public class SelsortInteractive2 : MonoBehaviour
         {
             if (sorted)
             {
+                arrow.SetActive(false);
                 b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
             }
             else
             {
-                if (i == j - 1)
+                if (i < j)
                 {
-                    b[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
-                }
-                else if (i < j)
-                {
-                    b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+                    if (i == j - 1)
+                    {
+                        b[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                        dontchange = i;
+                        arrow.transform.position = b[i].transform.position;
+                        arrow.GetComponent<RectTransform>().anchoredPosition = new Vector2(arrow.GetComponent<RectTransform>().anchoredPosition.x, arrow.GetComponent<RectTransform>().anchoredPosition.y + 40);
+                    }
+                    else 
+                    {
+                        b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+                    }
                 }
                 else
                 {
@@ -203,6 +227,5 @@ public class SelsortInteractive2 : MonoBehaviour
             }
             step++;
         }
-        sorted = true;
     }
 }

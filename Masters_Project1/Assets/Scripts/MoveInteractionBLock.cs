@@ -35,6 +35,7 @@ public class MoveInteractionBLock : MonoBehaviour, IPointerDownHandler, IPointer
         down = false;
         pointer.defaultLength = 7f;
         slesortInteractive.updatePos();
+        slesortInteractive.arrow.SetActive(false);
     }
     public void Start()
     {
@@ -45,6 +46,7 @@ public class MoveInteractionBLock : MonoBehaviour, IPointerDownHandler, IPointer
     {
         if (down)
         {
+            slesortInteractive.arrow.SetActive(true);
             oldpos = obj.transform.position;
         }
 
@@ -89,7 +91,7 @@ public class MoveInteractionBLock : MonoBehaviour, IPointerDownHandler, IPointer
             {
                 slesortInteractive.Step.text = "Incorrect.  The block you attempted to swap was not the smallest value in the unsorted array.";
             }
-
+            slesortInteractive.arrow.SetActive(false);
         }
     }
 }
