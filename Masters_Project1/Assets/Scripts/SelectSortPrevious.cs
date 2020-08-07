@@ -9,11 +9,14 @@ public class SelectSortPrevious : MonoBehaviour, IPointerDownHandler
     // Start is called before the first frame update
     public void OnPointerDown(PointerEventData eventData)
     {
-        m_selsort_arrayholder.previous = true;
-        if (m_selsort_arrayholder.next)
+        if (m_selsort_arrayholder.previous == false && m_selsort_arrayholder.running)
         {
-            m_selsort_arrayholder.next = false;
+            m_selsort_arrayholder.previous = true;
+            if (m_selsort_arrayholder.next)
+            {
+                m_selsort_arrayholder.next = false;
+            }
+            m_selsort_arrayholder.Step.text = "Processing previous Step";
         }
-        m_selsort_arrayholder.Step.text = "Processing previous Step";
     }
 }

@@ -21,6 +21,13 @@ public class SlesortInteractive1 : MonoBehaviour
 
     public Text Step;
 
+    public int corretAnswers;
+    public int incorretAnswers;
+    public int numofGames;
+    public Text corretAnswersText;
+    public Text incorretAnswersText;
+    public Text numofGamesText;
+
 
     public float currentSmallest;
 
@@ -28,6 +35,12 @@ public class SlesortInteractive1 : MonoBehaviour
 
     private void Start()
     {
+        corretAnswersText.GetComponentInChildren<Text>().text = "0";
+        incorretAnswersText.GetComponentInChildren<Text>().text = "0";
+        numofGamesText.GetComponentInChildren<Text>().text = "0";
+        incorretAnswers = 0;
+        corretAnswers = 0;
+        numofGames = 0;
         arrow.SetActive(false);
         Begin();
     }
@@ -44,7 +57,9 @@ public class SlesortInteractive1 : MonoBehaviour
 
     public void Begin()
     {
-        Step.text = "Welcome!  This interacvtive minigame is designed to teach you how to perform Selection Sort." + "\nIf the block is blue it is Sorted and can not be interacted with." + "\nIf a block is red It must be swapped with the smallest value from the unsorted array.";
+        numofGames += 1;
+        numofGamesText.GetComponent<Text>().text = numofGames.ToString();
+        Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Selection Sort." + "\nIf the block is blue it is Sorted and can not be interacted with." + "\nIf a block is red It must be swapped with the smallest value from the unsorted array.";
         for (int i = 0; i < 9; i++)
         {
             int n = UnityEngine.Random.Range(1, 99);
@@ -147,6 +162,9 @@ public class SlesortInteractive1 : MonoBehaviour
         ti.text = tj.text;
         tj.text = n;
         Step.text = "Correct! " + ti.text + " and " + tj.text + "will swap and index" + j + " will be locked.";
+        corretAnswers += 1;
+        corretAnswersText.GetComponent<Text>().text = corretAnswers.ToString();
+
 
         checksort();
     }

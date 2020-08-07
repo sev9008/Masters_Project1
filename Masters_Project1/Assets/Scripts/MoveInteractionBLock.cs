@@ -27,6 +27,7 @@ public class MoveInteractionBLock : MonoBehaviour, IPointerDownHandler, IPointer
         down = true;
         pointer.defaultLength = 0f;
         obj.transform.position = pointer.transform.position;
+        obj.transform.position = obj.transform.position + (pointer.transform.forward * .1f);//new Vector3(pointer.transform.position.x - .1f, pointer.transform.position.y, pointer.transform.position.z + .1f);
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -48,6 +49,7 @@ public class MoveInteractionBLock : MonoBehaviour, IPointerDownHandler, IPointer
         {
             slesortInteractive.arrow.SetActive(true);
             oldpos = obj.transform.position;
+            obj.transform.rotation = new Quaternion(0,0,0,0);
         }
 
         if (!down){ }
@@ -64,8 +66,6 @@ public class MoveInteractionBLock : MonoBehaviour, IPointerDownHandler, IPointer
         int tempnum, tempnum2;
         int.TryParse(other.gameObject.tag, out tempnum);
         int.TryParse(this.gameObject.tag, out tempnum2);
-
-
 
         if (tempnum > 0 && tempnum < 9)
         {
@@ -90,6 +90,9 @@ public class MoveInteractionBLock : MonoBehaviour, IPointerDownHandler, IPointer
             else 
             {
                 slesortInteractive.Step.text = "Incorrect.  The block you attempted to swap was not the smallest value in the unsorted array.";
+                slesortInteractive.incorretAnswers += 1;
+                slesortInteractive.incorretAnswersText.GetComponent<Text>().text = slesortInteractive.incorretAnswers.ToString();
+
             }
             slesortInteractive.arrow.SetActive(false);
         }

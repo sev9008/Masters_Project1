@@ -33,7 +33,7 @@ public class ArrayKeeper : MonoBehaviour
     public void randomNum()
     {
         arr.Clear();
-        size = 30;
+        size = 8;
         for (int i = 0; i < size; i++)
         {
             int n = UnityEngine.Random.Range(1, 99);

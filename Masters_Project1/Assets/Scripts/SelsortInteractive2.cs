@@ -34,13 +34,24 @@ public class SelsortInteractive2 : MonoBehaviour
     public Text step;
     public int dontchange;
 
+    public Coroutine co1;
+    public Coroutine co2;
+
     private void Start()
     {
-        Begin();
+        //Begin();
     }
 
     public void Begin()
     {
+        try
+        {
+            moving = false;
+            StopCoroutine(co1);
+            StopCoroutine(co2);
+            updatePos();
+        }
+        catch { }
         arrow.SetActive(true);
         for (int i = 0; i < 9; i++)
         {
@@ -50,7 +61,7 @@ public class SelsortInteractive2 : MonoBehaviour
         }
         updatePos();
         checksort();
-        StartCoroutine(SelectionInteractive2());
+        co1 = StartCoroutine(SelectionInteractive2());
     }
 
     public void updatePos()
@@ -80,6 +91,7 @@ public class SelsortInteractive2 : MonoBehaviour
                 if (j != dontchange)
                 {
                     b[j].GetComponentInChildren<MeshRenderer>().material = checksmall;
+                    step.text = "Checking for new smallest";
                 }
                 if (n < m)
                 {
@@ -92,6 +104,7 @@ public class SelsortInteractive2 : MonoBehaviour
                     }
                     iMin = j;
                     b[j].GetComponentInChildren<MeshRenderer>().material = smallest;
+                    step.text = "Replace the current smallest value";
                 }
                 yield return new WaitForSeconds(speed);
                 if (b[j].GetComponentInChildren<MeshRenderer>().material == checksmall)
@@ -101,7 +114,9 @@ public class SelsortInteractive2 : MonoBehaviour
             }
             if (iMin != i)
             {
-                yield return SwapAnimation(i, iMin);
+                step.text = "Swap the smallest value with our left most unsorted index.";
+                co2 = StartCoroutine(SwapAnimation(i, iMin));
+                yield return co2;
             }
         }
         sorted = true;
