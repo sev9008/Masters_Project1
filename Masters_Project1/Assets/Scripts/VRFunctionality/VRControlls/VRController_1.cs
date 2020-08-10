@@ -12,7 +12,7 @@ public class VRController_1 : MonoBehaviour
     public float rotateincr = 5f;
 
     public SteamVR_Action_Boolean RotatePress = null;
-    public SteamVR_Action_Boolean SpawnPress = null;
+    public SteamVR_Action_Boolean GrabObj = null;
     public SteamVR_Action_Boolean Movepress = null;
     public SteamVR_Action_Vector2 MoveValue = null;
 
@@ -24,6 +24,13 @@ public class VRController_1 : MonoBehaviour
 
     public GameObject Spawnpos;
     public GameObject CanvasObject;
+
+    public Pointer m_pointer;
+
+    public GameObject grabbed;
+    public GameObject Dot;
+
+    public bool down;
 
     private void Awake()
     {
@@ -42,7 +49,15 @@ public class VRController_1 : MonoBehaviour
         HandleHieght();
         CalculateMovement();
         SnapRotation();
-        HandleCanvasSpawn();
+        HandleMoveObject();
+
+        if (down)
+        {
+            m_pointer.defaultLength = 0f;
+            grabbed.transform.position = m_pointer.transform.position;
+            grabbed.transform.position = grabbed.transform.position + (m_pointer.transform.forward * .3f);
+            grabbed.transform.rotation = new Quaternion(0, 0, 0, 0);
+        }
     }
 
     private void HandleHead()
@@ -133,12 +148,33 @@ public class VRController_1 : MonoBehaviour
         transform.RotateAround(Head.position, Vector3.up, snapValue);
     }
 
-    private void HandleCanvasSpawn()
+    private void HandleMoveObject()
     {
-        if (SpawnPress.GetStateDown(SteamVR_Input_Sources.RightHand))
+        try
         {
-            Vector3 newpos = Spawnpos.transform.position;
-            GameObject newob = Instantiate(CanvasObject, newpos, Spawnpos.transform.rotation);
+            if (GrabObj.GetStateDown(SteamVR_Input_Sources.RightHand) && m_pointer.hit.collider.gameObject.tag == "Moveable")
+            {
+                Debug.Log("down");
+                grabbed = m_pointer.hit.collider.gameObject;
+                grabbed.transform.parent = Dot.transform;
+                grabbed.GetComponent<BlockParent>().gravity = false;
+                down = true;
+            }
         }
+        catch { }
+        try
+        {
+            if (GrabObj.GetStateUp(SteamVR_Input_Sources.RightHand) && grabbed != null)
+            {
+                m_pointer.defaultLength = 7f;
+                down = false;
+                grabbed.GetComponent<BlockParent>().gravity = true;
+                GameObject m_parent = grabbed.GetComponent<BlockParent>().parent;
+                grabbed.transform.parent = m_parent.transform;
+                grabbed = null;
+
+            }
+        }
+        catch { }
     }    
 }

@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class Pointer : MonoBehaviour
 {
-    [SerializeField] public float defaultLength = 5.0f;
+    [SerializeField] public float defaultLength = 7.0f;
     [SerializeField] private GameObject dot = null;
 
     public Camera Camera { get; private set; } = null;
@@ -15,6 +15,8 @@ public class Pointer : MonoBehaviour
 
     private float colliderDistance;
     private float canvasDistance;
+
+    public RaycastHit hit;
 
     private void Awake()
     {
@@ -45,7 +47,7 @@ public class Pointer : MonoBehaviour
         {         
             // Use default or distance
             PointerEventData data = inputModule.Data;
-            RaycastHit hit = CreateRaycast();
+            hit = CreateRaycast();
 
             // If nothing is hit, set do default length
             colliderDistance = hit.distance == 0 ? defaultLength : hit.distance;

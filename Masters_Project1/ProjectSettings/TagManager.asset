@@ -17,6 +17,7 @@ TagManager:
   - 7
   - 8
   - 9
+  - Moveable
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - 
   - 
   - SelectInteractive
-  - 
+  - Moveable
   - 
   - 
   - 
