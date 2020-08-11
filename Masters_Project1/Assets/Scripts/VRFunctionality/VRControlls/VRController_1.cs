@@ -57,6 +57,16 @@ public class VRController_1 : MonoBehaviour
             grabbed.transform.position = m_pointer.transform.position;
             grabbed.transform.position = grabbed.transform.position + (m_pointer.transform.forward * .3f);
             grabbed.transform.rotation = new Quaternion(0, 0, 0, 0);
+            grabbed.GetComponent<BlockParent>().isGrabbed = true;
+        }
+        if (!down && grabbed != null)
+        {
+            m_pointer.defaultLength = 7f;
+            down = false;
+            grabbed.GetComponent<BlockParent>().gravity = true;
+            GameObject m_parent = grabbed.GetComponent<BlockParent>().parent;
+            grabbed.transform.parent = m_parent.transform;
+            grabbed = null;
         }
     }
 
@@ -154,6 +164,7 @@ public class VRController_1 : MonoBehaviour
         {
             if (GrabObj.GetStateDown(SteamVR_Input_Sources.RightHand) && m_pointer.hit.collider.gameObject.tag == "Moveable")
             {
+                m_pointer.defaultLength = 0f;
                 Debug.Log("down");
                 grabbed = m_pointer.hit.collider.gameObject;
                 grabbed.transform.parent = Dot.transform;
@@ -172,7 +183,6 @@ public class VRController_1 : MonoBehaviour
                 GameObject m_parent = grabbed.GetComponent<BlockParent>().parent;
                 grabbed.transform.parent = m_parent.transform;
                 grabbed = null;
-
             }
         }
         catch { }

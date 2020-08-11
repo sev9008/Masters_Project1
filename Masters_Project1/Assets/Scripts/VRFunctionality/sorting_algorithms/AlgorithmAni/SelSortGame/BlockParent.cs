@@ -6,9 +6,15 @@ public class BlockParent : MonoBehaviour
 {
     public GameObject parent;
     public bool gravity;
-    public Rigidbody rb;
+    private Rigidbody rb;
+    public GameObject txtpos;
+    public GameObject PairedPos;
+    public Material mat;
+
+    public bool isGrabbed;
     public void Start()
     {
+        gravity = true;
         rb = GetComponent<Rigidbody>();
     }
     public void Update()
@@ -21,5 +27,13 @@ public class BlockParent : MonoBehaviour
         {
             rb.useGravity = true;
         }
+        txtpos.transform.position = this.transform.position + (Vector3.up * .3f);
+
+        if (isGrabbed && this.GetComponent<BoxCollider>().enabled == true)
+        {
+            PairedPos.GetComponent<MeshRenderer>().material = mat;
+            PairedPos.GetComponent<MeshRenderer>().enabled = true;
+        }
+
     }
 }

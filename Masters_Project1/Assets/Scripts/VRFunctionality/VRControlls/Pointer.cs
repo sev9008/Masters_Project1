@@ -18,6 +18,8 @@ public class Pointer : MonoBehaviour
 
     public RaycastHit hit;
 
+    public LayerMask raymask;
+
     private void Awake()
     {
         Camera = GetComponent<Camera>();
@@ -39,20 +41,27 @@ public class Pointer : MonoBehaviour
 
     private void UpdateLine()
     {
-        if (dot.transform.childCount > 0)
-        {
+        //if (dot.transform.childCount > 0)
+        //{
 
-        }
-        else
-        {         
-            // Use default or distance
-            PointerEventData data = inputModule.Data;
-            hit = CreateRaycast();
+        //}
+        //else
+        //{         
+        //    // Use default or distance
+        //    PointerEventData data = inputModule.Data;
+        //    hit = CreateRaycast();
 
-            // If nothing is hit, set do default length
-            colliderDistance = hit.distance == 0 ? defaultLength : hit.distance;
-            canvasDistance = data.pointerCurrentRaycast.distance == 0 ? defaultLength : data.pointerCurrentRaycast.distance;
-        }
+        //    // If nothing is hit, set do default length
+        //    colliderDistance = hit.distance == 0 ? defaultLength : hit.distance;
+        //    canvasDistance = data.pointerCurrentRaycast.distance == 0 ? defaultLength : data.pointerCurrentRaycast.distance;
+        //}
+        // Use default or distance
+        PointerEventData data = inputModule.Data;
+        hit = CreateRaycast();
+
+        // If nothing is hit, set do default length
+        colliderDistance = hit.distance == 0 ? defaultLength : hit.distance;
+        canvasDistance = data.pointerCurrentRaycast.distance == 0 ? defaultLength : data.pointerCurrentRaycast.distance;
         // Get the closest one
         float targetLength = Mathf.Min(colliderDistance, canvasDistance);
 
@@ -71,7 +80,7 @@ public class Pointer : MonoBehaviour
     {
         RaycastHit hit;
         Ray ray = new Ray(transform.position, transform.forward);
-        Physics.Raycast(ray, out hit, defaultLength);
+        Physics.Raycast(ray, out hit, defaultLength, raymask);
 
         return hit;
     }
