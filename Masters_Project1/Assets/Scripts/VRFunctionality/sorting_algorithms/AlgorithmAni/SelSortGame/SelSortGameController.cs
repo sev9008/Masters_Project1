@@ -48,6 +48,7 @@ public class SelSortGameController : MonoBehaviour
             Text t = block[i].GetComponentInChildren<Text>();
             t.text = n.ToString();
             block[i].GetComponent<BlockParent>().PairedPos = pos[i];
+            block[i].GetComponent<BlockParent>().gravity = true;
         }
         block[0].GetComponentInChildren<Text>().text = "1";
         updatePos();
@@ -93,6 +94,7 @@ public class SelSortGameController : MonoBehaviour
                 pos[i].GetComponent<BoxCollider>().enabled = false;
                 pos[i].GetComponentInChildren<MeshRenderer>().enabled = true;
                 pos[i].GetComponentInChildren<MeshRenderer>().material = DoneSort;
+                block[i].GetComponent<BlockParent>().gravity = false;
             }
             else
             {
@@ -103,6 +105,7 @@ public class SelSortGameController : MonoBehaviour
                     pos[i].GetComponent<BoxCollider>().enabled = true;
                     pos[i].GetComponentInChildren<MeshRenderer>().material = NextSort;
                     pos[i].GetComponentInChildren<MeshRenderer>().enabled = true;
+                    block[i].GetComponent<BlockParent>().gravity = true;
                 }
                 else if (i < j)
                 {
@@ -112,15 +115,17 @@ public class SelSortGameController : MonoBehaviour
                     pos[i].GetComponent<BoxCollider>().enabled = false;
                     pos[i].GetComponentInChildren<MeshRenderer>().enabled = true;
                     pos[i].GetComponentInChildren<MeshRenderer>().material = DoneSort;
+                    block[i].GetComponent<BlockParent>().gravity = false;
                 }
                 else
                 {
                     block[i].GetComponent<BlockParent>().enabled = true;
                     block[i].GetComponent<BoxCollider>().enabled = true;
+                    block[i].GetComponent<Rigidbody>().isKinematic = false;
                     pos[i].GetComponent<BoxCollider>().enabled = true;
                     pos[i].GetComponentInChildren<MeshRenderer>().material = Transparent;
                     pos[i].GetComponentInChildren<MeshRenderer>().enabled = false;
-                    
+                    block[i].GetComponent<BlockParent>().gravity = true;
                 }
             }
         }
@@ -142,7 +147,8 @@ public class SelSortGameController : MonoBehaviour
 
     public void SwapValues(int i, int j)
     {
-        m_vRController_1.down = false;
+        m_vRController_1.downR = false;
+        m_vRController_1.downL = false;
         GameObject temppos = block[i].GetComponent<BlockParent>().PairedPos;
         block[i].GetComponent<BlockParent>().PairedPos = block[j].GetComponent<BlockParent>().PairedPos;
         block[j].GetComponent<BlockParent>().PairedPos = temppos;

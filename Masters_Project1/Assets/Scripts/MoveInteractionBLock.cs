@@ -40,7 +40,7 @@ public class MoveInteractionBLock : MonoBehaviour, IPointerDownHandler, IPointer
     }
     public void Start()
     {
-        Dot = GameObject.FindWithTag("DotCan");
+        Dot = GameObject.FindWithTag("DotCanR");
     }
 
     private void Update()

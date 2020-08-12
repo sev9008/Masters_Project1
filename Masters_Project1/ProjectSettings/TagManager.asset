@@ -18,6 +18,10 @@ TagManager:
   - 8
   - 9
   - Moveable
+  - PointerL
+  - PointerR
+  - DotCanR
+  - DotCanL
   layers:
   - Default
   - TransparentFX

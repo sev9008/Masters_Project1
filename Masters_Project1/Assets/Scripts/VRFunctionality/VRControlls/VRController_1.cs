@@ -25,12 +25,16 @@ public class VRController_1 : MonoBehaviour
     public GameObject Spawnpos;
     public GameObject CanvasObject;
 
-    public Pointer m_pointer;
+    public Pointer m_pointerR;
+    public Pointer m_pointerL;
 
-    public GameObject grabbed;
-    public GameObject Dot;
+    public GameObject grabbedL;
+    public GameObject grabbedR;
+    public GameObject DotL;
+    public GameObject DotR;
 
-    public bool down;
+    public bool downR;
+    public bool downL;
 
     private void Awake()
     {
@@ -51,22 +55,39 @@ public class VRController_1 : MonoBehaviour
         SnapRotation();
         HandleMoveObject();
 
-        if (down)
+        if (downR)
         {
-            m_pointer.defaultLength = 0f;
-            grabbed.transform.position = m_pointer.transform.position;
-            grabbed.transform.position = grabbed.transform.position + (m_pointer.transform.forward * .3f);
-            grabbed.transform.rotation = new Quaternion(0, 0, 0, 0);
-            grabbed.GetComponent<BlockParent>().isGrabbed = true;
+            m_pointerR.defaultLength = 0f;
+            grabbedR.transform.position = m_pointerR.transform.position;
+            grabbedR.transform.position = grabbedR.transform.position + (m_pointerR.transform.forward * .3f);
+            grabbedR.transform.rotation = new Quaternion(0, 0, 0, 0);
+            grabbedR.GetComponent<BlockParent>().isGrabbed = true;
         }
-        if (!down && grabbed != null)
+        if (!downR && grabbedR != null)
         {
-            m_pointer.defaultLength = 7f;
-            down = false;
-            grabbed.GetComponent<BlockParent>().gravity = true;
-            GameObject m_parent = grabbed.GetComponent<BlockParent>().parent;
-            grabbed.transform.parent = m_parent.transform;
-            grabbed = null;
+            m_pointerR.defaultLength = 7f;
+            downR = false;
+            grabbedR.GetComponent<BlockParent>().gravity = true;
+            GameObject m_parent = grabbedR.GetComponent<BlockParent>().parent;
+            grabbedR.transform.parent = m_parent.transform;
+            grabbedR = null;
+        }        
+        if (downL)
+        {
+            m_pointerL.defaultLength = 0f;
+            grabbedL.transform.position = m_pointerL.transform.position;
+            grabbedL.transform.position = grabbedL.transform.position + (m_pointerL.transform.forward * .3f);
+            grabbedL.transform.rotation = new Quaternion(0, 0, 0, 0);
+            grabbedL.GetComponent<BlockParent>().isGrabbed = true;
+        }
+        if (!downL && grabbedL != null)
+        {
+            m_pointerL.defaultLength = 7f;
+            downL = false;
+            grabbedL.GetComponent<BlockParent>().gravity = true;
+            GameObject m_parent = grabbedL.GetComponent<BlockParent>().parent;
+            grabbedL.transform.parent = m_parent.transform;
+            grabbedL = null;
         }
     }
 
@@ -162,27 +183,54 @@ public class VRController_1 : MonoBehaviour
     {
         try
         {
-            if (GrabObj.GetStateDown(SteamVR_Input_Sources.RightHand) && m_pointer.hit.collider.gameObject.tag == "Moveable")
+            if (GrabObj.GetStateDown(SteamVR_Input_Sources.RightHand) && m_pointerR.hit.collider.gameObject.tag == "Moveable")
             {
-                m_pointer.defaultLength = 0f;
+                m_pointerR.defaultLength = 0f;
                 Debug.Log("down");
-                grabbed = m_pointer.hit.collider.gameObject;
-                grabbed.transform.parent = Dot.transform;
-                grabbed.GetComponent<BlockParent>().gravity = false;
-                down = true;
+                grabbedR = m_pointerR.hit.collider.gameObject;
+                grabbedR.transform.parent = DotR.transform;
+                grabbedR.GetComponent<BlockParent>().gravity = false;
+                downR = true;
             }
         }
         catch { }
         try
         {
-            if (GrabObj.GetStateUp(SteamVR_Input_Sources.RightHand) && grabbed != null)
+            if (GrabObj.GetStateUp(SteamVR_Input_Sources.RightHand) && grabbedR != null)
             {
-                m_pointer.defaultLength = 7f;
-                down = false;
-                grabbed.GetComponent<BlockParent>().gravity = true;
-                GameObject m_parent = grabbed.GetComponent<BlockParent>().parent;
-                grabbed.transform.parent = m_parent.transform;
-                grabbed = null;
+                m_pointerR.defaultLength = 7f;
+                downR = false;
+                grabbedR.GetComponent<BlockParent>().gravity = true;
+                GameObject m_parent = grabbedR.GetComponent<BlockParent>().parent;
+                grabbedR.transform.parent = m_parent.transform;
+                grabbedR = null;
+            }
+        }
+        catch { }        
+        
+        try
+        {
+            if (GrabObj.GetStateDown(SteamVR_Input_Sources.LeftHand) && m_pointerL.hit.collider.gameObject.tag == "Moveable")
+            {
+                m_pointerL.defaultLength = 0f;
+                Debug.Log("down");
+                grabbedL = m_pointerL.hit.collider.gameObject;
+                grabbedL.transform.parent = DotL.transform;
+                grabbedL.GetComponent<BlockParent>().gravity = false;
+                downL = true;
+            }
+        }
+        catch { }
+        try
+        {
+            if (GrabObj.GetStateUp(SteamVR_Input_Sources.LeftHand) && grabbedL != null)
+            {
+                m_pointerL.defaultLength = 7f;
+                downL = false;
+                grabbedL.GetComponent<BlockParent>().gravity = true;
+                GameObject m_parent = grabbedL.GetComponent<BlockParent>().parent;
+                grabbedL.transform.parent = m_parent.transform;
+                grabbedL = null;
             }
         }
         catch { }
