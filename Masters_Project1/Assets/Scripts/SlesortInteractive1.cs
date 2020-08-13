@@ -28,10 +28,16 @@ public class SlesortInteractive1 : MonoBehaviour
     public Text incorretAnswersText;
     public Text numofGamesText;
 
+    public VRController_1 m_vRController_1;
 
     public float currentSmallest;
 
     public GameObject arrow;
+
+    public int currentSmallestIndex;
+    public int nextToSort;
+    public float dist1;
+
 
     private void Start()
     {
@@ -50,8 +56,34 @@ public class SlesortInteractive1 : MonoBehaviour
         if (sorted)
         {
             EnableTrigger(0);
-            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Selction Sort Operates."  + "\nThe Algorithm locks the positions that have already been sorted, and chooses the next smallest element to swap.";
+            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Selction Sort Operates." + "\nThe Algorithm locks the positions that have already been sorted, and chooses the next smallest element to swap.";
             sorted = false;
+        }
+        for (int i = nextToSort+1; i < b.Count; i++)
+        {
+            if (i != currentSmallestIndex)
+            {
+                float dist2 = Vector3.Distance(b[nextToSort].transform.position, b[i].transform.position);
+                if (dist2 < .04)
+                {
+                    m_vRController_1.downR = false;
+                    m_vRController_1.downL = false;
+                    Step.text = "Incorrect.  The block you attempted to swap was not the smallest value in the unsorted array.";
+                    incorretAnswers += 1;
+                    incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                    updatePos();
+                }
+                
+            }
+            else
+            {
+                dist1 = Vector3.Distance(b[nextToSort].transform.position, b[currentSmallestIndex].transform.position);
+                if (dist1 < .04)
+                {
+                    Debug.Log("Swap");
+                    SwapValues(nextToSort, currentSmallestIndex);
+                }
+            }
         }
     }
 
@@ -65,6 +97,7 @@ public class SlesortInteractive1 : MonoBehaviour
             int n = UnityEngine.Random.Range(1, 99);
             Text t = b[i].GetComponentInChildren<Text>();
             t.text = n.ToString();
+            b[i].GetComponent<MoveInteractionBLock>().PairedPos = pos[i];
         }
         //b[0].GetComponentInChildren<Text>().text = "1";
         updatePos();
@@ -88,6 +121,7 @@ public class SlesortInteractive1 : MonoBehaviour
                 {
                     sorted = false;
                     EnableTrigger(step);
+                    nextToSort = step;
                     return;
                 }
             }
@@ -104,7 +138,7 @@ public class SlesortInteractive1 : MonoBehaviour
             if (sorted)
             {
                 b[i].GetComponent<BoxCollider>().enabled = false;
-                b[i].GetComponent<MoveInteractionBLock>().enabled = false;
+                b[i].GetComponent<MoveInteractionBLock>().enabled = true;
                 pos[i].GetComponent<BoxCollider>().enabled = false;
                 b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
             }
@@ -112,7 +146,7 @@ public class SlesortInteractive1 : MonoBehaviour
             {
                 if (i == j - 1)
                 {
-                    b[i].GetComponent<MoveInteractionBLock>().enabled = false;
+                    b[i].GetComponent<MoveInteractionBLock>().enabled = true;
                     b[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
                     b[i].GetComponent<BoxCollider>().enabled = false;
                     pos[i].GetComponent<BoxCollider>().enabled = true;
@@ -124,7 +158,7 @@ public class SlesortInteractive1 : MonoBehaviour
                 else if (i < j)
                 {
                     b[i].GetComponent<BoxCollider>().enabled = false;
-                    b[i].GetComponent<MoveInteractionBLock>().enabled = false;
+                    b[i].GetComponent<MoveInteractionBLock>().enabled = true;
                     pos[i].GetComponent<BoxCollider>().enabled = false;
                     b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
                 }
@@ -148,12 +182,16 @@ public class SlesortInteractive1 : MonoBehaviour
             if ( currentSmallest > ti)
             {
                 currentSmallest = ti;
+                currentSmallestIndex = i;
             }
         }
     }
 
     public void SwapValues(int i, int j)
     {
+        m_vRController_1.downR = false;
+        m_vRController_1.downL = false;
+
         Text ti = b[i].GetComponentInChildren<Text>();
         Text tj = b[j].GetComponentInChildren<Text>();
 
@@ -161,10 +199,11 @@ public class SlesortInteractive1 : MonoBehaviour
 
         ti.text = tj.text;
         tj.text = n;
-        Step.text = "Correct! " + ti.text + " and " + tj.text + "will swap and index" + j + " will be locked.";
+        Step.text = "Correct! " + ti.text + " and " + tj.text + " will swap and index " + i + " will be locked.";
         corretAnswers += 1;
         corretAnswersText.GetComponent<Text>().text = corretAnswers.ToString();
 
+        updatePos();
 
         checksort();
     }
