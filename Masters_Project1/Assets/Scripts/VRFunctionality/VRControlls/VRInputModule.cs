@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using Valve.VR;
 
 public class VRInputModule : BaseInputModule
 {
-    [SerializeField] private PointerV2 pointer = null;
-
+    [SerializeField] private Pointer pointer = null;
     public PointerEventData Data { get; private set; } = null;
 
     protected override void Start()

@@ -25,7 +25,8 @@ public class VRController_1 : MonoBehaviour
     public GameObject Spawnpos;
     public GameObject CanvasObject;
 
-    public PointerV2 m_pointer;
+    public Pointer m_pointerR;
+    public Pointer m_pointerL;
 
     public GameObject grabbedL;
     public GameObject grabbedR;
@@ -56,15 +57,15 @@ public class VRController_1 : MonoBehaviour
 
         if (downR)
         {
-            m_pointer.defaultLengthRight = 0f;
-            grabbedR.transform.position = m_pointer.RightPointer.transform.position;
-            grabbedR.transform.position = grabbedR.transform.position + (m_pointer.RightPointer.transform.forward * .3f);
+            m_pointerR.defaultLength = 0f;
+            grabbedR.transform.position = m_pointerR.transform.position;
+            grabbedR.transform.position = grabbedR.transform.position + (m_pointerR.transform.forward * .3f);
             grabbedR.transform.rotation = new Quaternion(0, 0, 0, 0);
             grabbedR.GetComponent<BlockParent>().isGrabbed = true;
         }
         if (!downR && grabbedR != null)
         {
-            m_pointer.defaultLengthRight = 7f;
+            m_pointerR.defaultLength = 7f;
             downR = false;
             grabbedR.GetComponent<BlockParent>().gravity = true;
             GameObject m_parent = grabbedR.GetComponent<BlockParent>().parent;
@@ -73,15 +74,15 @@ public class VRController_1 : MonoBehaviour
         }        
         if (downL)
         {
-            m_pointer.defaultLengthLeft = 0f;
-            grabbedL.transform.position = m_pointer.LeftPointer.transform.position;
-            grabbedL.transform.position = grabbedL.transform.position + (m_pointer.LeftPointer.transform.forward * .3f);
+            m_pointerL.defaultLength = 0f;
+            grabbedL.transform.position = m_pointerL.transform.position;
+            grabbedL.transform.position = grabbedL.transform.position + (m_pointerL.transform.forward * .3f);
             grabbedL.transform.rotation = new Quaternion(0, 0, 0, 0);
             grabbedL.GetComponent<BlockParent>().isGrabbed = true;
         }
         if (!downL && grabbedL != null)
         {
-            m_pointer.defaultLengthLeft = 7f;
+            m_pointerL.defaultLength = 7f;
             downL = false;
             grabbedL.GetComponent<BlockParent>().gravity = true;
             GameObject m_parent = grabbedL.GetComponent<BlockParent>().parent;
@@ -156,7 +157,7 @@ public class VRController_1 : MonoBehaviour
 
         //rotate
         //newCenter = Quaternion.Euler(0, -transform.eulerAngles.y, 0) * newCenter;
-
+        
         //apply
         CharController.center = newCenter;
     }
@@ -182,11 +183,11 @@ public class VRController_1 : MonoBehaviour
     {
         try
         {
-            if (GrabObj.GetStateDown(SteamVR_Input_Sources.RightHand) && m_pointer.hitR.collider.gameObject.tag == "Moveable")
+            if (GrabObj.GetStateDown(SteamVR_Input_Sources.RightHand) && m_pointerR.hit.collider.gameObject.tag == "Moveable")
             {
-                m_pointer.defaultLengthRight = 0f;
+                m_pointerR.defaultLength = 0f;
                 Debug.Log("down");
-                grabbedR = m_pointer.hitR.collider.gameObject;
+                grabbedR = m_pointerR.hit.collider.gameObject;
                 grabbedR.transform.parent = DotR.transform;
                 grabbedR.GetComponent<BlockParent>().gravity = false;
                 downR = true;
@@ -197,7 +198,7 @@ public class VRController_1 : MonoBehaviour
         {
             if (GrabObj.GetStateUp(SteamVR_Input_Sources.RightHand) && grabbedR != null)
             {
-                m_pointer.defaultLengthRight = 7f;
+                m_pointerR.defaultLength = 7f;
                 downR = false;
                 grabbedR.GetComponent<BlockParent>().gravity = true;
                 GameObject m_parent = grabbedR.GetComponent<BlockParent>().parent;
@@ -209,11 +210,11 @@ public class VRController_1 : MonoBehaviour
         
         try
         {
-            if (GrabObj.GetStateDown(SteamVR_Input_Sources.LeftHand) && m_pointer.hitL.collider.gameObject.tag == "Moveable")
+            if (GrabObj.GetStateDown(SteamVR_Input_Sources.LeftHand) && m_pointerL.hit.collider.gameObject.tag == "Moveable")
             {
-                m_pointer.defaultLengthLeft = 0f;
+                m_pointerL.defaultLength= 0f;
                 Debug.Log("down");
-                grabbedL = m_pointer.hitL.collider.gameObject;
+                grabbedL = m_pointerL.hit.collider.gameObject;
                 grabbedL.transform.parent = DotL.transform;
                 grabbedL.GetComponent<BlockParent>().gravity = false;
                 downL = true;
@@ -224,7 +225,7 @@ public class VRController_1 : MonoBehaviour
         {
             if (GrabObj.GetStateUp(SteamVR_Input_Sources.LeftHand) && grabbedL != null)
             {
-                m_pointer.defaultLengthLeft = 7f;
+                m_pointerL.defaultLength = 7f;
                 downL = false;
                 grabbedL.GetComponent<BlockParent>().gravity = true;
                 GameObject m_parent = grabbedL.GetComponent<BlockParent>().parent;

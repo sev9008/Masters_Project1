@@ -14361,6 +14361,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MyCamera: {fileID: 0}
   MyCanvas1: {fileID: 0}
+  GrabObj:
+    actionPath: 
+    needsReinit: 0
 --- !u!1 &3012920781862534325
 GameObject:
   m_ObjectHideFlags: 0
