@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8868288741122940714}
   - component: {fileID: 8229326351204553498}
   - component: {fileID: 4901370197729069508}
-  - component: {fileID: 1528035439}
   m_Layer: 0
   m_Name: PR_VRInputModule
   m_TagString: Untagged
@@ -62,23 +61,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointer: {fileID: 0}
   TargetSource: 2
-  ClickAction:
-    actionPath: /actions/default/in/InteractUI
-    needsReinit: 0
---- !u!114 &1528035439
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7567711669637921839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c6f9e051db5182409a14ed796ff54d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pointer: {fileID: 0}
-  TargetSource: 1
   ClickAction:
     actionPath: /actions/default/in/InteractUI
     needsReinit: 0

@@ -41,20 +41,6 @@ public class Pointer : MonoBehaviour
 
     private void UpdateLine()
     {
-        //if (dot.transform.childCount > 0)
-        //{
-
-        //}
-        //else
-        //{         
-        //    // Use default or distance
-        //    PointerEventData data = inputModule.Data;
-        //    hit = CreateRaycast();
-
-        //    // If nothing is hit, set do default length
-        //    colliderDistance = hit.distance == 0 ? defaultLength : hit.distance;
-        //    canvasDistance = data.pointerCurrentRaycast.distance == 0 ? defaultLength : data.pointerCurrentRaycast.distance;
-        //}
         // Use default or distance
         PointerEventData data = inputModule.Data;
         hit = CreateRaycast();

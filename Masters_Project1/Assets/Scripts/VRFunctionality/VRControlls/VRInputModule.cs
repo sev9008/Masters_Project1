@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 public class VRInputModule : BaseInputModule
 {
-    [SerializeField] private Pointer pointer = null;
+    [SerializeField] private PointerV2 pointer = null;
 
     public PointerEventData Data { get; private set; } = null;
 
