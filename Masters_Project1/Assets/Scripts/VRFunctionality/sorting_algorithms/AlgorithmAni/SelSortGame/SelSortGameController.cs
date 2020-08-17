@@ -20,14 +20,15 @@ public class SelSortGameController : MonoBehaviour
     public Material NextSort;
     public Material Transparent;
 
+    public Text Step;
+
     public VRController_1 m_vRController_1;
-    // Start is called before the first frame update
-    void Start()
+
+    private void OnEnable()
     {
         Begin();
     }
 
-    // Update is called once per frame
     void Update()
     {
         float dist1, dist2;
@@ -41,7 +42,7 @@ public class SelSortGameController : MonoBehaviour
     }
     public void Begin()
     {
-        //Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Selection Sort." + "\nIf the block is blue it is Sorted and can not be interacted with." + "\nIf a block is red It must be swapped with the smallest value from the unsorted array.";
+        Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Selection Sort." + "\n\nIf the block is Green it is Sorted and can not be interacted with." + "\n\nIf a block is white It must be swapped with the smallest value from the unsorted array.";
         for (int i = 0; i < 9; i++)
         {
             int n = UnityEngine.Random.Range(1, 99);
@@ -164,18 +165,20 @@ public class SelSortGameController : MonoBehaviour
         block[i].GetComponent<BlockParent>().isGrabbed = false;
         block[j].GetComponent<BlockParent>().isGrabbed = false;
         updatePos();
-        for (int t = 0; t < pos.Length; t++)
-        {
-            pos[t].GetComponent<MeshRenderer>().material = Transparent;
-        }
+        //for (int t = 0; t < pos.Length; t++)
+        //{
+        //    pos[t].GetComponent<MeshRenderer>().material = Transparent;
+        //}
         checksort();
     }
     public void updatePos()
     {
-        for (int i = 0; i < 9; i++)
+        for (int i = 0; i < pos.Length; i++)
         {
             block[i].transform.position = pos[i].transform.position;
             block[i].transform.rotation = pos[i].transform.rotation;
+            pos[i].GetComponent<MeshRenderer>().material = Transparent;
+
         }
     }
 }

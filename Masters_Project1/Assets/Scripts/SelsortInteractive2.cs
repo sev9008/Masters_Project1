@@ -76,7 +76,6 @@ public class SelsortInteractive2 : MonoBehaviour
 
     public IEnumerator SelectionInteractive2()
     {
-        //structarr = new List<MyStruct>();
         running = true;
         int i, j;
         float n, m;
@@ -124,7 +123,7 @@ public class SelsortInteractive2 : MonoBehaviour
         yield return new WaitForSeconds(speed);
         running = false;
         arrow.SetActive(false);
-}
+    }
 
     public void Update()
     {

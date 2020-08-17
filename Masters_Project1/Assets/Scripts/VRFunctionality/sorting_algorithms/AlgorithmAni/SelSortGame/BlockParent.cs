@@ -10,10 +10,15 @@ public class BlockParent : MonoBehaviour
     public GameObject txtpos;
     public GameObject PairedPos;
     public Material mat;
+    public Material Transparent;
+
+    public bool OnTable;
 
     public bool isGrabbed;
+    public float timer;
     public void Start()
     {
+        OnTable = true;
         gravity = true;
         rb = GetComponent<Rigidbody>();
     }
@@ -34,6 +39,33 @@ public class BlockParent : MonoBehaviour
             PairedPos.GetComponent<MeshRenderer>().material = mat;
             PairedPos.GetComponent<MeshRenderer>().enabled = true;
         }
+        if (!OnTable)
+        {
+            timer += Time.deltaTime;
+            if (timer > 5f)
+            {
+                PairedPos.GetComponent<MeshRenderer>().material = Transparent;
+                PairedPos.GetComponent<MeshRenderer>().enabled = true;
+                transform.position = PairedPos.transform.position;
+            }
+        }
+        if (OnTable)
+        {
+            timer = 0;
+        }
+    }
 
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag != "Table")
+        {
+            Debug.Log("notble");
+            OnTable= false;
+        }        
+        if (collision.gameObject.tag == "Table")
+        {
+            Debug.Log("notble");
+            OnTable = true;
+        }
     }
 }

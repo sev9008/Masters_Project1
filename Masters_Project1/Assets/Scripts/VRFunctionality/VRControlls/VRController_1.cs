@@ -78,6 +78,7 @@ public class VRController_1 : MonoBehaviour
                 grabbedR.GetComponent<BlockParent>().gravity = true;
                 GameObject m_parent = grabbedR.GetComponent<BlockParent>().parent;
                 grabbedR.transform.parent = m_parent.transform;
+                grabbedR.GetComponent<BlockParent>().isGrabbed = false;
             }
             catch { }
             try
@@ -109,6 +110,7 @@ public class VRController_1 : MonoBehaviour
                 grabbedL.GetComponent<BlockParent>().gravity = true;
                 GameObject m_parent = grabbedL.GetComponent<BlockParent>().parent;
                 grabbedL.transform.parent = m_parent.transform;
+                grabbedR.GetComponent<BlockParent>().isGrabbed = false;
             }
             catch { }
             try
@@ -222,6 +224,7 @@ public class VRController_1 : MonoBehaviour
                 try
                 {
                     grabbedR.GetComponent<BlockParent>().gravity = false;
+                    grabbedR.GetComponent<BlockParent>().isGrabbed = true;
                 }
                 catch { }
                 try 
@@ -244,6 +247,7 @@ public class VRController_1 : MonoBehaviour
                     grabbedR.GetComponent<BlockParent>().gravity = true;
                     GameObject m_parent = grabbedR.GetComponent<BlockParent>().parent;
                     grabbedR.transform.parent = m_parent.transform;
+                    grabbedR.GetComponent<BlockParent>().isGrabbed = false;
                 }
                 catch { } 
                 try
@@ -270,6 +274,7 @@ public class VRController_1 : MonoBehaviour
                 try
                 {
                     grabbedL.GetComponent<BlockParent>().gravity = false;
+                    grabbedR.GetComponent<BlockParent>().isGrabbed = true;
                 }
                 catch { }
                 try
@@ -292,6 +297,7 @@ public class VRController_1 : MonoBehaviour
                     grabbedL.GetComponent<BlockParent>().gravity = true;
                     GameObject m_parent = grabbedL.GetComponent<BlockParent>().parent;
                     grabbedL.transform.parent = m_parent.transform;
+                    grabbedR.GetComponent<BlockParent>().isGrabbed = false;
                 }
                 catch { }
                 try
