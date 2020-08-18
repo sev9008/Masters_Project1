@@ -21,8 +21,14 @@ public class SelSortGameController : MonoBehaviour
     public Material Transparent;
 
     public Text Step;
+    public Text Correctanswerstxt;
+    public Text IncorrectAnswerstxt;
+    public Text NumOfGamestxt;
 
     public VRController_1 m_vRController_1;
+
+    public int CorretAnswers;
+    public int wrongAnswers;
 
     private void OnEnable()
     {
@@ -36,8 +42,24 @@ public class SelSortGameController : MonoBehaviour
         dist2 = Vector3.Distance(block[currentSmallestIndex].transform.position, pos[nextToSort].transform.position);
         if (dist1 < .5 && dist2 < .5)
         {
-            Debug.Log("Swap");
+            Debug.Log("rightanswer");
             SwapValues(nextToSort, currentSmallestIndex);
+            CorretAnswers++;
+            Correctanswerstxt.text = "Correct Anwserws = " + CorretAnswers;
+        }
+        else 
+        {
+            for (int i = 0; i < block.Length; i++)
+            {
+                dist1 = Vector3.Distance(block[nextToSort].transform.position, pos[i].transform.position);
+                dist2 = Vector3.Distance(block[i].transform.position, pos[nextToSort].transform.position);
+                if ((dist1 < .5 && dist2 < .5) && i != nextToSort)
+                {
+                    Debug.Log("wronganswer");
+                    wrongAnswers++;
+                    IncorrectAnswerstxt.text = "Incorrect Answers = " + wrongAnswers;
+                }
+            }
         }
     }
     public void Begin()
