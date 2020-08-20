@@ -22,7 +22,7 @@ public class PlayInsertSort : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         else if (!pressed)
         {
             pressed = true;
-            M_InsertSort_arrayHolder.StartCoroutine(M_InsertSort_arrayHolder.Insertion(M_InsertSort_arrayHolder.arr));
+            //M_InsertSort_arrayHolder.StartCoroutine(M_InsertSort_arrayHolder.Insertion(M_InsertSort_arrayHolder.arr3));
         }
     }
 

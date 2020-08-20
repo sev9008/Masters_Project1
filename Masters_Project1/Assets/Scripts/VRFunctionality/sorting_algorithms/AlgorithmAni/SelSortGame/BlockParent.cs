@@ -57,12 +57,12 @@ public class BlockParent : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag != "Table")
+        if (collision.gameObject.tag != "Table" && collision.gameObject.tag != "Moveable")
         {
             Debug.Log("notble");
             OnTable= false;
         }        
-        if (collision.gameObject.tag == "Table")
+        if (collision.gameObject.tag == "Table" || collision.gameObject.tag == "Moveable")
         {
             Debug.Log("notble");
             OnTable = true;
