@@ -12,6 +12,7 @@ public class InsertGameStartButton : MonoBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         m_GameTutorial.enabled = false;
+        m_InsertGameController.enabled = false;
         m_InsertGameController.enabled = true;
         NumberofGames++;
         m_InsertGameController.NumOfGamestxt.text = "Number of Games " + NumberofGames;

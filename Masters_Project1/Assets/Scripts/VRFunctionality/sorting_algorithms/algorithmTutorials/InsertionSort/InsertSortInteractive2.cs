@@ -103,7 +103,7 @@ public class InsertSortInteractive2 : MonoBehaviour
 
             float.TryParse(b[j].GetComponentInChildren<Text>().text, out float tempj);
             float.TryParse(key.GetComponentInChildren<Text>().text, out float tempkey);
-            Debug.Log(tempj + ", " + tempkey);
+            //Debug.Log(tempj + ", " + tempkey);
             while (j >= 0 && tempj > tempkey)
             {
                 yield return sho = StartCoroutine(SwapAnimation(j+1,j));

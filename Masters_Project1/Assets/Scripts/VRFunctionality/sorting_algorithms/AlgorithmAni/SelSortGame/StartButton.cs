@@ -12,6 +12,7 @@ public class StartButton : MonoBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         m_GameTutorial.enabled = false;
+        m_selSortGameController.enabled = false;
         m_selSortGameController.enabled = true;
         NumberofGames++;
         m_selSortGameController.NumOfGamestxt.text = "Number of Games " + NumberofGames;

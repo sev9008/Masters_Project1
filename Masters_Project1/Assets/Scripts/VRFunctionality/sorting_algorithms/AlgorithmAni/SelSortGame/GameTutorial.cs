@@ -66,6 +66,7 @@ public class GameTutorial : MonoBehaviour
         }
         steptxt.text = "Welcome!  This tutorial is designed to teach you play this interactive minigame." + "\n\nIf the block is Green it is Sorted and can not be interacted with." + "\n\nIf a block is white It must be swapped with the smallest value from the unsorted array.";
         updatePos();
+        EnableTrigger(0);
         sorted = false;
         checksort();
         co1 = StartCoroutine(SelectionInteractive2());

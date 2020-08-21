@@ -8,7 +8,6 @@ public class ArrayKeeper : MonoBehaviour
     public List<int> arr;
     public Text Txt_Text;
     public int size;
-    public selsort_arrayholder m_selsort_Arrayholder;
 
     public void push(int txt_to_push)
     {

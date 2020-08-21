@@ -36,7 +36,7 @@ public class BlockParent : MonoBehaviour
 
         if (isGrabbed && this.GetComponent<BoxCollider>().enabled == true)
         {
-            PairedPos.GetComponent<MeshRenderer>().material = mat;
+            //PairedPos.GetComponent<MeshRenderer>().material = mat;
             PairedPos.GetComponent<MeshRenderer>().enabled = true;
         }
         if (!OnTable)
@@ -44,7 +44,7 @@ public class BlockParent : MonoBehaviour
             timer += Time.deltaTime;
             if (timer > 5f)
             {
-                PairedPos.GetComponent<MeshRenderer>().material = Transparent;
+                //PairedPos.GetComponent<MeshRenderer>().material = Transparent;
                 PairedPos.GetComponent<MeshRenderer>().enabled = true;
                 transform.position = PairedPos.transform.position;
             }

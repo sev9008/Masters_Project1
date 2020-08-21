@@ -17,6 +17,7 @@ public class VRController_1 : MonoBehaviour
     public SteamVR_Action_Vector2 MoveValue = null;
 
     public SlesortInteractive1 slesortInteractive;
+    public InsertSortInteractive1 insertSortInteractive1;
 
     private float Speed = 0.0f;
 
@@ -256,6 +257,7 @@ public class VRController_1 : MonoBehaviour
                     grabbedR.transform.parent = m_parent.transform;
                     slesortInteractive.updatePos();
                     slesortInteractive.arrow.SetActive(false);
+                    insertSortInteractive1.updatePos();
                 }
                 catch { }
                 grabbedR = null;
@@ -306,6 +308,7 @@ public class VRController_1 : MonoBehaviour
                     grabbedL.transform.parent = m_parent.transform;
                     slesortInteractive.updatePos();
                     slesortInteractive.arrow.SetActive(false);
+                    insertSortInteractive1.updatePos();
                 }
                 catch { }
                 grabbedL = null;

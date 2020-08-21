@@ -11,9 +11,11 @@ public class InsertGameController : MonoBehaviour
 
     private bool sorted;
 
-    private int IndexToSwap;
+    public int IndexToSwap;
     private int step;
     public int NextSmallesIndex;
+    public int FinalIndexToSwap;
+
     //public int nextToSort;
 
     public Material Donesort;
@@ -30,6 +32,18 @@ public class InsertGameController : MonoBehaviour
 
     public int CorrectAnswers;
     public int wrongAnswers;
+    public int NumOfGames;
+
+    private void Start()
+    {
+        Correctanswerstxt.GetComponentInChildren<Text>().text = "0";
+        IncorrectAnswerstxt.GetComponentInChildren<Text>().text = "0";
+        NumOfGamestxt.GetComponentInChildren<Text>().text = "0";
+        CorrectAnswers = 0;
+        wrongAnswers = 0;
+        NumOfGames = 0;
+    }
+
     private void OnEnable()
     {
         Begin();
@@ -47,28 +61,6 @@ public class InsertGameController : MonoBehaviour
         else
         {
             float dist1, dist2;
-            for (int i = 0; i < b.Length; i++)
-            {
-
-                dist1 = Vector3.Distance(b[i].transform.position, pos[NextSmallesIndex].transform.position);
-                dist2 = Vector3.Distance(pos[i].transform.position, b[NextSmallesIndex].transform.position);
-                if (dist1 < .5 && dist2 < .5 && i != NextSmallesIndex)
-                {
-                    Debug.Log("Wrong");
-                    wrongAnswers++;
-                    updatePos();
-                }
-
-                dist1 = Vector3.Distance(b[IndexToSwap].transform.position, pos[i].transform.position);
-                dist2 = Vector3.Distance(pos[IndexToSwap].transform.position, b[i].transform.position);
-                if (dist1 < .5 && dist2 < .5 && i != IndexToSwap)
-                {
-                    Debug.Log("Wrong");
-                    wrongAnswers++;
-                    updatePos();
-                }
-
-            }
 
             dist1 = Vector3.Distance(b[IndexToSwap].transform.position, pos[NextSmallesIndex].transform.position);
             dist2 = Vector3.Distance(pos[IndexToSwap].transform.position, b[NextSmallesIndex].transform.position);
@@ -76,15 +68,47 @@ public class InsertGameController : MonoBehaviour
             {
                 Debug.Log("Swap");
                 CorrectAnswers++;
-                SwapValues();
+
+                m_vRController_1.downR = false;
+                m_vRController_1.downL = false;
+                string tempstringvalue = b[NextSmallesIndex].GetComponentInChildren<Text>().text;
+                b[NextSmallesIndex].GetComponentInChildren<Text>().text = b[IndexToSwap].GetComponentInChildren<Text>().text;
+                b[IndexToSwap].GetComponentInChildren<Text>().text = tempstringvalue;
                 updatePos();
-                checksort();
+
+                if (IndexToSwap == FinalIndexToSwap)
+                {
+                    checksort();
+                }
+                else
+                {
+                    IndexToSwap--;
+                    NextSmallesIndex--;
+                    EnableTrigger();
+                }
+            }
+
+            for (int i = 0; i < NextSmallesIndex; i++)
+            {
+                dist1 = Vector3.Distance(pos[i].transform.position, b[NextSmallesIndex].transform.position);
+                dist2 = Vector3.Distance(b[i].transform.position, pos[NextSmallesIndex].transform.position);
+                if (dist1 < .5  && dist2 < .5 && i != NextSmallesIndex)
+                {
+                    m_vRController_1.downR = false;
+                    m_vRController_1.downL = false;
+                    wrongAnswers++;
+                    updatePos();
+                }
             }
         }
+        Correctanswerstxt.text = CorrectAnswers.ToString();
+        IncorrectAnswerstxt.text = wrongAnswers.ToString();
+        NumOfGamestxt.text = NumOfGames.ToString();
     }
 
     public void Begin()
     {
+        NumOfGames += 1;
         Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Selection Sort." + "\n\nIf the block is Green it is Sorted and can not be interacted with." + "\n\nIf a block is white It must be swapped with the smallest value from the unsorted array.";
         for (int i = 0; i < 9; i++)
         {
@@ -127,8 +151,12 @@ public class InsertGameController : MonoBehaviour
             if (sorted)
             {
                 b[i].GetComponent<BoxCollider>().enabled = false;
+                b[i].GetComponent<Rigidbody>().isKinematic = true;
+                b[i].GetComponent<BlockParent>().enabled = false;
                 pos[i].GetComponent<BoxCollider>().enabled = false;
-                b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+                pos[i].GetComponentInChildren<MeshRenderer>().enabled = false;
+                pos[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+                b[i].GetComponent<BlockParent>().gravity = false;
             }
             else
             {
@@ -147,13 +175,14 @@ public class InsertGameController : MonoBehaviour
                     b[i].GetComponent<BlockParent>().enabled = true;
                     b[i].GetComponent<BoxCollider>().enabled = true;
                     b[i].GetComponent<Rigidbody>().isKinematic = false;
-                    pos[i].GetComponent<BoxCollider>().enabled = true;
+                    pos[i].GetComponent<BoxCollider>().enabled = false;
                     pos[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
                     pos[i].GetComponentInChildren<MeshRenderer>().enabled = true;
                     b[i].GetComponent<BlockParent>().gravity = true;
                 }
                 else if (i > NextSmallesIndex)
                 {
+                    Debug.Log("hitOdd");
                     b[i].GetComponent<BoxCollider>().enabled = false;
                     b[i].GetComponent<Rigidbody>().isKinematic = true;
                     b[i].GetComponent<BlockParent>().enabled = false;
@@ -186,24 +215,8 @@ public class InsertGameController : MonoBehaviour
                 break;
             }
         }
-        IndexToSwap = tempindex;
-    }
-
-    public void SwapValues()
-    {
-        string tempstringvalue = b[NextSmallesIndex].GetComponentInChildren<Text>().text;
-        for (int i = NextSmallesIndex; i > IndexToSwap - 1; i--)
-        {
-            if (i == IndexToSwap)
-            {
-                b[i].GetComponentInChildren<Text>().text = tempstringvalue;
-            }
-            else
-            {
-                b[i].GetComponentInChildren<Text>().text = b[i - 1].GetComponentInChildren<Text>().text;
-            }
-        }
-        updatePos();
+        IndexToSwap = NextSmallesIndex - 1;
+        FinalIndexToSwap = tempindex;
     }
 
     public void updatePos()
@@ -212,7 +225,7 @@ public class InsertGameController : MonoBehaviour
         {
             b[i].transform.position = pos[i].transform.position;
             b[i].transform.rotation = pos[i].transform.rotation;
-            pos[i].GetComponent<MeshRenderer>().material = Transparent;
+            //pos[i].GetComponent<MeshRenderer>().material = Transparent;
         }
     }
 }

@@ -32,7 +32,10 @@ public class InsertSortInteractive1 : MonoBehaviour
 
     public int NextSmallesIndex;
     public int IndexToSwap;
+    public int FinalIndexToSwap;
     public float dist1;
+
+    private bool swapping;
 
 
     private void Start()
@@ -63,27 +66,46 @@ public class InsertSortInteractive1 : MonoBehaviour
             {
                 Debug.Log("Swap");
                 correctAnswers++;
-                SwapValues();
-                checksort();
+
+                m_vRController_1.downR = false;
+                m_vRController_1.downL = false;
+                string tempstringvalue = b[NextSmallesIndex].GetComponentInChildren<Text>().text;
+                b[NextSmallesIndex].GetComponentInChildren<Text>().text = b[IndexToSwap].GetComponentInChildren<Text>().text;
+                b[IndexToSwap].GetComponentInChildren<Text>().text = tempstringvalue;
+                updatePos();
+
+                if (IndexToSwap == FinalIndexToSwap)
+                {
+                    checksort();
+                }
+                else
+                {
+                    IndexToSwap--;
+                    NextSmallesIndex--;
+                    EnableTrigger();
+                }
             }
-            for (int i = 0; i < b.Count; i++)
+            for (int i = 0; i < NextSmallesIndex; i++)
             {
                 dist1 = Vector3.Distance(b[i].transform.position, b[NextSmallesIndex].transform.position);
                 if (dist1 < .04 && i != NextSmallesIndex)
                 {
-                    Debug.Log("Swap");
+                    m_vRController_1.downR = false;
+                    m_vRController_1.downL = false;
                     incorretAnswers++;
                     updatePos();
                 }
-
             }
         }
+        corretAnswersText.text = correctAnswers.ToString();
+        incorretAnswersText.text = incorretAnswers.ToString();
+        numofGamesText.text = numofGames.ToString();
     }
 
     public void Begin()
     {
         numofGames += 1;
-        numofGamesText.GetComponent<Text>().text = numofGames.ToString();
+        //numofGamesText.GetComponent<Text>().text = numofGames.ToString();
         Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Selection Sort." + "\nIf the block is blue it is Sorted and can not be interacted with." + "\nIf a block is red It must be swapped with the smallest value from the unsorted array.";
         for (int i = 0; i < 9; i++)
         {
@@ -146,24 +168,8 @@ public class InsertSortInteractive1 : MonoBehaviour
                 break;
             }
         }
-        IndexToSwap = tempindex;
-    }
-
-    public void SwapValues()
-    { 
-        string tempstringvalue = b[NextSmallesIndex].GetComponentInChildren<Text>().text;
-        for (int i = NextSmallesIndex; i > IndexToSwap-1; i--)
-        {
-            if (i == IndexToSwap)
-            {
-                b[i].GetComponentInChildren<Text>().text = tempstringvalue;
-            }
-            else
-            {
-                b[i].GetComponentInChildren<Text>().text = b[i - 1].GetComponentInChildren<Text>().text;
-            }
-        }
-        updatePos();
+        IndexToSwap = NextSmallesIndex-1;
+        FinalIndexToSwap = tempindex;
     }
     public void EnableTrigger()
     {
@@ -196,7 +202,7 @@ public class InsertSortInteractive1 : MonoBehaviour
                 {
                     b[i].GetComponent<MoveInteractionBLock>().enabled = true;
                     b[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
-                    b[i].GetComponent<BoxCollider>().enabled = true;
+                    b[i].GetComponent<BoxCollider>().enabled = false;
                     pos[i].GetComponent<BoxCollider>().enabled = false;
                 }
             }

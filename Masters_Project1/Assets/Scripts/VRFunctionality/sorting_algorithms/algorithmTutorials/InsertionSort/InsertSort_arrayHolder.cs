@@ -82,10 +82,11 @@ public class InsertSort_arrayHolder : MonoBehaviour
         running = true;
         m_selectionAni.ShowGraph(arr3);
 
-        int curSize = structarr.Count;
+        //int curSize = structarr.Count;
         int j, key;
-        for (int i = 1; i < curSize; ++i)
+        for (int i = 1; i < arr3.Count; ++i)
         {
+            Debug.Log("?");
             if (currentstrucstep == maxstrucstep)
             {
                 currentstrucstep++;

@@ -14,7 +14,7 @@ public class InsertGameTutorial : MonoBehaviour
 
     public Text steptxt;
 
-    private bool sorted;
+    public bool sorted;
     public bool moving;
     public bool running;
 
@@ -28,8 +28,6 @@ public class InsertGameTutorial : MonoBehaviour
     public int smooth;
     private int tempnumi;
     private int tempnumj;
-
-    //public Text Step;
 
     private Vector3 targetTransform;
     private Vector3 targetTransform2;
@@ -59,7 +57,7 @@ public class InsertGameTutorial : MonoBehaviour
             b[i].GetComponent<Rigidbody>().isKinematic = true;
         }
         steptxt.text = "Welcome!  This tutorial is designed to teach you play this interactive minigame." + "\n\nIf the block is Green it is Sorted and can not be interacted with." + "\n\nIf a block is white It must be swapped with the smallest value from the unsorted array.";
-
+        EnableTrigger();
         updatePos();
         sorted = false;
         co = StartCoroutine(insertionSort());
@@ -70,22 +68,21 @@ public class InsertGameTutorial : MonoBehaviour
         {
             b[i].transform.position = pos[i].transform.position;
             b[i].transform.rotation = pos[i].transform.rotation;
-            pos[i].GetComponent<MeshRenderer>().material = Transparent;
-
+            //pos[i].GetComponent<MeshRenderer>().material = Transparent;
         }
     }
 
     public IEnumerator insertionSort()
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(1);
 
         steptxt.text = "In this minigame you, the employee, must organize boxes by their value.  \n\nThis value is displayed above the boxes. \n\nYour boss wants you to organize them using Selection Sort!";
 
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(1);
 
         steptxt.text = "This tutorial will go through the execution of the game with the correct moves.  \n\nTo swap a box, simply palce both boxes in their respective, correct, positions!";
 
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1);
         running = true;
 
         int i, j;
@@ -101,10 +98,12 @@ public class InsertGameTutorial : MonoBehaviour
 
             float.TryParse(b[j].GetComponentInChildren<Text>().text, out float tempj);
             float.TryParse(key.GetComponentInChildren<Text>().text, out float tempkey);
-            Debug.Log(tempj + ", " + tempkey);
+            //Debug.Log(tempj + ", " + tempkey);
             while (j >= 0 && tempj > tempkey)
             {
+                EnableTrigger();
                 yield return sho = StartCoroutine(SwapAnimation(j + 1, j));
+                NextSmallesIndex--;
                 b[j + 1] = b[j];
                 b[j] = key;
                 j--;
@@ -112,6 +111,7 @@ public class InsertGameTutorial : MonoBehaviour
                 {
                     float.TryParse(b[j].GetComponentInChildren<Text>().text, out tempj);
                 }
+                //EnableTrigger();
                 updatePos();
                 yield return new WaitForSeconds(speed);
             }
@@ -130,7 +130,7 @@ public class InsertGameTutorial : MonoBehaviour
             EnableTrigger();
             //Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Selction Sort Operates." + "\nThe Algorithm locks the positions that have already been sorted, and chooses the next smallest element to swap.";
             IndexToSwap = 0;
-            NextSmallesIndex = 9;
+            NextSmallesIndex = 0;
         }
         if (moving)
         {
@@ -181,25 +181,45 @@ public class InsertGameTutorial : MonoBehaviour
 
     public void EnableTrigger()
     {
+        Debug.Log("hit" + NextSmallesIndex);
         for (int i = 0; i < b.Length; i++)
         {
             if (sorted)
             {
+                b[i].GetComponent<BlockParent>().enabled = false;
+                pos[i].GetComponent<BoxCollider>().enabled = false;
+
+                pos[i].GetComponentInChildren<MeshRenderer>().enabled = true;
                 pos[i].GetComponentInChildren<MeshRenderer>().material = DoneSort;
             }
             else
             {
-                if (i == NextSmallesIndex)
+                Debug.Log("hit2");
+                if (i < NextSmallesIndex)
                 {
-                    pos[i].GetComponentInChildren<MeshRenderer>().material = NextSort;
+                    b[i].GetComponent<BlockParent>().enabled = false;
+                    pos[i].GetComponent<BoxCollider>().enabled = false;
+
+                    pos[i].GetComponent<MeshRenderer>().enabled = true;
+                    pos[i].GetComponent<MeshRenderer>().material = DoneSort;
+                    Debug.Log("hit3");
                 }
-                else if (i < NextSmallesIndex)
+                else if (i == NextSmallesIndex)
                 {
-                    pos[i].GetComponentInChildren<MeshRenderer>().material = DoneSort;
+                    b[i].GetComponent<BlockParent>().enabled = false;
+                    pos[i].GetComponent<BoxCollider>().enabled = true;
+
+                    pos[i].GetComponent<MeshRenderer>().material = NextSort;
+                    pos[i].GetComponent<MeshRenderer>().enabled = true;
                 }
-                else
+
+                else if (i > NextSmallesIndex)
                 {
-                    pos[i].GetComponentInChildren<MeshRenderer>().material = Transparent;
+                    b[i].GetComponent<BlockParent>().enabled = false;
+                    pos[i].GetComponent<BoxCollider>().enabled = true;
+
+                    pos[i].GetComponent<MeshRenderer>().material = Transparent;
+                    pos[i].GetComponent<MeshRenderer>().enabled = false;
                 }
             }
         }

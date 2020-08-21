@@ -42,6 +42,8 @@ public class SelSortGameController : MonoBehaviour
         dist2 = Vector3.Distance(block[currentSmallestIndex].transform.position, pos[nextToSort].transform.position);
         if (dist1 < .5 && dist2 < .5)
         {
+            m_vRController_1.downR = false;
+            m_vRController_1.downL = false;
             Debug.Log("rightanswer");
             SwapValues(nextToSort, currentSmallestIndex);
             CorretAnswers++;
@@ -55,9 +57,12 @@ public class SelSortGameController : MonoBehaviour
                 dist2 = Vector3.Distance(block[i].transform.position, pos[nextToSort].transform.position);
                 if ((dist1 < .5 && dist2 < .5) && i != nextToSort)
                 {
+                    m_vRController_1.downR = false;
+                    m_vRController_1.downL = false;
                     Debug.Log("wronganswer");
                     wrongAnswers++;
                     IncorrectAnswerstxt.text = "Incorrect Answers = " + wrongAnswers;
+                    updatePos();
                 }
             }
         }
@@ -170,8 +175,6 @@ public class SelSortGameController : MonoBehaviour
 
     public void SwapValues(int i, int j)
     {
-        m_vRController_1.downR = false;
-        m_vRController_1.downL = false;
         GameObject temppos = block[i].GetComponent<BlockParent>().PairedPos;
         block[i].GetComponent<BlockParent>().PairedPos = block[j].GetComponent<BlockParent>().PairedPos;
         block[j].GetComponent<BlockParent>().PairedPos = temppos;

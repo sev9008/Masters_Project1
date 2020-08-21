@@ -64,9 +64,11 @@ public class InsertionSortAni : MonoBehaviour
             {
                 arr[j + 1] = arr[j];
                 j--;
+                ShowGraph(arr);
                 yield return new WaitForSeconds(speed);
             }
             arr[j + 1] = key;
+            ShowGraph(arr);
             yield return new WaitForSeconds(speed);
         }
         ShowGraph(arr);
