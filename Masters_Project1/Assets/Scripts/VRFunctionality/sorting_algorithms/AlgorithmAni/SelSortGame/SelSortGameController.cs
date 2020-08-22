@@ -51,7 +51,7 @@ public class SelSortGameController : MonoBehaviour
         }
         else 
         {
-            for (int i = 0; i < block.Length; i++)
+            for (int i = nextToSort; i < block.Length; i++)
             {
                 dist1 = Vector3.Distance(block[nextToSort].transform.position, pos[i].transform.position);
                 dist2 = Vector3.Distance(block[i].transform.position, pos[nextToSort].transform.position);
@@ -202,8 +202,7 @@ public class SelSortGameController : MonoBehaviour
         {
             block[i].transform.position = pos[i].transform.position;
             block[i].transform.rotation = pos[i].transform.rotation;
-            pos[i].GetComponent<MeshRenderer>().material = Transparent;
-
+            //pos[i].GetComponent<MeshRenderer>().material = Transparent;
         }
     }
 }
