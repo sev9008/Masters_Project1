@@ -22,7 +22,7 @@ public class PlayQuickSort : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         else if (!pressed)
         {
             pressed = true;
-            M_quickSort_arrayHolder.StartCoroutine(M_quickSort_arrayHolder.Quick(M_quickSort_arrayHolder.arr));
+            M_quickSort_arrayHolder.StartCoroutine(M_quickSort_arrayHolder.Quick());
         }
     }
 
