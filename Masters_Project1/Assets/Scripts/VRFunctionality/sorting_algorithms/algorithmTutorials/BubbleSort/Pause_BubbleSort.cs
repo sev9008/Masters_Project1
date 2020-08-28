@@ -4,28 +4,24 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Pause_BubbleSort : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class Pause_BubbleSort : MonoBehaviour, IPointerDownHandler
 {
-    public BubbleSort_arrayHolder M_bubbleSort_ArrayHolder;
+    public BubbleSort_arrayHolder M_quickSort_arrayHolder;
     public Text txt;
 
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (M_bubbleSort_ArrayHolder.paused)
+        if (M_quickSort_arrayHolder.paused)
         {
-            M_bubbleSort_ArrayHolder.paused = false;
+            M_quickSort_arrayHolder.paused = false;
             txt.text = "Pause";
         }
 
-        else if (!M_bubbleSort_ArrayHolder.paused)
+        else if (!M_quickSort_arrayHolder.paused)
         {
-            M_bubbleSort_ArrayHolder.paused = true;
+            M_quickSort_arrayHolder.paused = true;
             txt.text = "Resume";
         }
-    }
-    public void OnPointerUp(PointerEventData eventData)
-    {
-
     }
 }

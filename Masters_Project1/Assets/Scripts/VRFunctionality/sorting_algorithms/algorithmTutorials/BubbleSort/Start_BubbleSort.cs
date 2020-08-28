@@ -10,9 +10,9 @@ public class Start_BubbleSort : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        bubblesortcan.GetComponentInChildren<BubbleSort_arrayHolder>().arr = arrayKeeper.arr;
-        bubblesortcan.GetComponentInChildren<BubbleSort_arrayHolder>().size = arrayKeeper.size;
-        bubblesortcan.GetComponentInChildren<BubbleSort_arrayHolder>().Display();
+        //bubblesortcan.GetComponentInChildren<BubbleSort_arrayHolder>().arr = arrayKeeper.arr;
+        //bubblesortcan.GetComponentInChildren<BubbleSort_arrayHolder>().size = arrayKeeper.size;
+        //bubblesortcan.GetComponentInChildren<BubbleSort_arrayHolder>().Display();
     }
     public void OnPointerUp(PointerEventData eventData)
     { }

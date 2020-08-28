@@ -1,36 +1,51 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BubbleSort_arrayHolder : MonoBehaviour
 {
-	public List<int> arr;
+	public List<int> arr3;
 	public Text Txt_Text;
-	public int size;
 	public float waittime;
 	public Text Step;
 	public float speed;
 
 	public Slider slider;
 
-	public GameObject image1;
-	public GameObject image2;
-	public GameObject image3;
-	public GameObject image4;
+	public GameObject[] image;
 	public bool paused;
-	public bool swapped;
+	private int pi;
+	public List<MyStruct> structarr;
 
+	public int currentstrucstep;
+	public int maxstrucstep;
+
+	public bool previous;
+	public bool next;
+	public bool running;
+	public SelectionAni m_selectionAni;
+	public bool swapped;
 	private void Start()
 	{
 		paused = false;
+		structarr = new List<MyStruct>();
+	}
+	[Serializable]
+	public class MyStruct
+	{
+		public List<int> oldarr;
+		public int activeImage;
+		public string steptxt;
+		public string arrtxt;
 	}
 
 	public void Update()
 	{
 		speed = slider.value;
 	}
-	public void Display()
+	public void Display(List<int> arr2, int size)
 	{
 		Txt_Text.text = "";
 		int Tmpsize = size - 1;
@@ -38,162 +53,193 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 		{
 			if (i == 0)
 			{
-				Txt_Text.text += "a[" + Tmpsize + "] = " + arr[i].ToString();
+				Txt_Text.text += "a[" + Tmpsize + "] = " + arr2[i].ToString();
 			}
 			else if (i > 0)
 			{
-				Txt_Text.text += ", " + arr[i].ToString();
+				Txt_Text.text += ", " + arr2[i].ToString();
 			}
 		}
 	}
 
-	public IEnumerator Bubble(List<int> arr)
+	public IEnumerator Bubble()
 	{
-		int i, j;
-		for (i = 0; i < size - 1; i++)
+		running = true;
+		for (int n = 0; n < structarr.Count; n++)
 		{
-			image1.SetActive(true);
-			image2.SetActive(false);
-			image3.SetActive(false);
-			image4.SetActive(false);
+			structarr[n].oldarr.Clear();
+			structarr[n].activeImage = -1;
+			structarr[n].steptxt = "";
+			structarr[n].arrtxt = "";
+		}
+
+		structarr.Clear();
+		structarr = new List<MyStruct>();
+		currentstrucstep = -1;
+		maxstrucstep = -1;
+		m_selectionAni.ShowGraph(arr3);
+
+		int i, j;
+		for (i = 0; i < arr3.Count - 1; i++)
+		{
+			imageController(1);
 
 			Step.text = "This loop will run n times until the sholea rray ahs been processed";
+			currentstrucstep++;
+			maxstrucstep++;
+			var a = new MyStruct();
+			structarr.Add(a);
+			structarr[currentstrucstep].oldarr = new List<int>(arr3.Count);
+			for (int tempnum = 0; tempnum < arr3.Count; tempnum++)
+			{
+				structarr[currentstrucstep].oldarr.Add(arr3[tempnum]);
+			}
+			structarr[currentstrucstep].activeImage = 4;
+			structarr[currentstrucstep].steptxt = Step.text;
+			m_selectionAni.ShowGraph(arr3);
+			yield return new WaitForSeconds(speed);
+			if (next || previous)
+			{
+				yield return StartCoroutine(changeStep());
+			}
 			while (paused)
 			{
 				yield return null;
 			}
-			yield return new WaitForSeconds(speed);
 
-			for (j = 0; j < size - i - 1; j++)
+			for (j = 0; j < arr3.Count - i - 1; j++)
 			{
-				image1.SetActive(false);
-				image2.SetActive(true);
-				image3.SetActive(false);
-				image4.SetActive(false);
+				imageController(2);
 
 				Step.text = "this loop will iterate over j and j+1";
+				currentstrucstep++;
+				maxstrucstep++;
+				var b = new MyStruct();
+				structarr.Add(b);
+				structarr[currentstrucstep].oldarr = new List<int>(arr3.Count);
+				for (int tempnum = 0; tempnum < arr3.Count; tempnum++)
+				{
+					structarr[currentstrucstep].oldarr.Add(arr3[tempnum]);
+				}
+				structarr[currentstrucstep].activeImage = 4;
+				structarr[currentstrucstep].steptxt = Step.text;
+				m_selectionAni.ShowGraph(arr3);
+				yield return new WaitForSeconds(speed);
+				if (next || previous)
+				{
+					yield return StartCoroutine(changeStep());
+				}
 				while (paused)
 				{
 					yield return null;
 				}
-				yield return new WaitForSeconds(speed);
 
-				if (arr[j] > arr[j + 1])
+				if (arr3[j] > arr3[j + 1])
 				{
-					Step.text = arr[j] + " > " + arr[j+1] + " the algorithm will perform a swap";
+					Step.text = arr3[j] + " > " + arr3[j + 1] + " the algorithm will perform a swap";
 
-					int temp = arr[j];
-					arr[j] = arr[j + 1];
-					arr[j + 1] = temp;
+					int temp = arr3[j];
+					arr3[j] = arr3[j + 1];
+					arr3[j + 1] = temp;
 					swapped = true;
 
-					Display();
-					image1.SetActive(false);
-					image2.SetActive(true);
-					image3.SetActive(false);
-					image4.SetActive(false);
+					Display(arr3, arr3.Count);
+					imageController(3);
+					currentstrucstep++;
+					maxstrucstep++;
+					var c = new MyStruct();
+					structarr.Add(c);
+					structarr[currentstrucstep].oldarr = new List<int>(arr3.Count);
+					for (int tempnum = 0; tempnum < arr3.Count; tempnum++)
+					{
+						structarr[currentstrucstep].oldarr.Add(arr3[tempnum]);
+					}
+					structarr[currentstrucstep].activeImage = 4;
+					structarr[currentstrucstep].steptxt = Step.text;
+					m_selectionAni.ShowGraph(arr3);
+					yield return new WaitForSeconds(speed);
+					if (next || previous)
+					{
+						yield return StartCoroutine(changeStep());
+					}
 					while (paused)
 					{
 						yield return null;
 					}
-					yield return new WaitForSeconds(speed);
 				}
 			}
 
 			if (swapped == false)
 			{
 				Step.text = "No swaps occured.  The algorithm is complete";
-				image1.SetActive(false);
-				image2.SetActive(false);
-				image3.SetActive(false);
-				image4.SetActive(true);
+				imageController(4);
+
+				currentstrucstep++;
+				maxstrucstep++;
+				var d = new MyStruct();
+				structarr.Add(d);
+				structarr[currentstrucstep].oldarr = new List<int>(arr3.Count);
+				for (int tempnum = 0; tempnum < arr3.Count; tempnum++)
+				{
+					structarr[currentstrucstep].oldarr.Add(arr3[tempnum]);
+				}
+				structarr[currentstrucstep].activeImage = 4;
+				structarr[currentstrucstep].steptxt = Step.text;
+				m_selectionAni.ShowGraph(arr3);
+				yield return new WaitForSeconds(speed);
+				if (next || previous)
+				{
+					yield return StartCoroutine(changeStep());
+				}
 				while (paused)
 				{
 					yield return null;
 				}
-				yield return new WaitForSeconds(speed);
 
 				break;
 			}
 		}
-		image1.SetActive(false);
-		image2.SetActive(false);
-		image3.SetActive(false);
-		image4.SetActive(false);
+		imageController(-1);
 		Step.text = "Finished";
 	}
-	/*
-	public IEnumerator Bubble(List<int> arr)
+	public IEnumerator changeStep()
 	{
-		int n = size + 1;
-		bool swapped = true;
-		while (swapped)
+		resume:
+		if (previous && currentstrucstep > 0)
 		{
-			swapped = false;
-
-			image1.SetActive(true);
-			image1_1.SetActive(false);
-			image2.SetActive(false);
-			image3.SetActive(false);
-			Step.text = "Start while loop with our n elements";
-			while (paused)
-			{
-				yield return null;
-			}
-			yield return new WaitForSeconds(speed);
-			for (int i = 1; i < n - 1; i++)
-			{
-
-				image1.SetActive(false);
-				image1_1.SetActive(false);
-				image2.SetActive(true);
-				image3.SetActive(false);
-				Step.text = "increment i = " + i;
-				while (paused)
-				{
-					yield return null;
-				}
-				yield return new WaitForSeconds(speed);
-
-				if (arr[i - 1] > arr[i])
-				{
-					Step.text = "Swap arr[i-1] = " + arr[i - 1] + " with arr[i] = " + arr[i];
-
-					int temp = arr[i - 1];
-					arr[i - 1] = arr[i];
-					arr[i] = temp;
-					swapped = true;
-
-					image1.SetActive(false);
-					image1_1.SetActive(false);
-					image2.SetActive(false);
-					image3.SetActive(true);
-					Display();
-					while (paused)
-					{
-						yield return null;
-					}
-					yield return new WaitForSeconds(speed);
-				}
-			}
-			n--;
-			image1.SetActive(false);
-			image1_1.SetActive(true);
-			image2.SetActive(false);
-			image3.SetActive(false);
-			Step.text = "Decrement n = " + n;
-			while (paused)
-			{
-				yield return null;
-			}
-			yield return new WaitForSeconds(speed);
+			currentstrucstep--;
+			previous = false;
 		}
-		Step.text = "Finished";
-		image1.SetActive(false);
-		image1_1.SetActive(false);
-		image2.SetActive(false);
-		image3.SetActive(false);
-		Display();
+		else if (next && currentstrucstep != maxstrucstep || currentstrucstep != maxstrucstep)
+		{
+			currentstrucstep++;
+			next = false;
+		}
+
+		Display(structarr[currentstrucstep].oldarr, structarr[currentstrucstep].oldarr.Count);
+		imageController(structarr[currentstrucstep].activeImage);
+		Step.text = structarr[currentstrucstep].steptxt;
+		m_selectionAni.ShowGraph(structarr[currentstrucstep].oldarr);
+
+		yield return new WaitForSeconds(speed);
+		if (currentstrucstep < maxstrucstep)
+		{
+			goto resume;
+		}
 	}
-	*/
+
+	public void imageController(int k)
+	{
+		for (int i = 0; i < image.Length; i++)
+		{
+			if (i == k)
+			{
+				image[i].SetActive(true);
+			}
+			else
+			{
+				image[i].SetActive(false);
+			}
+		}
+	}
 }

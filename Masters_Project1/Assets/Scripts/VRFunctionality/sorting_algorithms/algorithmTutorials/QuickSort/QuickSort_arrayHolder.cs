@@ -26,6 +26,8 @@ public class QuickSort_arrayHolder : MonoBehaviour
 
     public bool previous;
     public bool next;
+    public bool running;
+    public SelectionAni m_selectionAni;
 
     private void Start()
     {
@@ -63,6 +65,7 @@ public class QuickSort_arrayHolder : MonoBehaviour
     }
     public IEnumerator Quick()
     {
+        running = true;
         for (int n = 0; n < structarr.Count; n++)
         {
             structarr[n].oldarr.Clear();
@@ -75,14 +78,14 @@ public class QuickSort_arrayHolder : MonoBehaviour
         structarr = new List<MyStruct>();
         currentstrucstep = -1;
         maxstrucstep = -1;
-        //running = true;
-        //m_selectionAni.ShowGraph(arr3);
+        m_selectionAni.ShowGraph(arr3);
 
         yield return StartCoroutine(quickSort(arr3, 0, arr3.Count-1));
         Display(arr3, arr3.Count);
         imageController(-1);
         ArrStep.text = "";
         Step.text = "Finished";
+        running = false;
     }
     public IEnumerator quickSort(List<int> arr, int l, int h)
     {
@@ -105,7 +108,7 @@ public class QuickSort_arrayHolder : MonoBehaviour
             structarr[currentstrucstep].activeImage = 1;
             structarr[currentstrucstep].steptxt = Step.text;
             structarr[currentstrucstep].arrtxt = ArrStep.text;
-
+            m_selectionAni.ShowGraph(arr3);
             yield return new WaitForSeconds(speed);
             if (next || previous)
             {
@@ -133,7 +136,7 @@ public class QuickSort_arrayHolder : MonoBehaviour
             structarr[currentstrucstep].activeImage = 2;
             structarr[currentstrucstep].steptxt = Step.text;
             structarr[currentstrucstep].arrtxt = ArrStep.text;
-
+            m_selectionAni.ShowGraph(arr3);
             yield return new WaitForSeconds(speed);
             if (next || previous)
             {
@@ -161,7 +164,7 @@ public class QuickSort_arrayHolder : MonoBehaviour
             structarr[currentstrucstep].activeImage = 3;
             structarr[currentstrucstep].steptxt = Step.text;
             structarr[currentstrucstep].arrtxt = ArrStep.text;
-
+            m_selectionAni.ShowGraph(arr3);
             yield return new WaitForSeconds(speed);
             if (next || previous)
             {
@@ -195,6 +198,7 @@ public class QuickSort_arrayHolder : MonoBehaviour
         structarr[currentstrucstep].activeImage = 4;
         structarr[currentstrucstep].steptxt = Step.text;
         structarr[currentstrucstep].arrtxt = ArrStep.text;
+        m_selectionAni.ShowGraph(arr3);
         yield return new WaitForSeconds(speed);
         if (next || previous)
         {
@@ -230,6 +234,7 @@ public class QuickSort_arrayHolder : MonoBehaviour
 
                 imageController(4);
                 Display(arr, arr.Count);
+                m_selectionAni.ShowGraph(arr3);
                 yield return new WaitForSeconds(speed);
                 if (next || previous)
                 {
@@ -263,6 +268,7 @@ public class QuickSort_arrayHolder : MonoBehaviour
 
         imageController(5);
         Display(arr, arr.Count);
+        m_selectionAni.ShowGraph(arr3);
         yield return new WaitForSeconds(speed);
         if (next || previous)
         {
@@ -308,6 +314,7 @@ public class QuickSort_arrayHolder : MonoBehaviour
         imageController(structarr[currentstrucstep].activeImage);
         Step.text = structarr[currentstrucstep].steptxt;
         ArrStep.text = structarr[currentstrucstep].arrtxt;
+        m_selectionAni.ShowGraph(structarr[currentstrucstep].oldarr);
 
         yield return new WaitForSeconds(speed);
         if (currentstrucstep < maxstrucstep)

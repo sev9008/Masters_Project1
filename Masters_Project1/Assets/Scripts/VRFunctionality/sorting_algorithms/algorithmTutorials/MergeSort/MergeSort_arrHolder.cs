@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
@@ -6,28 +7,38 @@ using UnityEngine.UI;
 
 public class MergeSort_arrHolder : MonoBehaviour
 {
-    public List<int> arr;
+    public List<int> arr3;
     public Text Txt_Text;
-    public int size;
     public float waittime;
     public Text Step;
-    public Text ArrayStep;
+    public Text ArrStep;
     public float speed;
 
     public Slider slider;
 
-    public GameObject image1;
-    public GameObject image2;
-    public GameObject image3;
-    public GameObject image4;
-    public GameObject image5;
-    public GameObject image6;
-    public GameObject image7;
+    public GameObject[] image;
     public bool paused;
+    private int pi;
+    public List<MyStruct> structarr;
 
+    public int currentstrucstep;
+    public int maxstrucstep;
+
+    public bool previous;
+    public bool next;
+    public bool running;
+    public SelectionAni m_selectionAni;
     private void Start()
     {
         paused = false;
+        structarr = new List<MyStruct>();
+    }
+    [Serializable] public class MyStruct
+    {
+        public List<int> oldarr;
+        public int activeImage;
+        public string steptxt;
+        public string arrtxt;
     }
 
     public void Update()
@@ -35,7 +46,7 @@ public class MergeSort_arrHolder : MonoBehaviour
         speed = slider.value;
     }
 
-    public void Display()
+    public void Display(List<int> arr2, int size)
     {
         Txt_Text.text = "";
         int Tmpsize = size - 1;
@@ -43,36 +54,41 @@ public class MergeSort_arrHolder : MonoBehaviour
         {
             if (i == 0)
             {
-                Txt_Text.text += "a[" + Tmpsize + "] = " + arr[i].ToString();
+                Txt_Text.text += "a[" + Tmpsize + "] = " + arr2[i].ToString();
             }
             else if (i > 0)
             {
-                Txt_Text.text += ", " + arr[i].ToString();
+                Txt_Text.text += ", " + arr2[i].ToString();
             }
         }
     }
 
     public IEnumerator IEMerge()
     {
-        yield return StartCoroutine(MergeSort(arr, 0, size-1));
-        image1.SetActive(false);
-        image2.SetActive(false);
-        image3.SetActive(false);
-        image4.SetActive(false);
-        image5.SetActive(false);
-        image6.SetActive(false);
-        image7.SetActive(false);
+        running = true;
+        for (int n = 0; n < structarr.Count; n++)
+        {
+            structarr[n].oldarr.Clear();
+            structarr[n].activeImage = -1;
+            structarr[n].steptxt = "";
+            structarr[n].arrtxt = "";
+        }
 
-        ArrayStep.text = "Finished";
+        structarr.Clear();
+        structarr = new List<MyStruct>();
+        currentstrucstep = -1;
+        maxstrucstep = -1;
+
+        yield return StartCoroutine(MergeSort(arr3, 0, arr3.Count - 1));
+        Display(arr3, arr3.Count);
+        imageController(-1);
+        ArrStep.text = "";
         Step.text = "Finished";
+        running = false;
     }
 
     public IEnumerator MergeSort(List<int> arr, int l, int r)
     {
-        image4.SetActive(false);
-        image5.SetActive(false);
-        image6.SetActive(false);
-        image7.SetActive(false);
         while (paused)
         {
             yield return null;
@@ -84,78 +100,132 @@ public class MergeSort_arrHolder : MonoBehaviour
             int m = l + (r - l) / 2;
             Step.text = "Iterate through mergeSort to divide and conquer" + "\n" + "m: " + m + " l: " + l + " r: " + r;
 
-            image1.SetActive(true);
-            image2.SetActive(false);
-            image3.SetActive(false);
+            imageController(1);
+
+            currentstrucstep++;
+            maxstrucstep++;
+            var a = new MyStruct();
+            structarr.Add(a);
+            structarr[currentstrucstep].oldarr = new List<int>(arr3.Count);
+            for (int tempnum = 0; tempnum < arr3.Count; tempnum++)
+            {
+                structarr[currentstrucstep].oldarr.Add(arr3[tempnum]);
+            }
+            structarr[currentstrucstep].activeImage = 1;
+            structarr[currentstrucstep].steptxt = Step.text;
+            structarr[currentstrucstep].arrtxt = ArrStep.text;
+            m_selectionAni.ShowGraph(arr3);
+            yield return new WaitForSeconds(speed);
+            if (next || previous)
+            {
+                yield return StartCoroutine(changeStep());
+            }
             while (paused)
             {
                 yield return null;
             }
-            yield return new WaitForSeconds(speed);
             yield return StartCoroutine(MergeSort(arr, l, m));
 
-            image1.SetActive(false);
-            image2.SetActive(true);
-            image3.SetActive(false);
+            imageController(2);
+            currentstrucstep++;
+            maxstrucstep++;
+            var b = new MyStruct();
+            structarr.Add(b);
+            structarr[currentstrucstep].oldarr = new List<int>(arr3.Count);
+            for (int tempnum = 0; tempnum < arr3.Count; tempnum++)
+            {
+                structarr[currentstrucstep].oldarr.Add(arr3[tempnum]);
+            }
+            structarr[currentstrucstep].activeImage = 1;
+            structarr[currentstrucstep].steptxt = Step.text;
+            structarr[currentstrucstep].arrtxt = ArrStep.text;
+            m_selectionAni.ShowGraph(arr3);
+            yield return new WaitForSeconds(speed);
+            if (next || previous)
+            {
+                yield return StartCoroutine(changeStep());
+            }
             while (paused)
             {
                 yield return null;
             }
-            yield return new WaitForSeconds(speed);
             yield return StartCoroutine(MergeSort(arr, m + 1, r));
 
-            image1.SetActive(false);
-            image2.SetActive(false);
-            image3.SetActive(true);
+            imageController(3);
+            currentstrucstep++;
+            maxstrucstep++;
+            var c = new MyStruct();
+            structarr.Add(c);
+            structarr[currentstrucstep].oldarr = new List<int>(arr3.Count);
+            for (int tempnum = 0; tempnum < arr3.Count; tempnum++)
+            {
+                structarr[currentstrucstep].oldarr.Add(arr3[tempnum]);
+            }
+            structarr[currentstrucstep].activeImage = 1;
+            structarr[currentstrucstep].steptxt = Step.text;
+            structarr[currentstrucstep].arrtxt = ArrStep.text;
+            m_selectionAni.ShowGraph(arr3);
+            yield return new WaitForSeconds(speed);
+            if (next || previous)
+            {
+                yield return StartCoroutine(changeStep());
+            }
             while (paused)
             {
                 yield return null;
             }
-            yield return new WaitForSeconds(speed);
             yield return StartCoroutine(merge(arr, l, m, r));
         }
-        Display();
+        Display(arr, arr.Count);
     }
 
     public IEnumerator merge(List<int> arr, int l, int m, int r)
     {
-        image1.SetActive(false);
-        image2.SetActive(false);
-        image3.SetActive(false);
         int i, j, k;
         int n1 = m - l + 1;
         int n2 = r - m;
         int[] L = new int[n1];
         int[] R = new int[n2];
-        ArrayStep.text = "Left array copy: ";
+        ArrStep.text = "Left array copy: ";
 
         for (i = 0; i < n1; i++)
         {
             L[i] = arr[l + i];
-            ArrayStep.text += L[i] + ", ";
+            ArrStep.text += L[i] + ", ";
         }
-        ArrayStep.text += "\n" + "Right array copy: ";
+        ArrStep.text += "\n" + "Right array copy: ";
         for (j = 0; j < n2; j++)
         {
             R[j] = arr[m + 1 + j];
-            ArrayStep.text += R[j] + ", ";
+            ArrStep.text += R[j] + ", ";
         }
 
-        image4.SetActive(true);
-        image5.SetActive(false);
-        image6.SetActive(false);
-        image7.SetActive(false);
+        imageController(4);
+        currentstrucstep++;
+        maxstrucstep++;
+        var a = new MyStruct();
+        structarr.Add(a);
+        structarr[currentstrucstep].oldarr = new List<int>(arr3.Count);
+        for (int tempnum = 0; tempnum < arr3.Count; tempnum++)
+        {
+            structarr[currentstrucstep].oldarr.Add(arr3[tempnum]);
+        }
+        structarr[currentstrucstep].activeImage = 1;
+        structarr[currentstrucstep].steptxt = Step.text;
+        structarr[currentstrucstep].arrtxt = ArrStep.text;
+        m_selectionAni.ShowGraph(arr3);
+        yield return new WaitForSeconds(speed);
+        if (next || previous)
+        {
+            yield return StartCoroutine(changeStep());
+        }
         while (paused)
         {
             yield return null;
         }
-        yield return new WaitForSeconds(speed);
 
         Step.text = "swap values between main array and left and right arrays";
-        image4.SetActive(false);
-        image5.SetActive(true);
-        image6.SetActive(false);
-        image7.SetActive(false);
+        imageController(5);
         i = 0;
         j = 0;
         k = l;
@@ -172,48 +242,133 @@ public class MergeSort_arrHolder : MonoBehaviour
                 j++;
             }
             k++;
-            Display();
+            Display(arr, arr.Count);
+            currentstrucstep++;
+            maxstrucstep++;
+            var b = new MyStruct();
+            structarr.Add(b);
+            structarr[currentstrucstep].oldarr = new List<int>(arr3.Count);
+            for (int tempnum = 0; tempnum < arr3.Count; tempnum++)
+            {
+                structarr[currentstrucstep].oldarr.Add(arr3[tempnum]);
+            }
+            structarr[currentstrucstep].activeImage = 1;
+            structarr[currentstrucstep].steptxt = Step.text;
+            structarr[currentstrucstep].arrtxt = ArrStep.text;
+            m_selectionAni.ShowGraph(arr3);
+            yield return new WaitForSeconds(speed);
+            if (next || previous)
+            {
+                yield return StartCoroutine(changeStep());
+            }
             while (paused)
             {
                 yield return null;
             }
-            yield return new WaitForSeconds(speed);
         }
 
         Step.text = "reorder left side";
-        Display();
-        image4.SetActive(false);
-        image5.SetActive(false);
-        image6.SetActive(true);
-        image7.SetActive(false);
+        Display(arr, arr.Count);
+        imageController(6);
         while (i < n1)
         {
             arr[k] = L[i];
             i++;
             k++;
+            currentstrucstep++;
+            maxstrucstep++;
+            var c = new MyStruct();
+            structarr.Add(c);
+            structarr[currentstrucstep].oldarr = new List<int>(arr3.Count);
+            for (int tempnum = 0; tempnum < arr3.Count; tempnum++)
+            {
+                structarr[currentstrucstep].oldarr.Add(arr3[tempnum]);
+            }
+            structarr[currentstrucstep].activeImage = 1;
+            structarr[currentstrucstep].steptxt = Step.text;
+            structarr[currentstrucstep].arrtxt = ArrStep.text;
+            m_selectionAni.ShowGraph(arr3);
+            yield return new WaitForSeconds(speed);
+            if (next || previous)
+            {
+                yield return StartCoroutine(changeStep());
+            }
             while (paused)
             {
                 yield return null;
             }
-            yield return new WaitForSeconds(speed);
         }
 
         Step.text = "reorder right side";
-        Display();
-        image4.SetActive(false);
-        image5.SetActive(false);
-        image6.SetActive(false);
-        image7.SetActive(true);
+        Display(arr, arr.Count);
+        imageController(7);
         while (j < n2)
         {
             arr[k] = R[j];
             j++;
             k++;
+            currentstrucstep++;
+            maxstrucstep++;
+            var d = new MyStruct();
+            structarr.Add(d);
+            structarr[currentstrucstep].oldarr = new List<int>(arr3.Count);
+            for (int tempnum = 0; tempnum < arr3.Count; tempnum++)
+            {
+                structarr[currentstrucstep].oldarr.Add(arr3[tempnum]);
+            }
+            structarr[currentstrucstep].activeImage = 1;
+            structarr[currentstrucstep].steptxt = Step.text;
+            structarr[currentstrucstep].arrtxt = ArrStep.text;
+            m_selectionAni.ShowGraph(arr3);
+            yield return new WaitForSeconds(speed);
+            if (next || previous)
+            {
+                yield return StartCoroutine(changeStep());
+            }
             while (paused)
             {
                 yield return null;
             }
-            yield return new WaitForSeconds(speed);
+        }
+    }
+    public IEnumerator changeStep()
+    {
+        resume:
+        if (previous && currentstrucstep > 0)
+        {
+            currentstrucstep--;
+            previous = false;
+        }
+        else if (next && currentstrucstep != maxstrucstep || currentstrucstep != maxstrucstep)
+        {
+            currentstrucstep++;
+            next = false;
+        }
+
+        Display(structarr[currentstrucstep].oldarr, structarr[currentstrucstep].oldarr.Count);
+        imageController(structarr[currentstrucstep].activeImage);
+        Step.text = structarr[currentstrucstep].steptxt;
+        ArrStep.text = structarr[currentstrucstep].arrtxt;
+        m_selectionAni.ShowGraph(structarr[currentstrucstep].oldarr);
+        yield return new WaitForSeconds(speed);
+        if (currentstrucstep < maxstrucstep)
+        {
+            goto resume;
+        }
+    }
+
+    public void imageController(int k)
+    {
+        for (int i = 0; i < image.Length; i++)
+        {
+            if (i == k)
+            {
+                image[i].SetActive(true);
+            }
+            else
+            {
+                image[i].SetActive(false);
+            }
         }
     }
 }

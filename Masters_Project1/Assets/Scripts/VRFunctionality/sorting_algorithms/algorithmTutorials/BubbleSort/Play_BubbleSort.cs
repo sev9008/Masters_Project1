@@ -22,7 +22,7 @@ public class Play_BubbleSort : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         else if (!pressed)
         {
             pressed = true;
-            M_bubbleSort_ArrayHolder.StartCoroutine(M_bubbleSort_ArrayHolder.Bubble(M_bubbleSort_ArrayHolder.arr));
+            //M_bubbleSort_ArrayHolder.StartCoroutine(M_bubbleSort_ArrayHolder.Bubble(M_bubbleSort_ArrayHolder.arr));
         }
     }
 

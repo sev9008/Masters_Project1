@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PauseQuickSort : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class PauseQuickSort : MonoBehaviour, IPointerDownHandler
 {
     public QuickSort_arrayHolder M_quickSort_arrayHolder;
     public Text txt;
@@ -23,9 +23,5 @@ public class PauseQuickSort : MonoBehaviour, IPointerDownHandler, IPointerUpHand
             M_quickSort_arrayHolder.paused = true;
             txt.text = "Resume";
         }
-    }
-    public void OnPointerUp(PointerEventData eventData)
-    {
-
     }
 }
