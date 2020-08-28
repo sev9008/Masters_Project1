@@ -273,6 +273,7 @@ public class MergeSort_arrHolder : MonoBehaviour
         while (i < n1)
         {
             arr[k] = L[i];
+            arr[k] = L[i];
             i++;
             k++;
             currentstrucstep++;
