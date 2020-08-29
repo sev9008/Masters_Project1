@@ -53,7 +53,7 @@ public class InsertGameController : MonoBehaviour
     {
         if (sorted)
         {
-            EnableTrigger();
+            //EnableTrigger();
             Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Selction Sort Operates." + "\nThe Algorithm locks the positions that have already been sorted, and chooses the next smallest element to swap.";
             IndexToSwap = 0;
             NextSmallesIndex = 9;
@@ -118,7 +118,7 @@ public class InsertGameController : MonoBehaviour
             b[i].GetComponent<BlockParent>().PairedPos = pos[i];
             b[i].GetComponent<BlockParent>().gravity = true;
         }
-        b[0].GetComponentInChildren<Text>().text = "1";
+        //b[0].GetComponentInChildren<Text>().text = "1";
         updatePos();
         sorted = false;
         checksort();
@@ -225,7 +225,6 @@ public class InsertGameController : MonoBehaviour
         {
             b[i].transform.position = pos[i].transform.position;
             b[i].transform.rotation = pos[i].transform.rotation;
-            //pos[i].GetComponent<MeshRenderer>().material = Transparent;
         }
     }
 }

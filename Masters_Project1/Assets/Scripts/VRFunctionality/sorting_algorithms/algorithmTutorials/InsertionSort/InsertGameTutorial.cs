@@ -199,7 +199,6 @@ public class InsertGameTutorial : MonoBehaviour
                 {
                     b[i].GetComponent<BlockParent>().enabled = false;
                     pos[i].GetComponent<BoxCollider>().enabled = false;
-
                     pos[i].GetComponent<MeshRenderer>().enabled = true;
                     pos[i].GetComponent<MeshRenderer>().material = DoneSort;
                     Debug.Log("hit3");
@@ -208,18 +207,16 @@ public class InsertGameTutorial : MonoBehaviour
                 {
                     b[i].GetComponent<BlockParent>().enabled = false;
                     pos[i].GetComponent<BoxCollider>().enabled = true;
-
-                    pos[i].GetComponent<MeshRenderer>().material = NextSort;
                     pos[i].GetComponent<MeshRenderer>().enabled = true;
+                    pos[i].GetComponent<MeshRenderer>().material = NextSort;
                 }
 
                 else if (i > NextSmallesIndex)
                 {
                     b[i].GetComponent<BlockParent>().enabled = false;
                     pos[i].GetComponent<BoxCollider>().enabled = true;
-
-                    pos[i].GetComponent<MeshRenderer>().material = Transparent;
                     pos[i].GetComponent<MeshRenderer>().enabled = false;
+                    pos[i].GetComponent<MeshRenderer>().material = Transparent;
                 }
             }
         }

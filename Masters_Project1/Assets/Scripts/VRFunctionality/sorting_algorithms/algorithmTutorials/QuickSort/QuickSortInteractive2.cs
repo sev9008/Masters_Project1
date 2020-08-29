@@ -42,7 +42,7 @@ public class QuickSortInteractive2 : MonoBehaviour
     {
         previouspi = new int[9];
         moving = false;
-        Begin();
+        //Begin();
     }
 
     public void Update()

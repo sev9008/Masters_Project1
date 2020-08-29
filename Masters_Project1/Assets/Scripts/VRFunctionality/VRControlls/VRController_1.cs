@@ -18,6 +18,7 @@ public class VRController_1 : MonoBehaviour
 
     public SlesortInteractive1 slesortInteractive;
     public InsertSortInteractive1 insertSortInteractive1;
+    public QuickSortInteractive1 quickSortInteractive1;
 
     private float Speed = 0.0f;
 
@@ -258,6 +259,7 @@ public class VRController_1 : MonoBehaviour
                     slesortInteractive.updatePos();
                     slesortInteractive.arrow.SetActive(false);
                     insertSortInteractive1.updatePos();
+                    quickSortInteractive1.updatePos();
                 }
                 catch { }
                 grabbedR = null;
@@ -309,6 +311,7 @@ public class VRController_1 : MonoBehaviour
                     slesortInteractive.updatePos();
                     slesortInteractive.arrow.SetActive(false);
                     insertSortInteractive1.updatePos();
+                    quickSortInteractive1.updatePos();
                 }
                 catch { }
                 grabbedL = null;
