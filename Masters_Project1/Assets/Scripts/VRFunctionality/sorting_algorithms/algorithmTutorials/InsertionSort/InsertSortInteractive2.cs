@@ -14,15 +14,12 @@ public class InsertSortInteractive2 : MonoBehaviour
 
     public bool sorted;
 
-    //public int step;
-
     public Text Step;
 
     public VRController_1 m_vRController_1;
 
     public int NextSmallesIndex;
     public int IndexToSwap;
-    //public float dist1;
 
     Coroutine co;
     Coroutine sho;
