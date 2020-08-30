@@ -158,7 +158,6 @@ public class QuickSortInteractive2 : MonoBehaviour
             if (temp < pivot)
             {
                 i++;
-
                 yield return StartCoroutine(SwapAnimation(i, j));
                 GameObject temp3 = b[i];
                 b[i] = b[j];
