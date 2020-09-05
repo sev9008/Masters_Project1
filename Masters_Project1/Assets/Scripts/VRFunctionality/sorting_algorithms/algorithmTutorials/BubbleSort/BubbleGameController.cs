@@ -92,8 +92,8 @@ public class BubbleGameController : MonoBehaviour
                         m_vRController_1.downR = false;
                         m_vRController_1.downL = false;
                         Step.text = "Incorrect.  The block you attempted to swap was not the smallest value in the unsorted array.";
-                        incorretAnswers += 1;
-                        incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                        incorretAnswers++;
+                        incorretAnswersText.text = "Incorrect Anwserws = " + incorretAnswers;
                         updatePos();
                     }
                 }
@@ -127,8 +127,8 @@ public class BubbleGameController : MonoBehaviour
         ti.text = tj.text;
         tj.text = n;
         Step.text = "Correct! " + ti.text + " and " + tj.text + " will swap and index " + i + " will be locked.";
-        corretAnswers += 1;
-        corretAnswersText.GetComponent<Text>().text = corretAnswers.ToString();
+        corretAnswers++;
+        corretAnswersText.text = "Incorrect Anwserws = " + corretAnswers;
 
         updatePos();
     }

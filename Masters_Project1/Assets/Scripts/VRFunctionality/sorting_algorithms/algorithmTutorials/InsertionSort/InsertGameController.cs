@@ -101,9 +101,9 @@ public class InsertGameController : MonoBehaviour
                 }
             }
         }
-        Correctanswerstxt.text = CorrectAnswers.ToString();
-        IncorrectAnswerstxt.text = wrongAnswers.ToString();
-        NumOfGamestxt.text = NumOfGames.ToString();
+        Correctanswerstxt.text = "Incorrect Answers = " + CorrectAnswers;
+        IncorrectAnswerstxt.text = "Incorrect Answers = " + wrongAnswers;
+        NumOfGamestxt.text = "Number of Games = " + NumOfGames;
     }
 
     public void Begin()

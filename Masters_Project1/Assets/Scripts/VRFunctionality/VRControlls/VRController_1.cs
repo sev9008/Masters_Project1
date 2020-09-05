@@ -19,6 +19,8 @@ public class VRController_1 : MonoBehaviour
     public SlesortInteractive1 slesortInteractive;
     public InsertSortInteractive1 insertSortInteractive1;
     public QuickSortInteractive1 quickSortInteractive1;
+    public BubbleInteractive1 bubbleSortInteractive1;
+    public MergeSortInteractive1 mergeSortInteractive1;
 
     private float Speed = 0.0f;
 
@@ -260,6 +262,8 @@ public class VRController_1 : MonoBehaviour
                     slesortInteractive.arrow.SetActive(false);
                     insertSortInteractive1.updatePos();
                     quickSortInteractive1.updatePos();
+                    bubbleSortInteractive1.updatePos();
+                    mergeSortInteractive1.updatePos();
                 }
                 catch { }
                 grabbedR = null;
@@ -312,6 +316,8 @@ public class VRController_1 : MonoBehaviour
                     slesortInteractive.arrow.SetActive(false);
                     insertSortInteractive1.updatePos();
                     quickSortInteractive1.updatePos();
+                    bubbleSortInteractive1.updatePos();
+                    mergeSortInteractive1.updatePos();
                 }
                 catch { }
                 grabbedL = null;

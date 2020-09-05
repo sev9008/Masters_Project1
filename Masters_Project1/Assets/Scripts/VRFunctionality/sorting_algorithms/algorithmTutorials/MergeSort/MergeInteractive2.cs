@@ -18,13 +18,8 @@ public class MergeInteractive2 : MonoBehaviour
 
     public VRController_1 m_vRController_1;
 
-    //public int NextSmallesIndex;
-    //public int IndexToSwap;
     public int currentSmallestIndex;
     public int nextToSort;
-
-    Coroutine co;
-    Coroutine sho;
 
     public int speed;
     public int smooth;
@@ -32,6 +27,7 @@ public class MergeInteractive2 : MonoBehaviour
     public int tempnumj;
 
     public bool moving;
+    public bool moving2;
 
     public Vector2 targetTransform;
     public Vector2 targetTransform2;
@@ -42,11 +38,11 @@ public class MergeInteractive2 : MonoBehaviour
     private GameObject[] R;
     private bool Larray;
 
-
     private void Start()
     {
         moving = false;
-        Begin();
+        moving2 = false;
+        //Begin();
     }
 
     public void Update()
@@ -58,11 +54,6 @@ public class MergeInteractive2 : MonoBehaviour
         }
         if (moving)
         {
-            //if (tempnumi == tempnumj)
-            //{
-            //    moving = false;
-            //    return;
-            //}
             float.TryParse(b[tempnumi].GetComponentInChildren<Text>().text, out float temp);
             float temp2;
             if (Larray)
@@ -73,14 +64,11 @@ public class MergeInteractive2 : MonoBehaviour
             {
                 float.TryParse(R[tempnumj].GetComponentInChildren<Text>().text, out temp2);
             }
-            Debug.Log(temp2 + " " + temp);
             if (temp == temp2)
             {
                 moving = false;
                 return;
             }
-
-            b[tempnumi].GetComponent<RectTransform>().anchoredPosition = Vector3.MoveTowards(b[tempnumi].GetComponent<RectTransform>().anchoredPosition, targetTransform, Time.deltaTime * smooth);
 
             if (Larray)
             {
@@ -95,19 +83,26 @@ public class MergeInteractive2 : MonoBehaviour
 
             if (Larray)
             {
-                if (b[tempnumi].GetComponent<RectTransform>().anchoredPosition == targetTransform || L[tempnumj].GetComponent<RectTransform>().anchoredPosition == targetTransform2)
+                if (L[tempnumj].GetComponent<RectTransform>().anchoredPosition == targetTransform2)
                 {
                     moving = false;
                 }
             }
             else 
             {
-                if (b[tempnumi].GetComponent<RectTransform>().anchoredPosition == targetTransform || R[tempnumj].GetComponent<RectTransform>().anchoredPosition == targetTransform2)
+                if (R[tempnumj].GetComponent<RectTransform>().anchoredPosition == targetTransform2)
                 {
                     moving = false;
                 }
             }
-
+        }
+        if (moving2)
+        {
+            b[tempnumj].GetComponent<RectTransform>().anchoredPosition = Vector3.MoveTowards(b[tempnumj].GetComponent<RectTransform>().anchoredPosition, targetTransform2, Time.deltaTime * smooth);
+            if (b[tempnumj].GetComponent<RectTransform>().anchoredPosition.y == targetTransform2.y)
+            {
+                moving2 = false;
+            }
         }
     }
 
@@ -133,70 +128,69 @@ public class MergeInteractive2 : MonoBehaviour
             b[i].GetComponent<RectTransform>().anchoredPosition = pos[i].GetComponent<RectTransform>().anchoredPosition;
             b[i].transform.position = pos[i].transform.position;
             b[i].transform.rotation = pos[i].transform.rotation;
+            b[i].GetComponent<MoveInteractionBLock>().PairedPos = pos[i];
         }
     }
 
     public IEnumerator SwapAnimation(int i, int j)
     {
-        tempnumi = i;
         tempnumj = j;
+        tempnumi = i;
+        float tran1;
 
-        float tran3 = b[i].GetComponent<RectTransform>().anchoredPosition.y + 50f;
-        float tran4;
+        //move blocks down
         if (Larray)
         {
-            tran4 = L[j].GetComponent<RectTransform>().anchoredPosition.y - 50f;
-            targetTransform2 = new Vector3(L[j].GetComponent<RectTransform>().anchoredPosition.x, tran4);
+            tran1 = L[j].GetComponent<RectTransform>().anchoredPosition.y + 50f;
+            targetTransform2 = new Vector3(L[j].GetComponent<RectTransform>().anchoredPosition.x, tran1);
         }
         else 
         {
-            tran4 = R[j].GetComponent<RectTransform>().anchoredPosition.y - 50f;
-            targetTransform2 = new Vector3(R[j].GetComponent<RectTransform>().anchoredPosition.x, tran4);
+            tran1 = R[j].GetComponent<RectTransform>().anchoredPosition.y + 50f;
+            targetTransform2 = new Vector3(R[j].GetComponent<RectTransform>().anchoredPosition.x, tran1);
         }
-        targetTransform = new Vector3(b[i].GetComponent<RectTransform>().anchoredPosition.x, tran3);
         moving = true;
         while (moving == true)
         {
-            Debug.Log("stuck1");
             yield return null;
         }
 
-        float tran5 = b[i].GetComponent<RectTransform>().anchoredPosition.x;
-        float tran6;
+        //move blocks into hover position over their traded block
         if (Larray)
         {
-            tran6 = L[j].GetComponent<RectTransform>().anchoredPosition.x;
-            targetTransform2 = new Vector3(tran5, L[j].GetComponent<RectTransform>().anchoredPosition.y);
+            GameObject p = b[i].GetComponent<MoveInteractionBLock>().PairedPos;
+            tran1 = p.GetComponent<RectTransform>().anchoredPosition.x;
+            targetTransform2 = new Vector3(tran1, L[j].GetComponent<RectTransform>().anchoredPosition.y);
         }
         else
         {
-            tran6 = R[j].GetComponent<RectTransform>().anchoredPosition.x;
-            targetTransform2 = new Vector3(tran5, R[j].GetComponent<RectTransform>().anchoredPosition.y);
+            GameObject p = b[i].GetComponent<MoveInteractionBLock>().PairedPos;
+            tran1 = p.GetComponent<RectTransform>().anchoredPosition.x;
+            targetTransform2 = new Vector3(tran1, R[j].GetComponent<RectTransform>().anchoredPosition.y);
         }
-        targetTransform = new Vector3(tran6, b[i].GetComponent<RectTransform>().anchoredPosition.y);
         moving = true;
         while (moving == true)
         {
-            Debug.Log("stuck2");
             yield return null;
         }
-
-        if (Larray)
+    }
+    public IEnumerator Fallin()
+    {
+        float p = pos[0].GetComponent<RectTransform>().anchoredPosition.y;
+        for (int i = 0; i < 9; i++)
         {
-            targetTransform2 = new Vector3(L[j].GetComponent<RectTransform>().anchoredPosition.x, (L[j].GetComponent<RectTransform>().anchoredPosition.y + 50));
+            tempnumj = i;
+            float s = b[i].GetComponent<RectTransform>().anchoredPosition.y;
+            if (s != p)
+            {
+                targetTransform2 = new Vector3(b[i].GetComponent<RectTransform>().anchoredPosition.x, p);
+                moving2 = true;
+                while (moving2 == true)
+                {
+                    yield return null;
+                }
+            }
         }
-        else
-        {
-            targetTransform2 = new Vector3(R[j].GetComponent<RectTransform>().anchoredPosition.x, (R[j].GetComponent<RectTransform>().anchoredPosition.y + 50));
-        }
-        targetTransform = new Vector3(b[i].GetComponent<RectTransform>().anchoredPosition.x, (b[i].GetComponent<RectTransform>().anchoredPosition.y - 50));
-        moving = true;
-        while (moving == true)
-        {
-            Debug.Log("stuck3");
-            yield return null;
-        }
-        yield return new WaitForSeconds(speed);
     }
 
     public IEnumerator Mergechecksort()
@@ -204,7 +198,7 @@ public class MergeInteractive2 : MonoBehaviour
         yield return StartCoroutine(mergeSort(0, b.Count - 1));
         updatePos();
         sorted = true;
-        //EnableTrigger(0, 0);
+        EnableTrigger(0, 9);
     }
 
     public IEnumerator mergeSort(int l, int r)
@@ -234,6 +228,7 @@ public class MergeInteractive2 : MonoBehaviour
         {
             R[j] = b[m + 1 + j];
         }
+        updatePos();
         i = 0;
         j = 0;
         k = l;
@@ -246,7 +241,7 @@ public class MergeInteractive2 : MonoBehaviour
             if (temp <= temp2)
             {
                 Larray = true;
-                b[k].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                L[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
                 yield return StartCoroutine(SwapAnimation(k, i));
                 b[k] = L[i];
                 i++;
@@ -254,42 +249,40 @@ public class MergeInteractive2 : MonoBehaviour
             else
             {
                 Larray = false;
-                b[k].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                R[j].GetComponentInChildren<MeshRenderer>().material = Nextsort;
                 yield return StartCoroutine(SwapAnimation(k, j));
                 b[k] = R[j];
                 j++;
             }
             k++;
-            updatePos();
         }
-        EnableTrigger(l, r);
+        //EnableTrigger(l, r);
         while (i < n1)
         {
             Larray = true;
-            b[k].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+            L[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
             yield return StartCoroutine(SwapAnimation(k, i));
             b[k] = L[i];
             i++;
             k++;
-            updatePos();
         }
         while (j < n2)
         {
             Larray = false;
-            b[k].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+            R[j].GetComponentInChildren<MeshRenderer>().material = Nextsort;
             yield return StartCoroutine(SwapAnimation(k, j));
             b[k] = R[j];
             j++;
             k++;
-            updatePos();
         }
+        yield return StartCoroutine(Fallin());
         updatePos();
         yield return new WaitForSeconds(speed);
     }
 
     public void EnableTrigger(int l, int h)
     {
-        Debug.Log(l + " " + h);
+        //Debug.Log(l + " " + h);
         for (int i = 0; i < b.Count; i++)
         {
             if (i >= l && i <= h)
