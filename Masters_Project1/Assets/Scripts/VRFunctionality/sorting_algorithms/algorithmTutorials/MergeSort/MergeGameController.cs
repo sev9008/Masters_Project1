@@ -63,7 +63,7 @@ public class MergeGameController : MonoBehaviour
     {
         numofGames += 1;
         numofGamesText.GetComponent<Text>().text = numofGames.ToString();
-        Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Selection Sort." + "\nIf the block is blue it is Sorted and can not be interacted with." + "\nIf a block is red It must be swapped with the smallest value from the unsorted array.";
+        Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Merge Sort." + "\nIf a block is green It must be swapped with the another green block.";
         for (int i = 0; i < 9; i++)
         {
             int n = UnityEngine.Random.Range(1, 99);
@@ -91,7 +91,7 @@ public class MergeGameController : MonoBehaviour
     {
         if (sorted)
         {
-            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Selction Sort Operates." + "\nThe Algorithm locks the positions that have already been sorted, and chooses the next smallest element to swap.";
+            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Merge Sort Operates." + "\nThe Algorithm splits the array into halves and sorts each half one at a time.";
             sorted = false;
         }
 
@@ -249,7 +249,7 @@ public class MergeGameController : MonoBehaviour
                 b[k].GetComponent<BoxCollider>().enabled = true;
                 b[k].GetComponent<Rigidbody>().isKinematic = false;
                 pos[k].GetComponent<BoxCollider>().enabled = false;
-                pos[k].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                //pos[k].GetComponentInChildren<MeshRenderer>().material = Nextsort;
                 pos[k].GetComponentInChildren<MeshRenderer>().enabled = true;
                 b[k].GetComponent<BlockParent>().gravity = true;
 
@@ -257,7 +257,7 @@ public class MergeGameController : MonoBehaviour
                 L[i].GetComponent<BoxCollider>().enabled = true;
                 L[i].GetComponent<Rigidbody>().isKinematic = false;
                 L[i].GetComponent<BlockParent>().PairedPos.GetComponent<BoxCollider>().enabled = false;
-                L[i].GetComponent<BlockParent>().PairedPos.GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                //L[i].GetComponent<BlockParent>().PairedPos.GetComponentInChildren<MeshRenderer>().material = Nextsort;
                 L[i].GetComponent<BlockParent>().PairedPos.GetComponentInChildren<MeshRenderer>().enabled = true;
                 L[i].GetComponent<BlockParent>().gravity = true;
 
@@ -291,7 +291,7 @@ public class MergeGameController : MonoBehaviour
                 b[k].GetComponent<BoxCollider>().enabled = true;
                 b[k].GetComponent<Rigidbody>().isKinematic = false;
                 pos[k].GetComponent<BoxCollider>().enabled = false;
-                pos[k].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                //pos[k].GetComponentInChildren<MeshRenderer>().material = Nextsort;
                 pos[k].GetComponentInChildren<MeshRenderer>().enabled = true;
                 b[k].GetComponent<BlockParent>().gravity = true;
 
@@ -299,7 +299,7 @@ public class MergeGameController : MonoBehaviour
                 R[j].GetComponent<BoxCollider>().enabled = true;
                 R[j].GetComponent<Rigidbody>().isKinematic = false;
                 R[j].GetComponent<BlockParent>().PairedPos.GetComponent<BoxCollider>().enabled = false;
-                R[j].GetComponent<BlockParent>().PairedPos.GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                //R[j].GetComponent<BlockParent>().PairedPos.GetComponentInChildren<MeshRenderer>().material = Nextsort;
                 R[j].GetComponent<BlockParent>().PairedPos.GetComponentInChildren<MeshRenderer>().enabled = true;
                 R[j].GetComponent<BlockParent>().gravity = true;
 
@@ -337,7 +337,7 @@ public class MergeGameController : MonoBehaviour
             b[k].GetComponent<BoxCollider>().enabled = true;
             b[k].GetComponent<Rigidbody>().isKinematic = false;
             pos[k].GetComponent<BoxCollider>().enabled = false;
-            pos[k].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+            //pos[k].GetComponentInChildren<MeshRenderer>().material = Nextsort;
             pos[k].GetComponentInChildren<MeshRenderer>().enabled = true;
             b[k].GetComponent<BlockParent>().gravity = true;
 
@@ -345,7 +345,7 @@ public class MergeGameController : MonoBehaviour
             L[i].GetComponent<BoxCollider>().enabled = true;
             L[i].GetComponent<Rigidbody>().isKinematic = false;
             L[i].GetComponent<BlockParent>().PairedPos.GetComponent<BoxCollider>().enabled = false;
-            L[i].GetComponent<BlockParent>().PairedPos.GetComponentInChildren<MeshRenderer>().material = Nextsort;
+            //L[i].GetComponent<BlockParent>().PairedPos.GetComponentInChildren<MeshRenderer>().material = Nextsort;
             L[i].GetComponent<BlockParent>().PairedPos.GetComponentInChildren<MeshRenderer>().enabled = true;
             L[i].GetComponent<BlockParent>().gravity = true;
 
@@ -382,7 +382,7 @@ public class MergeGameController : MonoBehaviour
             b[k].GetComponent<BoxCollider>().enabled = true;
             b[k].GetComponent<Rigidbody>().isKinematic = false;
             pos[k].GetComponent<BoxCollider>().enabled = false;
-            pos[k].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+            //pos[k].GetComponentInChildren<MeshRenderer>().material = Nextsort;
             pos[k].GetComponentInChildren<MeshRenderer>().enabled = true;
             b[k].GetComponent<BlockParent>().gravity = true;
 
@@ -391,7 +391,7 @@ public class MergeGameController : MonoBehaviour
             R[j].GetComponent<Rigidbody>().isKinematic = false;
             R[j].GetComponent<BlockParent>().PairedPos.GetComponent<BoxCollider>().enabled = false;
             R[j].GetComponent<BlockParent>().PairedPos.GetComponentInChildren<MeshRenderer>().material = Nextsort;
-            R[j].GetComponent<BlockParent>().PairedPos.GetComponentInChildren<MeshRenderer>().enabled = true;
+            //R[j].GetComponent<BlockParent>().PairedPos.GetComponentInChildren<MeshRenderer>().enabled = true;
             R[j].GetComponent<BlockParent>().gravity = true;
 
             Larray = false;

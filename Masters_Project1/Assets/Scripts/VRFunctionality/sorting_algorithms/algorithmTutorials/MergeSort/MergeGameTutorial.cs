@@ -216,6 +216,15 @@ public class MergeGameTutorial : MonoBehaviour
 
     public IEnumerator Mergechecksort()
     {
+        steptxt.text = "In this minigame you, the employee, must organize boxes by their value.  \n\nThis value is displayed above the boxes. \n\nYour boss wants you to organize them using Merge Sort!";
+
+        yield return new WaitForSeconds(speed);
+
+        steptxt.text = "This tutorial will go through the execution of the game with the correct moves.  \n\nTo swap a box, simply palce both boxes in their respective, correct, positions!";
+
+        yield return new WaitForSeconds(speed);
+        running = true;
+
         yield return StartCoroutine(mergeSort(0, b.Length - 1));
         updatePos();
         sorted = true;

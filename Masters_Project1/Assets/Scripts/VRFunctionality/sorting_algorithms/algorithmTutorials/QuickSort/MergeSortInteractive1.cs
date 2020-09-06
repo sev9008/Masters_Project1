@@ -56,7 +56,7 @@ public class MergeSortInteractive1 : MonoBehaviour
     {
         numofGames += 1;
         numofGamesText.GetComponent<Text>().text = numofGames.ToString();
-        Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Selection Sort." + "\nIf the block is blue it is Sorted and can not be interacted with." + "\nIf a block is red It must be swapped with the smallest value from the unsorted array.";
+        Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Merge Sort." + "\nIf a block is green It must be swapped with the other green block.";
         for (int i = 0; i < 9; i++)
         {
             int n = UnityEngine.Random.Range(1, 99);
@@ -74,7 +74,7 @@ public class MergeSortInteractive1 : MonoBehaviour
     {
         if (sorted)
         {
-            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Selction Sort Operates." + "\nThe Algorithm locks the positions that have already been sorted, and chooses the next smallest element to swap.";
+            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Merge Sort Operates." + "\nThe Algorithm splits the array into halves and sorts each half one at a time.";
             sorted = false;
         }
 
@@ -83,12 +83,14 @@ public class MergeSortInteractive1 : MonoBehaviour
             float dist2;
             if (Larray)
             {
+                Step.text = "The Algorithm is ready to swap values.  Perform the swap.";
                 dist1 = Vector3.Distance(b[nextToSort].transform.position, L[currentSmallestIndex].transform.position);
                 if (dist1 < .04)
                 {
                     Debug.Log("Swap");
                     m_vRController_1.downR = false;
                     m_vRController_1.downL = false;
+                    Step.text = "The block you attempted to swap was correct.";
                     corretAnswers += 1;
                     corretAnswersText.GetComponent<Text>().text = corretAnswers.ToString();
                     waitingforswap = false;

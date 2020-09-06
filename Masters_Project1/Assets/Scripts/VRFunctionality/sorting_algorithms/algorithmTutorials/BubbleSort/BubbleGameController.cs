@@ -54,7 +54,7 @@ public class BubbleGameController : MonoBehaviour
     {
         numofGames += 1;
         numofGamesText.GetComponent<Text>().text = numofGames.ToString();
-        Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Selection Sort." + "\nIf the block is blue it is Sorted and can not be interacted with." + "\nIf a block is red It must be swapped with the smallest value from the unsorted array.";
+        Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Bubble Sort." + "\nIf the block is white it must be swapped with the smallest adjacent value";
         for (int i = 0; i < 9; i++)
         {
             int n = UnityEngine.Random.Range(1, 99);
@@ -73,7 +73,7 @@ public class BubbleGameController : MonoBehaviour
     {
         if (sorted)
         {
-            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Selction Sort Operates." + "\nThe Algorithm locks the positions that have already been sorted, and chooses the next smallest element to swap.";
+            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Bubble Sort Operates." + "\nThe Algorithm Swaps the largest vaues to mvoe them to the right and locks their positions.";
             sorted = false;
         }
 

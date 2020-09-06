@@ -50,7 +50,7 @@ public class QuickSortInteractive2 : MonoBehaviour
         if (sorted)
         {
             //EnableTrigger();
-            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Selction Sort Operates." + "\nThe Algorithm locks the positions that have already been sorted, and chooses the next smallest element to swap.";
+            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Quick Sort Operates." + "\nThe Algorithm repeatedly sorts the array around the pivot.  If a value is less than the pviot it will remain on the left branch, otherwise values are compared and swapped until the array is sorted";
             IndexToSwap = 0;
             NextSmallesIndex = 9;
         }
@@ -73,7 +73,7 @@ public class QuickSortInteractive2 : MonoBehaviour
 
     public void Begin()
     {
-        Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Selection Sort." + "\nIf the block is blue it is Sorted and can not be interacted with." + "\nIf a block is red It must be swapped with the smallest value from the unsorted array.";
+        Step.text = "Welcome!  This tutorial is designed to teach you play this interactive minigame." + "\n\nIf the block is red it is the pivot and will be used to test our array for swaps.";
         for (int i = 0; i < 9; i++)
         {
             previouspi[i] = 0;
@@ -129,6 +129,14 @@ public class QuickSortInteractive2 : MonoBehaviour
 
     public IEnumerator Quick()
     {
+        Step.text = "First Quick sort will choose the last element as our pivot." + "\nThen our algorithm will swap values on the laft with any value smaller than our pivot.  It does this until all elements greater than the pivot are in the right half of our array";
+        yield return new WaitForSeconds(speed);
+        Step.text = "Quicksort will now swap the first value greater than it, from the left most index first, with the pivot." + "\n It will nowe repeat the above steps to the left and the to the right of the pivot we jsut swapped.";
+        yield return new WaitForSeconds(speed);        
+        Step.text = "It will repeat these steps until the eniter array is sorted.";
+        yield return new WaitForSeconds(speed);
+
+
         yield return StartCoroutine(quickSort(0, b.Count - 1));
         updatePos();
         sorted = true;

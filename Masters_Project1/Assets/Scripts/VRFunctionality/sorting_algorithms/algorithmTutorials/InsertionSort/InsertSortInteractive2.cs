@@ -44,7 +44,7 @@ public class InsertSortInteractive2 : MonoBehaviour
         if (sorted)
         {
             EnableTrigger();
-            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Selction Sort Operates." + "\nThe Algorithm locks the positions that have already been sorted, and chooses the next smallest element to swap.";
+            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Insertion Sort Operates." + "\nThe Algorithm iterates thorugh the array and shifts the smallest values to the front.";
             IndexToSwap = 0;
             NextSmallesIndex = 9;
         }
@@ -64,7 +64,7 @@ public class InsertSortInteractive2 : MonoBehaviour
 
     public void Begin()
     {
-        //Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Selection Sort." + "\nIf the block is blue it is Sorted and can not be interacted with." + "\nIf a block is red It must be swapped with the smallest value from the unsorted array.";
+        Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Insertion Sort." + "\nIf the block is Green it is Sorted and can not be interacted with." + "\nIf a block is White it must be shifted to the elft until it is in its sorted position.";
         for (int i = 0; i < 9; i++)
         {
             int n = UnityEngine.Random.Range(1, 99);
@@ -87,6 +87,14 @@ public class InsertSortInteractive2 : MonoBehaviour
     }
     public IEnumerator insertionSort()
     {
+        Step.text = "Insertion Sort will sort the array by locking the elft msot values until it is adjacent to a smaller value.";
+        yield return new WaitForSeconds(speed);
+        Step.text = "First iterate through the array until the left index is larger than the right index 'M'.";
+        yield return new WaitForSeconds(speed);
+        Step.text = "Swap these values, and continue to swap until 'M' is in its sorted position.";
+        yield return new WaitForSeconds(speed);
+        Step.text = "Resume swapping at the index where the previous swap began and repeat these steps until the array is sorted.";
+        yield return new WaitForSeconds(speed);
         int i, j;
         GameObject key;
         for (i = 1; i < b.Count; i++)

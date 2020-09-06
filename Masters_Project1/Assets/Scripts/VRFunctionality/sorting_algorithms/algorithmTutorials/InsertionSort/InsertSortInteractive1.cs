@@ -55,7 +55,7 @@ public class InsertSortInteractive1 : MonoBehaviour
         if (sorted)
         {
             EnableTrigger();
-            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Selction Sort Operates." + "\nThe Algorithm locks the positions that have already been sorted, and chooses the next smallest element to swap.";
+            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Insertion Sort Operates." + "\nThe Algorithm iterates thorugh the array and shifts the smallest values to the front.";
             IndexToSwap = 0; 
             NextSmallesIndex = 9;
         }
@@ -106,7 +106,7 @@ public class InsertSortInteractive1 : MonoBehaviour
     {
         numofGames += 1;
         //numofGamesText.GetComponent<Text>().text = numofGames.ToString();
-        Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Selection Sort." + "\nIf the block is blue it is Sorted and can not be interacted with." + "\nIf a block is red It must be swapped with the smallest value from the unsorted array.";
+        Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Insertion Sort." + "\nIf the block is Green it is Sorted and can not be interacted with." + "\nIf a block is White it must be shifted to the elft until it is in its sorted position.";
         for (int i = 0; i < 9; i++)
         {
             int n = UnityEngine.Random.Range(1, 99);

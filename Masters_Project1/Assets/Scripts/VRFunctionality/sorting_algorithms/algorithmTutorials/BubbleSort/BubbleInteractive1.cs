@@ -50,7 +50,7 @@ public class BubbleInteractive1 : MonoBehaviour
     {
         numofGames += 1;
         numofGamesText.GetComponent<Text>().text = numofGames.ToString();
-        Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Selection Sort." + "\nIf the block is blue it is Sorted and can not be interacted with." + "\nIf a block is red It must be swapped with the smallest value from the unsorted array.";
+        Step.text = "Welcome!  This tutorial is designed to teach you play this interactive minigame." + "\nIf the block is Green it is Sorted and can not be interacted with." + "\nIf a block is white or non colored, It must be swapped with the smallest adjacent value from the unsorted array.";
         for (int i = 0; i < 9; i++)
         {
             int n = UnityEngine.Random.Range(1, 99);
@@ -67,7 +67,7 @@ public class BubbleInteractive1 : MonoBehaviour
     {
         if (sorted)
         {
-            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Selction Sort Operates." + "\nThe Algorithm locks the positions that have already been sorted, and chooses the next smallest element to swap.";
+            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Bubble Sort Operates." + "\nThe Algorithm Swaps the largest vaues to mvoe them to the right and locks their positions.";
             sorted = false;
         }
 
@@ -82,7 +82,7 @@ public class BubbleInteractive1 : MonoBehaviour
                     {
                         m_vRController_1.downR = false;
                         m_vRController_1.downL = false;
-                        Step.text = "Incorrect.  The block you attempted to swap was not the smallest value in the unsorted array.";
+                        Step.text = "Incorrect.  The block you attempted to swap was not the smallest adjacent value in the unsorted array.";
                         incorretAnswers += 1;
                         incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
                         updatePos();
@@ -132,6 +132,8 @@ public class BubbleInteractive1 : MonoBehaviour
 
     public IEnumerator Bubblechecksort()
     {
+        Step.text = "To perform Bubble Sort go through the array from elft to right.  If the left value is larger than the right value swap them, and perform the same steps for the next index.";
+
         yield return StartCoroutine(BubbleSort());
         updatePos();
         sorted = true;

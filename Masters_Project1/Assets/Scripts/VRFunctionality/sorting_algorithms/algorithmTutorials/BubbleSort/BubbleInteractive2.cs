@@ -66,7 +66,7 @@ public class BubbleInteractive2 : MonoBehaviour
 
     public void Begin()
     {
-        Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Selection Sort." + "\nIf the block is blue it is Sorted and can not be interacted with." + "\nIf a block is red It must be swapped with the smallest value from the unsorted array.";
+        Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Bubble Sort.";
         for (int i = 0; i < 9; i++)
         {
             int n = UnityEngine.Random.Range(1, 99);
@@ -146,6 +146,13 @@ public class BubbleInteractive2 : MonoBehaviour
     }
     public IEnumerator Bubblechecksort()
     {
+        Step.text = "Bubble Sort is relatively easy.  Dimply check if the firt value is greater than the right value.  If it is then swap them.";
+        yield return new WaitForSeconds(speed);
+        Step.text = "After you swap check the next vlue you jsut swapped and the third value. Perform the swap if needed and repeat these steps until you hit the end of the array. ";
+        yield return new WaitForSeconds(speed);
+        Step.text = "Once you hit the end of the array, return to the front and repeat the above steps.";
+        yield return new WaitForSeconds(speed);
+
         yield return StartCoroutine(BubbleSort());
         updatePos();
         sorted = true;

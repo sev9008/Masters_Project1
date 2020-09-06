@@ -63,7 +63,7 @@ public class QuickGameTutorial : MonoBehaviour
             b[i].GetComponent<BlockParent>().gravity = false;
             b[i].GetComponent<Rigidbody>().isKinematic = true;
         }
-        steptxt.text = "Welcome!  This tutorial is designed to teach you play this interactive minigame." + "\n\nIf the block is Green it is Sorted and can not be interacted with." + "\n\nIf a block is white It must be swapped with the smallest value from the unsorted array.";
+        steptxt.text = "Welcome!  This tutorial is designed to teach you play this interactive minigame." + "\n\nIf the block is red it is the pivot and will be used to test our array for swaps.";
         updatePos();
         sorted = false;
         co = StartCoroutine(Quick());
@@ -83,7 +83,7 @@ public class QuickGameTutorial : MonoBehaviour
         if (sorted)
         {
             //EnableTrigger();
-            //Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Selction Sort Operates." + "\nThe Algorithm locks the positions that have already been sorted, and chooses the next smallest element to swap.";
+            steptxt.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Quick Sort Operates." + "\nThe Algorithm repeatedly sorts the array around the pivot.  If a value is less than the pviot it will remain on the left branch, otherwise values are compared and swapped until the array is sorted";
             IndexToSwap = 0;
             NextSmallesIndex = 0;
         }
@@ -139,6 +139,11 @@ public class QuickGameTutorial : MonoBehaviour
 
     public IEnumerator Quick()
     {
+        steptxt.text = "In this minigame you, the employee, must organize boxes by their value.  \n\nThis value is displayed above the boxes. \n\nYour boss wants you to organize them using Quick Sort!";
+        yield return new WaitForSeconds(speed);
+        steptxt.text = "This tutorial will go through the execution of the game with the correct moves.  \n\nTo swap a box, simply palce both boxes in their respective, correct, positions!";
+        yield return new WaitForSeconds(speed);
+
         yield return StartCoroutine(quickSort(0, b.Length- 1));
         updatePos();
         sorted = true;

@@ -62,7 +62,7 @@ public class BubbleGameTutorial : MonoBehaviour
             b[i].GetComponent<BlockParent>().gravity = false;
             b[i].GetComponent<Rigidbody>().isKinematic = true;
         }
-        steptxt.text = "Welcome!  This tutorial is designed to teach you play this interactive minigame." + "\n\nIf the block is Green it is Sorted and can not be interacted with." + "\n\nIf a block is white It must be swapped with the smallest value from the unsorted array.";
+        steptxt.text = "Welcome!  This tutorial is designed to teach you play this interactive minigame." + "\n\nIf the block is Green it is Sorted and can not be interacted with." + "\n\nIf a block is white or non colored, It must be swapped with the smallest adjacent value from the unsorted array.";
         updatePos();
         sorted = false;
         co = StartCoroutine(Bubblechecksort());
@@ -80,6 +80,7 @@ public class BubbleGameTutorial : MonoBehaviour
     {
         if (sorted)
         {
+            steptxt.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Bubble Sort Operates." + "\nThe Algorithm Swaps the largest vaues to mvoe them to the right and locks their positions.";
             IndexToSwap = 0;
             NextSmallesIndex = 0;
         }
@@ -105,7 +106,7 @@ public class BubbleGameTutorial : MonoBehaviour
         tempnumj = j;
 
         float tran3 = pos[i].transform.position.y + 1f;
-        float tran4 = pos[j].transform.position.y - 1f;
+        float tran4 = pos[j].transform.position.y + 1f;
         targetTransform = new Vector3(pos[i].transform.position.x, tran3, pos[i].transform.position.z);
         targetTransform2 = new Vector3(pos[j].transform.position.x, tran4, pos[i].transform.position.z);
         moving = true;
@@ -172,6 +173,13 @@ public class BubbleGameTutorial : MonoBehaviour
 
     public IEnumerator Bubblechecksort()
     {
+        steptxt.text = "In this minigame you, the employee, must organize boxes by their value.  \n\nThis value is displayed above the boxes. \n\nYour boss wants you to organize them using Bubble Sort!";
+
+        yield return new WaitForSeconds(speed);
+
+        steptxt.text = "This tutorial will go through the execution of the game with the correct moves.  \n\nTo swap a box, simply palce both boxes in their respective, correct, positions!";
+
+        yield return new WaitForSeconds(speed);
         yield return StartCoroutine(BubbleSort());
         updatePos();
         sorted = true;

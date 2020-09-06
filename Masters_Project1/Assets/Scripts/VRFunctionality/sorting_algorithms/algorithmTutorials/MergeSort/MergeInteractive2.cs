@@ -50,7 +50,7 @@ public class MergeInteractive2 : MonoBehaviour
         if (sorted)
         {
             //EnableTrigger();
-            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Selction Sort Operates." + "\nThe Algorithm locks the positions that have already been sorted, and chooses the next smallest element to swap.";
+            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Merge Sort Operates." + "\nThe Algorithm splits the array into halves and sorts each half one at a time.";
         }
         if (moving)
         {
@@ -108,7 +108,7 @@ public class MergeInteractive2 : MonoBehaviour
 
     public void Begin()
     {
-        Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Selection Sort." + "\nIf the block is blue it is Sorted and can not be interacted with." + "\nIf a block is red It must be swapped with the smallest value from the unsorted array.";
+        Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Merge Sort.";
         for (int i = 0; i < 9; i++)
         {
             int n = UnityEngine.Random.Range(1, 99);
@@ -195,6 +195,13 @@ public class MergeInteractive2 : MonoBehaviour
 
     public IEnumerator Mergechecksort()
     {
+        Step.text = "First merge sort will divide the array into multiple parts." + "\nFirst we will work on the first 2 elements.  Slowly progressign through the first half of the array.";
+        yield return new WaitForSeconds(speed);
+        Step.text = "Next we will find the middle point and right most idnex.  This wills erve as the second half of our array." + "\nWe will use the same steps as before and slowly swap elements that are out of place";
+        yield return new WaitForSeconds(speed);
+        Step.text = "Finally we will finish by merging both the left and right halves of the array and sorting them." + "\nLets see how this works";
+        yield return new WaitForSeconds(speed);
+
         yield return StartCoroutine(mergeSort(0, b.Count - 1));
         updatePos();
         sorted = true;

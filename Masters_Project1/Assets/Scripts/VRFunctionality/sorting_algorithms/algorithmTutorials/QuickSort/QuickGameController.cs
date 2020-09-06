@@ -64,7 +64,7 @@ public class QuickGameController : MonoBehaviour
     {
         numofGames += 1;
         numofGamesText.GetComponent<Text>().text = numofGames.ToString();
-        Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Selection Sort." + "\nIf the block is blue it is Sorted and can not be interacted with." + "\nIf a block is red It must be swapped with the smallest value from the unsorted array.";
+        Step.text = "Welcome!  This tutorial is designed to teach you play this interactive minigame." + "\n\nIf the block is red it is the pivot and will be used to test our array for swaps.";
         for (int i = 0; i < 9; i++)
         {
             previouspi[i] = 0;
@@ -84,7 +84,7 @@ public class QuickGameController : MonoBehaviour
     {
         if (sorted)
         {
-            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Selction Sort Operates." + "\nThe Algorithm locks the positions that have already been sorted, and chooses the next smallest element to swap.";
+            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Quick Sort Operates." + "\nThe Algorithm repeatedly sorts the array around the pivot.  If a value is less than the pviot it will remain on the left branch, otherwise values are compared and swapped until the array is sorted";
             sorted = false;
         }
 
@@ -102,7 +102,7 @@ public class QuickGameController : MonoBehaviour
                     {
                         m_vRController_1.downR = false;
                         m_vRController_1.downL = false;
-                        Step.text = "Incorrect.  The block you attempted to swap was not the smallest value in the unsorted array.";
+                        Step.text = "Incorrect.  The block you attempted to swap was Incorrect.";
                         incorretAnswers++;
                         incorretAnswersText.text = "Incorrect Anwserws = " + incorretAnswers;
                         updatePos();
