@@ -103,8 +103,9 @@ public class MergeGameController : MonoBehaviour
             float dist2;
             if (Larray)
             {
-                dist1 = Vector3.Distance(b[nextToSort].transform.position, L[currentSmallestIndex].transform.position);
-                if (dist1 < .04)
+                dist1 = Vector3.Distance(b[nextToSort].transform.position, L[currentSmallestIndex].GetComponent<BlockParent>().PairedPos.transform.position);
+                dist2 = Vector3.Distance(L[currentSmallestIndex].transform.position, b[nextToSort].GetComponent<BlockParent>().PairedPos.transform.position);
+                if (dist1 < .5)
                 {
                     Debug.Log("Swap");
                     m_vRController_1.downR = false;
@@ -119,38 +120,39 @@ public class MergeGameController : MonoBehaviour
                 {
                     for (int i = 0; i < b.Length; i++)
                     {
-                        for (int j = 0; j < b.Length; j++)
+                        dist1 = Vector3.Distance(b[i].transform.position, L[currentSmallestIndex].GetComponent<BlockParent>().PairedPos.transform.position);
+                        dist2 = Vector3.Distance(L[currentSmallestIndex].transform.position, b[i].GetComponent<BlockParent>().PairedPos.transform.position);
+                        if ((dist1 < .5 && dist1 != 0) || (dist2 < .5 && dist2 != 0))
                         {
-                            dist1 = Vector3.Distance(b[i].transform.position, L[currentSmallestIndex].transform.position);
-                            dist2 = Vector3.Distance(b[nextToSort].transform.position, b[j].transform.position);
-                            if (dist1 < .04 && dist1 != 0)
-                            {
-                                m_vRController_1.downR = false;
-                                m_vRController_1.downL = false;
-                                Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
-                                incorretAnswers++;
-                                incorretAnswersText.text = "Incorrect Anwserws = " + incorretAnswers;
-                                updatePos();
-                                return;
-                            }
-                            if (dist2 < .04 && dist2 != 0)
-                            {
-                                m_vRController_1.downR = false;
-                                m_vRController_1.downL = false;
-                                Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
-                                incorretAnswers++;
-                                incorretAnswersText.text = "Incorrect Anwserws = " + incorretAnswers;
-                                updatePos();
-                                return;
-                            }
+                            m_vRController_1.downR = false;
+                            m_vRController_1.downL = false;
+                            Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
+                            incorretAnswers++;
+                            incorretAnswersText.text = "Incorrect Anwserws = " + incorretAnswers;
+                            updatePos();
+                            return;
+                        }
+
+                        dist1 = Vector3.Distance(b[i].transform.position, b[nextToSort].GetComponent<BlockParent>().PairedPos.transform.position);
+                        dist2 = Vector3.Distance(b[nextToSort].transform.position, b[i].GetComponent<BlockParent>().PairedPos.transform.position);
+                        if ((dist1 < .5 && dist1 != 0) || (dist2 < .5 && dist2 != 0))
+                        {
+                            m_vRController_1.downR = false;
+                            m_vRController_1.downL = false;
+                            Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
+                            incorretAnswers++;
+                            incorretAnswersText.text = "Incorrect Anwserws = " + incorretAnswers;
+                            updatePos();
+                            return;
                         }
                     }
                 }
             }
             else
             {
-                dist1 = Vector3.Distance(b[nextToSort].transform.position, R[currentSmallestIndex].transform.position);
-                if (dist1 < .04)
+                dist1 = Vector3.Distance(b[nextToSort].transform.position, R[currentSmallestIndex].GetComponent<BlockParent>().PairedPos.transform.position);
+                dist2 = Vector3.Distance(R[currentSmallestIndex].transform.position, b[nextToSort].GetComponent<BlockParent>().PairedPos.transform.position);
+                if (dist1 < .5)
                 {
                     Debug.Log("Swap");
                     m_vRController_1.downR = false;
@@ -165,34 +167,79 @@ public class MergeGameController : MonoBehaviour
                 {
                     for (int i = 0; i < b.Length; i++)
                     {
-                        for (int j = 0; j < b.Length; j++)
+                        dist1 = Vector3.Distance(b[i].transform.position, L[currentSmallestIndex].GetComponent<BlockParent>().PairedPos.transform.position);
+                        dist2 = Vector3.Distance(R[currentSmallestIndex].transform.position, b[i].GetComponent<BlockParent>().PairedPos.transform.position);
+                        if ((dist1 < .5 && dist1 != 0) || (dist2 < .5 && dist2 != 0))
                         {
-                            dist1 = Vector3.Distance(b[i].transform.position, R[currentSmallestIndex].transform.position);
-                            dist2 = Vector3.Distance(b[nextToSort].transform.position, b[j].transform.position);
-                            if (dist1 < .04 && dist1 != 0)
-                            {
-                                m_vRController_1.downR = false;
-                                m_vRController_1.downL = false;
-                                Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
-                                incorretAnswers++;
-                                incorretAnswersText.text = "Incorrect Anwserws = " + incorretAnswers;
-                                updatePos();
-                                return;
-                            }
-                            if (dist2 < .04 && dist2 != 0)
-                            {
-                                m_vRController_1.downR = false;
-                                m_vRController_1.downL = false;
-                                Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
-                                incorretAnswers++;
-                                incorretAnswersText.text = "Incorrect Anwserws = " + incorretAnswers;
-                                updatePos();
-                                return;
-                            }
+                            m_vRController_1.downR = false;
+                            m_vRController_1.downL = false;
+                            Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
+                            incorretAnswers++;
+                            incorretAnswersText.text = "Incorrect Anwserws = " + incorretAnswers;
+                            updatePos();
+                            return;
+                        }
+
+                        dist1 = Vector3.Distance(b[i].transform.position, b[nextToSort].GetComponent<BlockParent>().PairedPos.transform.position);
+                        dist2 = Vector3.Distance(b[nextToSort].transform.position, b[i].GetComponent<BlockParent>().PairedPos.transform.position);
+                        if ((dist1 < .5 && dist1 != 0) || (dist2 < .5 && dist2 != 0))
+                        {
+                            m_vRController_1.downR = false;
+                            m_vRController_1.downL = false;
+                            Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
+                            incorretAnswers++;
+                            incorretAnswersText.text = "Incorrect Anwserws = " + incorretAnswers;
+                            updatePos();
+                            return;
                         }
                     }
                 }
             }
+            //{
+            //    dist1 = Vector3.Distance(b[nextToSort].transform.position, R[currentSmallestIndex].transform.position);
+            //    if (dist1 < .04)
+            //    {
+            //        Debug.Log("Swap");
+            //        m_vRController_1.downR = false;
+            //        m_vRController_1.downL = false;
+            //        corretAnswers++;
+            //        corretAnswersText.text = "Correct Anwserws = " + corretAnswers;
+            //        waitingforswap = false;
+            //        updatePos();
+            //        return;
+            //    }
+            //    else
+            //    {
+            //        for (int i = 0; i < b.Length; i++)
+            //        {
+            //            for (int j = 0; j < b.Length; j++)
+            //            {
+            //                dist1 = Vector3.Distance(b[i].transform.position, R[currentSmallestIndex].transform.position);
+            //                dist2 = Vector3.Distance(b[nextToSort].transform.position, b[j].transform.position);
+            //                if (dist1 < .04 && dist1 != 0)
+            //                {
+            //                    m_vRController_1.downR = false;
+            //                    m_vRController_1.downL = false;
+            //                    Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
+            //                    incorretAnswers++;
+            //                    incorretAnswersText.text = "Incorrect Anwserws = " + incorretAnswers;
+            //                    updatePos();
+            //                    return;
+            //                }
+            //                if (dist2 < .04 && dist2 != 0)
+            //                {
+            //                    m_vRController_1.downR = false;
+            //                    m_vRController_1.downL = false;
+            //                    Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
+            //                    incorretAnswers++;
+            //                    incorretAnswersText.text = "Incorrect Anwserws = " + incorretAnswers;
+            //                    updatePos();
+            //                    return;
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
         }
     }
 

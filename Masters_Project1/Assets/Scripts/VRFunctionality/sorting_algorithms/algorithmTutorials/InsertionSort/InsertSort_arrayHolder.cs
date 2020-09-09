@@ -185,35 +185,19 @@ public class InsertSort_arrayHolder : MonoBehaviour
                 image3.SetActive(false);
                 Display(arr3, arr3.Count);
 
-                if (previous)
-                {
-                    goto resume;
-                }
-                if (next)
-                {
-                    goto resume;
-                }
+
                 yield return new WaitForSeconds(speed);
                 if (previous)
                 {
-                    goto resume;
+                    Step.text = "Please wait...";
+                    previous = true;
                 }
                 if (next)
                 {
-                    goto resume;
+                    Step.text = "Please wait...";
+                    next = true;
                 }
-                while (paused)
-                {
-                    yield return null;
-                }
-                if (previous)
-                {
-                    goto resume;
-                }
-                if (next)
-                {
-                    goto resume;
-                }
+
             }
 
             Step.text = "set " + arr3[j+1] + " to " + key;

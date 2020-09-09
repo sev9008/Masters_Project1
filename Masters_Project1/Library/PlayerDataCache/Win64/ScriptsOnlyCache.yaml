@@ -1,15 +1,68 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - AdvanceBubble
+    - AdvanceMerge
+    - AdvanceQuickSort
     - ArrayKeeper
     - BlockParent
+    - BubbleGameController
+    - BubbleGameStartButton
+    - BubbleGameTutorial
+    - BubbleInteractive1
+    - BubbleInteractive1Start
+    - BubbleInteractive2
+    - BubbleInteractive2Start
+    - BubbleSortAni
+    - BubbleSort_arrayHolder
+    - BubbleTutorialButton
     - ButtonTransition
     - Button_pause
     - FindPointerCanvas
+    - GameTutorial
+    - InsertGameController
+    - InsertGameStartButton
+    - InsertGameTutorial
+    - InsertNext
+    - InsertPrevious
+    - InsertSortInteractive1
+    - InsertSortInteractive2
+    - InsertSort_arrayHolder
+    - InsertStartInteractive1
+    - InsertStartInteractive2
+    - InsertTutorialButton
+    - InsertionSortAni
+    - MergeGameController
+    - MergeGameStartButton
+    - MergeGameTutorial
+    - MergeInteractive2
+    - MergeSortAni
+    - MergeSortInteractive1
+    - MergeSort_arrHolder
+    - MergeStartInteractive1
+    - MergeStartInteractive2
+    - MergeTutorialButton
     - MoveInteractionBLock
+    - PauseInsertSort
+    - PauseMergeSort
+    - PauseQuickSort
+    - Pause_BubbleSort
     - Pointer
+    - PreviousBubble
+    - PreviousMerge
+    - PreviousQuickSort
+    - QuickGameController
+    - QuickGameStart
+    - QuickGameTutorial
+    - QuickSortAni
+    - QuickSortInteractive1
+    - QuickSortInteractive2
+    - QuickSort_arrayHolder
+    - QuickTutorialButton
     - RandomNumbers
     - RestartInteractive1
+    - RestartQuickInteractive1
+    - RestartQuickInteractive2
     - SelSortGameController
     - SelectSortPrevious
     - SelectSortnext
@@ -20,8 +73,18 @@ ScriptsOnlyBuild:
     - SlideNext_Button
     - SlideShowController
     - SliderRot
+    - StartBubble
+    - StartBubbleGraphAni
+    - StartButton
+    - StartInsertGraphAni
+    - StartInsertSort
+    - StartMergeSort
+    - StartMergeSortAni
+    - StartQuickSort
+    - StartQuickSortAni
     - StartSelectiongraphani
     - SteamInputModule_tut
+    - TutorialButton
     - VRController_1
     - day_night
     - lookat
@@ -45,12 +108,14 @@ ScriptsOnlyBuild:
     - Valve.VR.SteamVR_Behaviour_Pose
     - Valve.VR.SteamVR_Behaviour_Skeleton
     - Valve.VR.SteamVR_Camera
+    - Valve.VR.SteamVR_Ears
     - Valve.VR.SteamVR_ExternalCamera
     - Valve.VR.SteamVR_PlayArea
     - Valve.VR.SteamVR_RenderModel
     - Valve.VR.SteamVR_Settings
     - Valve.VR.SteamVR_Skeleton_Pose
     - Valve.VR.SteamVR_Skeleton_Poser
+    - Valve.VR.SteamVR_TrackedObject
     Unity.RenderPipelines.Core.Runtime.dll:
     - UnityEngine.Rendering.UI.DebugUIHandlerBitField
     - UnityEngine.Rendering.UI.DebugUIHandlerButton
@@ -79,6 +144,12 @@ ScriptsOnlyBuild:
     - UnityEngine.Rendering.UI.UIFoldout
     Unity.RenderPipelines.Universal.Editor.dll:
     - UnityEditor.Rendering.Universal.UniversalProjectSettings
+    Unity.RenderPipelines.Universal.Runtime.dll:
+    - UnityEngine.Rendering.Universal.ForwardRendererData
+    - UnityEngine.Rendering.Universal.PostProcessData
+    - UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+    - UnityEngine.Rendering.Universal.UniversalRenderPipelineAsset
+    - UnityEngine.Rendering.Universal.UniversalRenderPipelineEditorResources
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
     Unity.TextMeshPro.dll:
@@ -156,197 +227,329 @@ ScriptsOnlyBuild:
     - Class: 109
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11346}
+      Script: {instanceID: 11352}
     - Class: 114
-      Script: {instanceID: 11414}
+      Script: {instanceID: 11354}
     - Class: 114
-      Script: {instanceID: 11482}
+      Script: {instanceID: 11364}
     - Class: 114
-      Script: {instanceID: 11568}
+      Script: {instanceID: 11422}
     - Class: 114
-      Script: {instanceID: 11604}
+      Script: {instanceID: 11480}
     - Class: 114
-      Script: {instanceID: 11626}
+      Script: {instanceID: 11494}
     - Class: 114
-      Script: {instanceID: 11628}
+      Script: {instanceID: 11534}
     - Class: 114
-      Script: {instanceID: 11722}
+      Script: {instanceID: 11582}
     - Class: 114
-      Script: {instanceID: 11726}
+      Script: {instanceID: 11598}
+    - Class: 114
+      Script: {instanceID: 11620}
+    - Class: 114
+      Script: {instanceID: 11632}
+    - Class: 114
+      Script: {instanceID: 11644}
+    - Class: 114
+      Script: {instanceID: 11646}
+    - Class: 114
+      Script: {instanceID: 11680}
+    - Class: 114
+      Script: {instanceID: 11684}
     - Class: 114
       Script: {instanceID: 11746}
     - Class: 114
-      Script: {instanceID: 11786}
+      Script: {instanceID: 11750}
     - Class: 114
-      Script: {instanceID: 11816}
+      Script: {instanceID: 11770}
     - Class: 114
-      Script: {instanceID: 11828}
+      Script: {instanceID: 11788}
     - Class: 114
-      Script: {instanceID: 11860}
+      Script: {instanceID: 11810}
     - Class: 114
-      Script: {instanceID: 11882}
+      Script: {instanceID: 11840}
     - Class: 114
-      Script: {instanceID: 11928}
+      Script: {instanceID: 11852}
     - Class: 114
-      Script: {instanceID: 12002}
+      Script: {instanceID: 11884}
     - Class: 114
-      Script: {instanceID: 12034}
+      Script: {instanceID: 11906}
     - Class: 114
-      Script: {instanceID: 12116}
+      Script: {instanceID: 11946}
     - Class: 114
-      Script: {instanceID: 12396}
+      Script: {instanceID: 11954}
     - Class: 114
-      Script: {instanceID: 12398}
+      Script: {instanceID: 11966}
+    - Class: 114
+      Script: {instanceID: 11984}
+    - Class: 114
+      Script: {instanceID: 12028}
+    - Class: 114
+      Script: {instanceID: 12032}
+    - Class: 114
+      Script: {instanceID: 12044}
+    - Class: 114
+      Script: {instanceID: 12048}
+    - Class: 114
+      Script: {instanceID: 12052}
+    - Class: 114
+      Script: {instanceID: 12070}
+    - Class: 114
+      Script: {instanceID: 12080}
+    - Class: 114
+      Script: {instanceID: 12096}
+    - Class: 114
+      Script: {instanceID: 12110}
+    - Class: 114
+      Script: {instanceID: 12136}
+    - Class: 114
+      Script: {instanceID: 12160}
+    - Class: 114
+      Script: {instanceID: 12258}
+    - Class: 114
+      Script: {instanceID: 12300}
+    - Class: 114
+      Script: {instanceID: 12308}
+    - Class: 114
+      Script: {instanceID: 12336}
+    - Class: 114
+      Script: {instanceID: 12364}
+    - Class: 114
+      Script: {instanceID: 12400}
     - Class: 114
       Script: {instanceID: 12408}
     - Class: 114
-      Script: {instanceID: 12480}
+      Script: {instanceID: 12448}
     - Class: 114
-      Script: {instanceID: 12610}
+      Script: {instanceID: 12450}
     - Class: 114
-      Script: {instanceID: 12614}
+      Script: {instanceID: 12460}
     - Class: 114
-      Script: {instanceID: 12664}
+      Script: {instanceID: 12532}
     - Class: 114
-      Script: {instanceID: 12682}
+      Script: {instanceID: 12662}
     - Class: 114
-      Script: {instanceID: 12796}
+      Script: {instanceID: 12666}
     - Class: 114
-      Script: {instanceID: 12860}
+      Script: {instanceID: 12716}
     - Class: 114
-      Script: {instanceID: 13032}
+      Script: {instanceID: 12734}
     - Class: 114
-      Script: {instanceID: 13080}
+      Script: {instanceID: 12820}
     - Class: 114
-      Script: {instanceID: 13086}
+      Script: {instanceID: 12844}
     - Class: 114
-      Script: {instanceID: 13148}
+      Script: {instanceID: 12850}
     - Class: 114
-      Script: {instanceID: 13168}
+      Script: {instanceID: 12914}
     - Class: 114
-      Script: {instanceID: 13178}
+      Script: {instanceID: 12934}
     - Class: 114
-      Script: {instanceID: 13196}
+      Script: {instanceID: 13066}
     - Class: 114
-      Script: {instanceID: 13240}
+      Script: {instanceID: 13090}
     - Class: 114
-      Script: {instanceID: 13258}
+      Script: {instanceID: 13138}
     - Class: 114
-      Script: {instanceID: 13264}
+      Script: {instanceID: 13144}
     - Class: 114
-      Script: {instanceID: 13302}
+      Script: {instanceID: 13206}
+    - Class: 114
+      Script: {instanceID: 13226}
+    - Class: 114
+      Script: {instanceID: 13236}
+    - Class: 114
+      Script: {instanceID: 13238}
+    - Class: 114
+      Script: {instanceID: 13252}
+    - Class: 114
+      Script: {instanceID: 13256}
+    - Class: 114
+      Script: {instanceID: 13270}
+    - Class: 114
+      Script: {instanceID: 13296}
+    - Class: 114
+      Script: {instanceID: 13304}
+    - Class: 114
+      Script: {instanceID: 13312}
+    - Class: 114
+      Script: {instanceID: 13324}
+    - Class: 114
+      Script: {instanceID: 13330}
     - Class: 114
       Script: {instanceID: 13368}
     - Class: 114
-      Script: {instanceID: 13388}
+      Script: {instanceID: 13370}
     - Class: 114
-      Script: {instanceID: 13474}
+      Script: {instanceID: 13410}
     - Class: 114
-      Script: {instanceID: 13560}
+      Script: {instanceID: 13438}
     - Class: 114
-      Script: {instanceID: 13576}
+      Script: {instanceID: 13440}
     - Class: 114
-      Script: {instanceID: 13592}
+      Script: {instanceID: 13460}
     - Class: 114
-      Script: {instanceID: 13604}
+      Script: {instanceID: 13506}
     - Class: 114
-      Script: {instanceID: 13690}
+      Script: {instanceID: 13538}
     - Class: 114
-      Script: {instanceID: 13738}
+      Script: {instanceID: 13550}
     - Class: 114
-      Script: {instanceID: 13748}
+      Script: {instanceID: 13636}
     - Class: 114
-      Script: {instanceID: 13856}
+      Script: {instanceID: 13652}
     - Class: 114
-      Script: {instanceID: 13900}
+      Script: {instanceID: 13668}
     - Class: 114
-      Script: {instanceID: 13920}
+      Script: {instanceID: 13680}
     - Class: 114
-      Script: {instanceID: 13966}
+      Script: {instanceID: 13696}
     - Class: 114
-      Script: {instanceID: 13968}
+      Script: {instanceID: 13728}
     - Class: 114
-      Script: {instanceID: 13974}
+      Script: {instanceID: 13730}
     - Class: 114
-      Script: {instanceID: 13990}
+      Script: {instanceID: 13744}
     - Class: 114
-      Script: {instanceID: 13996}
+      Script: {instanceID: 13752}
     - Class: 114
-      Script: {instanceID: 14020}
+      Script: {instanceID: 13772}
+    - Class: 114
+      Script: {instanceID: 13820}
+    - Class: 114
+      Script: {instanceID: 13830}
+    - Class: 114
+      Script: {instanceID: 13938}
+    - Class: 114
+      Script: {instanceID: 13982}
+    - Class: 114
+      Script: {instanceID: 14002}
+    - Class: 114
+      Script: {instanceID: 14048}
+    - Class: 114
+      Script: {instanceID: 14050}
+    - Class: 114
+      Script: {instanceID: 14056}
+    - Class: 114
+      Script: {instanceID: 14072}
+    - Class: 114
+      Script: {instanceID: 14078}
+    - Class: 114
+      Script: {instanceID: 14098}
     - Class: 114
       Script: {instanceID: 14104}
     - Class: 114
-      Script: {instanceID: 14110}
+      Script: {instanceID: 14188}
     - Class: 114
-      Script: {instanceID: 14138}
+      Script: {instanceID: 14194}
     - Class: 114
-      Script: {instanceID: 14146}
+      Script: {instanceID: 14222}
     - Class: 114
-      Script: {instanceID: 14152}
+      Script: {instanceID: 14230}
     - Class: 114
-      Script: {instanceID: 14172}
+      Script: {instanceID: 14234}
     - Class: 114
-      Script: {instanceID: 14180}
+      Script: {instanceID: 14238}
     - Class: 114
-      Script: {instanceID: 14288}
+      Script: {instanceID: 14258}
     - Class: 114
-      Script: {instanceID: 14420}
+      Script: {instanceID: 14266}
     - Class: 114
-      Script: {instanceID: 14452}
+      Script: {instanceID: 14292}
     - Class: 114
-      Script: {instanceID: 14530}
+      Script: {instanceID: 14302}
     - Class: 114
-      Script: {instanceID: 14546}
+      Script: {instanceID: 14356}
     - Class: 114
-      Script: {instanceID: 14612}
+      Script: {instanceID: 14380}
     - Class: 114
-      Script: {instanceID: 14640}
+      Script: {instanceID: 14386}
     - Class: 114
-      Script: {instanceID: 14694}
+      Script: {instanceID: 14458}
     - Class: 114
-      Script: {instanceID: 14734}
+      Script: {instanceID: 14516}
+    - Class: 114
+      Script: {instanceID: 14548}
+    - Class: 114
+      Script: {instanceID: 14594}
+    - Class: 114
+      Script: {instanceID: 14628}
+    - Class: 114
+      Script: {instanceID: 14644}
+    - Class: 114
+      Script: {instanceID: 14650}
+    - Class: 114
+      Script: {instanceID: 14710}
+    - Class: 114
+      Script: {instanceID: 14738}
+    - Class: 114
+      Script: {instanceID: 14792}
+    - Class: 114
+      Script: {instanceID: 14814}
     - Class: 114
       Script: {instanceID: 14828}
     - Class: 114
-      Script: {instanceID: 14862}
+      Script: {instanceID: 14834}
     - Class: 114
-      Script: {instanceID: 14870}
+      Script: {instanceID: 14852}
     - Class: 114
-      Script: {instanceID: 14916}
+      Script: {instanceID: 14864}
     - Class: 114
-      Script: {instanceID: 14944}
+      Script: {instanceID: 14874}
     - Class: 114
-      Script: {instanceID: 15062}
+      Script: {instanceID: 14882}
     - Class: 114
-      Script: {instanceID: 15114}
+      Script: {instanceID: 14936}
     - Class: 114
-      Script: {instanceID: 15206}
+      Script: {instanceID: 14970}
     - Class: 114
-      Script: {instanceID: 15250}
+      Script: {instanceID: 14978}
     - Class: 114
-      Script: {instanceID: 15334}
+      Script: {instanceID: 15024}
     - Class: 114
-      Script: {instanceID: 15336}
+      Script: {instanceID: 15038}
     - Class: 114
-      Script: {instanceID: 15388}
+      Script: {instanceID: 15054}
     - Class: 114
-      Script: {instanceID: 15390}
+      Script: {instanceID: 15074}
     - Class: 114
-      Script: {instanceID: 15426}
+      Script: {instanceID: 15168}
     - Class: 114
-      Script: {instanceID: 15430}
+      Script: {instanceID: 15174}
     - Class: 114
-      Script: {instanceID: 15442}
+      Script: {instanceID: 15226}
     - Class: 114
-      Script: {instanceID: 15470}
+      Script: {instanceID: 15284}
     - Class: 114
-      Script: {instanceID: 15476}
+      Script: {instanceID: 15320}
     - Class: 114
-      Script: {instanceID: 15478}
+      Script: {instanceID: 15364}
     - Class: 114
-      Script: {instanceID: 15520}
+      Script: {instanceID: 15448}
     - Class: 114
-      Script: {instanceID: 15526}
+      Script: {instanceID: 15450}
+    - Class: 114
+      Script: {instanceID: 15502}
+    - Class: 114
+      Script: {instanceID: 15504}
+    - Class: 114
+      Script: {instanceID: 15540}
+    - Class: 114
+      Script: {instanceID: 15544}
+    - Class: 114
+      Script: {instanceID: 15556}
+    - Class: 114
+      Script: {instanceID: 15584}
+    - Class: 114
+      Script: {instanceID: 15590}
+    - Class: 114
+      Script: {instanceID: 15592}
+    - Class: 114
+      Script: {instanceID: 15634}
+    - Class: 114
+      Script: {instanceID: 15636}
+    - Class: 114
+      Script: {instanceID: 15642}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
@@ -390,6 +593,12 @@ ScriptsOnlyBuild:
     assemblyName: SteamVR.dll
     namespaceName: Valve.VR.InteractionSystem
     className: LinearAnimation
+  - hash:
+      serializedVersion: 2
+      Hash: aa2471144b435361088fd49e1793c30c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: QuickSortInteractive2
   - hash:
       serializedVersion: 2
       Hash: 6adee554954584b0047fa1955f259d15
@@ -446,6 +655,18 @@ ScriptsOnlyBuild:
     className: TMP_Dropdown
   - hash:
       serializedVersion: 2
+      Hash: dda6a2216fa5e955d3d858be56ce176c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PointerV2
+  - hash:
+      serializedVersion: 2
+      Hash: 2ffc85c1bb63ed9823f17d3b29c1803b
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BubbleInteractive2Start
+  - hash:
+      serializedVersion: 2
       Hash: 64f8f2a126159fc63ec6d58b6751945b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -468,6 +689,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Button_Close
+  - hash:
+      serializedVersion: 2
+      Hash: fe53ad1853efb2d0eec1fee465afe705
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: InsertTutorialButton
   - hash:
       serializedVersion: 2
       Hash: 8528d6b2bf8de7e441f1c781a2231062
@@ -500,6 +727,12 @@ ScriptsOnlyBuild:
     className: TMP_ScrollbarEventHandler
   - hash:
       serializedVersion: 2
+      Hash: a69f8926ae245c1a41a1ed4e3325d599
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MergeSortInteractive1
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: SteamVR.dll
     namespaceName: Valve.VR
@@ -510,6 +743,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.RenderPipelines.Core.Runtime.dll
     namespaceName: UnityEngine.Rendering.UI
     className: DebugUIHandlerPersistentCanvas
+  - hash:
+      serializedVersion: 2
+      Hash: 190219df986392e88a32b81c618a9894
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: QuickGameTutorial
   - hash:
       serializedVersion: 2
       Hash: e9f3da6fb043ba55c5686b2625010fb8
@@ -524,7 +763,7 @@ ScriptsOnlyBuild:
     className: DebugUIHandlerVBox
   - hash:
       serializedVersion: 2
-      Hash: 6018b0ba79d3434d61886f01610fc4c5
+      Hash: d64313e3abbbec5826ead68ac80d16e2
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SlesortInteractive1
@@ -548,10 +787,28 @@ ScriptsOnlyBuild:
     className: GroupTrack
   - hash:
       serializedVersion: 2
+      Hash: fa888f51b4d16667e24e76a8ab03cbf6
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: GameTutorial
+  - hash:
+      serializedVersion: 2
+      Hash: 522e795b2891638641594012cfb42641
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: InsertPrevious
+  - hash:
+      serializedVersion: 2
       Hash: 5fcd6c83f4b9ef27fbcf701cc39abb93
     assemblyName: Unity.RenderPipelines.Universal.Runtime.dll
     namespaceName: UnityEngine.Rendering.Universal
     className: Bloom
+  - hash:
+      serializedVersion: 2
+      Hash: 2f91dab3f3a29d6446b5f982fa94341a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: StartInsertionGraphAni
   - hash:
       serializedVersion: 2
       Hash: a5781dc71a671b1ad2b38de19f24b71f
@@ -596,7 +853,7 @@ ScriptsOnlyBuild:
     className: SteamVR_LaserPointer
   - hash:
       serializedVersion: 2
-      Hash: c5428d8c5a055daa36a35eafc4e07681
+      Hash: 2d913d81cc18b7751af73e38dd653cdb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Pause_BubbleSort
@@ -668,7 +925,7 @@ ScriptsOnlyBuild:
     className: TMP_InputField
   - hash:
       serializedVersion: 2
-      Hash: 890f7f1f543d8ddb0e7834ca8c22f3fd
+      Hash: dec2dd5bf7859e7c38540b01e23d9e17
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: BlockParent
@@ -684,6 +941,12 @@ ScriptsOnlyBuild:
     assemblyName: SteamVR.dll
     namespaceName: Valve.VR.InteractionSystem
     className: BodyCollider
+  - hash:
+      serializedVersion: 2
+      Hash: 04c5bf01377ebd90684ded0c0562771b
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: RestartQuickInteractive1
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -704,7 +967,7 @@ ScriptsOnlyBuild:
     className: SteamVR_Settings
   - hash:
       serializedVersion: 2
-      Hash: 404a0161c171578d5fe25387aad646b1
+      Hash: 0f94476eb6e909d24488013628255a34
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: StartMergeSort
@@ -714,6 +977,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.RenderPipelines.Universal.Runtime.dll
     namespaceName: UnityEngine.Rendering.Universal
     className: ColorCurves
+  - hash:
+      serializedVersion: 2
+      Hash: ef1dd8579c1120b5d7cffb73d25b9760
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MergeInteractive2
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -728,6 +997,12 @@ ScriptsOnlyBuild:
     className: SteamVR_Behaviour_Boolean
   - hash:
       serializedVersion: 2
+      Hash: 98d247faabf5e2fb3b928c92e37202f9
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: QuickSortAni
+  - hash:
+      serializedVersion: 2
       Hash: 8aa3d6ccbcb54ee8db6c1229854adaaa
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -738,6 +1013,24 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: SignalAsset
+  - hash:
+      serializedVersion: 2
+      Hash: 90f8583c386820784e3fdca246f49758
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: QuickGameController
+  - hash:
+      serializedVersion: 2
+      Hash: 73066741ada0407a0cea990a61f1788d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MergeGameStartButton
+  - hash:
+      serializedVersion: 2
+      Hash: bf6596505afa947c36e1ef08ff98f3ce
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: StartBubbleGraphAni
   - hash:
       serializedVersion: 2
       Hash: 2e4d26187828ec6fc78fe78f0712f15b
@@ -758,10 +1051,34 @@ ScriptsOnlyBuild:
     className: PhysicsRaycaster
   - hash:
       serializedVersion: 2
+      Hash: 7c1628634acb6302bb5e640066287c91
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: InsertGameController
+  - hash:
+      serializedVersion: 2
+      Hash: 16607eaf02df682adc2cb0d5d3918417
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: AdvanceQuickSort
+  - hash:
+      serializedVersion: 2
       Hash: 18628813c7aad3d4328ffde18c4d9d59
     assemblyName: SteamVR.dll
     namespaceName: Valve.VR.InteractionSystem.Sample
     className: JoeJeffController
+  - hash:
+      serializedVersion: 2
+      Hash: 4c591d92c56e18f592be506ba4cce55d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: InsertSortInteractive2
+  - hash:
+      serializedVersion: 2
+      Hash: 281b764d233a7cb7149599545bc14e48
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MergeStartInteractive2
   - hash:
       serializedVersion: 2
       Hash: a01f5fdb7bcdde54e45412c1be54d990
@@ -824,6 +1141,12 @@ ScriptsOnlyBuild:
     className: RectMask2D
   - hash:
       serializedVersion: 2
+      Hash: 3d644696c43739da87b5641b6c6e047c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: QuickGameStart
+  - hash:
+      serializedVersion: 2
       Hash: d941ab6dd93d37ffdf2277f2ea2375a0
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -836,13 +1159,25 @@ ScriptsOnlyBuild:
     className: VRback2
   - hash:
       serializedVersion: 2
+      Hash: 4743212bd00c497c7dd43456edb98d8f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: StartInsertGraphAni
+  - hash:
+      serializedVersion: 2
+      Hash: 73066741ada0407a0cea990a61f1788d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MergeTutorialButton
+  - hash:
+      serializedVersion: 2
       Hash: 8f8cbabafb472772e0aa9da19e8ed009
     assemblyName: SteamVR.dll
     namespaceName: Valve.VR
     className: SteamVR_IK
   - hash:
       serializedVersion: 2
-      Hash: a8a56bcb9514b33c469e31e8471de57f
+      Hash: 9e4903204f2aef6e6710c694ed82c2bb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: StartInsertSort
@@ -876,6 +1211,12 @@ ScriptsOnlyBuild:
     assemblyName: SteamVR.dll
     namespaceName: Valve.VR.InteractionSystem
     className: InteractableDebug
+  - hash:
+      serializedVersion: 2
+      Hash: 613450cc4283a7c07e35f3a98adf4290
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BubbleGameStartButton
   - hash:
       serializedVersion: 2
       Hash: eb229c6d50b852c329bee0df4153ef20
@@ -1010,6 +1351,12 @@ ScriptsOnlyBuild:
     className: TMP_SpriteAsset
   - hash:
       serializedVersion: 2
+      Hash: f3ccaeb15bc251af81d1dffd9070e313
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: AdvanceBubble
+  - hash:
+      serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -1022,7 +1369,7 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
-      Hash: c496f1e672b3441055face0abc13c224
+      Hash: b8dfe7351d0f8dd6f7160b2dad8eb245
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: InsertSort_arrayHolder
@@ -1056,6 +1403,12 @@ ScriptsOnlyBuild:
     assemblyName: SteamVR.dll
     namespaceName: Valve.VR.InteractionSystem
     className: TeleportPoint
+  - hash:
+      serializedVersion: 2
+      Hash: 4a799ec3f3171d3a955f1a1ce293bcc7
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: InsertGameTutorial
   - hash:
       serializedVersion: 2
       Hash: eade5a5efd53b0e50dfe8fb48b76f0f7
@@ -1116,6 +1469,12 @@ ScriptsOnlyBuild:
     assemblyName: SteamVR.dll
     namespaceName: Valve.VR.InteractionSystem
     className: SnapTurn
+  - hash:
+      serializedVersion: 2
+      Hash: 35b87b063758269ab9d8b2ddcb4d5a73
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MergeGameTutorial
   - hash:
       serializedVersion: 2
       Hash: 5e1eefcd5106de6c2e85908a3b2d3f04
@@ -1202,6 +1561,12 @@ ScriptsOnlyBuild:
     className: RestartInteractive1
   - hash:
       serializedVersion: 2
+      Hash: 2698043f88e415a15feb1b7ea45af627
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: StartBubble
+  - hash:
+      serializedVersion: 2
       Hash: 88c7d6b0daf65dd194dfaf4d26206352
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1238,6 +1603,12 @@ ScriptsOnlyBuild:
     className: SignalTrack
   - hash:
       serializedVersion: 2
+      Hash: 16607eaf02df682adc2cb0d5d3918417
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PreviousQuickSort
+  - hash:
+      serializedVersion: 2
       Hash: 68b3341b9d1eefc68ec50eee1555ebae
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1248,6 +1619,12 @@ ScriptsOnlyBuild:
     assemblyName: SteamVR.dll
     namespaceName: Valve.VR.InteractionSystem
     className: IgnoreTeleportTrace
+  - hash:
+      serializedVersion: 2
+      Hash: 52be5110aa813baf9e838b03520b2df2
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PauseMergeSort
   - hash:
       serializedVersion: 2
       Hash: fa320d061ef45e1933fde25e50bb37ed
@@ -1262,6 +1639,12 @@ ScriptsOnlyBuild:
     className: SkeletonUIOptions
   - hash:
       serializedVersion: 2
+      Hash: 6dba06da27a39d5664e6dbd2029b5863
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: QuickSortInteractive1
+  - hash:
+      serializedVersion: 2
       Hash: 55b407e9077bd3514ce410d659add1b0
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1272,6 +1655,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.RenderPipelines.Core.Runtime.dll
     namespaceName: UnityEngine.Rendering.UI
     className: DebugUIHandlerToggleHistory
+  - hash:
+      serializedVersion: 2
+      Hash: 1af406ca41b7c07119739ba2a0a850dd
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TutorialButton
   - hash:
       serializedVersion: 2
       Hash: ad8fccd69d05122ba3739b6b7ad0c2b2
@@ -1296,6 +1685,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_SpriteAnimator
+  - hash:
+      serializedVersion: 2
+      Hash: 1af406ca41b7c07119739ba2a0a850dd
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: StartButton
   - hash:
       serializedVersion: 2
       Hash: fa5d069645c5f38a362924187ca1cb5d
@@ -1328,6 +1723,12 @@ ScriptsOnlyBuild:
     className: SteamVR_Behaviour_Skeleton
   - hash:
       serializedVersion: 2
+      Hash: 522e795b2891638641594012cfb42641
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: InsertNext
+  - hash:
+      serializedVersion: 2
       Hash: 2fa405fd598b8a89245b3c78c55e9904
     assemblyName: SteamVR.dll
     namespaceName: Valve.VR.InteractionSystem
@@ -1350,6 +1751,18 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
     className: RemoteTestResultSender
+  - hash:
+      serializedVersion: 2
+      Hash: 98d247faabf5e2fb3b928c92e37202f9
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BubbleSortAni
+  - hash:
+      serializedVersion: 2
+      Hash: 613450cc4283a7c07e35f3a98adf4290
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BubbleTutorialButton
   - hash:
       serializedVersion: 2
       Hash: 8bb7e5d3b3fe15b81f2bbdcb2372b1c6
@@ -1406,7 +1819,7 @@ ScriptsOnlyBuild:
     className: Button
   - hash:
       serializedVersion: 2
-      Hash: df2d2a788cdbae8ddd0b6c78db10b021
+      Hash: e4bd23bbf7650ebd4afa71ee5a9c86ca
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: VRController_1
@@ -1436,6 +1849,12 @@ ScriptsOnlyBuild:
     className: ColorLookup
   - hash:
       serializedVersion: 2
+      Hash: a1c7e9548dc4ee9f5a31050fe5936bea
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: InsertSortInteractive1
+  - hash:
+      serializedVersion: 2
       Hash: 4c128527affe5849820ed3dec75f6027
     assemblyName: SteamVR.dll
     namespaceName: Valve.VR.InteractionSystem
@@ -1448,13 +1867,25 @@ ScriptsOnlyBuild:
     className: DebugUIHandlerWidget
   - hash:
       serializedVersion: 2
+      Hash: 81f601aa974e067893ab4cdd903faacc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BubbleInteractive1Start
+  - hash:
+      serializedVersion: 2
       Hash: 8eb3a5f0b7fd900742b16e7776e2275b
     assemblyName: SteamVR.dll
     namespaceName: Valve.VR
     className: SteamVR_TrackedObject
   - hash:
       serializedVersion: 2
-      Hash: 2f2ad275a7d7fd3eee3fa9a4586a4a45
+      Hash: 4b8af1e6b8f5ebb28d4b721ed62f1a5a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: AdvanceMerge
+  - hash:
+      serializedVersion: 2
+      Hash: 9707764647a880b01eb81ed53cb40b84
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MergeSort_arrHolder
@@ -1466,7 +1897,7 @@ ScriptsOnlyBuild:
     className: SoundBowClick
   - hash:
       serializedVersion: 2
-      Hash: 1dbaf5259699af855f8ecac288c28cd2
+      Hash: 474663f80472bac7e066b3e86112c4a2
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ArrayKeeper
@@ -1628,7 +2059,13 @@ ScriptsOnlyBuild:
     className: SteamVR_TestTrackedCamera
   - hash:
       serializedVersion: 2
-      Hash: 01e558e7188d8f40cbda8fbf0db0bc90
+      Hash: e5e1be3f91ba0358133b960c4d1e59a0
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BubbleGameTutorial
+  - hash:
+      serializedVersion: 2
+      Hash: 6033a9777c30f828f26720cb1952826c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: FindPointerCanvas
@@ -1700,6 +2137,12 @@ ScriptsOnlyBuild:
     className: SteamVR_PlayArea
   - hash:
       serializedVersion: 2
+      Hash: 6db4ea5fde01387963f9d89178e7abe1
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: StartMergeSortAni
+  - hash:
+      serializedVersion: 2
       Hash: 26fe8d64d18a6adb64611d959c11fe05
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1742,10 +2185,22 @@ ScriptsOnlyBuild:
     className: SteamVR_Overlay
   - hash:
       serializedVersion: 2
+      Hash: 4b8af1e6b8f5ebb28d4b721ed62f1a5a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PreviousMerge
+  - hash:
+      serializedVersion: 2
       Hash: 9e9f97e029dbf3ae34e4f8f1aabde748
     assemblyName: SteamVR.dll
     namespaceName: Valve.VR.InteractionSystem.Sample
     className: trackCam
+  - hash:
+      serializedVersion: 2
+      Hash: cb1a697ae734c8dd97689bb04d2b835f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: InsertStartInteractive1
   - hash:
       serializedVersion: 2
       Hash: 35192af4bda4142f0dc2ca7f06090c8e
@@ -1784,6 +2239,12 @@ ScriptsOnlyBuild:
     className: HandPhysics
   - hash:
       serializedVersion: 2
+      Hash: 98d247faabf5e2fb3b928c92e37202f9
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: InsertionSortAni
+  - hash:
+      serializedVersion: 2
       Hash: 23b81d05a0ad0499613fc3e1a4a0501b
     assemblyName: Unity.RenderPipelines.Universal.Runtime.dll
     namespaceName: UnityEngine.Rendering.Universal
@@ -1806,6 +2267,18 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: pressedpop
+  - hash:
+      serializedVersion: 2
+      Hash: 841341dfc1897318790b2dde48aa2cf3
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: StartQuickSortAni
+  - hash:
+      serializedVersion: 2
+      Hash: 5372a3671bb7308d0541d6c9b819e656
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: RestartQuickInteractive2
   - hash:
       serializedVersion: 2
       Hash: 5ffe9fc605b635c66264c1090e3433e7
@@ -1856,6 +2329,12 @@ ScriptsOnlyBuild:
     className: ArrowheadRotation
   - hash:
       serializedVersion: 2
+      Hash: d8dd3c0df153b22beedd4d750eac5f93
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BubbleInteractive2
+  - hash:
+      serializedVersion: 2
       Hash: f336e086360abe49a3323e5f1583c35a
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -1886,7 +2365,7 @@ ScriptsOnlyBuild:
     className: GraphicRaycaster
   - hash:
       serializedVersion: 2
-      Hash: 84566f494b171b7739cfe08a603de7db
+      Hash: da08a1ae48806a0490b369e3fb83a280
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: BubbleSort_arrayHolder
@@ -1946,10 +2425,16 @@ ScriptsOnlyBuild:
     className: SelectSortnext
   - hash:
       serializedVersion: 2
-      Hash: e21c045c89298e844f01e6caee82f6ed
+      Hash: 13f92324868ffae22f07435e46cc78cb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: StartQuickSort
+  - hash:
+      serializedVersion: 2
+      Hash: c0cad990cb4d4751f79d04cc0864f804
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BubbleInteractive1
   - hash:
       serializedVersion: 2
       Hash: 96da068d974cf8acaa9fb2f198864139
@@ -1962,6 +2447,30 @@ ScriptsOnlyBuild:
     assemblyName: SteamVR.dll
     namespaceName: Valve.VR
     className: SteamVR_ExternalCamera
+  - hash:
+      serializedVersion: 2
+      Hash: 4d9e2e4d147272ea39c2043e52178554
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MergeStartInteractive1
+  - hash:
+      serializedVersion: 2
+      Hash: f5de141b2473f33db44c89b0d473ecbb
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: InsertStartInteractive2
+  - hash:
+      serializedVersion: 2
+      Hash: 98d247faabf5e2fb3b928c92e37202f9
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MergeSortAni
+  - hash:
+      serializedVersion: 2
+      Hash: f3ccaeb15bc251af81d1dffd9070e313
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PreviousBubble
   - hash:
       serializedVersion: 2
       Hash: 36112b0a16753cab0931521e4de67ef6
@@ -2024,10 +2533,22 @@ ScriptsOnlyBuild:
     className: TMP_StyleSheet
   - hash:
       serializedVersion: 2
+      Hash: fe53ad1853efb2d0eec1fee465afe705
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: InsertGameStartButton
+  - hash:
+      serializedVersion: 2
       Hash: 187c36716970063ea589d7bac045c8ff
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: pressed2
+  - hash:
+      serializedVersion: 2
+      Hash: 9ce9250a131a023833d71a3d5bf0af59
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BubbleGameController
   - hash:
       serializedVersion: 2
       Hash: 60cbe3de757929cfb039821828987e3a
@@ -2048,7 +2569,7 @@ ScriptsOnlyBuild:
     className: ShadowCaster2D
   - hash:
       serializedVersion: 2
-      Hash: 276ed27be0291c9ff05cc01b28e91ad4
+      Hash: 9707764647a880b01eb81ed53cb40b84
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: QuickSort_arrayHolder
@@ -2096,6 +2617,12 @@ ScriptsOnlyBuild:
     className: SceneRenderPipeline
   - hash:
       serializedVersion: 2
+      Hash: 3d644696c43739da87b5641b6c6e047c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: QuickTutorialButton
+  - hash:
+      serializedVersion: 2
       Hash: 84a3e4e0d25666c0e73413aed3a9552e
     assemblyName: SteamVR.dll
     namespaceName: Valve.VR.InteractionSystem
@@ -2108,7 +2635,7 @@ ScriptsOnlyBuild:
     className: PlayModeRunnerCallback
   - hash:
       serializedVersion: 2
-      Hash: c368bb2c68372ac028d301d3bb36010e
+      Hash: 77fc14c26d86b6577f8e5cea0d44d637
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SelSortGameController
@@ -2270,7 +2797,7 @@ ScriptsOnlyBuild:
     className: Slider
   - hash:
       serializedVersion: 2
-      Hash: 920c5188ac569d55ab57d8c6f58708e3
+      Hash: 414febfd0a64aaa12863dbb3c62a2e42
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MoveInteractionBLock
@@ -2328,6 +2855,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.RenderPipelines.Core.Runtime.dll
     namespaceName: UnityEngine.Rendering.UI
     className: DebugUIHandlerContainer
+  - hash:
+      serializedVersion: 2
+      Hash: da65febf174defcdcd5c26728e014cae
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MergeGameController
   - hash:
       serializedVersion: 2
       Hash: 8d35f16c5022311c6f4d9432be73bfcf

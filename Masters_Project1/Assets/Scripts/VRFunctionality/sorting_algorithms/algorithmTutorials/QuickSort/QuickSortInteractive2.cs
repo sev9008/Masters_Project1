@@ -24,6 +24,8 @@ public class QuickSortInteractive2 : MonoBehaviour
 
     Coroutine co;
     Coroutine sho;
+    Coroutine lo;
+    Coroutine bo;
 
     public int speed;
     public int smooth;
@@ -73,6 +75,16 @@ public class QuickSortInteractive2 : MonoBehaviour
 
     public void Begin()
     {
+        try
+        {
+            moving = false;
+            StopCoroutine(co);
+            StopCoroutine(sho);
+            StopCoroutine(lo);
+            StopCoroutine(bo);
+            updatePos();
+        }
+        catch { }
         Step.text = "Welcome!  This tutorial is designed to teach you play this interactive minigame." + "\n\nIf the block is red it is the pivot and will be used to test our array for swaps.";
         for (int i = 0; i < 9; i++)
         {
@@ -83,7 +95,7 @@ public class QuickSortInteractive2 : MonoBehaviour
         }
         updatePos();
         sorted = false;
-        StartCoroutine(Quick());
+        co = StartCoroutine(Quick());
     }
 
     
@@ -137,7 +149,7 @@ public class QuickSortInteractive2 : MonoBehaviour
         yield return new WaitForSeconds(speed);
 
 
-        yield return StartCoroutine(quickSort(0, b.Count - 1));
+        yield return sho = StartCoroutine(quickSort(0, b.Count - 1));
         updatePos();
         sorted = true;
         EnableTrigger(0, 0);
@@ -150,9 +162,9 @@ public class QuickSortInteractive2 : MonoBehaviour
             EnableTrigger(l,h);
             //yield return new WaitForSeconds(speed);
 
-            yield return StartCoroutine(partition(l, h));
-            yield return StartCoroutine(quickSort(l, pi - 1));
-            yield return StartCoroutine(quickSort(pi + 1, h));
+            yield return lo = StartCoroutine(partition(l, h));
+            yield return sho = StartCoroutine(quickSort(l, pi - 1));
+            yield return sho = StartCoroutine(quickSort(pi + 1, h));
         }
     }
 
@@ -166,13 +178,13 @@ public class QuickSortInteractive2 : MonoBehaviour
             if (temp < pivot)
             {
                 i++;
-                yield return StartCoroutine(SwapAnimation(i, j));
+                yield return bo = StartCoroutine(SwapAnimation(i, j));
                 GameObject temp3 = b[i];
                 b[i] = b[j];
                 b[j] = temp3;
             }
         }
-        yield return StartCoroutine(SwapAnimation(i+1, h));
+        yield return bo = StartCoroutine(SwapAnimation(i+1, h));
         GameObject temp1 = b[i + 1];
         b[i + 1] = b[h];
         b[h] = temp1;

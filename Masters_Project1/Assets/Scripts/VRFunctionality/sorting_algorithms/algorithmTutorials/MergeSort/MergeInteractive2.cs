@@ -29,6 +29,10 @@ public class MergeInteractive2 : MonoBehaviour
     public bool moving;
     public bool moving2;
 
+    Coroutine co;
+    Coroutine sho;
+    Coroutine lo;
+
     public Vector2 targetTransform;
     public Vector2 targetTransform2;
 
@@ -108,6 +112,15 @@ public class MergeInteractive2 : MonoBehaviour
 
     public void Begin()
     {
+        try
+        {
+            moving = false;
+            StopCoroutine(co);
+            StopCoroutine(sho);
+            StopCoroutine(lo);
+            updatePos();
+        }
+        catch { }
         Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Merge Sort.";
         for (int i = 0; i < 9; i++)
         {
@@ -117,7 +130,7 @@ public class MergeInteractive2 : MonoBehaviour
         }
         updatePos();
         sorted = false;
-        StartCoroutine(Mergechecksort());
+        co = StartCoroutine(Mergechecksort());
     }
 
 
@@ -202,7 +215,7 @@ public class MergeInteractive2 : MonoBehaviour
         Step.text = "Finally we will finish by merging both the left and right halves of the array and sorting them." + "\nLets see how this works";
         yield return new WaitForSeconds(speed);
 
-        yield return StartCoroutine(mergeSort(0, b.Count - 1));
+        yield return lo = StartCoroutine(mergeSort(0, b.Count - 1));
         updatePos();
         sorted = true;
         EnableTrigger(0, 9);
@@ -249,7 +262,7 @@ public class MergeInteractive2 : MonoBehaviour
             {
                 Larray = true;
                 L[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
-                yield return StartCoroutine(SwapAnimation(k, i));
+                yield return  sho = StartCoroutine(SwapAnimation(k, i));
                 b[k] = L[i];
                 i++;
             }
@@ -257,7 +270,7 @@ public class MergeInteractive2 : MonoBehaviour
             {
                 Larray = false;
                 R[j].GetComponentInChildren<MeshRenderer>().material = Nextsort;
-                yield return StartCoroutine(SwapAnimation(k, j));
+                yield return sho = StartCoroutine(SwapAnimation(k, j));
                 b[k] = R[j];
                 j++;
             }
@@ -268,7 +281,7 @@ public class MergeInteractive2 : MonoBehaviour
         {
             Larray = true;
             L[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
-            yield return StartCoroutine(SwapAnimation(k, i));
+            yield return sho = StartCoroutine(SwapAnimation(k, i));
             b[k] = L[i];
             i++;
             k++;
@@ -277,12 +290,12 @@ public class MergeInteractive2 : MonoBehaviour
         {
             Larray = false;
             R[j].GetComponentInChildren<MeshRenderer>().material = Nextsort;
-            yield return StartCoroutine(SwapAnimation(k, j));
+            yield return sho = StartCoroutine(SwapAnimation(k, j));
             b[k] = R[j];
             j++;
             k++;
         }
-        yield return StartCoroutine(Fallin());
+        yield return sho = StartCoroutine(Fallin());
         updatePos();
         yield return new WaitForSeconds(speed);
     }

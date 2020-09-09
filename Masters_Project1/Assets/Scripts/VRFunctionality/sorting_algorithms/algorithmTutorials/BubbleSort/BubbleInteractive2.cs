@@ -22,6 +22,7 @@ public class BubbleInteractive2 : MonoBehaviour
 
     Coroutine co;
     Coroutine sho;
+    Coroutine lo;
 
     public int speed;
     public int smooth;
@@ -66,6 +67,15 @@ public class BubbleInteractive2 : MonoBehaviour
 
     public void Begin()
     {
+        try
+        {
+            moving = false;
+            StopCoroutine(co);
+            StopCoroutine(sho);
+            StopCoroutine(lo);
+            updatePos();
+        }
+        catch { }
         Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Bubble Sort.";
         for (int i = 0; i < 9; i++)
         {
@@ -75,7 +85,7 @@ public class BubbleInteractive2 : MonoBehaviour
         }
         updatePos();
         sorted = false;
-        StartCoroutine(Bubblechecksort());
+        co = StartCoroutine(Bubblechecksort());
     }
     public void updatePos()
     {
@@ -153,7 +163,7 @@ public class BubbleInteractive2 : MonoBehaviour
         Step.text = "Once you hit the end of the array, return to the front and repeat the above steps.";
         yield return new WaitForSeconds(speed);
 
-        yield return StartCoroutine(BubbleSort());
+        yield return sho = StartCoroutine(BubbleSort());
         updatePos();
         sorted = true;
         EnableTrigger(-1, -1);
@@ -171,7 +181,7 @@ public class BubbleInteractive2 : MonoBehaviour
                 if (temp > temp2)
                 {
                     EnableTrigger(b.Count - i, j);
-                    yield return StartCoroutine(SwapAnimation(j, j+1));
+                    yield return  lo = StartCoroutine(SwapAnimation(j, j+1));
                     GameObject temp3 = b[j];
                     b[j] = b[j + 1];
                     b[j + 1] = temp3;

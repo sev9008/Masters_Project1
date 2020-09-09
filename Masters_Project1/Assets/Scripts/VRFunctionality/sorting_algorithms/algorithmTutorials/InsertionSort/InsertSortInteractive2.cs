@@ -21,8 +21,8 @@ public class InsertSortInteractive2 : MonoBehaviour
     public int NextSmallesIndex;
     public int IndexToSwap;
 
-    Coroutine co;
-    Coroutine sho;
+    public Coroutine co;
+    public Coroutine sho;
 
     public int speed;
     public int smooth;
@@ -36,7 +36,7 @@ public class InsertSortInteractive2 : MonoBehaviour
 
     private void Start()
     {
-        //Begin();
+        Begin();
     }
 
     public void Update()
@@ -64,6 +64,14 @@ public class InsertSortInteractive2 : MonoBehaviour
 
     public void Begin()
     {
+        try
+        {
+            moving = false;
+            StopCoroutine(co);
+            StopCoroutine(sho);
+            updatePos();
+        }
+        catch { }
         Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Insertion Sort." + "\nIf the block is Green it is Sorted and can not be interacted with." + "\nIf a block is White it must be shifted to the elft until it is in its sorted position.";
         for (int i = 0; i < 9; i++)
         {
