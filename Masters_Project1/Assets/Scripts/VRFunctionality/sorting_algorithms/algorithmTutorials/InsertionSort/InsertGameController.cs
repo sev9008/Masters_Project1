@@ -69,6 +69,14 @@ public class InsertGameController : MonoBehaviour
                 Debug.Log("Swap");
                 CorrectAnswers++;
 
+                if (m_vRController_1.grabbedL != null)
+                {
+                    m_vRController_1.grabbedL.GetComponent<BlockParent>().isGrabbed = false;
+                }
+                if (m_vRController_1.grabbedR != null)
+                {
+                    m_vRController_1.grabbedR.GetComponent<BlockParent>().isGrabbed = false;
+                }
                 m_vRController_1.downR = false;
                 m_vRController_1.downL = false;
                 string tempstringvalue = b[NextSmallesIndex].GetComponentInChildren<Text>().text;
@@ -94,6 +102,14 @@ public class InsertGameController : MonoBehaviour
                 dist2 = Vector3.Distance(b[i].transform.position, pos[NextSmallesIndex].transform.position);
                 if (dist1 < .5  && dist2 < .5 && i != NextSmallesIndex)
                 {
+                    if (m_vRController_1.grabbedL != null)
+                    {
+                        m_vRController_1.grabbedL.GetComponent<BlockParent>().isGrabbed = false;
+                    }
+                    if (m_vRController_1.grabbedR != null)
+                    {
+                        m_vRController_1.grabbedR.GetComponent<BlockParent>().isGrabbed = false;
+                    }
                     m_vRController_1.downR = false;
                     m_vRController_1.downL = false;
                     wrongAnswers++;
@@ -101,6 +117,30 @@ public class InsertGameController : MonoBehaviour
                 }
             }
         }
+        //for (int i = 0; i < b.Length; i++)
+        //{
+        //    float dist1 = Vector3.Distance(b[i].transform.position, b[i].GetComponent<BlockParent>().PairedPos.transform.position);
+
+        //    if (dist1 > 20)
+        //    {
+        //        if (m_vRController_1.grabbedL != null)
+        //        {
+        //            m_vRController_1.grabbedL.GetComponent<BlockParent>().isGrabbed = false;
+        //        }
+        //        if (m_vRController_1.grabbedR != null)
+        //        {
+        //            m_vRController_1.grabbedR.GetComponent<BlockParent>().isGrabbed = false;
+        //        }
+        //        m_vRController_1.downR = false;
+        //        m_vRController_1.downL = false;
+        //        b[i].GetComponent<BlockParent>().isGrabbed = false;
+
+
+        //        pos[i].GetComponent<BoxCollider>().enabled = true;
+        //        updatePos();
+        //    }
+        //}
+
         Correctanswerstxt.text = "Incorrect Answers = " + CorrectAnswers;
         IncorrectAnswerstxt.text = "Incorrect Answers = " + wrongAnswers;
         NumOfGamestxt.text = "Number of Games = " + NumOfGames;

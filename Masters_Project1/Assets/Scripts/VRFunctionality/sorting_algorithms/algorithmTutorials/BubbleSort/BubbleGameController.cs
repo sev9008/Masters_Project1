@@ -81,31 +81,62 @@ public class BubbleGameController : MonoBehaviour
         {
             for (int i = nextToSort + 1; i < b.Length; i++)
             {
-                if (i != currentSmallestIndex)
+                float dist1 = Vector3.Distance(b[nextToSort].transform.position, pos[currentSmallestIndex].transform.position);
+                float dist2 = Vector3.Distance(b[currentSmallestIndex].transform.position, pos[nextToSort].transform.position);
+                if (dist1 < .5 && dist2 < .5)
                 {
-                    float dist3 = Vector3.Distance(b[nextToSort].transform.position, b[i].transform.position);
-                    float dist4 = Vector3.Distance(b[i].transform.position, b[nextToSort].transform.position);
-                    float dist5 = Vector3.Distance(b[i].transform.position, b[currentSmallestIndex].transform.position);
-                    float dist6 = Vector3.Distance(b[currentSmallestIndex].transform.position, b[i].transform.position);
-                    if ((dist3 < .5 && dist4 < .5) || (dist5 < .5 && dist6 < .5))
-                    {
-                        m_vRController_1.downR = false;
-                        m_vRController_1.downL = false;
-                        Step.text = "Incorrect.  The block you attempted to swap was not the smallest value in the unsorted array.";
-                        incorretAnswers++;
-                        incorretAnswersText.text = "Incorrect Anwserws = " + incorretAnswers;
-                        updatePos();
-                    }
+                    Debug.Log("Swap");
+                    SwapValues(nextToSort, currentSmallestIndex);
+                    waitingforswap = false;
+                    return;
                 }
                 else
                 {
-                    float dist1 = Vector3.Distance(b[nextToSort].transform.position, pos[currentSmallestIndex].transform.position);
-                    float dist2 = Vector3.Distance(b[nextToSort].transform.position, pos[currentSmallestIndex].transform.position);
-                    if (dist1 < .5 && dist2 < .5)
+                    if (i != currentSmallestIndex)
                     {
-                        Debug.Log("Swap");
-                        SwapValues(nextToSort, currentSmallestIndex);
-                        waitingforswap = false;
+                        float dist3 = Vector3.Distance(b[nextToSort].transform.position, b[i].transform.position);
+                        float dist4 = Vector3.Distance(b[i].transform.position, b[nextToSort].transform.position);
+                        if (dist3 < .5 && dist4 < .5 && dist3 != 0)
+                        {
+                            if (m_vRController_1.grabbedL != null)
+                            {
+                                m_vRController_1.grabbedL.GetComponent<BlockParent>().isGrabbed = false;
+                            }
+                            if (m_vRController_1.grabbedR != null)
+                            {
+                                m_vRController_1.grabbedR.GetComponent<BlockParent>().isGrabbed = false;
+                            }
+                            m_vRController_1.downR = false;
+                            m_vRController_1.downL = false;
+                            Step.text = "Incorrect.  The block you attempted to swap was not the smallest value in the unsorted array.";
+                            incorretAnswers++;
+                            incorretAnswersText.text = "Incorrect Anwserws = " + incorretAnswers;
+                            updatePos();
+                            return;
+                        }
+                    }
+                    else if (i != nextToSort)
+                    {
+                        float dist5 = Vector3.Distance(b[i].transform.position, b[currentSmallestIndex].transform.position);
+                        float dist6 = Vector3.Distance(b[currentSmallestIndex].transform.position, b[i].transform.position);
+                        if (dist5 < .5 && dist6 < .5 && dist6 !=0)
+                        {
+                            if (m_vRController_1.grabbedL != null)
+                            {
+                                m_vRController_1.grabbedL.GetComponent<BlockParent>().isGrabbed = false;
+                            }
+                            if (m_vRController_1.grabbedR != null)
+                            {
+                                m_vRController_1.grabbedR.GetComponent<BlockParent>().isGrabbed = false;
+                            }
+                            m_vRController_1.downR = false;
+                            m_vRController_1.downL = false;
+                            Step.text = "Incorrect.  The block you attempted to swap was not the smallest value in the unsorted array.";
+                            incorretAnswers++;
+                            incorretAnswersText.text = "Incorrect Anwserws = " + incorretAnswers;
+                            updatePos();
+                            return;
+                        }
                     }
                 }
             }
@@ -113,9 +144,41 @@ public class BubbleGameController : MonoBehaviour
         corretAnswersText.text = corretAnswers.ToString();
         incorretAnswersText.text = incorretAnswers.ToString();
         numofGamesText.text = numofGames.ToString();
+
+        //for (int i = 0; i < b.Length; i++)
+        //{
+        //    float dist1 = Vector3.Distance(b[i].transform.position, b[i].GetComponent<BlockParent>().PairedPos.transform.position);
+
+        //    if (dist1 > 20)
+        //    {
+        //        if (m_vRController_1.grabbedL != null)
+        //        {
+        //            m_vRController_1.grabbedL.GetComponent<BlockParent>().isGrabbed = false;
+        //        }
+        //        if (m_vRController_1.grabbedR != null)
+        //        {
+        //            m_vRController_1.grabbedR.GetComponent<BlockParent>().isGrabbed = false;
+        //        }
+        //        m_vRController_1.downR = false;
+        //        m_vRController_1.downL = false;
+        //        b[i].GetComponent<BlockParent>().isGrabbed = false;
+
+
+        //        pos[i].GetComponent<BoxCollider>().enabled = true;
+        //        updatePos();
+        //    }
+        //}
     }
     public void SwapValues(int i, int j)
     {
+        if (m_vRController_1.grabbedL != null)
+        {
+            m_vRController_1.grabbedL.GetComponent<BlockParent>().isGrabbed = false;
+        }
+        if (m_vRController_1.grabbedR != null)
+        {
+            m_vRController_1.grabbedR.GetComponent<BlockParent>().isGrabbed = false;
+        }
         m_vRController_1.downR = false;
         m_vRController_1.downL = false;
 
@@ -174,7 +237,7 @@ public class BubbleGameController : MonoBehaviour
                     b[i].GetComponent<Rigidbody>().isKinematic = true;
                     b[i].GetComponent<BlockParent>().enabled = false;
                     pos[i].GetComponent<BoxCollider>().enabled = false;
-                    pos[i].GetComponentInChildren<MeshRenderer>().enabled = false;
+                    pos[i].GetComponentInChildren<MeshRenderer>().enabled = true;
                     pos[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
                     b[i].GetComponent<BlockParent>().gravity = false;
                 }
@@ -184,7 +247,7 @@ public class BubbleGameController : MonoBehaviour
                     b[i].GetComponent<BoxCollider>().enabled = true;
                     b[i].GetComponent<Rigidbody>().isKinematic = false;
                     pos[i].GetComponent<BoxCollider>().enabled = false;
-                    pos[i].GetComponentInChildren<MeshRenderer>().enabled = true;
+                    pos[i].GetComponentInChildren<MeshRenderer>().enabled = false;
                     b[i].GetComponent<BlockParent>().gravity = true;
                     pos[i].GetComponentInChildren<MeshRenderer>().material = Transparent;
                 }

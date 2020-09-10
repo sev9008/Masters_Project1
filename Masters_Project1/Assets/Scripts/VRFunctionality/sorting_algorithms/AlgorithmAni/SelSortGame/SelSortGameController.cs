@@ -42,6 +42,14 @@ public class SelSortGameController : MonoBehaviour
         dist2 = Vector3.Distance(block[currentSmallestIndex].transform.position, pos[nextToSort].transform.position);
         if (dist1 < .5 && dist2 < .5)
         {
+            if (m_vRController_1.grabbedL != null)
+            {
+                m_vRController_1.grabbedL.GetComponent<BlockParent>().isGrabbed = false;
+            }
+            if (m_vRController_1.grabbedR != null)
+            {
+                m_vRController_1.grabbedR.GetComponent<BlockParent>().isGrabbed = false;
+            }
             m_vRController_1.downR = false;
             m_vRController_1.downL = false;
             Debug.Log("rightanswer");
@@ -57,6 +65,14 @@ public class SelSortGameController : MonoBehaviour
                 dist2 = Vector3.Distance(block[i].transform.position, pos[nextToSort].transform.position);
                 if ((dist1 < .5 && dist2 < .5) && i != nextToSort)
                 {
+                    if (m_vRController_1.grabbedL != null)
+                    {
+                        m_vRController_1.grabbedL.GetComponent<BlockParent>().isGrabbed = false;
+                    }
+                    if (m_vRController_1.grabbedR != null)
+                    {
+                        m_vRController_1.grabbedR.GetComponent<BlockParent>().isGrabbed = false;
+                    }
                     m_vRController_1.downR = false;
                     m_vRController_1.downL = false;
                     Debug.Log("wronganswer");
@@ -66,6 +82,29 @@ public class SelSortGameController : MonoBehaviour
                 }
             }
         }
+        //for (int i = 0; i < block.Length; i++)
+        //{
+        //    dist1 = Vector3.Distance(block[i].transform.position, block[i].GetComponent<BlockParent>().PairedPos.transform.position);
+
+        //    if (dist1 > 20)
+        //    {
+        //        if (m_vRController_1.grabbedL != null)
+        //        {
+        //            m_vRController_1.grabbedL.GetComponent<BlockParent>().isGrabbed = false;
+        //        }
+        //        if (m_vRController_1.grabbedR != null)
+        //        {
+        //            m_vRController_1.grabbedR.GetComponent<BlockParent>().isGrabbed = false;
+        //        }
+        //        m_vRController_1.downR = false;
+        //        m_vRController_1.downL = false;
+        //        block[i].GetComponent<BlockParent>().isGrabbed = false;
+
+
+        //        pos[i].GetComponent<BoxCollider>().enabled = true;
+        //        updatePos();
+        //    }
+        //}
     }
     public void Begin()
     {

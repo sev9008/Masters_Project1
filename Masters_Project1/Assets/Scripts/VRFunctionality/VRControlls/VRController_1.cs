@@ -222,7 +222,7 @@ public class VRController_1 : MonoBehaviour
             if (GrabObj.GetStateDown(SteamVR_Input_Sources.RightHand) && m_pointerR.hit.collider.gameObject.layer == 9)
             {
                 m_pointerR.defaultLength = 0f;
-                Debug.Log("down");
+                //Debug.Log("down");
                 grabbedR = m_pointerR.hit.collider.gameObject;
                 grabbedR.transform.parent = DotR.transform;
                 try

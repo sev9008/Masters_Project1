@@ -53,6 +53,17 @@ public class BlockParent : MonoBehaviour
         {
             timer = 0;
         }
+
+
+        //if (isGrabbed)
+        //{
+        //    GetComponent<BoxCollider>().enabled = false;
+        //}
+        //else
+        //{
+        //    GetComponent<BoxCollider>().enabled = true;
+        //}
+
     }
 
     public void OnCollisionEnter(Collision collision)

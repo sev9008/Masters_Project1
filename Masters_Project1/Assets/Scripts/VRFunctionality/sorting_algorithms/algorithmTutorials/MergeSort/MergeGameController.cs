@@ -105,9 +105,17 @@ public class MergeGameController : MonoBehaviour
             {
                 dist1 = Vector3.Distance(b[nextToSort].transform.position, L[currentSmallestIndex].GetComponent<BlockParent>().PairedPos.transform.position);
                 dist2 = Vector3.Distance(L[currentSmallestIndex].transform.position, b[nextToSort].GetComponent<BlockParent>().PairedPos.transform.position);
-                if (dist1 < .5)
+                if ((dist1 < .5 && dist1 != 0) || (dist2 < .5 && dist2 != 0))
                 {
                     Debug.Log("Swap");
+                    if (m_vRController_1.grabbedL != null)
+                    {
+                        m_vRController_1.grabbedL.GetComponent<BlockParent>().isGrabbed = false;
+                    }
+                    if (m_vRController_1.grabbedR != null)
+                    {
+                        m_vRController_1.grabbedR.GetComponent<BlockParent>().isGrabbed = false;
+                    }
                     m_vRController_1.downR = false;
                     m_vRController_1.downL = false;
                     corretAnswers++;
@@ -124,6 +132,14 @@ public class MergeGameController : MonoBehaviour
                         dist2 = Vector3.Distance(L[currentSmallestIndex].transform.position, b[i].GetComponent<BlockParent>().PairedPos.transform.position);
                         if ((dist1 < .5 && dist1 != 0) || (dist2 < .5 && dist2 != 0))
                         {
+                            if (m_vRController_1.grabbedL != null)
+                            {
+                                m_vRController_1.grabbedL.GetComponent<BlockParent>().isGrabbed = false;
+                            }
+                            if (m_vRController_1.grabbedR != null)
+                            {
+                                m_vRController_1.grabbedR.GetComponent<BlockParent>().isGrabbed = false;
+                            }
                             m_vRController_1.downR = false;
                             m_vRController_1.downL = false;
                             Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
@@ -137,6 +153,14 @@ public class MergeGameController : MonoBehaviour
                         dist2 = Vector3.Distance(b[nextToSort].transform.position, b[i].GetComponent<BlockParent>().PairedPos.transform.position);
                         if ((dist1 < .5 && dist1 != 0) || (dist2 < .5 && dist2 != 0))
                         {
+                            if (m_vRController_1.grabbedL != null)
+                            {
+                                m_vRController_1.grabbedL.GetComponent<BlockParent>().isGrabbed = false;
+                            }
+                            if (m_vRController_1.grabbedR != null)
+                            {
+                                m_vRController_1.grabbedR.GetComponent<BlockParent>().isGrabbed = false;
+                            }
                             m_vRController_1.downR = false;
                             m_vRController_1.downL = false;
                             Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
@@ -152,8 +176,16 @@ public class MergeGameController : MonoBehaviour
             {
                 dist1 = Vector3.Distance(b[nextToSort].transform.position, R[currentSmallestIndex].GetComponent<BlockParent>().PairedPos.transform.position);
                 dist2 = Vector3.Distance(R[currentSmallestIndex].transform.position, b[nextToSort].GetComponent<BlockParent>().PairedPos.transform.position);
-                if (dist1 < .5)
+                if ((dist1 < .5 && dist1 != 0) || (dist2 < .5 && dist2 != 0))
                 {
+                    if (m_vRController_1.grabbedL != null)
+                    {
+                        m_vRController_1.grabbedL.GetComponent<BlockParent>().isGrabbed = false;
+                    }
+                    if (m_vRController_1.grabbedR != null)
+                    {
+                        m_vRController_1.grabbedR.GetComponent<BlockParent>().isGrabbed = false;
+                    }
                     Debug.Log("Swap");
                     m_vRController_1.downR = false;
                     m_vRController_1.downL = false;
@@ -171,6 +203,14 @@ public class MergeGameController : MonoBehaviour
                         dist2 = Vector3.Distance(R[currentSmallestIndex].transform.position, b[i].GetComponent<BlockParent>().PairedPos.transform.position);
                         if ((dist1 < .5 && dist1 != 0) || (dist2 < .5 && dist2 != 0))
                         {
+                            if (m_vRController_1.grabbedL != null)
+                            {
+                                m_vRController_1.grabbedL.GetComponent<BlockParent>().isGrabbed = false;
+                            }
+                            if (m_vRController_1.grabbedR != null)
+                            {
+                                m_vRController_1.grabbedR.GetComponent<BlockParent>().isGrabbed = false;
+                            }
                             m_vRController_1.downR = false;
                             m_vRController_1.downL = false;
                             Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
@@ -184,6 +224,14 @@ public class MergeGameController : MonoBehaviour
                         dist2 = Vector3.Distance(b[nextToSort].transform.position, b[i].GetComponent<BlockParent>().PairedPos.transform.position);
                         if ((dist1 < .5 && dist1 != 0) || (dist2 < .5 && dist2 != 0))
                         {
+                            if (m_vRController_1.grabbedL != null)
+                            {
+                                m_vRController_1.grabbedL.GetComponent<BlockParent>().isGrabbed = false;
+                            }
+                            if (m_vRController_1.grabbedR != null)
+                            {
+                                m_vRController_1.grabbedR.GetComponent<BlockParent>().isGrabbed = false;
+                            }
                             m_vRController_1.downR = false;
                             m_vRController_1.downL = false;
                             Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
@@ -241,6 +289,29 @@ public class MergeGameController : MonoBehaviour
             //    }
             //}
         }
+        //for (int i = 0; i < b.Length; i++)
+        //{
+        //    float dist1 = Vector3.Distance(b[i].transform.position, b[i].GetComponent<BlockParent>().PairedPos.transform.position);
+
+        //    if (dist1 > 20)
+        //    {
+        //        if (m_vRController_1.grabbedL != null)
+        //        {
+        //            m_vRController_1.grabbedL.GetComponent<BlockParent>().isGrabbed = false;
+        //        }
+        //        if (m_vRController_1.grabbedR != null)
+        //        {
+        //            m_vRController_1.grabbedR.GetComponent<BlockParent>().isGrabbed = false;
+        //        }
+        //        m_vRController_1.downR = false;
+        //        m_vRController_1.downL = false;
+        //        b[i].GetComponent<BlockParent>().isGrabbed = false;
+
+
+        //        pos[i].GetComponent<BoxCollider>().enabled = true;
+        //        updatePos();
+        //    }
+        //}
     }
 
     public IEnumerator Mergechecksort()
@@ -478,7 +549,7 @@ public class MergeGameController : MonoBehaviour
 
     public void EnableTrigger(int l, int h)
     {
-        Debug.Log(l + " " + h);
+        //Debug.Log(l + " " + h);
         for (int i = 0; i < b.Length; i++)
         {
             if (i >= l && i <= h)
