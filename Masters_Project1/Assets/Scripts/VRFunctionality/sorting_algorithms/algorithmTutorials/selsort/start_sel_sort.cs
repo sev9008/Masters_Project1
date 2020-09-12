@@ -37,7 +37,7 @@ public class start_sel_sort : MonoBehaviour, IPointerDownHandler
         {
             arr2.Add(arrayKeeper.arr[i]);
         }
-        m_selsort_Arrayholder.Display(arr2, size);
+        m_selsort_Arrayholder.Display(arr2, size, -1, -1, -1);
 
         if (!running)
         {

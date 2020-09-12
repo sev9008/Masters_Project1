@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Button_pause : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class Button_pause : MonoBehaviour, IPointerDownHandler
 {
     public selsort_arrayholder M_selsort_Arrayholder;
     public Text txt;
@@ -13,20 +13,16 @@ public class Button_pause : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (M_selsort_Arrayholder.paused)
+        if (M_selsort_Arrayholder.manual)
         {
-            M_selsort_Arrayholder.paused = false;
-            txt.text = "Pause";
+            M_selsort_Arrayholder.manual = false;
+            txt.text = "Manual";
         }
 
-        else if (!M_selsort_Arrayholder.paused)
+        else if (!M_selsort_Arrayholder.manual)
         {
-            M_selsort_Arrayholder.paused = true;
-            txt.text = "Resume";
+            M_selsort_Arrayholder.manual = true;
+            txt.text = "Auto";
         }
-    }
-    public void OnPointerUp(PointerEventData eventData)
-    { 
-    
     }
 }

@@ -7,7 +7,12 @@ using UnityEngine.UI;
 
 public class selsort_arrayholder : MonoBehaviour
 {
+    public GameObject[] b;
+
     public Text Txt_Text;
+    public Text i_Text;
+    public Text j_Text;
+    public Text iMin_Text;
     public float waittime;
     public Text Step;
     public float speed;
@@ -33,6 +38,20 @@ public class selsort_arrayholder : MonoBehaviour
     public int currentstrucstep;
     public int maxstrucstep;
 
+    public Material imat;
+    public Material jmat;
+    public Material iMinmat;
+    public Material Normalmat;
+
+    public GameObject iholder;
+    public GameObject jholder;
+    public GameObject iMinholder;
+
+    public bool manual;
+
+
+
+
     private void Start()
     {
         paused = false;
@@ -50,25 +69,80 @@ public class selsort_arrayholder : MonoBehaviour
         speed = slider.value;
     }
 
-    public void Display(List<int> arr2, int size)
+    public void Display(List<int> arr2, int size, int i, int j, int iMin)
     {
+        iholder.SetActive(false);
+        jholder.SetActive(false);
+        iMinholder.SetActive(false);
         Txt_Text.text = "";
         int Tmpsize = size - 1;
-        for (int i = 0; i < size; i++)
+        for (int n = 0; n < size; n++)
         {
-            if (i == 0)
+            b[n].SetActive(true);
+            if (n == 0)
             {
-                Txt_Text.text += "a[" + Tmpsize + "] = " + arr2[i].ToString();
+                if (n == i)
+                {
+                    b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
+                    b[n].GetComponentInChildren<MeshRenderer>().material = imat;
+                    iholder.SetActive(true);
+                    iholder.GetComponent<RectTransform>().anchoredPosition = new Vector2(b[n].GetComponent<RectTransform>().anchoredPosition.x, b[n].GetComponent<RectTransform>().anchoredPosition.y+12);
+                }
+                else if (n == iMin)
+                {
+                    b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
+                    b[n].GetComponentInChildren<MeshRenderer>().material = jmat;
+                    iMinholder.SetActive(true);
+                    iMinholder.GetComponent<RectTransform>().anchoredPosition = new Vector2(b[n].GetComponent<RectTransform>().anchoredPosition.x, b[n].GetComponent<RectTransform>().anchoredPosition.y + 12);
+                }
+                else 
+                {
+                    b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
+                    b[n].GetComponentInChildren<MeshRenderer>().material = Normalmat;
+                }
             }
-            else if (i > 0)
+            else if (n > 0)
             {
-                Txt_Text.text += ", " + arr2[i].ToString();
+                if (n == i)
+                {
+                    b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
+                    b[n].GetComponentInChildren<MeshRenderer>().material = imat;
+                    iholder.SetActive(true);
+                    iholder.GetComponent<RectTransform>().anchoredPosition = new Vector2(b[n].GetComponent<RectTransform>().anchoredPosition.x, b[n].GetComponent<RectTransform>().anchoredPosition.y +12);
+                }
+                else if (n == iMin)
+                {
+                    b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
+                    b[n].GetComponentInChildren<MeshRenderer>().material = iMinmat;
+                    iMinholder.SetActive(true);
+                    iMinholder.GetComponent<RectTransform>().anchoredPosition = new Vector2(b[n].GetComponent<RectTransform>().anchoredPosition.x, b[n].GetComponent<RectTransform>().anchoredPosition.y + 12);
+                }
+                else if (n == j)
+                {
+                    b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
+                    b[n].GetComponentInChildren<MeshRenderer>().material = jmat;
+                    jholder.SetActive(true);
+                    jholder.GetComponent<RectTransform>().anchoredPosition = new Vector2(b[n].GetComponent<RectTransform>().anchoredPosition.x, b[n].GetComponent<RectTransform>().anchoredPosition.y + 12);
+                }
+                else 
+                {
+                    b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
+                    b[n].GetComponentInChildren<MeshRenderer>().material = Normalmat;
+                }
             }
         }
     }
 
     public IEnumerator Selection()
     {
+        if (manual)
+        {
+            paused = true;
+        }
+        for (int k = 0; k < b.Length; k++)
+        {
+            b[k].SetActive(false);
+        }
         //clear struct
         for (int n = 0; n < structarr.Count; n++)
         {
@@ -86,6 +160,12 @@ public class selsort_arrayholder : MonoBehaviour
         int iMin;
         for (i = 0; i < arr3.Count - 1; i++)
         {
+            i_Text.text = "i = " + i.ToString();
+            Display(arr3, arr3.Count, i, -1, -1);
+            if (!manual)
+            {
+                yield return new WaitForSeconds(speed);
+            }
             if (currentstrucstep == maxstrucstep)
             {
                 currentstrucstep++;
@@ -100,7 +180,9 @@ public class selsort_arrayholder : MonoBehaviour
                 }
                 structarr[currentstrucstep].i_value = i;
             }
+            
             resume:
+            
             if (previous && next)
             {
                 previous = false;
@@ -116,7 +198,10 @@ public class selsort_arrayholder : MonoBehaviour
             else if (previous && currentstrucstep <= 0)
             {
                 Step.text = "Cant go back any further";
-                yield return new WaitForSeconds(speed);
+                if (!manual)
+                {
+                    yield return new WaitForSeconds(speed);
+                }
             }
 
             if (next && currentstrucstep < maxstrucstep)
@@ -129,91 +214,117 @@ public class selsort_arrayholder : MonoBehaviour
             else if (next && currentstrucstep >= maxstrucstep)
             {
                 Step.text = "Cant go forward any further";
-                yield return new WaitForSeconds(speed);
+                if (!manual)
+                {
+                    yield return new WaitForSeconds(speed);
+                }
             }
             previous = false;
             next = false;
+            
             m_selectionAni.ShowGraph(arr3);
-            Display(arr3, arr3.Count);
+            Display(arr3, arr3.Count, i, -1, -1);
             iMin = i;
+            iMin_Text.text = "iMin = " + iMin.ToString();
 
             image1.SetActive(true);
             image2.SetActive(false);
             image3.SetActive(false);
-            Step.text = "increment i = " + i + ", reset iMin to i = " + iMin;
-
-            if (previous)
+            Step.text = "increment i = " + i + ", reset iMin";
+            Display(arr3, arr3.Count, i, -1, iMin);
+            if (!manual)
             {
-                goto resume;
+                yield return new WaitForSeconds(speed);
             }
-            if (next)
+            if (manual)
             {
-                goto resume;
+                paused = true;
             }
-            yield return new WaitForSeconds(speed);
-            if (previous)
+            while (paused && manual)
             {
-                goto resume;
-            }
-            if (next)
-            {
-                goto resume;
-            }
-            while (paused)
-            {
+                if (previous && currentstrucstep > 0)
+                {
+                    goto resume;
+                }
+                if (next && currentstrucstep < maxstrucstep)
+                {
+                    goto resume;
+                }
+                else if (next && currentstrucstep >= maxstrucstep)
+                {
+                    next = false;
+                    paused = false;
+                }
                 yield return null;
-            }
-            if (previous)
-            {
-                goto resume;
-            }
-            if (next)
-            {
-                goto resume;
             }
 
             for (j = i + 1; j < arr3.Count; j++)
             {
-                if (arr3[j] < arr3[iMin])
-                {
-                    iMin = j;
-                }
-
-                Step.text = "i = " + arr3[i] + ", j = " + arr3[j] + ", min = " + iMin;
+                j_Text.text = "j = " + j.ToString();
+                Display(arr3, arr3.Count, i, j, iMin);
+                Step.text = "Increment j = " + j;
                 image1.SetActive(false);
                 image2.SetActive(true);
                 image3.SetActive(false);
-
-                if (previous)
+                if (!manual)
                 {
-                    goto resume;
+                    yield return new WaitForSeconds(speed);
                 }
-                if (next)
+                if (manual)
                 {
-                    goto resume;
+                    paused = true;
                 }
-                yield return new WaitForSeconds(speed);
-                if (previous)
+                while (paused && manual)
                 {
-                    goto resume;
-                }
-                if (next)
-                {
-                    goto resume;
-                }
-                while (paused)
-                {
+                    if (previous && currentstrucstep > 0)
+                    {
+                        goto resume;
+                    }
+                    if (next && currentstrucstep < maxstrucstep)
+                    {
+                        goto resume;
+                    }
+                    else if (next && currentstrucstep >= maxstrucstep)
+                    {
+                        next = false;
+                        paused = false;
+                    }
                     yield return null;
                 }
-                if (previous)
+
+                if (arr3[j] < arr3[iMin])
                 {
-                    goto resume;
-                }
-                if (next)
-                {
-                    goto resume;
+                    iMin = j;
+                    iMin_Text.text = "iMin = " + iMin.ToString();
+                    Display(arr3, arr3.Count, i, j, iMin);
+                    Step.text = "iMin = " + j;
+                    if (!manual)
+                    {
+                        yield return new WaitForSeconds(speed);
+                    }
                 }
 
+                if (manual)
+                {
+                    paused = true;
+                }
+                while (paused && manual)
+                {
+                    if (previous && currentstrucstep > 0)
+                    {
+                        goto resume;
+                    }
+                    if (next && currentstrucstep < maxstrucstep)
+                    {
+                        goto resume;
+                    }
+                    else if (next && currentstrucstep >= maxstrucstep)
+                    {
+                        next = false;
+                        paused = false;
+                    }
+                    yield return null;
+                }
             }
             if (iMin != i)
             {
@@ -221,51 +332,49 @@ public class selsort_arrayholder : MonoBehaviour
                 arr3[i] = arr3[iMin];
                 arr3[iMin] = temp;
 
-                Step.text = "Swap " + arr3[i] + " and " + arr3[iMin];
+                Step.text = "Swap i = " + arr3[i] + " and iMin = " + arr3[iMin];
                 m_selectionAni.ShowGraph(arr3);
-                Display(arr3, arr3.Count);
+                Display(arr3, arr3.Count, iMin, j, i);
                 image1.SetActive(false);
                 image2.SetActive(false);
                 image3.SetActive(true);
-
-                if (previous)
+                if (!manual)
                 {
-                    goto resume;
+                    yield return new WaitForSeconds(speed);
                 }
-                if (next)
+                if (manual)
                 {
-                    goto resume;
+                    paused = true;
                 }
-                yield return new WaitForSeconds(speed);
-                if (previous)
+                while (paused && manual)
                 {
-                    goto resume;
-                }
-                if (next)
-                {
-                    goto resume;
-                }
-                while (paused)
-                {
+                    if (previous && currentstrucstep > 0)
+                    {
+                        goto resume;
+                    }
+                    if (next && currentstrucstep < maxstrucstep)
+                    {
+                        goto resume;
+                    }
+                    else if (next && currentstrucstep >= maxstrucstep)
+                    {
+                        next = false;
+                        paused = false;
+                    }
                     yield return null;
-                }
-                if (previous)
-                {
-                    goto resume;
-                }
-                if (next)
-                {
-                    goto resume;
                 }
             }
         }
         Step.text = "Finished";
-        Display(arr3, arr3.Count); 
+        Display(arr3, arr3.Count, -1, -1, -1);
         image1.SetActive(false);
         image2.SetActive(false);
         image3.SetActive(false);
         m_selectionAni.ShowGraph(arr3);
-        yield return new WaitForSeconds(speed);
+        if (!manual)
+        {
+            yield return new WaitForSeconds(speed);
+        }
         running = false;
     }
 

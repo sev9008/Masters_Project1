@@ -1,16 +1,2 @@
 Base path: 'E:/unity/2019.3.13f1/Editor/Data', plugins path 'E:/unity/2019.3.13f1/Editor/Data/PlaybackEngines'
 Cmd: initializeCompiler
-Cmd: disassembleShader
-  api=4 insize=5722 outsize=8064 ok=1
-Cmd: disassembleShader
-  api=4 insize=1690 outsize=3080 ok=1
-Cmd: disassembleShader
-  api=4 insize=5022 outsize=7237 ok=1
-Cmd: disassembleShader
-  api=4 insize=1746 outsize=3138 ok=1
-Cmd: disassembleShader
-  api=4 insize=2070 outsize=3593 ok=1
-Cmd: disassembleShader
-  api=4 insize=2214 outsize=3895 ok=1
-Cmd: compileSnippet
-  api=4 type=0 insize=2323 outsize=1854 kw=_MAIN_LIGHT_SHADOWS pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR ok=1

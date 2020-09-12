@@ -16,7 +16,7 @@ public class SelectSortnext : MonoBehaviour, IPointerDownHandler
             {
                 m_selsort_arrayholder.previous = false;
             }
-            m_selsort_arrayholder.Step.text = "Processing next Step";
+            //m_selsort_arrayholder.Step.text = "Processing next Step";
         }
     }
 }
