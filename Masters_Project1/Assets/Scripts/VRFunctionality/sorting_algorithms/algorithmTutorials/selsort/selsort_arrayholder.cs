@@ -75,7 +75,6 @@ public class selsort_arrayholder : MonoBehaviour
         jholder.SetActive(false);
         iMinholder.SetActive(false);
         Txt_Text.text = "";
-        int Tmpsize = size - 1;
         for (int n = 0; n < size; n++)
         {
             b[n].SetActive(true);

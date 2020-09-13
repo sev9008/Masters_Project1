@@ -16,13 +16,13 @@ public class Button_pause : MonoBehaviour, IPointerDownHandler
         if (M_selsort_Arrayholder.manual)
         {
             M_selsort_Arrayholder.manual = false;
-            txt.text = "Manual";
+            txt.text = "Auto";
         }
 
         else if (!M_selsort_Arrayholder.manual)
         {
             M_selsort_Arrayholder.manual = true;
-            txt.text = "Auto";
+            txt.text = "Manual";
         }
     }
 }

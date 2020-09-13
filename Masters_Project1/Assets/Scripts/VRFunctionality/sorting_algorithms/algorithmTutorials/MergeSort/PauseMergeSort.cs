@@ -14,14 +14,14 @@ public class PauseMergeSort : MonoBehaviour, IPointerDownHandler
     {
         if (M_quickSort_arrayHolder.paused)
         {
-            M_quickSort_arrayHolder.paused = false;
-            txt.text = "Pause";
+            M_quickSort_arrayHolder.manual = false;
+            txt.text = "Auto";
         }
 
         else if (!M_quickSort_arrayHolder.paused)
         {
-            M_quickSort_arrayHolder.paused = true;
-            txt.text = "Resume";
+            M_quickSort_arrayHolder.manual = true;
+            txt.text = "Manual";
         }
     }
 }
