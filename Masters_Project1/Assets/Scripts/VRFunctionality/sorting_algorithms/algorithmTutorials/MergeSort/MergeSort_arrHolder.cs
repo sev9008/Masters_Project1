@@ -13,7 +13,6 @@ public class MergeSort_arrHolder : MonoBehaviour
     public Text Txt_Text;
     public float waittime;
     public Text Step;
-    public Text ArrStep;
     public float speed;
 
     public Slider slider;
@@ -56,6 +55,8 @@ public class MergeSort_arrHolder : MonoBehaviour
     public Text ktextstep2;    
     public Text whiletextstep3;
     public Text ktextstep3;
+    public Text Larr;
+    public Text Rarr;
 
 
     private void Start()
@@ -69,7 +70,8 @@ public class MergeSort_arrHolder : MonoBehaviour
         public List<int> oldarr;
         public int activeImage;
         public string steptxt;
-        public string arrtxt;
+        public string Larr;
+        public string Rarr;
         public int l;
         public int r;
     }
@@ -81,27 +83,24 @@ public class MergeSort_arrHolder : MonoBehaviour
 
     public void Display(List<int> arr2, int size, int l, int r, int i, int j, int k)
     {
+        //size = size - 1;
         Txt_Text.text = "";
-        int Tmpsize = size - 1;
+        //int Tmpsize = size - 1;
         for (int n = 0; n < size; n++)
         {
-            if (l < n && n < r)
+            b[n].SetActive(true);
+            Debug.Log(l + " < " + n + " < "+ r);
+            if (l <= n && n <= r)
             {
                 b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
                 b[n].GetComponentInChildren<MeshRenderer>().material = checkmat;
             }
-            else 
+            else if (n == 0)
             {
                 b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
                 b[n].GetComponentInChildren<MeshRenderer>().material = Normalmat;
             }
-
-            if (n == 0)
-            {
-                b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
-                b[n].GetComponentInChildren<MeshRenderer>().material = Normalmat;
-            }
-            else if (n > 0)
+            else
             {
                 b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
                 b[n].GetComponentInChildren<MeshRenderer>().material = Normalmat;
@@ -117,10 +116,14 @@ public class MergeSort_arrHolder : MonoBehaviour
             structarr[n].oldarr.Clear();
             structarr[n].activeImage = -1;
             structarr[n].steptxt = "";
-            structarr[n].arrtxt = "";
+            structarr[n].Larr = "";
+            structarr[n].Rarr = "";
             structarr[n].l = -1;
             structarr[n].r = -1;
-
+        }
+        for (int k = 0; k < b.Length; k++)
+        {
+            b[k].SetActive(false);
         }
 
         structarr.Clear();
@@ -131,7 +134,6 @@ public class MergeSort_arrHolder : MonoBehaviour
         yield return StartCoroutine(MergeSort(arr3, 0, arr3.Count - 1));
         Display(arr3, arr3.Count, -1,-1,-1,-1,-1);
         imageController(-1);
-        ArrStep.text = "";
         Step.text = "Finished";
         running = false;
     }
@@ -170,7 +172,8 @@ public class MergeSort_arrHolder : MonoBehaviour
             }
             structarr[currentstrucstep].activeImage = 1;
             structarr[currentstrucstep].steptxt = Step.text;
-            structarr[currentstrucstep].arrtxt = ArrStep.text;
+            structarr[currentstrucstep].Larr = Larr.text;
+            structarr[currentstrucstep].Rarr = Rarr.text;
             structarr[currentstrucstep].l = l;
             structarr[currentstrucstep].r = r;
             m_selectionAni.ShowGraph(arr3);
@@ -213,7 +216,8 @@ public class MergeSort_arrHolder : MonoBehaviour
             }
             structarr[currentstrucstep].activeImage = 1;
             structarr[currentstrucstep].steptxt = Step.text;
-            structarr[currentstrucstep].arrtxt = ArrStep.text;
+            structarr[currentstrucstep].Larr = Larr.text;
+            structarr[currentstrucstep].Rarr = Rarr.text;
             structarr[currentstrucstep].l = l;
             structarr[currentstrucstep].r = r;
             m_selectionAni.ShowGraph(arr3);
@@ -256,7 +260,8 @@ public class MergeSort_arrHolder : MonoBehaviour
             }
             structarr[currentstrucstep].activeImage = 1;
             structarr[currentstrucstep].steptxt = Step.text;
-            structarr[currentstrucstep].arrtxt = ArrStep.text;
+            structarr[currentstrucstep].Larr = Larr.text;
+            structarr[currentstrucstep].Rarr = Rarr.text;
             structarr[currentstrucstep].l = l;
             structarr[currentstrucstep].r = r;
             m_selectionAni.ShowGraph(arr3);
@@ -287,13 +292,25 @@ public class MergeSort_arrHolder : MonoBehaviour
         Display(arr, arr.Count, -1, -1, -1, -1, -1);
     }
 
-    //public Text itextstep1;
-    //public Text jtextstep1;
-    //public Text n1textstep2;
-    //public Text n2textstep2;
-
     public IEnumerator merge(List<int> arr, int l, int m, int r)
     {
+        itextstep1.text = "i = 0";
+        jtextstep1.text = "j = 0";
+        n1textstep1.text = "n1 = 0";
+        n2textstep1.text = "n2 = 0";
+        itextstep1.text = "i = 0";
+        jtextstep1.text = "j = 0";
+        n1textstep2.text = "n1 = 0";
+        n2textstep2.text = "n2 = 0";
+        whiletextstep1.text = "i < n1 && j < n2";
+        ktextstep1.text = "k = 0";
+        whiletextstep2.text = "i < n1";
+        ktextstep2.text = "k = 0";
+        whiletextstep3.text = "j < n2";
+        ktextstep3.text = "k = 0";
+        Larr.text = "L[] = 0";
+        Rarr.text = "R[] = 0";
+
         int i, j, k;
         int n1 = m - l + 1;
         n1textstep1.text = "n1 = " + n1;
@@ -303,19 +320,20 @@ public class MergeSort_arrHolder : MonoBehaviour
         n2textstep2.text = "n2 = " + n2;
         int[] L = new int[n1];
         int[] R = new int[n2];
-        ArrStep.text = "Left array copy: ";
 
+        Larr.text = "L[] = ";
         for (i = 0; i < n1; i++)
         {
             L[i] = arr[l + i];
-            ArrStep.text += L[i] + ", ";
+            Larr.text += L[i] + ", ";
             itextstep1.text = "i = " + i;
         }
-        ArrStep.text += "\n" + "Right array copy: ";
+
+        Rarr.text = "R[] = ";
         for (j = 0; j < n2; j++)
         {
             R[j] = arr[m + 1 + j];
-            ArrStep.text += R[j] + ", ";
+            Rarr.text += R[j] + ", ";
             itextstep1.text = "j = " + j;
         }
 
@@ -331,7 +349,8 @@ public class MergeSort_arrHolder : MonoBehaviour
         }
         structarr[currentstrucstep].activeImage = 1;
         structarr[currentstrucstep].steptxt = Step.text;
-        structarr[currentstrucstep].arrtxt = ArrStep.text;
+        structarr[currentstrucstep].Larr = Larr.text;
+        structarr[currentstrucstep].Rarr = Rarr.text;
         structarr[currentstrucstep].l = l;
         structarr[currentstrucstep].r = r;
         m_selectionAni.ShowGraph(arr3);
@@ -391,7 +410,8 @@ public class MergeSort_arrHolder : MonoBehaviour
             }
             structarr[currentstrucstep].activeImage = 1;
             structarr[currentstrucstep].steptxt = Step.text;
-            structarr[currentstrucstep].arrtxt = ArrStep.text;
+            structarr[currentstrucstep].Larr = Larr.text;
+            structarr[currentstrucstep].Rarr = Rarr.text;
             structarr[currentstrucstep].l = l;
             structarr[currentstrucstep].r = r;
             m_selectionAni.ShowGraph(arr3);
@@ -442,10 +462,12 @@ public class MergeSort_arrHolder : MonoBehaviour
             }
             structarr[currentstrucstep].activeImage = 1;
             structarr[currentstrucstep].steptxt = Step.text;
-            structarr[currentstrucstep].arrtxt = ArrStep.text;
+            structarr[currentstrucstep].Larr = Larr.text;
+            structarr[currentstrucstep].Rarr = Rarr.text;
             structarr[currentstrucstep].l = l;
             structarr[currentstrucstep].r = r;
             m_selectionAni.ShowGraph(arr3);
+            Display(arr, arr.Count, l, r, i, j, k);
             whiletextstep2.text = i + "<" + n1;
             ktextstep2.text = "k = " + k;
             if (!manual)
@@ -492,10 +514,12 @@ public class MergeSort_arrHolder : MonoBehaviour
             }
             structarr[currentstrucstep].activeImage = 1;
             structarr[currentstrucstep].steptxt = Step.text;
-            structarr[currentstrucstep].arrtxt = ArrStep.text;
+            structarr[currentstrucstep].Larr = Larr.text;
+            structarr[currentstrucstep].Rarr = Rarr.text;
             structarr[currentstrucstep].l = l;
             structarr[currentstrucstep].r = r;
             m_selectionAni.ShowGraph(arr3);
+            Display(arr, arr.Count, l, r, i, j, k);
             whiletextstep3.text = i + "<" + n1;
             ktextstep3.text = "k = " + k;
             if (!manual)
@@ -538,7 +562,9 @@ public class MergeSort_arrHolder : MonoBehaviour
         Display(structarr[currentstrucstep].oldarr, structarr[currentstrucstep].oldarr.Count, structarr[currentstrucstep].l, structarr[currentstrucstep].r, -1, -1, -1);
         imageController(structarr[currentstrucstep].activeImage);
         Step.text = structarr[currentstrucstep].steptxt;
-        ArrStep.text = structarr[currentstrucstep].arrtxt;
+        Larr.text = structarr[currentstrucstep].Larr;
+        Rarr.text = structarr[currentstrucstep].Rarr;
+
         m_selectionAni.ShowGraph(structarr[currentstrucstep].oldarr);
         if (!manual)
         {

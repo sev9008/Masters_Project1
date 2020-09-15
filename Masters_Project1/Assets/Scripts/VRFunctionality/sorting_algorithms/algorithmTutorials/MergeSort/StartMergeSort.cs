@@ -34,7 +34,7 @@ public class StartMergeSort : MonoBehaviour, IPointerDownHandler
         {
             arr2.Add(arrayKeeper.arr[i]);
         }
-        m_insertSort_ArrayHolder.Display(arr2, size);
+        m_insertSort_ArrayHolder.Display(arr2, size, -1, -1, -1, -1, -1);
 
         if (!running)
         {

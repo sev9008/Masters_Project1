@@ -15,7 +15,6 @@ public class AdvanceMerge : MonoBehaviour, IPointerDownHandler
             {
                 m_InsertSort_arrayHolder.previous = false;
             }
-            m_InsertSort_arrayHolder.Step.text = "Processing next Step";
         }
     }
 }
