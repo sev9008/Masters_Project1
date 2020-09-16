@@ -6,11 +6,13 @@ using UnityEngine.UI;
 public class MergeInteractive2 : MonoBehaviour
 {
     public List<GameObject> b;
+    public List<GameObject> bclone;
     public List<GameObject> pos;
     public Material Donesort;
-    public Material Nextsort;
+    public Material Rmat;
     public Material Unsorted;
-    public Material nextLine;
+    public Material Lmat;
+    public Material Goodmat;
 
     public bool sorted;
 
@@ -46,7 +48,7 @@ public class MergeInteractive2 : MonoBehaviour
     {
         moving = false;
         moving2 = false;
-        //Begin();
+        Begin();
     }
 
     public void Update()
@@ -77,12 +79,10 @@ public class MergeInteractive2 : MonoBehaviour
             if (Larray)
             {
                 L[tempnumj].GetComponent<RectTransform>().anchoredPosition = Vector3.MoveTowards(L[tempnumj].GetComponent<RectTransform>().anchoredPosition, targetTransform2, Time.deltaTime * smooth);
-
             }
             else
             {
                 R[tempnumj].GetComponent<RectTransform>().anchoredPosition = Vector3.MoveTowards(R[tempnumj].GetComponent<RectTransform>().anchoredPosition, targetTransform2, Time.deltaTime * smooth);
-
             }
 
             if (Larray)
@@ -100,14 +100,14 @@ public class MergeInteractive2 : MonoBehaviour
                 }
             }
         }
-        if (moving2)
-        {
-            b[tempnumj].GetComponent<RectTransform>().anchoredPosition = Vector3.MoveTowards(b[tempnumj].GetComponent<RectTransform>().anchoredPosition, targetTransform2, Time.deltaTime * smooth);
-            if (b[tempnumj].GetComponent<RectTransform>().anchoredPosition.y == targetTransform2.y)
-            {
-                moving2 = false;
-            }
-        }
+        //if (moving2)
+        //{
+        //    b[tempnumj].GetComponent<RectTransform>().anchoredPosition = Vector3.MoveTowards(b[tempnumj].GetComponent<RectTransform>().anchoredPosition, targetTransform2, Time.deltaTime * smooth);
+        //    if (b[tempnumj].GetComponent<RectTransform>().anchoredPosition.y == targetTransform2.y)
+        //    {
+        //        moving2 = false;
+        //    }
+        //}
     }
 
     public void Begin()
@@ -127,6 +127,8 @@ public class MergeInteractive2 : MonoBehaviour
             int n = UnityEngine.Random.Range(1, 99);
             Text t = b[i].GetComponentInChildren<Text>();
             t.text = n.ToString();
+
+            bclone[i].GetComponentInChildren<Text>().text = b[i].GetComponentInChildren<Text>().text;
         }
         updatePos();
         sorted = false;
@@ -139,8 +141,11 @@ public class MergeInteractive2 : MonoBehaviour
         for (int i = 0; i < 9; i++)
         {
             b[i].GetComponent<RectTransform>().anchoredPosition = pos[i].GetComponent<RectTransform>().anchoredPosition;
+            bclone[i].GetComponent<RectTransform>().anchoredPosition = new Vector3(pos[i].GetComponent<RectTransform>().anchoredPosition.x, pos[i].GetComponent<RectTransform>().anchoredPosition.y + 50);
             b[i].transform.position = pos[i].transform.position;
+            //bclone[i].transform.position = pos[i].transform.position;
             b[i].transform.rotation = pos[i].transform.rotation;
+            bclone[i].transform.rotation = pos[i].transform.rotation;
             b[i].GetComponent<MoveInteractionBLock>().PairedPos = pos[i];
         }
     }
@@ -186,7 +191,26 @@ public class MergeInteractive2 : MonoBehaviour
         {
             yield return null;
         }
+
+        if (Larray)
+        {
+            GameObject p = b[i].GetComponent<MoveInteractionBLock>().PairedPos;
+            targetTransform2 = new Vector3(L[j].GetComponent<RectTransform>().anchoredPosition.x, p.GetComponent<RectTransform>().anchoredPosition.y);
+        }
+        else
+        {
+            GameObject p = b[i].GetComponent<MoveInteractionBLock>().PairedPos;
+            targetTransform2 = new Vector3(R[j].GetComponent<RectTransform>().anchoredPosition.x, p.GetComponent<RectTransform>().anchoredPosition.y);
+        }
+        moving = true;
+        while (moving == true)
+        {
+            yield return null;
+        }
+
+        updatePos();
     }
+    /*
     public IEnumerator Fallin()
     {
         float p = pos[0].GetComponent<RectTransform>().anchoredPosition.y;
@@ -205,6 +229,7 @@ public class MergeInteractive2 : MonoBehaviour
             }
         }
     }
+    */
 
     public IEnumerator Mergechecksort()
     {
@@ -242,11 +267,15 @@ public class MergeInteractive2 : MonoBehaviour
         R = new GameObject[n2];
         for (i = 0; i < n1; i++)
         {
-            L[i] = b[l + i];
+            L[i] = bclone[l + i];
+            bclone[l + i].SetActive(true);
+            bclone[l + i].GetComponentInChildren<MeshRenderer>().material = Lmat;
         }
         for (j = 0; j < n2; j++)
         {
-            R[j] = b[m + 1 + j];
+            R[j] = bclone[m + 1 + j];
+            bclone[m + 1 + j].SetActive(true);
+            bclone[m + 1 + j].GetComponentInChildren<MeshRenderer>().material = Rmat;
         }
         updatePos();
         i = 0;
@@ -261,17 +290,22 @@ public class MergeInteractive2 : MonoBehaviour
             if (temp <= temp2)
             {
                 Larray = true;
-                L[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                //L[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
                 yield return  sho = StartCoroutine(SwapAnimation(k, i));
-                b[k] = L[i];
+                b[k].GetComponentInChildren<Text>().text = L[i].GetComponentInChildren<Text>().text;
+                b[k].GetComponentInChildren<MeshRenderer>().material = Goodmat;
+                //b[k] = L[i];
                 i++;
             }
             else
             {
                 Larray = false;
-                R[j].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                //R[j].GetComponentInChildren<MeshRenderer>().material = Nextsort;
                 yield return sho = StartCoroutine(SwapAnimation(k, j));
-                b[k] = R[j];
+                b[k].GetComponentInChildren<Text>().text = R[j].GetComponentInChildren<Text>().text;
+                b[k].GetComponentInChildren<MeshRenderer>().material = Goodmat;
+
+                //b[k] = R[j];
                 j++;
             }
             k++;
@@ -280,24 +314,35 @@ public class MergeInteractive2 : MonoBehaviour
         while (i < n1)
         {
             Larray = true;
-            L[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+            //L[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
             yield return sho = StartCoroutine(SwapAnimation(k, i));
-            b[k] = L[i];
+            b[k].GetComponentInChildren<Text>().text = L[i].GetComponentInChildren<Text>().text;
+            b[k].GetComponentInChildren<MeshRenderer>().material = Goodmat;
+            //b[k] = L[i];
             i++;
             k++;
         }
         while (j < n2)
         {
             Larray = false;
-            R[j].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+            //R[j].GetComponentInChildren<MeshRenderer>().material = Nextsort;
             yield return sho = StartCoroutine(SwapAnimation(k, j));
-            b[k] = R[j];
+            b[k].GetComponentInChildren<Text>().text = R[j].GetComponentInChildren<Text>().text;
+            b[k].GetComponentInChildren<MeshRenderer>().material = Goodmat;
+            //b[k] = R[j];
             j++;
             k++;
         }
-        yield return sho = StartCoroutine(Fallin());
+        //yield return sho = StartCoroutine(Fallin());
         updatePos();
         yield return new WaitForSeconds(speed);
+        for (int x = 0; x < bclone.Count; x++)
+        {
+            //b[x].GetComponentInChildren<Text>().text = bclone[x].GetComponentInChildren<Text>().text;
+            bclone[x].GetComponentInChildren<Text>().text = b[x].GetComponentInChildren<Text>().text;
+            bclone[x].SetActive(false);
+        }
+        updatePos();
     }
 
     public void EnableTrigger(int l, int h)

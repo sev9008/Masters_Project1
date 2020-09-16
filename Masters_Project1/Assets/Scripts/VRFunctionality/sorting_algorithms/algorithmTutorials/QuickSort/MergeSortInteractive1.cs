@@ -9,9 +9,9 @@ public class MergeSortInteractive1 : MonoBehaviour
     public List<GameObject> bclone;
     public List<GameObject> pos;
     public Material Donesort;
-    public Material Nextsort;
+    public Material Rmat;
     public Material Unsorted;
-    public Material nextLine;
+    public Material Lmat;
 
     public bool sorted;
 
@@ -93,10 +93,12 @@ public class MergeSortInteractive1 : MonoBehaviour
                     Step.text = "The block you attempted to swap was correct.";
                     corretAnswers += 1;
                     corretAnswersText.GetComponent<Text>().text = corretAnswers.ToString();
+                    b[nextToSort].GetComponentInChildren<Text>().text = L[currentSmallestIndex].GetComponentInChildren<Text>().text;
                     waitingforswap = false;
                     updatePos();
                     return;
                 }
+                /*
                 else 
                 {
                     for (int i = 0; i < b.Count; i++)
@@ -128,6 +130,7 @@ public class MergeSortInteractive1 : MonoBehaviour
                         }
                     }
                 }
+                */
             }
             else
             {
@@ -139,10 +142,12 @@ public class MergeSortInteractive1 : MonoBehaviour
                     m_vRController_1.downL = false;
                     corretAnswers += 1;
                     corretAnswersText.GetComponent<Text>().text = corretAnswers.ToString();
+                    b[nextToSort].GetComponentInChildren<Text>().text = R[currentSmallestIndex].GetComponentInChildren<Text>().text;
                     waitingforswap = false;
                     updatePos();
                     return;
                 }
+                /*
                 else
                 {
                     for (int i = 0; i < b.Count; i++)
@@ -174,6 +179,7 @@ public class MergeSortInteractive1 : MonoBehaviour
                         }
                     }
                 }
+                */
             }
         }
     }
@@ -183,8 +189,11 @@ public class MergeSortInteractive1 : MonoBehaviour
         for (int i = 0; i < 9; i++)
         {
             b[i].GetComponent<RectTransform>().anchoredPosition = pos[i].GetComponent<RectTransform>().anchoredPosition;
+            bclone[i].GetComponent<RectTransform>().anchoredPosition = new Vector3(pos[i].GetComponent<RectTransform>().anchoredPosition.x, pos[i].GetComponent<RectTransform>().anchoredPosition.y + 50);
             b[i].transform.position = pos[i].transform.position;
+            //bclone[i].transform.position = pos[i].transform.position;
             b[i].transform.rotation = pos[i].transform.rotation;
+            bclone[i].transform.rotation = pos[i].transform.rotation;
             b[i].GetComponent<MoveInteractionBLock>().PairedPos = pos[i];
         }
     }
@@ -223,11 +232,15 @@ public class MergeSortInteractive1 : MonoBehaviour
         R = new GameObject[n2];
         for (i = 0; i < n1; i++)
         {
-            L[i] = b[l + i];
+            L[i] = bclone[l + i];
+            bclone[l + i].SetActive(true);
+            bclone[l + i].GetComponentInChildren<MeshRenderer>().material = Lmat;
         }
         for (j = 0; j < n2; j++)
         {
-            R[j] = b[m + 1 + j];
+            R[j] = bclone[m + 1 + j];
+            bclone[m + 1 + j].SetActive(true);
+            bclone[m + 1 + j].GetComponentInChildren<MeshRenderer>().material = Rmat;
         }
         i = 0;
         j = 0;
@@ -245,17 +258,6 @@ public class MergeSortInteractive1 : MonoBehaviour
                 Larray = true;
                 waitingforswap = true;
 
-                b[k].GetComponent<BoxCollider>().enabled = true;
-                pos[k].GetComponent<BoxCollider>().enabled = false;
-                b[k].GetComponent<MoveInteractionBLock>().enabled = true;
-
-                L[i].GetComponent<BoxCollider>().enabled = true;
-                L[i].GetComponent<MoveInteractionBLock>().PairedPos.GetComponent<BoxCollider>().enabled = false;
-                L[i].GetComponent<MoveInteractionBLock>().enabled = true;
-
-                b[k].GetComponentInChildren<MeshRenderer>().material = Nextsort;
-                L[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
-
                 float.TryParse(b[k].GetComponentInChildren<Text>().text, out temp);
                 float.TryParse(L[i].GetComponentInChildren<Text>().text, out temp2);
                 if (temp == temp2)
@@ -266,11 +268,6 @@ public class MergeSortInteractive1 : MonoBehaviour
                 {
                     yield return null;
                 }
-                b[k].GetComponentInChildren<MeshRenderer>().material = Donesort;
-                L[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
-
-                bclone[k].SetActive(true);
-                bclone[k].GetComponentInChildren<Text>().text = L[i].GetComponentInChildren<Text>().text;
 
                 i++;
             }
@@ -280,17 +277,6 @@ public class MergeSortInteractive1 : MonoBehaviour
                 currentSmallestIndex = j;
                 Larray = false;
                 waitingforswap = true;
-
-                b[k].GetComponent<BoxCollider>().enabled = true;
-                pos[k].GetComponent<BoxCollider>().enabled = false;
-                b[k].GetComponent<MoveInteractionBLock>().enabled = true;
-
-                R[j].GetComponent<BoxCollider>().enabled = true;
-                R[j].GetComponent<MoveInteractionBLock>().PairedPos.GetComponent<BoxCollider>().enabled = false;
-                R[j].GetComponent<MoveInteractionBLock>().enabled = true;
-
-                b[k].GetComponentInChildren<MeshRenderer>().material = Nextsort;
-                R[j].GetComponentInChildren<MeshRenderer>().material = Nextsort;
 
                 float.TryParse(b[k].GetComponentInChildren<Text>().text, out temp);
                 float.TryParse(R[j].GetComponentInChildren<Text>().text, out temp2);
@@ -302,12 +288,6 @@ public class MergeSortInteractive1 : MonoBehaviour
                 {
                     yield return null;
                 }
-                b[k].GetComponentInChildren<MeshRenderer>().material = Donesort;
-                R[j].GetComponentInChildren<MeshRenderer>().material = Donesort;
-
-                bclone[k].SetActive(true);
-                bclone[k].GetComponentInChildren<Text>().text = R[j].GetComponentInChildren<Text>().text;
-
                 j++;
             }
             EnableTrigger(l, r);
@@ -321,17 +301,6 @@ public class MergeSortInteractive1 : MonoBehaviour
             Larray = true;
             waitingforswap = true;
 
-            b[k].GetComponent<BoxCollider>().enabled = true;
-            pos[k].GetComponent<BoxCollider>().enabled = false;
-            b[k].GetComponent<MoveInteractionBLock>().enabled = true;
-
-            L[i].GetComponent<BoxCollider>().enabled = true;
-            L[i].GetComponent<MoveInteractionBLock>().PairedPos.GetComponent<BoxCollider>().enabled = false;
-            L[i].GetComponent<MoveInteractionBLock>().enabled = true;
-
-            b[k].GetComponentInChildren<MeshRenderer>().material = Nextsort;
-            L[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
-
             float.TryParse(b[k].GetComponentInChildren<Text>().text, out temp);
             float.TryParse(L[i].GetComponentInChildren<Text>().text, out temp2);
             if (temp == temp2)
@@ -342,11 +311,6 @@ public class MergeSortInteractive1 : MonoBehaviour
             {
                 yield return null;
             }
-            b[k].GetComponentInChildren<MeshRenderer>().material = Donesort;
-            L[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
-
-            bclone[k].SetActive(true);
-            bclone[k].GetComponentInChildren<Text>().text = L[i].GetComponentInChildren<Text>().text;
 
             i++;
             k++;
@@ -360,17 +324,6 @@ public class MergeSortInteractive1 : MonoBehaviour
             Larray = false;
             waitingforswap = true;
 
-            b[k].GetComponent<BoxCollider>().enabled = true;
-            pos[k].GetComponent<BoxCollider>().enabled = false;
-            b[k].GetComponent<MoveInteractionBLock>().enabled = true;
-
-            R[j].GetComponent<BoxCollider>().enabled = true;
-            R[j].GetComponent<MoveInteractionBLock>().PairedPos.GetComponent<BoxCollider>().enabled = false;
-            R[j].GetComponent<MoveInteractionBLock>().enabled = true;
-
-            b[k].GetComponentInChildren<MeshRenderer>().material = Nextsort;
-            R[j].GetComponentInChildren<MeshRenderer>().material = Nextsort;
-
             float.TryParse(b[k].GetComponentInChildren<Text>().text, out temp);
             float.TryParse(R[j].GetComponentInChildren<Text>().text, out temp2);
             if (temp == temp2)
@@ -381,11 +334,6 @@ public class MergeSortInteractive1 : MonoBehaviour
             {
                 yield return null;
             }
-            b[k].GetComponentInChildren<MeshRenderer>().material = Donesort;
-            R[j].GetComponentInChildren<MeshRenderer>().material = Donesort;
-
-            bclone[k].SetActive(true);
-            bclone[k].GetComponentInChildren<Text>().text = R[j].GetComponentInChildren<Text>().text;
 
             j++;
             k++;
@@ -396,7 +344,7 @@ public class MergeSortInteractive1 : MonoBehaviour
 
         for (int x = 0; x < bclone.Count; x++)
         {
-            b[x].GetComponentInChildren<Text>().text = bclone[x].GetComponentInChildren<Text>().text;
+            //b[x].GetComponentInChildren<Text>().text = bclone[x].GetComponentInChildren<Text>().text;
             bclone[x].GetComponentInChildren<Text>().text = b[x].GetComponentInChildren<Text>().text;
             bclone[x].SetActive(false);
         }

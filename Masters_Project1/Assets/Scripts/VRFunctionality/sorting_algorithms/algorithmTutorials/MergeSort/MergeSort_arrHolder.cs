@@ -89,7 +89,7 @@ public class MergeSort_arrHolder : MonoBehaviour
         for (int n = 0; n < size; n++)
         {
             b[n].SetActive(true);
-            Debug.Log(l + " < " + n + " < "+ r);
+            //Debug.Log(l + " < " + n + " < "+ r);
             if (l <= n && n <= r)
             {
                 b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
@@ -566,10 +566,6 @@ public class MergeSort_arrHolder : MonoBehaviour
         Rarr.text = structarr[currentstrucstep].Rarr;
 
         m_selectionAni.ShowGraph(structarr[currentstrucstep].oldarr);
-        if (!manual)
-        {
-            yield return new WaitForSeconds(speed);
-        }
         if (manual)
         {
             paused = true;
@@ -590,6 +586,18 @@ public class MergeSort_arrHolder : MonoBehaviour
                 goto resume;
             }
             yield return null;
+        }
+        if (!manual)
+        {
+            yield return new WaitForSeconds(speed);
+            if (currentstrucstep >= maxstrucstep)
+            {
+                paused = false;
+            }
+            else if (currentstrucstep > 0 && currentstrucstep < maxstrucstep)
+            {
+                goto resume;
+            }
         }
     }
 

@@ -12,15 +12,16 @@ public class PauseMergeSort : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (M_quickSort_arrayHolder.paused)
+        if (M_quickSort_arrayHolder.manual)
         {
             M_quickSort_arrayHolder.manual = false;
+            M_quickSort_arrayHolder.paused = false;
             txt.text = "Auto";
         }
-
-        else if (!M_quickSort_arrayHolder.paused)
+        else if (!M_quickSort_arrayHolder.manual)
         {
             M_quickSort_arrayHolder.manual = true;
+            M_quickSort_arrayHolder.paused = true;
             txt.text = "Manual";
         }
     }
