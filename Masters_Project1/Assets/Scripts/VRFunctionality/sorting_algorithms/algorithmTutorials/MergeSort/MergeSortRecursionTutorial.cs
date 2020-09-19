@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,17 +8,42 @@ public class MergeSortRecursionTutorial : MonoBehaviour
 {
     public GameObject[] b;
     public GameObject[] bstep;
-    public int speed;
+    public float speed;
     public int currentIndex;
     public Text tmptxt;
     public Material Lmat;
     public Material Rmat;
     public Material Normalmat;
+    public bool manual;
+    public bool next;
+    public bool previous;
+    public bool paused;
+    public int currentstrucstep;
+    public int maxstrucstep;
+    public List<MyStruct> structarr;
+    public Slider slider;
+    public bool running;
+
 
     public void Start()
     {
+        paused = false;
+        manual = false;
         Begin();
+        structarr = new List<MyStruct>();
     }
+
+    [Serializable] public class MyStruct
+    {
+        public int oldarr;
+        public string steptxt;
+    }
+    public void Update()
+    {
+        //speed = slider.value;
+        speed = 1;
+    }
+
     public void Begin()
     {
         for (int i = 0; i < 9; i++)
@@ -33,8 +59,21 @@ public class MergeSortRecursionTutorial : MonoBehaviour
 
     public IEnumerator Mergechecksort()
     {
+        running = true;
+        //for (int n = 0; n < structarr.Count; n++)
+        //{
+        //    structarr[n].oldarr = -1;
+        //    structarr[n].steptxt = " ";
+        //}
+        //structarr.Clear();
+        structarr = new List<MyStruct>();
+        currentstrucstep = -1;
+        maxstrucstep = -1;
+        var a = new MyStruct();
+        structarr.Add(a);
         yield return StartCoroutine(mergeSort(0, b.Length - 1));
         tmptxt.text = "Merge Sort is finished.";
+        running = false;
     }
 
     public IEnumerator mergeSort(int l, int r)
@@ -42,7 +81,6 @@ public class MergeSortRecursionTutorial : MonoBehaviour
         int tempsize = 0;
         if (l < r)
         {
-            yield return new WaitForSeconds(speed);
             int m = l + (r - l) / 2;
             tempsize = m - l;
             for (int i = l; i < l+tempsize+1; i++)
@@ -53,8 +91,38 @@ public class MergeSortRecursionTutorial : MonoBehaviour
                 currentIndex++;
             }
             tmptxt.text = "Perform MergeSort on the left side of the array.\n" + "Left index = " + l + "\nRight index = " + m;
+            currentstrucstep++;
+            maxstrucstep++;
+            var a = new MyStruct();
+            a.oldarr = currentIndex;
+            a.steptxt = tmptxt.text;
+            structarr.Add(a);
+            Debug.Log(currentstrucstep + " - " + currentIndex + " - " + structarr.Count);
+            //structarr[currentstrucstep].oldarr = currentIndex;
+            //structarr[currentstrucstep].steptxt = tmptxt.text;
+            //if (!manual)
+            //{
+            //    yield return new WaitForSeconds(speed);
+            //}
+            //if (manual)
+            //{
+            //    paused = true;
+            //}
+            //while (paused && manual)
+            //{
+            //    if (next && currentstrucstep >= maxstrucstep)
+            //    {
+            //        next = false;
+            //        paused = false;
+            //    }
+            //    else if (next || previous)
+            //    {
+            //        yield return StartCoroutine(changeStep());
+            //    }
+            //    yield return null;
+            //}
             yield return mergeSort(l, m);
-            yield return new WaitForSeconds(speed);
+
 
             tempsize = r - m;
             for (int i = m+1; i < m+1+tempsize; i++)
@@ -65,8 +133,34 @@ public class MergeSortRecursionTutorial : MonoBehaviour
                 currentIndex++;
             }
             tmptxt.text = "Perform MergeSort on the right side of the array.\n" + "Left index = " + m+1 + "\nRight index = " + r;
+            //currentstrucstep++;
+            //maxstrucstep++;
+            //var c = new MyStruct();
+            //structarr.Add(c);
+            //structarr[currentstrucstep].oldarr = currentIndex;
+            //structarr[currentstrucstep].steptxt = tmptxt.text;
+            //if (!manual)
+            //{
+            //    yield return new WaitForSeconds(speed);
+            //}
+            //if (manual)
+            //{
+            //    paused = true;
+            //}
+            //while (paused && manual)
+            //{
+            //    if (next && currentstrucstep >= maxstrucstep)
+            //    {
+            //        next = false;
+            //        paused = false;
+            //    }
+            //    else if (next || previous)
+            //    {
+            //        yield return StartCoroutine(changeStep());
+            //    }
+            //    yield return null;
+            //}
             yield return mergeSort(m + 1, r);
-            yield return new WaitForSeconds(speed);
 
             tmptxt.text = "Perform Merge on ";
             for (int i = l; i < r+1; i++)
@@ -75,7 +169,33 @@ public class MergeSortRecursionTutorial : MonoBehaviour
             }
             tmptxt.text += "\nLeft index = " + l + "\nMiddle index = " + m + "\nRight index = " + r;
             yield return merge(l, m, r);
-            yield return new WaitForSeconds(speed);
+            //currentstrucstep++;
+            //maxstrucstep++;
+            //var d = new MyStruct();
+            //structarr.Add(d);
+            //structarr[currentstrucstep].oldarr = currentIndex;
+            //structarr[currentstrucstep].steptxt = tmptxt.text;
+            //if (!manual)
+            //{
+            //    yield return new WaitForSeconds(speed);
+            //}
+            //if (manual)
+            //{
+            //    paused = true;
+            //}
+            //while (paused && manual)
+            //{
+            //    if (next && currentstrucstep >= maxstrucstep)
+            //    {
+            //        next = false;
+            //        paused = false;
+            //    }
+            //    else if (next || previous)
+            //    {
+            //        yield return StartCoroutine(changeStep());
+            //    }
+            //    yield return null;
+            //}
         }
     }
 
@@ -142,4 +262,67 @@ public class MergeSortRecursionTutorial : MonoBehaviour
         }
         yield return null;
     }
+    /*
+    public IEnumerator changeStep()
+    {
+        resume:
+        if (previous && currentstrucstep > 0)
+        {
+            currentstrucstep--;
+            previous = false;
+        }
+        else if (next && currentstrucstep != maxstrucstep || currentstrucstep != maxstrucstep)
+        {
+            currentstrucstep++;
+            next = false;
+        }
+
+        tmptxt.text = structarr[currentstrucstep].steptxt;
+        for (int i = 0; i < bstep.Length; i++)
+        {
+            if (i < structarr[currentstrucstep].oldarr)
+            {
+                bstep[i].SetActive(true);
+            }
+            else
+            {
+                bstep[i].SetActive(false);
+            }
+        }
+
+        if (manual)
+        {
+            paused = true;
+        }
+        while (paused && manual)
+        {
+            if (next && currentstrucstep >= maxstrucstep)
+            {
+                next = false;
+                paused = false;
+            }
+            else if (previous && currentstrucstep > 0)
+            {
+                goto resume;
+            }
+            else if (next && currentstrucstep < maxstrucstep)
+            {
+                goto resume;
+            }
+            yield return null;
+        }
+        if (!manual)
+        {
+            yield return new WaitForSeconds(speed);
+            if (currentstrucstep >= maxstrucstep)
+            {
+                paused = false;
+            }
+            else if (currentstrucstep > 0 && currentstrucstep < maxstrucstep)
+            {
+                goto resume;
+            }
+        }
+    }
+    */
 }

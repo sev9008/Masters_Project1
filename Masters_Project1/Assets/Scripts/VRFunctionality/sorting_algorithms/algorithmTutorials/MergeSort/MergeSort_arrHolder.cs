@@ -145,12 +145,6 @@ public class MergeSort_arrHolder : MonoBehaviour
 
     public IEnumerator MergeSort(List<int> arr, int l, int r)
     {
-        while (paused)
-        {
-            yield return null;
-        }
-        yield return new WaitForSeconds(1);
-
         if (l < r)
         {
             int m = l + (r - l) / 2;
