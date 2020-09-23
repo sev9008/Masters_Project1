@@ -98,39 +98,23 @@ public class MergeSortInteractive1 : MonoBehaviour
                     updatePos();
                     return;
                 }
-                /*
                 else 
                 {
                     for (int i = 0; i < b.Count; i++)
                     {
-                        for (int j = 0; j < b.Count; j++)
+                        dist2 = Vector3.Distance(b[i].transform.position, L[currentSmallestIndex].transform.position);
+                        if (dist2 < .04)
                         {
-                            dist1 = Vector3.Distance(b[i].transform.position, L[currentSmallestIndex].transform.position);
-                            dist2 = Vector3.Distance(b[nextToSort].transform.position, b[j].transform.position);
-                            if (dist1 < .04 && dist1 != 0)
-                            {
-                                m_vRController_1.downR = false;
-                                m_vRController_1.downL = false;
-                                Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
-                                incorretAnswers += 1;
-                                incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
-                                updatePos();
-                                return;
-                            }
-                            if (dist2 < .04 && dist2 != 0)
-                            {
-                                m_vRController_1.downR = false;
-                                m_vRController_1.downL = false;
-                                Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
-                                incorretAnswers += 1;
-                                incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
-                                updatePos();
-                                return;
-                            }
+                            m_vRController_1.downR = false;
+                            m_vRController_1.downL = false;
+                            Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
+                            incorretAnswers += 1;
+                            incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                            updatePos();
+                            return;
                         }
                     }
                 }
-                */
             }
             else
             {
@@ -147,39 +131,23 @@ public class MergeSortInteractive1 : MonoBehaviour
                     updatePos();
                     return;
                 }
-                /*
                 else
                 {
                     for (int i = 0; i < b.Count; i++)
                     {
-                        for (int j = 0; j < b.Count; j++)
+                        dist2 = Vector3.Distance(b[i].transform.position, R[currentSmallestIndex].transform.position);
+                        if (dist2 < .04)
                         {
-                            dist1 = Vector3.Distance(b[i].transform.position, R[currentSmallestIndex].transform.position);
-                            dist2 = Vector3.Distance(b[nextToSort].transform.position, b[j].transform.position);
-                            if (dist1 < .04 && dist1 != 0)
-                            {
-                                m_vRController_1.downR = false;
-                                m_vRController_1.downL = false;
-                                Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
-                                incorretAnswers += 1;
-                                incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
-                                updatePos();
-                                return;
-                            }
-                            if (dist2 < .04 && dist2 != 0)
-                            {
-                                m_vRController_1.downR = false;
-                                m_vRController_1.downL = false;
-                                Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
-                                incorretAnswers += 1;
-                                incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
-                                updatePos();
-                                return;
-                            }
+                            m_vRController_1.downR = false;
+                            m_vRController_1.downL = false;
+                            Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
+                            incorretAnswers += 1;
+                            incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                            updatePos();
+                            return;
                         }
                     }
                 }
-                */
             }
         }
     }

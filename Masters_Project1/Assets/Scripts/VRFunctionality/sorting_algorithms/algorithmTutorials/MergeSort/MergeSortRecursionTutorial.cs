@@ -25,6 +25,10 @@ public class MergeSortRecursionTutorial : MonoBehaviour
     public bool running;
     private bool firstiter;
 
+    public GameObject image1;
+    public GameObject image2;
+    public GameObject image3;
+
 
     public void Start()
     {
@@ -97,6 +101,9 @@ public class MergeSortRecursionTutorial : MonoBehaviour
             a.oldarr = currentIndex;
             a.steptxt = tmptxt.text;
             structarr.Add(a);
+            image1.SetActive(true);
+            image2.SetActive(true);
+            image3.SetActive(true);
             if (!manual)
             {
                 yield return new WaitForSeconds(speed);
@@ -137,6 +144,9 @@ public class MergeSortRecursionTutorial : MonoBehaviour
             c.steptxt = tmptxt.text;
             structarr.Add(c);
             Debug.Log(currentstrucstep + " - " + currentIndex + " - " + structarr.Count);
+            image1.SetActive(false);
+            image2.SetActive(true);
+            image3.SetActive(false);
             if (!manual)
             {
                 yield return new WaitForSeconds(speed);
@@ -173,6 +183,9 @@ public class MergeSortRecursionTutorial : MonoBehaviour
             d.oldarr = currentIndex;
             d.steptxt = tmptxt.text;
             structarr.Add(d);
+            image1.SetActive(false);
+            image2.SetActive(false);
+            image3.SetActive(true);
             if (!manual)
             {
                 yield return new WaitForSeconds(speed);
