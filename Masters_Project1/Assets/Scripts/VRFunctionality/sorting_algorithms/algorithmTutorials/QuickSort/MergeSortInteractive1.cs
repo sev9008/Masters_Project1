@@ -36,6 +36,10 @@ public class MergeSortInteractive1 : MonoBehaviour
 
     public bool waitingforswap;
 
+    public bool waitingforswap2;
+    public int MergeLIndex;
+    public int MergeRIndex;
+
     public GameObject[] L;
     public GameObject[] R;
     public bool Larray;
@@ -76,6 +80,38 @@ public class MergeSortInteractive1 : MonoBehaviour
         {
             Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Merge Sort Operates." + "\nThe Algorithm splits the array into halves and sorts each half one at a time.";
             sorted = false;
+        }
+
+        if (waitingforswap2)
+        {
+            for (int i = 0; i < b.Count; i++)
+            {
+                if (i == MergeLIndex || i == MergeRIndex)//test to see if the palyer clicked the correct indexes
+                {
+                    if (b[MergeLIndex].GetComponent<MergeInter1_RecursionBlockTEst>().pressed && b[MergeRIndex].GetComponent<MergeInter1_RecursionBlockTEst>().pressed)//correct
+                    {
+                        b[MergeLIndex].GetComponent<MergeInter1_RecursionBlockTEst>().pressed = false;
+                        b[MergeRIndex].GetComponent<MergeInter1_RecursionBlockTEst>().pressed = false;
+                        EnableTrigger(-1, -1);
+                        corretAnswers += 1;
+                        Step.text = "The block you attempted to selected was correct.";
+                        waitingforswap2 = false;
+                        return;
+                    }
+                }
+                else if(i != MergeLIndex && i != MergeRIndex)//test to see if the palyer clicked the incorrect indexes
+                {
+                    if (b[i].GetComponent<MergeInter1_RecursionBlockTEst>().pressed)//incorrect
+                    {
+                        b[i].GetComponent<MergeInter1_RecursionBlockTEst>().pressed = false;
+                        EnableTrigger(-1, -1);
+                        incorretAnswers += 1;
+                        Step.text = "The block you attempted selected was incorrect.";
+                        waitingforswap2 = false;
+                        return;
+                    }
+                }
+            }
         }
 
         if (waitingforswap && ((L.Length > 0 && Larray) || (R.Length > 0 && !Larray)))
@@ -183,8 +219,51 @@ public class MergeSortInteractive1 : MonoBehaviour
         if (l < r)
         {
             int m = l + (r - l) / 2;
+            //Debug.Log("l= " + l + "m= " + m + "r= " + r + "");
+
+            EnableTrigger(-1, -1);
+            MergeLIndex = l;
+            MergeRIndex = r;
+            waitingforswap2 = true;
+            for (int i = 0; i < bclone.Count; i++)//disable all bclones since they are not needed here
+            {
+                bclone[i].SetActive(false);
+                bclone[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+            }
+            while (waitingforswap2)
+            {
+                yield return null;
+            }
             yield return mergeSort(l, m);
+
+            EnableTrigger(-1, -1);
+            MergeLIndex = l;
+            MergeRIndex = m;
+            waitingforswap2 = true;
+            for (int i = 0; i < bclone.Count; i++)//disable all bclones since they are not needed here
+            {
+                bclone[i].SetActive(false);
+                bclone[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+            }
+            while (waitingforswap2)
+            {
+                yield return null;
+            }
             yield return mergeSort(m + 1, r);
+
+            EnableTrigger(-1, -1);
+            MergeLIndex = -l;
+            MergeRIndex = -r;
+            waitingforswap2 = true;
+            for (int i = 0; i < bclone.Count; i++)//disable all bclones since they are not needed here
+            {
+                bclone[i].SetActive(false);
+                bclone[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+            }
+            while (waitingforswap2)
+            {
+                yield return null;
+            }
             yield return merge(l, m, r);
         }
     }
@@ -331,7 +410,14 @@ public class MergeSortInteractive1 : MonoBehaviour
                 pos[i].GetComponent<BoxCollider>().enabled = false;
                 b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
             }
-            else 
+            else if(i == -1 && h == -1)
+            {
+                b[i].GetComponent<BoxCollider>().enabled = false;
+                b[i].GetComponent<MoveInteractionBLock>().enabled = false;
+                pos[i].GetComponent<BoxCollider>().enabled = false;
+                b[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+            }
+            else
             {
                 b[i].GetComponent<BoxCollider>().enabled = false;
                 b[i].GetComponent<MoveInteractionBLock>().enabled = true;
