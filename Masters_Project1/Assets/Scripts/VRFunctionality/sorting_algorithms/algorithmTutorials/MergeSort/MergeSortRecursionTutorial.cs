@@ -29,6 +29,9 @@ public class MergeSortRecursionTutorial : MonoBehaviour
     public GameObject image2;
     public GameObject image3;
 
+    Coroutine SHO;
+
+
 
     public void Start()
     {
@@ -43,6 +46,7 @@ public class MergeSortRecursionTutorial : MonoBehaviour
     {
         public int oldarr;
         public string steptxt;
+        public GameObject Activeimage;
     }
     public void Update()
     {
@@ -52,6 +56,21 @@ public class MergeSortRecursionTutorial : MonoBehaviour
 
     public void Begin()
     {
+        StopAllCoroutines();
+        currentIndex = 0;
+        for (int n = 0; n < structarr.Count; n++)
+        {
+            structarr[n].steptxt = "";
+            structarr[n].oldarr = -1;
+            structarr[n].Activeimage = null;
+        }
+        for (int k = 0; k < bstep.Length; k++)
+        {
+            bstep[k].SetActive(false);
+        }
+        structarr.Clear();
+        structarr = new List<MyStruct>();
+
         for (int i = 0; i < 9; i++)
         {
             int n = UnityEngine.Random.Range(1, 99);
@@ -100,10 +119,11 @@ public class MergeSortRecursionTutorial : MonoBehaviour
             var a = new MyStruct();
             a.oldarr = currentIndex;
             a.steptxt = tmptxt.text;
+            a.Activeimage = image1;
             structarr.Add(a);
             image1.SetActive(true);
-            image2.SetActive(true);
-            image3.SetActive(true);
+            image2.SetActive(false);
+            image3.SetActive(false);
             if (!manual)
             {
                 yield return new WaitForSeconds(speed);
@@ -142,8 +162,9 @@ public class MergeSortRecursionTutorial : MonoBehaviour
             var c = new MyStruct();
             c.oldarr = currentIndex;
             c.steptxt = tmptxt.text;
+            c.Activeimage = image2;
             structarr.Add(c);
-            Debug.Log(currentstrucstep + " - " + currentIndex + " - " + structarr.Count);
+            //Debug.Log(currentstrucstep + " - " + currentIndex + " - " + structarr.Count);
             image1.SetActive(false);
             image2.SetActive(true);
             image3.SetActive(false);
@@ -182,6 +203,7 @@ public class MergeSortRecursionTutorial : MonoBehaviour
             var d = new MyStruct();
             d.oldarr = currentIndex;
             d.steptxt = tmptxt.text;
+            d.Activeimage = image3;
             structarr.Add(d);
             image1.SetActive(false);
             image2.SetActive(false);
@@ -287,8 +309,13 @@ public class MergeSortRecursionTutorial : MonoBehaviour
             currentstrucstep++;
             next = false;
         }
+        image1.SetActive(false);
+        image2.SetActive(false);
+        image3.SetActive(false);
+        structarr[currentstrucstep].Activeimage.SetActive(true);
 
         tmptxt.text = structarr[currentstrucstep].steptxt;
+        
         for (int i = 0; i < bstep.Length; i++)
         {
             if (i < structarr[currentstrucstep].oldarr)

@@ -10,6 +10,17 @@ public class MergeInter1_RecursionBlockTEst : MonoBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         this.gameObject.GetComponentInChildren<MeshRenderer>().material = mat;
+        StartCoroutine(pressdown());
+    }
+
+    public IEnumerator pressdown()
+    {
+        yield return new WaitForSeconds(1);
         pressed = true;
+    }
+
+    void Update()
+    {
+            
     }
 }

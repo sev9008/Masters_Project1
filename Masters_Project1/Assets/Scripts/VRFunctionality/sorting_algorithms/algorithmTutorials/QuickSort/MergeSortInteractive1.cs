@@ -11,6 +11,7 @@ public class MergeSortInteractive1 : MonoBehaviour
     public Material Donesort;
     public Material Rmat;
     public Material Unsorted;
+    public Material greenmat;
     public Material Lmat;
 
     public bool sorted;
@@ -38,7 +39,11 @@ public class MergeSortInteractive1 : MonoBehaviour
 
     public bool waitingforswap2;
     public int MergeLIndex;
-    public int MergeRIndex;
+    public int MergeRIndex;    
+    
+    public int DisplayMergeLIndex;
+    public int DisplayMergeRIndex;
+    public bool displayRecursion;
 
     public GameObject[] L;
     public GameObject[] R;
@@ -58,6 +63,7 @@ public class MergeSortInteractive1 : MonoBehaviour
 
     public void Begin()
     {
+        StopAllCoroutines();
         numofGames += 1;
         numofGamesText.GetComponent<Text>().text = numofGames.ToString();
         Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Merge Sort." + "\nIf a block is green It must be swapped with the other green block.";
@@ -66,7 +72,7 @@ public class MergeSortInteractive1 : MonoBehaviour
             int n = UnityEngine.Random.Range(1, 99);
             Text t = b[i].GetComponentInChildren<Text>();
             t.text = n.ToString();
-            b[i].GetComponent<MoveInteractionBLock>().PairedPos = pos[i];
+            //b[i].GetComponent<MoveInteractionBLock>().PairedPos = pos[i];
             bclone[i].GetComponentInChildren<Text>().text = b[i].GetComponentInChildren<Text>().text;
         }
         updatePos();
@@ -94,7 +100,8 @@ public class MergeSortInteractive1 : MonoBehaviour
                         b[MergeRIndex].GetComponent<MergeInter1_RecursionBlockTEst>().pressed = false;
                         EnableTrigger(-1, -1);
                         corretAnswers += 1;
-                        Step.text = "The block you attempted to selected was correct.";
+                        corretAnswersText.GetComponent<Text>().text = corretAnswers.ToString();
+                        //Step.text = "The block you attempted to selected was correct.";
                         waitingforswap2 = false;
                         return;
                     }
@@ -106,8 +113,9 @@ public class MergeSortInteractive1 : MonoBehaviour
                         b[i].GetComponent<MergeInter1_RecursionBlockTEst>().pressed = false;
                         EnableTrigger(-1, -1);
                         incorretAnswers += 1;
-                        Step.text = "The block you attempted selected was incorrect.";
-                        waitingforswap2 = false;
+                        incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                        //Step.text = "The block you attempted selected was incorrect.";
+                        displayRecursion = true;
                         return;
                     }
                 }
@@ -186,19 +194,31 @@ public class MergeSortInteractive1 : MonoBehaviour
                 }
             }
         }
+
+        if (displayRecursion)
+        {
+            for (int i = 0; i < b.Count; i++)
+            {
+                if (i >= DisplayMergeLIndex && i <= DisplayMergeRIndex)
+                {
+                    b[i].GetComponentInChildren<MeshRenderer>().material = greenmat;
+                    displayRecursion = false;
+                }
+            }
+        }
     }
 
     public void updatePos()
     {
         for (int i = 0; i < 9; i++)
         {
+            bclone[i].transform.position = pos[i].transform.position;
             b[i].GetComponent<RectTransform>().anchoredPosition = pos[i].GetComponent<RectTransform>().anchoredPosition;
-            bclone[i].GetComponent<RectTransform>().anchoredPosition = new Vector3(pos[i].GetComponent<RectTransform>().anchoredPosition.x, pos[i].GetComponent<RectTransform>().anchoredPosition.y + 50);
+            bclone[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos[i].GetComponent<RectTransform>().anchoredPosition.x, pos[i].GetComponent<RectTransform>().anchoredPosition.y + 50);
             b[i].transform.position = pos[i].transform.position;
-            //bclone[i].transform.position = pos[i].transform.position;
             b[i].transform.rotation = pos[i].transform.rotation;
             bclone[i].transform.rotation = pos[i].transform.rotation;
-            b[i].GetComponent<MoveInteractionBLock>().PairedPos = pos[i];
+            //b[i].GetComponent<MoveInteractionBLock>().PairedPos = pos[i];
         }
     }
 
@@ -223,8 +243,9 @@ public class MergeSortInteractive1 : MonoBehaviour
 
             EnableTrigger(-1, -1);
             MergeLIndex = l;
-            MergeRIndex = r;
+            MergeRIndex = m;
             waitingforswap2 = true;
+            Step.text = "Select the correct left and right indexes to proceed with left side recursion.";
             for (int i = 0; i < bclone.Count; i++)//disable all bclones since they are not needed here
             {
                 bclone[i].SetActive(false);
@@ -234,12 +255,16 @@ public class MergeSortInteractive1 : MonoBehaviour
             {
                 yield return null;
             }
+            DisplayMergeLIndex = MergeLIndex;
+            DisplayMergeRIndex = MergeRIndex;
+            displayRecursion = true;
             yield return mergeSort(l, m);
 
             EnableTrigger(-1, -1);
-            MergeLIndex = l;
-            MergeRIndex = m;
+            MergeLIndex = m+1;
+            MergeRIndex = r;
             waitingforswap2 = true;
+            Step.text = "Select the correct middle and right indexes to proceed with right side recursion.";
             for (int i = 0; i < bclone.Count; i++)//disable all bclones since they are not needed here
             {
                 bclone[i].SetActive(false);
@@ -249,12 +274,16 @@ public class MergeSortInteractive1 : MonoBehaviour
             {
                 yield return null;
             }
+            DisplayMergeLIndex = MergeLIndex;
+            DisplayMergeRIndex = MergeRIndex;
+            displayRecursion = true;
             yield return mergeSort(m + 1, r);
 
             EnableTrigger(-1, -1);
-            MergeLIndex = -l;
-            MergeRIndex = -r;
+            MergeLIndex = l;
+            MergeRIndex = r;
             waitingforswap2 = true;
+            Step.text = "Select the correct left and right indexes to proceed with merge.";
             for (int i = 0; i < bclone.Count; i++)//disable all bclones since they are not needed here
             {
                 bclone[i].SetActive(false);
@@ -264,7 +293,13 @@ public class MergeSortInteractive1 : MonoBehaviour
             {
                 yield return null;
             }
+            DisplayMergeLIndex = MergeLIndex;
+            DisplayMergeRIndex = MergeRIndex;
+            displayRecursion = true;
             yield return merge(l, m, r);
+            DisplayMergeLIndex = MergeLIndex;
+            DisplayMergeRIndex = MergeRIndex;
+            displayRecursion = true;
         }
     }
 
@@ -406,23 +441,28 @@ public class MergeSortInteractive1 : MonoBehaviour
             if (i >= l && i <= h)
             {
                 b[i].GetComponent<BoxCollider>().enabled = false;
-                b[i].GetComponent<MoveInteractionBLock>().enabled = true;
+                bclone[i].GetComponent<BoxCollider>().enabled = true;
+                //b[i].GetComponent<MoveInteractionBLock>().enabled = true;
                 pos[i].GetComponent<BoxCollider>().enabled = false;
-                b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+                //b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+                b[i].GetComponentInChildren<MergeInter1_RecursionBlockTEst>().enabled = false;
             }
-            else if(i == -1 && h == -1)
+            else if(l == -1 && h == -1)
             {
                 b[i].GetComponent<BoxCollider>().enabled = false;
-                b[i].GetComponent<MoveInteractionBLock>().enabled = false;
+                //b[i].GetComponent<MoveInteractionBLock>().enabled = false;
                 pos[i].GetComponent<BoxCollider>().enabled = false;
                 b[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+                b[i].GetComponentInChildren<MergeInter1_RecursionBlockTEst>().enabled = true;
             }
             else
             {
                 b[i].GetComponent<BoxCollider>().enabled = false;
-                b[i].GetComponent<MoveInteractionBLock>().enabled = true;
+                //b[i].GetComponent<MoveInteractionBLock>().enabled = true;
                 pos[i].GetComponent<BoxCollider>().enabled = false;
                 b[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+                b[i].GetComponentInChildren<MergeInter1_RecursionBlockTEst>().enabled = false;
+
             }
         }
     }
