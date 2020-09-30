@@ -146,16 +146,22 @@ public class MergeSortInteractive1 : MonoBehaviour
                 {
                     for (int i = 0; i < b.Count; i++)
                     {
-                        dist2 = Vector3.Distance(b[i].transform.position, L[currentSmallestIndex].transform.position);
-                        if (dist2 < .04)
+                        for (int j = 0; j < L.Length; j++)
                         {
-                            m_vRController_1.downR = false;
-                            m_vRController_1.downL = false;
-                            Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
-                            incorretAnswers += 1;
-                            incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
-                            updatePos();
-                            return;
+                            dist2 = Vector3.Distance(b[i].transform.position, L[j].transform.position);
+                            if (i != nextToSort && j != currentSmallestIndex)
+                            {
+                                if (dist2 < .04)
+                                {
+                                    m_vRController_1.downR = false;
+                                    m_vRController_1.downL = false;
+                                    Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
+                                    incorretAnswers += 1;
+                                    incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                                    updatePos();
+                                    return;
+                                }
+                            }
                         }
                     }
                 }
@@ -179,16 +185,22 @@ public class MergeSortInteractive1 : MonoBehaviour
                 {
                     for (int i = 0; i < b.Count; i++)
                     {
-                        dist2 = Vector3.Distance(b[i].transform.position, R[currentSmallestIndex].transform.position);
-                        if (dist2 < .04)
+                        for (int j = 0; j < R.Length; j++)
                         {
-                            m_vRController_1.downR = false;
-                            m_vRController_1.downL = false;
-                            Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
-                            incorretAnswers += 1;
-                            incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
-                            updatePos();
-                            return;
+                            dist2 = Vector3.Distance(b[i].transform.position, R[j].transform.position);
+                            if (i != nextToSort && j != currentSmallestIndex)
+                            {
+                                if (dist2 < .04)
+                                {
+                                    m_vRController_1.downR = false;
+                                    m_vRController_1.downL = false;
+                                    Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
+                                    incorretAnswers += 1;
+                                    incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                                    updatePos();
+                                    return;
+                                }
+                            }
                         }
                     }
                 }

@@ -251,8 +251,65 @@ public class MergeInteractive2 : MonoBehaviour
         if (l < r)
         {
             int m = l + (r - l) / 2;
+
+            EnableTrigger(-1, -1);
+            for (int i = 0; i < bclone.Count; i++)//disable all bclones since they are not needed here
+            {
+                bclone[i].SetActive(false);
+                bclone[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+            }
+            for (int i = 0; i < b.Count; i++)
+            {
+                if (i >= l && i <= m)
+                {
+                    b[i].GetComponentInChildren<MeshRenderer>().material = Goodmat;
+                }
+                else
+                {
+                    b[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+                }
+            }
+            yield return new WaitForSeconds(2);
             yield return mergeSort(l, m);
+
+            EnableTrigger(-1, -1);
+            for (int i = 0; i < bclone.Count; i++)//disable all bclones since they are not needed here
+            {
+                bclone[i].SetActive(false);
+                bclone[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+            }
+            for (int i = 0; i < b.Count; i++)
+            {
+                if (i >= m+1 && i <= r)
+                {
+                    b[i].GetComponentInChildren<MeshRenderer>().material = Goodmat;
+                }
+                else
+                {
+                    b[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+                }
+            }
+            yield return new WaitForSeconds(2);
             yield return mergeSort(m + 1, r);
+
+            EnableTrigger(-1, -1);
+            for (int i = 0; i < bclone.Count; i++)//disable all bclones since they are not needed here
+            {
+                bclone[i].SetActive(false);
+                bclone[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+            }
+            for (int i = 0; i < b.Count; i++)
+            {
+                if (i >= l && i <= r)
+                {
+                    b[i].GetComponentInChildren<MeshRenderer>().material = Goodmat;
+                }
+                else
+                {
+                    b[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+                }
+            }
+            yield return new WaitForSeconds(2);
             yield return merge(l, m, r);
         }
     }
@@ -353,6 +410,10 @@ public class MergeInteractive2 : MonoBehaviour
             if (i >= l && i <= h)
             {
                 b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+            }
+            else if (l == -1 && h == -1)
+            {
+                b[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
             }
             else
             {
