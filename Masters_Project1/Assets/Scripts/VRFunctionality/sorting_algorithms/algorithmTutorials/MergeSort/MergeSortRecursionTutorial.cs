@@ -304,7 +304,7 @@ public class MergeSortRecursionTutorial : MonoBehaviour
             currentstrucstep--;
             previous = false;
         }
-        else if (next && currentstrucstep != maxstrucstep || currentstrucstep != maxstrucstep)
+        else if ((next && currentstrucstep != maxstrucstep) || currentstrucstep != maxstrucstep)
         {
             currentstrucstep++;
             next = false;
@@ -356,7 +356,7 @@ public class MergeSortRecursionTutorial : MonoBehaviour
             {
                 paused = false;
             }
-            else if (currentstrucstep > 0 && currentstrucstep < maxstrucstep)
+            else if (currentstrucstep >= 0 && currentstrucstep < maxstrucstep)
             {
                 goto resume;
             }

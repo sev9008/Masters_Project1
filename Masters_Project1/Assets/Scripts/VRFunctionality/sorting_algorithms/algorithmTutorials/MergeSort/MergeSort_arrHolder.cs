@@ -588,7 +588,7 @@ public class MergeSort_arrHolder : MonoBehaviour
             {
                 paused = false;
             }
-            else if (currentstrucstep > 0 && currentstrucstep < maxstrucstep)
+            else if (currentstrucstep >= 0 && currentstrucstep < maxstrucstep)
             {
                 goto resume;
             }

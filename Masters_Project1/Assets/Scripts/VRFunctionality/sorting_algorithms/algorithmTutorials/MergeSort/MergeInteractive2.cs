@@ -48,7 +48,7 @@ public class MergeInteractive2 : MonoBehaviour
     {
         moving = false;
         moving2 = false;
-        Begin();
+        //Begin();
     }
 
     public void Update()

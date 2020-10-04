@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class AdvanceMerge : MonoBehaviour, IPointerDownHandler
 {
-    public MergeSortRecursionTutorial m_InsertSort_arrayHolder;
+    public MergeSort_arrHolder m_InsertSort_arrayHolder;
     public void OnPointerDown(PointerEventData eventData)
     {
         Debug.Log("hit");
