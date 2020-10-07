@@ -10,6 +10,7 @@ public class InsertSortInteractive2 : MonoBehaviour
     public List<GameObject> pos;
     public Material Donesort;
     public Material Nextsort;
+    public Material prevsort;
     public Material Unsorted;
 
     public bool sorted;
@@ -26,13 +27,15 @@ public class InsertSortInteractive2 : MonoBehaviour
 
     public int speed;
     public int smooth;
-    private int tempnumi;
-    private int tempnumj;
+
+    private GameObject tempGo;
 
     public bool moving;
 
     private Vector2 targetTransform;
     private Vector2 targetTransform2;
+
+    public GameObject keyGo;
 
     private void Start()
     {
@@ -50,12 +53,8 @@ public class InsertSortInteractive2 : MonoBehaviour
         }
         if (moving)
         {
-
-            b[tempnumi].GetComponent<RectTransform>().anchoredPosition = Vector3.MoveTowards(b[tempnumi].GetComponent<RectTransform>().anchoredPosition, targetTransform, Time.deltaTime * smooth);
-
-            b[tempnumj].GetComponent<RectTransform>().anchoredPosition = Vector3.MoveTowards(b[tempnumj].GetComponent<RectTransform>().anchoredPosition, targetTransform2, Time.deltaTime * smooth);
-
-            if (b[tempnumi].GetComponent<RectTransform>().anchoredPosition == targetTransform || b[tempnumj].GetComponent<RectTransform>().anchoredPosition == targetTransform2)
+            tempGo.GetComponent<RectTransform>().anchoredPosition = Vector3.MoveTowards(tempGo.GetComponent<RectTransform>().anchoredPosition, targetTransform, Time.deltaTime * smooth);
+            if (tempGo.GetComponent<RectTransform>().anchoredPosition == targetTransform)
             {
                 moving = false;
             }
@@ -103,41 +102,49 @@ public class InsertSortInteractive2 : MonoBehaviour
         yield return new WaitForSeconds(speed);
         Step.text = "Resume swapping at the index where the previous swap began and repeat these steps until the array is sorted.";
         yield return new WaitForSeconds(speed);
-        int i, j;
-        GameObject key;
+
+        keyGo.SetActive(true);
+
+        int i, key, j;
         for (i = 1; i < b.Count; i++)
         {
-            NextSmallesIndex = i;
-            EnableTrigger();
-            updatePos();
-            yield return new WaitForSeconds(speed);
-            key = b[i];
+            key = int.Parse(b[i].GetComponentInChildren<Text>().text);
+            b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+            keyGo.GetComponentInChildren<Text>().text = key.ToString();
+            keyGo.GetComponent<RectTransform>().anchoredPosition = new Vector2(b[i].GetComponent<RectTransform>().anchoredPosition.x, b[i].GetComponent<RectTransform>().anchoredPosition.y - 50);
+
             j = i - 1;
 
-            float.TryParse(b[j].GetComponentInChildren<Text>().text, out float tempj);
-            float.TryParse(key.GetComponentInChildren<Text>().text, out float tempkey);
-            //Debug.Log(tempj + ", " + tempkey);
-            while (j >= 0 && tempj > tempkey)
+            int tempval = int.Parse(b[j].GetComponentInChildren<Text>().text);
+            while (j >= 0 && tempval > key)
             {
-                yield return sho = StartCoroutine(SwapAnimation(j+1,j));
-                b[j + 1] = b[j];
-                b[j] = key;
-                j--;
-                if (j >= 0)
-                {
-                    float.TryParse(b[j].GetComponentInChildren<Text>().text, out tempj);
-                }
+                b[j].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                b[j+1].GetComponentInChildren<MeshRenderer>().material = prevsort;
+                yield return StartCoroutine(SwapAnimation(j + 1, j));
                 updatePos();
+                b[j + 1].GetComponentInChildren<Text>().text = b[j].GetComponentInChildren<Text>().text;
+                j = j - 1;
+
+                if (j >= 0)//use this otherwise tmepval will throw an error
+                {
+                    tempval = int.Parse(b[j].GetComponentInChildren<Text>().text);
+                    Debug.Log(tempval);
+                }
                 yield return new WaitForSeconds(speed);
             }
-            b[j+1] = key;
-            updatePos();
-  
+            yield return StartCoroutine(SwapAnimation(j+1, -1));
+
+            b[j + 1].GetComponentInChildren<Text>().text = key.ToString();
+            yield return new WaitForSeconds(speed);
+            for (int p = 0; p < b.Count; p++)
+            {
+                b[p].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+            }
         }
+        keyGo.SetActive(false);
         updatePos();
         sorted = true;
         yield return new WaitForSeconds(speed);
-
     }
 
     public void EnableTrigger()
@@ -168,35 +175,48 @@ public class InsertSortInteractive2 : MonoBehaviour
 
     public IEnumerator SwapAnimation(int i, int j)
     {
-        tempnumi = i;
-        tempnumj = j;
-
-        float tran3 = pos[i].GetComponent<RectTransform>().anchoredPosition.y + 50f;
-        float tran4 = pos[j].GetComponent<RectTransform>().anchoredPosition.y - 50f;
-        targetTransform = new Vector3(pos[i].GetComponent<RectTransform>().anchoredPosition.x, tran3);
-        targetTransform2 = new Vector3(pos[j].GetComponent<RectTransform>().anchoredPosition.x, tran4);
-        moving = true;
-        while (moving == true)
+        if (j == -1)
         {
-            yield return null;
+            tempGo = keyGo;
+            float tran = tempGo.GetComponent<RectTransform>().anchoredPosition.y;
+            targetTransform = new Vector3(b[i].GetComponent<RectTransform>().anchoredPosition.x, tran);
+            moving = true;
+            while (moving == true)
+            {
+                yield return null;
+            }
+
+            targetTransform = new Vector3(tempGo.GetComponent<RectTransform>().anchoredPosition.x, b[i].GetComponent<RectTransform>().anchoredPosition.y);
+            moving = true;
+            while (moving == true)
+            {
+                yield return null;
+            }
         }
-
-        tran3 = pos[i].GetComponent<RectTransform>().anchoredPosition.x;
-        tran4 = pos[j].GetComponent<RectTransform>().anchoredPosition.x;
-        targetTransform = new Vector3(tran4, b[i].GetComponent<RectTransform>().anchoredPosition.y);
-        targetTransform2 = new Vector3(tran3, b[j].GetComponent<RectTransform>().anchoredPosition.y);
-        moving = true;
-        while (moving == true)
+        else 
         {
-            yield return null;
-        }
+            tempGo = b[j];
+            float tran = tempGo.GetComponent<RectTransform>().anchoredPosition.y + 50f;//move up 50 units
+            targetTransform = new Vector3(tempGo.GetComponent<RectTransform>().anchoredPosition.x, tran);
+            moving = true;
+            while (moving == true)
+            {
+                yield return null;
+            }
 
-        targetTransform = pos[tempnumj].GetComponent<RectTransform>().anchoredPosition;
-        targetTransform2 = pos[tempnumi].GetComponent<RectTransform>().anchoredPosition;
-        moving = true;
-        while (moving == true)
-        {
-            yield return null;
+            targetTransform = new Vector3(b[i].GetComponent<RectTransform>().anchoredPosition.x, tempGo.GetComponent<RectTransform>().anchoredPosition.y);
+            moving = true;
+            while (moving == true)
+            {
+                yield return null;
+            }
+
+            targetTransform = new Vector3(b[i].GetComponent<RectTransform>().anchoredPosition.x, b[i].GetComponent<RectTransform>().anchoredPosition.y);
+            moving = true;
+            while (moving == true)
+            {
+                yield return null;
+            }
         }
     }
 }

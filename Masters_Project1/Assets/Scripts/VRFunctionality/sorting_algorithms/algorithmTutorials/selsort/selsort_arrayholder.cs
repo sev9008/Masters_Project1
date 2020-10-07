@@ -32,7 +32,6 @@ public class selsort_arrayholder : MonoBehaviour
 
     public List<MyStruct> structarr;
 
-
     public List<int> arr3;
 
     public int currentstrucstep;

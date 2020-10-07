@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PauseInsertSort : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class PauseInsertSort : MonoBehaviour, IPointerDownHandler
 {
     public InsertSort_arrayHolder M_InsertSort_arrayHolder;
     public Text txt;
@@ -12,20 +12,16 @@ public class PauseInsertSort : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (M_InsertSort_arrayHolder.paused)
+        if (M_InsertSort_arrayHolder.manual)
         {
-            M_InsertSort_arrayHolder.paused = false;
-            txt.text = "Pause";
+            M_InsertSort_arrayHolder.manual = false;
+            txt.text = "Auto";
         }
 
-        else if (!M_InsertSort_arrayHolder.paused)
+        else if (!M_InsertSort_arrayHolder.manual)
         {
-            M_InsertSort_arrayHolder.paused = true;
+            M_InsertSort_arrayHolder.manual = true;
             txt.text = "Resume";
         }
-    }
-    public void OnPointerUp(PointerEventData eventData)
-    {
-
     }
 }

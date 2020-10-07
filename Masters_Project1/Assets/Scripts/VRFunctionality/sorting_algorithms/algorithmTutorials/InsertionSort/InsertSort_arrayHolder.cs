@@ -6,7 +6,12 @@ using UnityEngine.UI;
 
 public class InsertSort_arrayHolder : MonoBehaviour
 {
-    //public int size;
+    public GameObject[] b;
+
+    public Text i_Text;
+    public Text j_Text;
+    public Text j2_Text;
+    public Text key_Text;
     public Text Txt_Text;
     public float waittime;
     public Text Step;
@@ -27,11 +32,22 @@ public class InsertSort_arrayHolder : MonoBehaviour
 
     public List<MyStruct> structarr;
 
-
     public List<int> arr3;
 
     public int currentstrucstep;
     public int maxstrucstep;
+
+    public Material imat;
+    public Material jmat;
+    public Material jnextmat;
+    public Material Normalmat;
+
+    public GameObject iholder;
+    public GameObject jholder;
+    public GameObject jnextholder;
+
+    public bool manual;
+
 
     private void Start()
     {
@@ -49,26 +65,55 @@ public class InsertSort_arrayHolder : MonoBehaviour
         speed = slider.value;
     }
 
-    public void Display(List<int> arr2, int size)
+    public void Display(List<int> arr2, int size, int i, int j)//need to edit
     {
+        iholder.SetActive(false);
+        jholder.SetActive(false);
+        jnextholder.SetActive(false);
         Txt_Text.text = "";
-        int Tmpsize = size - 1;
-        for (int i = 0; i < size; i++)
+        for (int n = 0; n < size; n++)
         {
-            if (i == 0)
+            b[n].SetActive(true);
+            if (n == i)
             {
-                Txt_Text.text += "a[" + Tmpsize + "] = " + arr2[i].ToString();
+                b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
+                b[n].GetComponentInChildren<MeshRenderer>().material = imat;
+                iholder.SetActive(true);
+                iholder.GetComponent<RectTransform>().anchoredPosition = new Vector2(b[n].GetComponent<RectTransform>().anchoredPosition.x, b[n].GetComponent<RectTransform>().anchoredPosition.y + 12);
             }
-            else if (i > 0)
+            else if (n == j)
             {
-                Txt_Text.text += ", " + arr2[i].ToString();
+                b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
+                b[n].GetComponentInChildren<MeshRenderer>().material = jmat;
+                jholder.SetActive(true);
+                jholder.GetComponent<RectTransform>().anchoredPosition = new Vector2(b[n].GetComponent<RectTransform>().anchoredPosition.x, b[n].GetComponent<RectTransform>().anchoredPosition.y + 12);
+            }             
+            else if (n == j+1 && j != -1)
+            {
+                b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
+                b[n].GetComponentInChildren<MeshRenderer>().material = jnextmat;
+                jnextholder.SetActive(true);
+                jnextholder.GetComponent<RectTransform>().anchoredPosition = new Vector2(b[n].GetComponent<RectTransform>().anchoredPosition.x, b[n].GetComponent<RectTransform>().anchoredPosition.y + 12);
+            }            
+            else
+            {
+                b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
+                b[n].GetComponentInChildren<MeshRenderer>().material = Normalmat;
             }
         }
     }
 
     public IEnumerator Insertion()
     {
-        //clear the struct
+        if (manual)
+        {
+            paused = true;
+        }
+        for (int k = 0; k < b.Length; k++)
+        {
+            b[k].SetActive(false);
+        }
+
         for (int n = 0; n < structarr.Count; n++)
         {
             structarr[n].oldarr.Clear();
@@ -86,7 +131,12 @@ public class InsertSort_arrayHolder : MonoBehaviour
         int j, key;
         for (int i = 1; i < arr3.Count; ++i)
         {
-            Debug.Log("?");
+            i_Text.text = "i = " + i.ToString();
+            Display(arr3, arr3.Count, i, -1);
+            if (!manual)
+            {
+                yield return new WaitForSeconds(speed);
+            }
             if (currentstrucstep == maxstrucstep)
             {
                 currentstrucstep++;
@@ -102,6 +152,7 @@ public class InsertSort_arrayHolder : MonoBehaviour
                 structarr[currentstrucstep].i_value = i;
             }
             resume:
+
             if (previous && next)
             {
                 previous = false;
@@ -117,7 +168,10 @@ public class InsertSort_arrayHolder : MonoBehaviour
             else if (previous && currentstrucstep <= 0)
             {
                 Step.text = "Cant go back any further";
-                yield return new WaitForSeconds(speed);
+                if (!manual)
+                {
+                    yield return new WaitForSeconds(speed);
+                }
             }
 
             if (next && currentstrucstep < maxstrucstep)
@@ -130,63 +184,79 @@ public class InsertSort_arrayHolder : MonoBehaviour
             else if (next && currentstrucstep >= maxstrucstep)
             {
                 Step.text = "Cant go forward any further";
-                yield return new WaitForSeconds(speed);
+                if (!manual)
+                {
+                    yield return new WaitForSeconds(speed);
+                }
             }
             previous = false;
             next = false;
             m_selectionAni.ShowGraph(arr3);
-            Display(arr3, arr3.Count);
+            Display(arr3, arr3.Count, i, -1);
+
             key = arr3[i];
             j = i - 1;
 
+            j_Text.text = "j = " + j.ToString();
             Step.text = "Save " + arr3[i] + " as a key";
+            key_Text.text = "key = " + arr3[i].ToString();
+
             image1.SetActive(true);
             image2.SetActive(false);
             image3.SetActive(false);
-            if (previous)
+            Display(arr3, arr3.Count, i, j);
+
+            if (!manual)
             {
-                goto resume;
+                yield return new WaitForSeconds(speed);
             }
-            if (next)
+            if (manual)
             {
-                goto resume;
+                paused = true;
             }
-            yield return new WaitForSeconds(speed);
-            if (previous)
+            while (paused && manual)
             {
-                goto resume;
-            }
-            if (next)
-            {
-                goto resume;
-            }
-            while (paused)
-            {
+                if (previous && currentstrucstep > 0)
+                {
+                    goto resume;
+                }
+                if (next && currentstrucstep < maxstrucstep)
+                {
+                    goto resume;
+                }
+                else if (next && currentstrucstep >= maxstrucstep)
+                {
+                    next = false;
+                    paused = false;
+                }
                 yield return null;
-            }
-            if (previous)
-            {
-                goto resume;
-            }
-            if (next)
-            {
-                goto resume;
             }
 
             while (j >= 0 && arr3[j] > key)
             {
+                j_Text.text = "j = " + j.ToString();
                 Step.text = "if " + arr3[j] + " > " + key + " \nThen set " + arr3[j + 1] + " to " + arr3[j];
 
                 arr3[j + 1] = arr3[j];
                 j--;
+                j_Text.text = "j = " + j.ToString();
 
                 image1.SetActive(false);
                 image2.SetActive(true);
                 image3.SetActive(false);
-                Display(arr3, arr3.Count);
-
+                Display(arr3, arr3.Count, i, j);
 
                 yield return new WaitForSeconds(speed);
+                if (manual)
+                {
+                    //Step.text = "Please wait...";
+                    paused = true;
+                }                
+                if (!manual)
+                {
+                    //Step.text = "Please wait...";
+                    paused = false;
+                }
                 if (previous)
                 {
                     Step.text = "Please wait...";
@@ -197,52 +267,50 @@ public class InsertSort_arrayHolder : MonoBehaviour
                     Step.text = "Please wait...";
                     next = true;
                 }
-
             }
 
             Step.text = "set " + arr3[j+1] + " to " + key;
             arr3[j + 1] = key;
-            Display(arr3, arr3.Count); 
+            Display(arr3, arr3.Count, i, j);//fix
             image1.SetActive(false);
             image2.SetActive(false);
             image3.SetActive(true);
-            if (previous)
+            if (!manual)
             {
-                goto resume;
+                yield return new WaitForSeconds(speed);
             }
-            if (next)
+            if (manual)
             {
-                goto resume;
+                paused = true;
             }
-            yield return new WaitForSeconds(speed);
-            if (previous)
+            while (paused && manual)
             {
-                goto resume;
-            }
-            if (next)
-            {
-                goto resume;
-            }
-            while (paused)
-            {
+                if (previous && currentstrucstep > 0)
+                {
+                    goto resume;
+                }
+                if (next && currentstrucstep < maxstrucstep)
+                {
+                    goto resume;
+                }
+                else if (next && currentstrucstep >= maxstrucstep)
+                {
+                    next = false;
+                    paused = false;
+                }
                 yield return null;
-            }
-            if (previous)
-            {
-                goto resume;
-            }
-            if (next)
-            {
-                goto resume;
             }
         }
         image1.SetActive(false);
         image2.SetActive(false);
         image3.SetActive(false);
         Step.text = "Finished";
-        Display(arr3, arr3.Count);
+        Display(arr3, arr3.Count, -1,-1);//fix
         m_selectionAni.ShowGraph(arr3);
-        yield return new WaitForSeconds(speed);
+        if (!manual)
+        {
+            yield return new WaitForSeconds(speed);
+        }
         running = false;
     }
     public void PressedPrevious()
