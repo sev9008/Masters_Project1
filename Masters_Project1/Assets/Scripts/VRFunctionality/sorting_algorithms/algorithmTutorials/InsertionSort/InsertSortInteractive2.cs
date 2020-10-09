@@ -39,7 +39,7 @@ public class InsertSortInteractive2 : MonoBehaviour
 
     private void Start()
     {
-        Begin();
+        //Begin();
     }
 
     public void Update()

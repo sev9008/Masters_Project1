@@ -44,7 +44,7 @@ public class InsertSortInteractive1 : MonoBehaviour
 
     private void Start()
     {
-        Begin();
+        //Begin();
     }
 
     public void Update()
@@ -88,7 +88,7 @@ public class InsertSortInteractive1 : MonoBehaviour
                 Step.text = "The block you attempted to swap was correct.";
                 corretAnswers += 1;
                 corretAnswersText.GetComponent<Text>().text = corretAnswers.ToString();
-                b[nextToSort].GetComponentInChildren<Text>().text = b[currentSmallestIndex].GetComponentInChildren<Text>().text;
+                b[nextToSort].GetComponentInChildren<Text>().text = keyGo.GetComponentInChildren<Text>().text;
                 waitingforswap = false;
                 updatePos();
                 return;
@@ -128,8 +128,9 @@ public class InsertSortInteractive1 : MonoBehaviour
             b[i].GetComponent<RectTransform>().anchoredPosition = pos[i].GetComponent<RectTransform>().anchoredPosition;
             b[i].transform.position = pos[i].transform.position;
             b[i].transform.rotation = pos[i].transform.rotation;
-            keyGo.GetComponent<RectTransform>().anchoredPosition = new Vector2(b[keypos].GetComponent<RectTransform>().anchoredPosition.x, b[keypos].GetComponent<RectTransform>().anchoredPosition.y - 50);
-
+            keyGo.transform.rotation = pos[i].transform.rotation;
+            //keyGo.GetComponent<RectTransform>().anchoredPosition3D = pos[keypos].GetComponent<RectTransform>().anchoredPosition3D;
+            keyGo.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(b[keypos].GetComponent<RectTransform>().anchoredPosition3D.x, b[keypos].GetComponent<RectTransform>().anchoredPosition3D.y + 50, 0);
         }
     }
     public IEnumerator insertionSort()
@@ -143,7 +144,8 @@ public class InsertSortInteractive1 : MonoBehaviour
             b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
             keyGo.GetComponentInChildren<Text>().text = key.ToString();
             keypos = i;
-            keyGo.GetComponent<RectTransform>().anchoredPosition = new Vector2(b[i].GetComponent<RectTransform>().anchoredPosition.x, b[i].GetComponent<RectTransform>().anchoredPosition.y - 50);
+            updatePos();
+            //keyGo.GetComponent<RectTransform>().anchoredPosition = new Vector2(b[i].GetComponent<RectTransform>().anchoredPosition.x, b[i].GetComponent<RectTransform>().anchoredPosition.y - 50);
 
             j = i - 1;
 
@@ -160,7 +162,7 @@ public class InsertSortInteractive1 : MonoBehaviour
                 {
                     yield return null;
                 }
-                b[j + 1].GetComponentInChildren<Text>().text = b[j].GetComponentInChildren<Text>().text;
+                //b[j + 1].GetComponentInChildren<Text>().text = b[j].GetComponentInChildren<Text>().text;
                 j = j - 1;
 
                 if (j >= 0)//use this otherwise tmepval will throw an error
@@ -177,7 +179,7 @@ public class InsertSortInteractive1 : MonoBehaviour
             {
                 yield return null;
             }
-            b[j + 1].GetComponentInChildren<Text>().text = key.ToString();
+           // b[j + 1].GetComponentInChildren<Text>().text = key.ToString();
             yield return new WaitForSeconds(speed);
             for (int p = 0; p < b.Count; p++)
             {
