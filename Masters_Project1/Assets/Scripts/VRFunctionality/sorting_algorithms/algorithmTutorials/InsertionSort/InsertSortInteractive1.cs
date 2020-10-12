@@ -60,7 +60,7 @@ public class InsertSortInteractive1 : MonoBehaviour
             dist1 = Vector3.Distance(b[nextToSort].transform.position, b[currentSmallestIndex].transform.position);
             if (dist1 < .04)
             {
-                Debug.Log("Swap");
+                //Debug.Log("Swap");
                 m_vRController_1.downR = false;
                 m_vRController_1.downL = false;
                 Step.text = "The block you attempted to swap was correct.";
@@ -69,11 +69,29 @@ public class InsertSortInteractive1 : MonoBehaviour
                 b[nextToSort].GetComponentInChildren<Text>().text = b[currentSmallestIndex].GetComponentInChildren<Text>().text;
                 waitingforswap = false;
                 updatePos();
-                return;
             }
             else
             {//check for incorret answer
+                for (int i = 0; i < b.Count; i++)
+                {
+                    if (i != currentSmallestIndex && i != nextToSort)
+                    {
+                        dist1 = Vector3.Distance(b[i].transform.position, b[currentSmallestIndex].transform.position);
+                        dist2 = Vector3.Distance(b[nextToSort].transform.position, b[i].transform.position);
 
+                        if (dist1 < .04 || dist2 < .04)
+                        {
+                            //Debug.Log("wrong");
+                            m_vRController_1.downR = false;
+                            m_vRController_1.downL = false;
+                            Step.text = "The block you attempted to swap was incorrect.";
+                            incorretAnswers += 1; 
+                            incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                            updatePos();
+                            break;
+                        }
+                    }
+                }
             }
         }        
         else if (waitingforswap && currentSmallestIndex == 2000)
@@ -82,7 +100,7 @@ public class InsertSortInteractive1 : MonoBehaviour
             dist1 = Vector3.Distance(b[nextToSort].transform.position, keyGo.transform.position);
             if (dist1 < .04)
             {
-                Debug.Log("Swap");
+                //Debug.Log("Swap");
                 m_vRController_1.downR = false;
                 m_vRController_1.downL = false;
                 Step.text = "The block you attempted to swap was correct.";
@@ -91,11 +109,27 @@ public class InsertSortInteractive1 : MonoBehaviour
                 b[nextToSort].GetComponentInChildren<Text>().text = keyGo.GetComponentInChildren<Text>().text;
                 waitingforswap = false;
                 updatePos();
-                return;
             }
             else
             {//check for incorret answer
-
+                for (int i = 0; i < b.Count; i++)
+                {
+                    if (i != nextToSort)
+                    { 
+                        dist1 = Vector3.Distance(b[i].transform.position, keyGo.transform.position);
+                        if (dist1 < .04)
+                        {
+                            //Debug.Log("wrong");
+                            m_vRController_1.downR = false;
+                            m_vRController_1.downL = false;
+                            Step.text = "The block you attempted to swap was incorrect.";
+                            incorretAnswers += 1;
+                            incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                            updatePos();
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
@@ -128,9 +162,9 @@ public class InsertSortInteractive1 : MonoBehaviour
             b[i].GetComponent<RectTransform>().anchoredPosition = pos[i].GetComponent<RectTransform>().anchoredPosition;
             b[i].transform.position = pos[i].transform.position;
             b[i].transform.rotation = pos[i].transform.rotation;
-            keyGo.transform.rotation = pos[i].transform.rotation;
-            //keyGo.GetComponent<RectTransform>().anchoredPosition3D = pos[keypos].GetComponent<RectTransform>().anchoredPosition3D;
-            keyGo.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(b[keypos].GetComponent<RectTransform>().anchoredPosition3D.x, b[keypos].GetComponent<RectTransform>().anchoredPosition3D.y + 50, 0);
+            keyGo.transform.parent = this.gameObject.transform;
+            keyGo.transform.rotation = pos[keypos].transform.rotation;
+            keyGo.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(b[keypos].GetComponent<RectTransform>().anchoredPosition3D.x, b[keypos].GetComponent<RectTransform>().anchoredPosition3D.y + 50, b[keypos].GetComponent<RectTransform>().anchoredPosition3D.z);
         }
     }
     public IEnumerator insertionSort()
@@ -145,7 +179,6 @@ public class InsertSortInteractive1 : MonoBehaviour
             keyGo.GetComponentInChildren<Text>().text = key.ToString();
             keypos = i;
             updatePos();
-            //keyGo.GetComponent<RectTransform>().anchoredPosition = new Vector2(b[i].GetComponent<RectTransform>().anchoredPosition.x, b[i].GetComponent<RectTransform>().anchoredPosition.y - 50);
 
             j = i - 1;
 
