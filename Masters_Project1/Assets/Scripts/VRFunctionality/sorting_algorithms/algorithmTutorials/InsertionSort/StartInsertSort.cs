@@ -17,14 +17,17 @@ public class StartInsertSort : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (co != null || sho != null)
-        {
-            StopCoroutine(co);
-            StopCoroutine(sho);
-            sho = null;
-            co = null;
-            running = false;
+        try { 
+            if (co != null || sho != null)
+            {
+                StopCoroutine(co);
+                StopCoroutine(sho);
+                sho = null;
+                co = null;
+                running = false;
+            }
         }
+        catch { }
         size = arrayKeeper.size;
         if (!arr2.Equals(null))
         {

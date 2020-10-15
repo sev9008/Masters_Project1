@@ -106,7 +106,7 @@ public class BubbleInteractive2 : MonoBehaviour
             }
             else
             {
-                if (i == j)
+                if (i == j || i == j+1)
                 {
                     b[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
                 }
@@ -176,6 +176,9 @@ public class BubbleInteractive2 : MonoBehaviour
         {
             for (j = 0; j < b.Count - i - 1; j++)
             {
+                EnableTrigger(b.Count - i, j);
+                yield return new WaitForSeconds(speed);
+
                 float.TryParse(b[j].GetComponentInChildren<Text>().text, out float temp);
                 float.TryParse(b[j + 1].GetComponentInChildren<Text>().text, out float temp2);
                 if (temp > temp2)

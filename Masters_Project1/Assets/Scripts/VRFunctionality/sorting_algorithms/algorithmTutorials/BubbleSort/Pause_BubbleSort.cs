@@ -15,12 +15,14 @@ public class Pause_BubbleSort : MonoBehaviour, IPointerDownHandler
         if (M_quickSort_arrayHolder.paused)
         {
             M_quickSort_arrayHolder.paused = false;
+            M_quickSort_arrayHolder.manual = false;
             txt.text = "Pause";
         }
 
         else if (!M_quickSort_arrayHolder.paused)
         {
             M_quickSort_arrayHolder.paused = true;
+            M_quickSort_arrayHolder.manual = true;
             txt.text = "Resume";
         }
     }

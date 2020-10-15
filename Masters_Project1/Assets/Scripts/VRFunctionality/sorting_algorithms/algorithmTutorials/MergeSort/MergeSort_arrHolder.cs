@@ -51,6 +51,7 @@ public class MergeSort_arrHolder : MonoBehaviour
     
     public Text whiletextstep1;
     public Text ktextstep1;
+    public Text ifstep1;
     public Text whiletextstep2;
     public Text ktextstep2;    
     public Text whiletextstep3;
@@ -304,6 +305,8 @@ public class MergeSort_arrHolder : MonoBehaviour
         ktextstep3.text = "k = 0";
         Larr.text = "L[] = 0";
         Rarr.text = "R[] = 0";
+        ifstep1.text = "0 <= 0";
+
 
         int i, j, k;
         int n1 = m - l + 1;
@@ -381,6 +384,7 @@ public class MergeSort_arrHolder : MonoBehaviour
         ktextstep1.text = "k = " + k;
         while (i < n1 && j < n2)
         {
+            ifstep1.text = L[i] + " <= " + R[j];
             if (L[i] <= R[j])
             {
                 arr[k] = L[i];

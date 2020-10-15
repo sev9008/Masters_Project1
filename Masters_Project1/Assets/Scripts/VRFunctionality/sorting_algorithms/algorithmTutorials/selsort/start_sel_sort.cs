@@ -20,14 +20,18 @@ public class start_sel_sort : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (co != null || sho != null)
+        try
         {
-            StopCoroutine(co);
-            StopCoroutine(sho);
-            sho = null;
-            co = null;
-            running = false;
+            if (co != null || sho != null)
+            {
+                StopCoroutine(co);
+                StopCoroutine(sho);
+                sho = null;
+                co = null;
+                running = false;
+            }
         }
+        catch { }
         size = arrayKeeper.size;
         if (!arr2.Equals(null))
         {
