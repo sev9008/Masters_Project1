@@ -31,14 +31,12 @@ public class MergeSortRecursionTutorial : MonoBehaviour
 
     Coroutine SHO;
 
-
-
     public void Start()
     {
         firstiter = false;
         paused = false;
         manual = false;
-        //Begin();
+        Begin();
         //structarr = new List<MyStruct>();
     }
 
@@ -103,7 +101,6 @@ public class MergeSortRecursionTutorial : MonoBehaviour
         if (l < r)
         {
             int m = l + (r - l) / 2;
-
 
             tempsize = m - l;
             for (int i = l; i < l+tempsize+1; i++)

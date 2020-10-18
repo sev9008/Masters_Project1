@@ -38,7 +38,7 @@ public class StartQuickSort : MonoBehaviour, IPointerDownHandler
         {
             arr2.Add(arrayKeeper.arr[i]);
         }
-        m_insertSort_ArrayHolder.Display(arr2, size);
+        m_insertSort_ArrayHolder.Display(arr2, size, -20, -20, -20, -20, -20);
 
         if (!running)
         {
