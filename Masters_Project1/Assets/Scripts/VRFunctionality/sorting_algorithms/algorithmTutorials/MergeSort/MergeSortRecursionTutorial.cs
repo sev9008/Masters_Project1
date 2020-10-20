@@ -88,7 +88,7 @@ public class MergeSortRecursionTutorial : MonoBehaviour
         currentstrucstep = -1;
         maxstrucstep = -1;
 
-        Debug.Log(currentstrucstep + " - " + currentIndex + " - " + structarr.Count);
+//        Debug.Log(currentstrucstep + " - " + currentIndex + " - " + structarr.Count);
         yield return StartCoroutine(mergeSort(0, b.Length - 1));
         tmptxt.text = "Merge Sort is finished.";
 
