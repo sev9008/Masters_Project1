@@ -113,14 +113,19 @@ public class QuickSortRecursionTutorial : MonoBehaviour
         //Debug.Log(currentstrucstep + " - " + currentIndex + " - " + structarr.Count);
         yield return StartCoroutine(quickSort(0, b.Length - 1));
         tmptxt.text = "Quick Sort is finished.";
-
+        StepCube.GetComponentInChildren<Text>().text = "Finished";
+        StepCube.GetComponentInChildren<MeshRenderer>().material = Normalmat;
+        for (int i = 0; i < bstep.Length; i++)
+        {
+            bstep[i].SetActive(true);
+            b[i].GetComponentInChildren<MeshRenderer>().material = Normalmat;
+        }
         running = false;
     }
     public IEnumerator quickSort(int l, int h)
     {
         if (l < h)
         {
-            yield return StartCoroutine(partition(l, h));
             tmptxt.text = "Perform Partition";
             StepCube.GetComponentInChildren<Text>().text = "Perform Partition";
             currentstrucstep++;
@@ -128,6 +133,54 @@ public class QuickSortRecursionTutorial : MonoBehaviour
             var a = new MyStruct();
             structarr.Add(a);
             int m = 0;
+            structarr[currentstrucstep].oldarr = new List<float>(h - l);
+            for (int i = l; i <= h; i++)
+            {
+                float.TryParse(b[i].GetComponentInChildren<Text>().text, out float temp);
+                structarr[currentstrucstep].oldarr.Add(temp);
+                m++;
+            }
+            structarr[currentstrucstep].steptxt = tmptxt.text;
+            structarr[currentstrucstep].Cubetxt = StepCube.GetComponentInChildren<Text>().text;
+            structarr[currentstrucstep].pi = pi;
+            structarr[currentstrucstep].left = l;
+            structarr[currentstrucstep].right = h;
+            structarr[currentstrucstep].Activeimage = image1;
+            Updatedisplay();
+            image1.SetActive(true);
+            image2.SetActive(false);
+            image3.SetActive(false);
+            if (!manual)
+            {
+                yield return new WaitForSeconds(speed);
+            }
+            if (manual)
+            {
+                paused = true;
+            }
+            while (paused && manual)
+            {
+                if (next && currentstrucstep >= maxstrucstep)
+                {
+                    next = false;
+                    paused = false;
+                }
+                else if (next || previous)
+                {
+                    yield return StartCoroutine(changeStep());
+                }
+                yield return null;
+            }
+
+
+            yield return StartCoroutine(partition(l, h));
+            tmptxt.text = "Return Partition Results";
+            StepCube.GetComponentInChildren<Text>().text = "Return Partition Results";
+            currentstrucstep++;
+            maxstrucstep++;
+            a = new MyStruct();
+            structarr.Add(a);
+            m = 0;
             structarr[currentstrucstep].oldarr = new List<float>(h-l);
             for (int i = l; i <= h; i++)
             {
@@ -169,6 +222,7 @@ public class QuickSortRecursionTutorial : MonoBehaviour
 
             tmptxt.text = "Perform quicksort on left side";
             StepCube.GetComponentInChildren<Text>().text = "Perform quicksort on left side";
+            StepCube.GetComponentInChildren<MeshRenderer>().material = Lmat;
             currentstrucstep++;
             maxstrucstep++;
             a = new MyStruct();
@@ -216,6 +270,7 @@ public class QuickSortRecursionTutorial : MonoBehaviour
 
             tmptxt.text = "Perform quicksort on right side";
             StepCube.GetComponentInChildren<Text>().text = "Perform quicksort on right side";
+            StepCube.GetComponentInChildren<MeshRenderer>().material = Rmat;
             currentstrucstep++;
             maxstrucstep++;
             a = new MyStruct();
@@ -277,6 +332,32 @@ public class QuickSortRecursionTutorial : MonoBehaviour
                 GameObject temp = b[i];
                 b[i] = b[j]; 
                 b[j] = temp;
+                float.TryParse(b[i].GetComponentInChildren<Text>().text, out float temp6);
+                float.TryParse(b[j].GetComponentInChildren<Text>().text, out float temp7);
+                tmptxt.text = "Swap " + temp6 + " and " + temp7;
+                Updatedisplay();
+                if (!manual)
+                {
+                    yield return new WaitForSeconds(speed);
+                }
+                if (manual)
+                {
+                    paused = true;
+                }
+                while (paused && manual)
+                {
+                    if (next)
+                    {
+                        paused = false;
+                        previous = false;
+                        next = false;
+                    }
+                    if (previous)
+                    {
+                        previous = false;
+                    }
+                    yield return null;
+                }
                 updatePos();
             }
         }
@@ -285,7 +366,33 @@ public class QuickSortRecursionTutorial : MonoBehaviour
         b[h] = temp1;
         updatePos();
         pi = i + 1;
-        yield return new WaitForSeconds(speed);
+        float.TryParse(b[i+1].GetComponentInChildren<Text>().text, out float temp3);
+        float.TryParse(b[h].GetComponentInChildren<Text>().text, out float temp4);
+        float.TryParse(b[pi].GetComponentInChildren<Text>().text, out float temp5);
+        tmptxt.text = "Swap " + temp3 + " and " + temp4 + ". New Pivot = " + temp5;
+        Updatedisplay();
+        if (!manual)
+        {
+            yield return new WaitForSeconds(speed);
+        }
+        if (manual)
+        {
+            paused = true;
+        }
+        while (paused && manual)
+        {
+            if (next)
+            {
+                paused = false;
+                previous = false;
+                next = false;
+            }
+            if (previous)
+            {
+                previous = false;
+            }
+            yield return null;
+        }
     }
 
     public IEnumerator changeStep()
@@ -360,6 +467,7 @@ public class QuickSortRecursionTutorial : MonoBehaviour
         for (int i = 0; i < bstep.Length; i++)
         {
             bstep[i].SetActive(false);
+            b[i].GetComponentInChildren<MeshRenderer>().material = Normalmat;
         }
         int m = 0;
 
@@ -375,13 +483,10 @@ public class QuickSortRecursionTutorial : MonoBehaviour
             {
                 LPointer.SetActive(true);
                 HPointer.SetActive(true);
-                if (structarr[currentstrucstep].pi >= structarr[currentstrucstep].left && structarr[currentstrucstep].pi <= structarr[currentstrucstep].right)
-                {
-                    PivotPointer.SetActive(true);
-                }
                 LPointer.GetComponent<RectTransform>().anchoredPosition = new Vector2(bstep[structarr[currentstrucstep].left].GetComponent<RectTransform>().anchoredPosition.x, bstep[structarr[currentstrucstep].left].GetComponent<RectTransform>().anchoredPosition.y + 14);
                 HPointer.GetComponent<RectTransform>().anchoredPosition = new Vector2(bstep[structarr[currentstrucstep].right].GetComponent<RectTransform>().anchoredPosition.x, bstep[structarr[currentstrucstep].right].GetComponent<RectTransform>().anchoredPosition.y + 14);
                 PivotPointer.GetComponent<RectTransform>().anchoredPosition = new Vector2(bstep[structarr[currentstrucstep].pi].GetComponent<RectTransform>().anchoredPosition.x, bstep[structarr[currentstrucstep].pi].GetComponent<RectTransform>().anchoredPosition.y - 14);
+
                 for (int i = 0; i < bstep.Length; i++)
                 {
                     if (i >= structarr[currentstrucstep].left && i <= structarr[currentstrucstep].right)
@@ -390,14 +495,22 @@ public class QuickSortRecursionTutorial : MonoBehaviour
                         bstep[i].GetComponentInChildren<Text>().text = structarr[currentstrucstep].oldarr[m].ToString();
                         m++;
                         bstep[i].SetActive(true);
+                        b[i].GetComponentInChildren<MeshRenderer>().material = Lmat;
                     }
                 }
+                if (structarr[currentstrucstep].pi >= structarr[currentstrucstep].left && structarr[currentstrucstep].pi <= structarr[currentstrucstep].right)
+                {
+                    PivotPointer.SetActive(true);
+                    b[structarr[currentstrucstep].pi].GetComponentInChildren<MeshRenderer>().material = Rmat;
+                }
+
             }
         }
         else 
         {
             for (int i = 0; i < bstep.Length; i++)
             {
+                Debug.Log("hit????");
                 if (i >= structarr[currentstrucstep].left && i <= structarr[currentstrucstep].right)
                 {
                     bstep[i].GetComponentInChildren<Text>().text = structarr[currentstrucstep].oldarr[m].ToString();
