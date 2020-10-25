@@ -49,8 +49,12 @@ public class VRController_1 : MonoBehaviour
 
     private void Start()
     {
-        CameraRig = SteamVR_Render.Top().origin;
-        Head = SteamVR_Render.Top().head;
+        try
+        {
+            CameraRig = SteamVR_Render.Top().origin;
+            Head = SteamVR_Render.Top().head;
+        }
+        catch { }
     }
 
     private void Update()
@@ -171,31 +175,40 @@ public class VRController_1 : MonoBehaviour
     {
         float rotation = Mathf.Atan2(MoveValue.axis.x, MoveValue.axis.y);
         rotation *= Mathf.Rad2Deg;
+        try
+        {
+            Vector3 orientationEuler = new Vector3(0, Head.eulerAngles.y + rotation, 0);
+            return Quaternion.Euler(orientationEuler);
+        }
+        catch {  }
+        Vector3 orientationEuler2 = new Vector3(0, rotation, 0);
+        return Quaternion.Euler(orientationEuler2);
 
-        Vector3 orientationEuler = new Vector3(0, Head.eulerAngles.y + rotation, 0);
-        return Quaternion.Euler(orientationEuler);
     }
 
     private void HandleHieght()
     {
         //get the head in local space
-        float headhieght = Mathf.Clamp(Head.localPosition.y, 1, 2);
-        CharController.height = headhieght;
+        try
+        {
+            float headhieght = Mathf.Clamp(Head.localPosition.y, 1, 2);
+            CharController.height = headhieght;
+            //cuit in half
+            Vector3 newCenter = Vector3.zero;
+            newCenter.y = CharController.height / 2;
+            newCenter.y += CharController.skinWidth;
 
-        //cuit in half
-        Vector3 newCenter = Vector3.zero;
-        newCenter.y = CharController.height / 2;
-        newCenter.y += CharController.skinWidth;
+            //move capsule in local space
+            newCenter.x = Head.localPosition.x;
+            newCenter.z = Head.localPosition.z;
 
-        //move capsule in local space
-        newCenter.x = Head.localPosition.x;
-        newCenter.z = Head.localPosition.z;
+            //rotate
+            //newCenter = Quaternion.Euler(0, -transform.eulerAngles.y, 0) * newCenter;
 
-        //rotate
-        //newCenter = Quaternion.Euler(0, -transform.eulerAngles.y, 0) * newCenter;
-        
-        //apply
-        CharController.center = newCenter;
+            //apply
+            CharController.center = newCenter;
+        }
+        catch { }
     }
 
     private void SnapRotation() 
@@ -211,8 +224,11 @@ public class VRController_1 : MonoBehaviour
         {
             snapValue = Mathf.Abs(rotateincr);
         }
-
-        transform.RotateAround(Head.position, Vector3.up, snapValue);
+        try
+        {
+            transform.RotateAround(Head.position, Vector3.up, snapValue);
+        }
+        catch { }
     }
 
     private void HandleMoveObject()
@@ -324,5 +340,7 @@ public class VRController_1 : MonoBehaviour
             }
         }
         catch { }
-    }    
+    }
+
+
 }
