@@ -341,6 +341,4 @@ public class VRController_1 : MonoBehaviour
         }
         catch { }
     }
-
-
 }
