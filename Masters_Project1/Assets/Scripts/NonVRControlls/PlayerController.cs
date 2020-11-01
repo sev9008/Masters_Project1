@@ -11,27 +11,18 @@ public class PlayerController : MonoBehaviour
     Vector3 Velocity;
     float GroundDistance = 0.4f;
 
-    public float MouseSensitivity = 100f;
     public float speed = 10f;
-    public Transform PlayerBody;
     //public Transform weapon;
-    float xRotation = 0f;
-    float yRotation = 0f;
-
-    Quaternion rotation;
-
 
     public LayerMask GroundMask;
     public Transform GroundCheck;
     public float MoveSpeed = 5;
-
 
     void Start()
     {
         cam = Camera.main;
         charController = GetComponent<CharacterController>();
         //Cursor.lockState = CursorLockMode.Locked;
-
     }
 
     // Update is called once per frame
@@ -43,19 +34,6 @@ public class PlayerController : MonoBehaviour
             Grounded = charController.isGrounded;
         }
         Movement();
-        //ThirdPersonCameraLookDirection();
-
-        //Time.deltaTime prevents framerate based speed
-        float mouseX = Input.GetAxis("Mouse X") * MouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * MouseSensitivity * Time.deltaTime;
-        xRotation -= mouseY;
-        yRotation -= mouseX;
-        //Prevents over rotation = looking backward
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-        //Rotate the body and camera
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        transform.localRotation = Quaternion.Euler(0f, -yRotation, 0f);
-        PlayerBody.Rotate(Vector3.up * mouseX);
     }
 
     void Movement()

@@ -12,10 +12,14 @@ public class FindPointerCanvas : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        MyCamera = GameObject.FindWithTag("PointerR");
-        MyCanvas1 = GetComponent<Canvas>();
+        try
+        {
+            MyCamera = GameObject.FindWithTag("PointerR");
+            MyCanvas1 = GetComponent<Canvas>();
 
-        MyCanvas1.worldCamera = MyCamera.GetComponent<Camera>();
+            MyCanvas1.worldCamera = MyCamera.GetComponent<Camera>();
+        }
+        catch { }
     }
 
     private void Update()
@@ -28,6 +32,11 @@ public class FindPointerCanvas : MonoBehaviour
         if (GrabObj.GetStateDown(SteamVR_Input_Sources.LeftHand))
         {
             MyCamera = GameObject.FindWithTag("PointerL");
+            MyCanvas1.worldCamera = MyCamera.GetComponent<Camera>();
+        }
+        if(Input.GetAxis("Fire1") != 0)
+        {
+            MyCamera = GameObject.FindWithTag("FPCamera");
             MyCanvas1.worldCamera = MyCamera.GetComponent<Camera>();
         }
     }

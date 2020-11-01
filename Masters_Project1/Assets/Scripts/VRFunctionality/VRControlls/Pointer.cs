@@ -8,10 +8,11 @@ public class Pointer : MonoBehaviour
     [SerializeField] public float defaultLength = 7.0f;
     [SerializeField] private GameObject dot = null;
 
+    //public Camera Camera { get; private set; } = null;
     public Camera Camera { get; private set; } = null;
 
-    private LineRenderer lineRenderer = null;
-    private VRInputModule inputModule = null;
+    public LineRenderer lineRenderer = null;
+    public VRInputModule inputModule = null;
 
     private float colliderDistance;
     private float canvasDistance;

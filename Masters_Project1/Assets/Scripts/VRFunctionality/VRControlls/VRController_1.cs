@@ -6,10 +6,13 @@ using Valve.VR;
 
 public class VRController_1 : MonoBehaviour
 {
-    public float Gravity = 9.8f;
+    public float Gravity = -10f;
+    public float gravitymult = 2f;
     public float sensitivity = 0.1f;
     public float MaxSpeed = 1.0f;
     public float rotateincr = 5f;
+    private Vector3 Velocity;
+
 
     public SteamVR_Action_Boolean RotatePress = null;
     public SteamVR_Action_Boolean GrabObj = null;
@@ -165,9 +168,19 @@ public class VRController_1 : MonoBehaviour
 
         //orientation and gravity
         movement += orientation * (Speed * Vector3.forward);
-        movement.y -= Gravity * Time.deltaTime;
+        if (!CharController.isGrounded)
+        {
+            Velocity -= Vector3.up * Gravity * gravitymult * Time.deltaTime; // increases fall gravity for better feel
+        }
+        else 
+        {
+            Velocity.y = 0f;
+            Debug.Log("Grounded");
+        }
 
         //apply move
+        CharController.Move(Velocity * Time.deltaTime);
+
         CharController.Move(movement * Time.deltaTime);
     }
 

@@ -23,6 +23,7 @@ TagManager:
   - DotCanR
   - DotCanL
   - Table
+  - FPCamera
   layers:
   - Default
   - TransparentFX
