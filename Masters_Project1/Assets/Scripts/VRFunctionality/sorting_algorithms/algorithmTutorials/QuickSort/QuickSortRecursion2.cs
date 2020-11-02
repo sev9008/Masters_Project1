@@ -35,7 +35,7 @@ public class QuickSortRecursion2 : MonoBehaviour
         manual = false;
         currentIndex = 0;
         MaxIndex = 0;
-        Begin();
+        //Begin();
     }
 
     void Update()

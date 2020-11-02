@@ -5,6 +5,14 @@ using UnityEngine;
 public class SortingOptimizationController : MonoBehaviour
 {
     public GameObject[] objectsToHalt;
+    private void Start()
+    {
+        for (int i = 0; i < objectsToHalt.Length; i++)
+        {
+            objectsToHalt[i].SetActive(false);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Enter");

@@ -30,13 +30,13 @@ public class SortAniCompare : MonoBehaviour
         quickFinished.SetActive(false);
         mergeFinished.SetActive(false);
 
-        speed = 1f;
-        Begin();
+        //speed = 1f;
+        //Begin();
     }
 
     void Update()
     {
-        //speed = slider.value;
+        speed = slider.value;
         for (int x = 0; x < selectionSortArr.Count; x++)
         {
             float.TryParse(selectionSortArr[x].GetComponentInChildren<Text>().text, out float temp1);

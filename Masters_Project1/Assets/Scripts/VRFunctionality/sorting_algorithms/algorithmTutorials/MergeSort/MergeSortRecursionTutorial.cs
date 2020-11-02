@@ -36,7 +36,7 @@ public class MergeSortRecursionTutorial : MonoBehaviour
         firstiter = false;
         paused = false;
         manual = false;
-        Begin();
+        //Begin();
         //structarr = new List<MyStruct>();
     }
 
