@@ -113,6 +113,8 @@ public class QuickSort_arrayHolder : MonoBehaviour
     public IEnumerator Quick()
     {
         running = true;
+        StopAllCoroutines();
+
         for (int k = 0; k < b.Length; k++)
         {
             b[k].SetActive(false);

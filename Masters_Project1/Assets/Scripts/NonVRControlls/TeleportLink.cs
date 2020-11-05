@@ -14,7 +14,7 @@ public class TeleportLink : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            Debug.Log("hit");
+            //Debug.Log("hit");
             Player.transform.position = TeleportTo.position;
         }
     }

@@ -23,11 +23,12 @@ public class QuickSortRecursion2 : MonoBehaviour
     public bool previous;
     public bool paused;
     public List<MyStruct> structarr;
+    public int stepIndex;
 
     [Serializable]
     public class MyStruct
     {
-        //public int currentstep;
+        public int currentstep;
         public GameObject Activeimage;
     }
     private void Start()
@@ -59,7 +60,7 @@ public class QuickSortRecursion2 : MonoBehaviour
     public IEnumerator Step()
     {
         currentIndex = 0;
-        MaxIndex = bstep.Length;
+        MaxIndex = 0;
         running = true;
         int temp = 0;
         for (int i = currentIndex; i < currentIndex+8; i++)//27,21,15,18,30,45,32
@@ -68,6 +69,14 @@ public class QuickSortRecursion2 : MonoBehaviour
             temp++;
         }
         currentIndex = temp;
+        MaxIndex = temp;
+        var d = new MyStruct();
+        d.currentstep = currentIndex;
+        d.Activeimage = image1;
+        image1.SetActive(true);
+        image2.SetActive(false);
+        image3.SetActive(false);
+        structarr.Add(d);
         if (!manual)
         {
             yield return new WaitForSeconds(speed);
@@ -96,6 +105,14 @@ public class QuickSortRecursion2 : MonoBehaviour
             temp++;
         }
         currentIndex = temp;
+        MaxIndex = temp;
+        d = new MyStruct();
+        d.currentstep = currentIndex;
+        d.Activeimage = image2;
+        structarr.Add(d);
+        image1.SetActive(false);
+        image2.SetActive(true);
+        image3.SetActive(false);
         if (!manual)
         {
             yield return new WaitForSeconds(speed);
@@ -124,6 +141,14 @@ public class QuickSortRecursion2 : MonoBehaviour
             temp++;
         }
         currentIndex = temp;
+        MaxIndex = temp;
+        d = new MyStruct();
+        d.currentstep = currentIndex;
+        d.Activeimage = image2;
+        structarr.Add(d);
+        image1.SetActive(false);
+        image2.SetActive(true);
+        image3.SetActive(false);
         if (!manual)
         {
             yield return new WaitForSeconds(speed);
@@ -152,6 +177,14 @@ public class QuickSortRecursion2 : MonoBehaviour
             temp++;
         }
         currentIndex = temp;
+        MaxIndex = temp;
+        d = new MyStruct();
+        d.currentstep = currentIndex;
+        d.Activeimage = image2;
+        structarr.Add(d);
+        image1.SetActive(false);
+        image2.SetActive(true);
+        image3.SetActive(false);
         if (!manual)
         {
             yield return new WaitForSeconds(speed);
@@ -180,6 +213,14 @@ public class QuickSortRecursion2 : MonoBehaviour
             temp++;
         }
         currentIndex = temp;
+        MaxIndex = temp;
+        d = new MyStruct();
+        d.currentstep = currentIndex;
+        d.Activeimage = image3;
+        structarr.Add(d);
+        image1.SetActive(false);
+        image2.SetActive(false);
+        image3.SetActive(true);
         if (!manual)
         {
             yield return new WaitForSeconds(speed);
@@ -208,6 +249,14 @@ public class QuickSortRecursion2 : MonoBehaviour
             temp++;
         }
         currentIndex = temp;
+        MaxIndex = temp;
+        d = new MyStruct();
+        d.currentstep = currentIndex;
+        d.Activeimage = image1;
+        structarr.Add(d);
+        image1.SetActive(true);
+        image2.SetActive(false);
+        image3.SetActive(false);
         if (!manual)
         {
             yield return new WaitForSeconds(speed);
@@ -236,6 +285,14 @@ public class QuickSortRecursion2 : MonoBehaviour
             temp++;
         }
         currentIndex = temp;
+        MaxIndex = temp;
+        d = new MyStruct();
+        d.currentstep = currentIndex;
+        d.Activeimage = image3;
+        structarr.Add(d);
+        image1.SetActive(false);
+        image2.SetActive(false);
+        image3.SetActive(true);
         if (!manual)
         {
             yield return new WaitForSeconds(speed);
@@ -264,6 +321,14 @@ public class QuickSortRecursion2 : MonoBehaviour
             temp++;
         }
         currentIndex = temp;
+        MaxIndex = temp;
+        d = new MyStruct();
+        d.currentstep = currentIndex;
+        d.Activeimage = image1;
+        structarr.Add(d);
+        image1.SetActive(true);
+        image2.SetActive(false);
+        image3.SetActive(false);
         if (!manual)
         {
             yield return new WaitForSeconds(speed);
@@ -292,6 +357,14 @@ public class QuickSortRecursion2 : MonoBehaviour
             temp++;
         }
         currentIndex = temp;
+        MaxIndex = temp;
+        d = new MyStruct();
+        d.currentstep = currentIndex;
+        d.Activeimage = image3;
+        structarr.Add(d);
+        image1.SetActive(false);
+        image2.SetActive(false);
+        image3.SetActive(false);
         if (!manual)
         {
             yield return new WaitForSeconds(speed);
@@ -316,27 +389,34 @@ public class QuickSortRecursion2 : MonoBehaviour
     }
     public IEnumerator changeStep()
     {
+        stepIndex = structarr.Count;
         resume:
-        if (previous && currentIndex > 0)
+        if (previous && currentIndex > 0 && stepIndex > 0)
         {
-            currentIndex--;
+            stepIndex--;
+            currentIndex = structarr[stepIndex].currentstep;
             previous = false;
         }
         else if ((next && currentIndex != MaxIndex) || currentIndex != MaxIndex)
         {
-            currentIndex++;
+            stepIndex++;
+            currentIndex = structarr[stepIndex].currentstep;
             next = false;
         }
         image1.SetActive(false);
         image2.SetActive(false);
         image3.SetActive(false);
 
-        structarr[currentIndex].Activeimage.SetActive(true);
-
+        structarr[stepIndex].Activeimage.SetActive(true);
+        for (int i = 0; i < bstep.Length; i++)
+        {
+            bstep[i].SetActive(false);
+            //currentIndex++;
+        }
         for (int i = 0; i < currentIndex; i++)
         {
             bstep[i].SetActive(true);
-            currentIndex++;
+            //currentIndex++;
         }
         if (manual)
         {

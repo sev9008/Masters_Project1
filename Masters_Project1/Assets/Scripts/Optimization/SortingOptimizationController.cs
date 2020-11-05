@@ -15,7 +15,7 @@ public class SortingOptimizationController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Enter");
+        //Debug.Log("Enter");
         for (int i = 0; i < objectsToHalt.Length; i++)
         {
             objectsToHalt[i].SetActive(true);

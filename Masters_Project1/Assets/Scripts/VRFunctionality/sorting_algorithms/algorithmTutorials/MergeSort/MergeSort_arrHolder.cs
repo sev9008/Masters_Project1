@@ -112,6 +112,7 @@ public class MergeSort_arrHolder : MonoBehaviour
     public IEnumerator IEMerge()
     {
         running = true;
+        StopAllCoroutines();
         for (int n = 0; n < structarr.Count; n++)
         {
             structarr[n].oldarr.Clear();
