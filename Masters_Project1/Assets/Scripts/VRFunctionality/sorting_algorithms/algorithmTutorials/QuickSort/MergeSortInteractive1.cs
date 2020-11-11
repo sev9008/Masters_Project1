@@ -80,7 +80,7 @@ public class MergeSortInteractive1 : MonoBehaviour
         StartCoroutine(Mergechecksort());
     }
 
-    public void Update()
+    public void Update()//needs testing
     {
         if (sorted)
         {
@@ -121,7 +121,7 @@ public class MergeSortInteractive1 : MonoBehaviour
                 }
             }
         }
-
+            //needs to be worked on
         if (waitingforswap && ((L.Length > 0 && Larray) || (R.Length > 0 && !Larray)))
         {
             float dist2;

@@ -60,7 +60,6 @@ public class InsertSortInteractive1 : MonoBehaviour
             dist1 = Vector3.Distance(b[nextToSort].transform.position, b[currentSmallestIndex].transform.position);
             if (dist1 < .04)
             {
-                //Debug.Log("Swap");
                 m_vRController_1.downR = false;
                 m_vRController_1.downL = false;
                 Step.text = "The block you attempted to swap was correct.";
@@ -71,7 +70,7 @@ public class InsertSortInteractive1 : MonoBehaviour
                 updatePos();
             }
             else
-            {//check for incorret answer
+            {
                 for (int i = 0; i < b.Count; i++)
                 {
                     if (i != currentSmallestIndex && i != nextToSort)
@@ -81,26 +80,23 @@ public class InsertSortInteractive1 : MonoBehaviour
 
                         if (dist1 < .04 || dist2 < .04)
                         {
-                            //Debug.Log("wrong");
                             m_vRController_1.downR = false;
                             m_vRController_1.downL = false;
                             Step.text = "The block you attempted to swap was incorrect.";
-                            incorretAnswers += 1; 
+                            incorretAnswers += 1;
                             incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
                             updatePos();
-                            break;
                         }
                     }
                 }
             }
-        }        
+        }
         else if (waitingforswap && currentSmallestIndex == 2000)
         {
             Step.text = "The Algorithm is ready to swap values.  Perform the swap.";
             dist1 = Vector3.Distance(b[nextToSort].transform.position, keyGo.transform.position);
             if (dist1 < .04)
             {
-                //Debug.Log("Swap");
                 m_vRController_1.downR = false;
                 m_vRController_1.downL = false;
                 Step.text = "The block you attempted to swap was correct.";
@@ -111,22 +107,20 @@ public class InsertSortInteractive1 : MonoBehaviour
                 updatePos();
             }
             else
-            {//check for incorret answer
+            {
                 for (int i = 0; i < b.Count; i++)
                 {
                     if (i != nextToSort)
-                    { 
+                    {
                         dist1 = Vector3.Distance(b[i].transform.position, keyGo.transform.position);
                         if (dist1 < .04)
                         {
-                            //Debug.Log("wrong");
                             m_vRController_1.downR = false;
                             m_vRController_1.downL = false;
                             Step.text = "The block you attempted to swap was incorrect.";
                             incorretAnswers += 1;
                             incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
                             updatePos();
-                            break;
                         }
                     }
                 }

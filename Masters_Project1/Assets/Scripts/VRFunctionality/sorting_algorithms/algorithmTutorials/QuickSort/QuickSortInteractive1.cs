@@ -87,14 +87,23 @@ public class QuickSortInteractive1 : MonoBehaviour
             sorted = false;
         }
 
-        if(waitingforswap)
+        if(waitingforswap)//works
         {
-            for (int i = nextToSort + 1; i < b.Count; i++)
+            dist1 = Vector3.Distance(b[nextToSort].transform.position, b[currentSmallestIndex].transform.position);
+            if (dist1 < .04)
             {
-                if (i != currentSmallestIndex)
+                Debug.Log("Swap");
+                SwapValues(nextToSort, currentSmallestIndex);
+                waitingforswap = false;
+            }
+
+            for (int i = 0; i < b.Count; i++)
+            {
+                if (i != nextToSort && i != currentSmallestIndex)
                 {
                     float dist2 = Vector3.Distance(b[nextToSort].transform.position, b[i].transform.position);
-                    if (dist2 < .04)
+                    float dist3 = Vector3.Distance(b[currentSmallestIndex].transform.position, b[i].transform.position);
+                    if (dist2 < .04 || dist3 < .04)
                     {
                         m_vRController_1.downR = false;
                         m_vRController_1.downL = false;
@@ -104,16 +113,6 @@ public class QuickSortInteractive1 : MonoBehaviour
                         updatePos();
                     }
 
-                }
-                else
-                {
-                    dist1 = Vector3.Distance(b[nextToSort].transform.position, b[currentSmallestIndex].transform.position);
-                    if (dist1 < .04)
-                    {
-                        Debug.Log("Swap");
-                        SwapValues(nextToSort, currentSmallestIndex);
-                        waitingforswap = false;
-                    }
                 }
             }
         }

@@ -38,7 +38,6 @@ public class SlesortInteractive1 : MonoBehaviour
     public int nextToSort;
     public float dist1;
 
-
     private void Start()
     {
         corretAnswersText.GetComponentInChildren<Text>().text = "0";
@@ -59,35 +58,40 @@ public class SlesortInteractive1 : MonoBehaviour
             Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Selction Sort Operates." + "\nThe Algorithm locks the positions that have already been sorted, and chooses the next smallest element to swap.";
             sorted = false;
         }
-        for (int i = nextToSort+1; i < b.Count; i++)
+
+        //this works
+        dist1 = Vector3.Distance(b[nextToSort].transform.position, b[currentSmallestIndex].transform.position);
+        if (dist1 < .04)
         {
-            if (i != currentSmallestIndex)
+            Debug.Log("Swap");
+            SwapValues(nextToSort, currentSmallestIndex);
+        }
+        else
+        {
+            for (int i = 0; i < b.Count; i++)
             {
-                float dist2 = Vector3.Distance(b[nextToSort].transform.position, b[i].transform.position);
-                if (dist2 < .04)
+                if (i != nextToSort && i != currentSmallestIndex)
                 {
-                    m_vRController_1.downR = false;
-                    m_vRController_1.downL = false;
-                    Step.text = "Incorrect.  The block you attempted to swap was not the smallest value in the unsorted array.";
-                    incorretAnswers += 1;
-                    incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
-                    updatePos();
-                }
-                
-            }
-            else
-            {
-                dist1 = Vector3.Distance(b[nextToSort].transform.position, b[currentSmallestIndex].transform.position);
-                if (dist1 < .04)
-                {
-                    Debug.Log("Swap");
-                    SwapValues(nextToSort, currentSmallestIndex);
+                    float dist2 = Vector3.Distance(b[nextToSort].transform.position, b[i].transform.position);
+                    float dist3 = Vector3.Distance(b[currentSmallestIndex].transform.position, b[i].transform.position);
+                    if (dist2 < .04 || dist3 < .04)
+                    {
+                        Debug.Log(dist2 + "   " + dist3);
+                        Debug.Log(currentSmallestIndex + nextToSort + i);
+
+                        m_vRController_1.downR = false;
+                        m_vRController_1.downL = false;
+                        Step.text = "Incorrect.  The block you attempted to swap was not the smallest value in the unsorted array.";
+                        incorretAnswers += 1;
+                        incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                        updatePos();
+                    }
                 }
             }
         }
     }
 
-    public void Begin()
+        public void Begin()
     {
         numofGames += 1;
         numofGamesText.GetComponent<Text>().text = numofGames.ToString();
