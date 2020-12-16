@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This Script is used for a non vr version of the game.  
+/// It currently cannot interact with any VR buttons
+/// </summary>
 public class MouseLook : MonoBehaviour
 {
     float xRotation = 0f; 
@@ -13,7 +17,6 @@ public class MouseLook : MonoBehaviour
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         float mouseX = Input.GetAxis("Mouse X") * MouseSensitivity * Time.deltaTime;

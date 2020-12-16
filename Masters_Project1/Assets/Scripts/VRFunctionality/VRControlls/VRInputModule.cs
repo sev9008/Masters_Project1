@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using Valve.VR;
-
+/// <summary>
+/// This script utilizes the unity even system to process pressing and releasing on the VR controller
+/// </summary>
 public class VRInputModule : BaseInputModule
 {
     [SerializeField] private Pointer pointer = null;

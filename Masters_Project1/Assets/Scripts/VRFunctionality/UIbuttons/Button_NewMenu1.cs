@@ -4,7 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
+/// <summary>
+/// This button was used to spawn new UI panels at the palyer's controller position
+/// It is no longer in use
+/// </summary>
 public class Button_NewMenu1 : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public GameObject PanelObject;

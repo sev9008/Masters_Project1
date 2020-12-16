@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
-
+/// <summary>
+/// Basic module that handles button presses with UI interaction
+/// </summary>
 public class SteamInputModule_tut : VRInputModule
 {
     public SteamVR_Input_Sources TargetSource;

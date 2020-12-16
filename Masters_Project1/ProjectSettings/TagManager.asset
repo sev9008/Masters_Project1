@@ -24,6 +24,7 @@ TagManager:
   - DotCanL
   - Table
   - FPCamera
+  - UI
   layers:
   - Default
   - TransparentFX
@@ -37,7 +38,7 @@ TagManager:
   - Moveable
   - ignorePointer
   - Ground
-  - 
+  - Blockers
   - 
   - 
   - 

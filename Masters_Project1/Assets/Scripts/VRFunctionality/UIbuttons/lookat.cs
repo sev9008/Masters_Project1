@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// This script will have the UI turn to face the palyer.
+/// It is rarely used in this project
+/// </summary>
 public class lookat : MonoBehaviour
 {
     public GameObject Player;

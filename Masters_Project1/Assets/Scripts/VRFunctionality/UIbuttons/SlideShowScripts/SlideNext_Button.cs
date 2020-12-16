@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+/// <summary>
+/// WHen pressed this script will increment the slide show controller
+/// </summary>
 public class SlideNext_Button : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public SlideShowController M_SlideShowController;

@@ -1,7 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// This script will enable and disable every object in: objectstohalt
+/// WHen the player leaves the specified area the objects will be disabled.
+/// When the player enters the specified area the objects will be enabled.
+/// This script will also stop any coroutines and scripts currently being performed by any deactivated game object
+/// </summary>
 public class SortingOptimizationController : MonoBehaviour
 {
     public GameObject[] objectsToHalt;
@@ -15,19 +20,25 @@ public class SortingOptimizationController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("Enter");
-        for (int i = 0; i < objectsToHalt.Length; i++)
+        if (other.tag == "Player")
         {
-            objectsToHalt[i].SetActive(true);
+            for (int i = 0; i < objectsToHalt.Length; i++)
+            {
+                objectsToHalt[i].SetActive(true);
+            }
         }
+
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("Leave");
-        for (int i = 0; i < objectsToHalt.Length; i++)
+        if (other.tag == "Player")
         {
-            objectsToHalt[i].SetActive(false);
+            for (int i = 0; i < objectsToHalt.Length; i++)
+            {
+                objectsToHalt[i].SetActive(false);
+            }
         }
+
     }
 }

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
 using Valve.VR;
-
+/// <summary>
+/// This script provides the main movement and controll functionality for steam vr
+/// </summary>
 public class VRController_1 : MonoBehaviour
 {
     public float Gravity = -10f;
@@ -13,11 +15,11 @@ public class VRController_1 : MonoBehaviour
     public float rotateincr = 5f;
     private Vector3 Velocity;
 
-
     public SteamVR_Action_Boolean RotatePress = null;
     public SteamVR_Action_Boolean GrabObj = null;
     public SteamVR_Action_Boolean Movepress = null;
     public SteamVR_Action_Vector2 MoveValue = null;
+    public SteamVR_Action_Boolean teleport = null;
 
     public SlesortInteractive1 slesortInteractive;
     public InsertSortInteractive1 insertSortInteractive1;
@@ -45,6 +47,8 @@ public class VRController_1 : MonoBehaviour
     public bool downR;
     public bool downL;
 
+    public Pointer PointerR;
+
     private void Awake()
     {
         CharController = GetComponent<CharacterController>();
@@ -52,7 +56,7 @@ public class VRController_1 : MonoBehaviour
 
     private void Start()
     {
-        try
+        try//if steam VR is not connected this will through a critical error
         {
             CameraRig = SteamVR_Render.Top().origin;
             Head = SteamVR_Render.Top().head;
@@ -67,7 +71,13 @@ public class VRController_1 : MonoBehaviour
         CalculateMovement();
         SnapRotation();
         HandleMoveObject();
+        Teleport();
 
+        //if the player has grabbed an object:
+        //set the grabbed object's parent to the controller
+        //set the length of the controller line to 0.  That way it will naturally disappear.
+        //then set the grabbed item 3f in front of the controller.
+        //THis looks much better, and is easier to controll.
         if (downR)
         {
             m_pointerR.defaultLength = 0f;
@@ -80,11 +90,14 @@ public class VRController_1 : MonoBehaviour
             }
             catch { }
         }
+        //if the player has released the object:
+        //reset the objects parent
+        //reset the length of the controller
         if (!downR && grabbedR != null)
         {
             m_pointerR.defaultLength = 7f;
             downR = false;
-            try
+            try//use this for BlockParent script which utilizes gravity
             {
                 grabbedR.GetComponent<BlockParent>().gravity = true;
                 GameObject m_parent = grabbedR.GetComponent<BlockParent>().parent;
@@ -92,14 +105,16 @@ public class VRController_1 : MonoBehaviour
                 grabbedR.GetComponent<BlockParent>().isGrabbed = false;
             }
             catch { }
-            try
+            try//use this for MoveInteractionBLock script which does not utilize a rigid body.
             {
                 GameObject m_parent = grabbedR.GetComponent<MoveInteractionBLock>().parent;
                 grabbedR.transform.parent = m_parent.transform;
             }
             catch { }
             grabbedR = null;
-        }        
+        }
+
+        //same as above function, except this is for the left controller.
         if (downL)
         {
             m_pointerL.defaultLength = 0f;
@@ -156,7 +171,6 @@ public class VRController_1 : MonoBehaviour
         Vector3 movement = Vector3.zero;
 
         //if not moving
-
         if (MoveValue.axis.magnitude == 0)
         {
             Speed = 0;
@@ -223,7 +237,8 @@ public class VRController_1 : MonoBehaviour
         }
         catch { }
     }
-
+    //This function will allow players to snap their rotation.
+    //pressing the specified button will turn them rotateincr degrees to the left or right.
     private void SnapRotation() 
     {
         float snapValue = 0.0f;
@@ -244,6 +259,33 @@ public class VRController_1 : MonoBehaviour
         catch { }
     }
 
+    private void Teleport()
+    {
+        Vector3 pos = new Vector3(PointerR.TeleportPos.x, CharController.height, PointerR.TeleportPos.z); //get the teleport position
+        Debug.DrawRay(pos, -transform.up * 3, Color.red);
+
+        if (teleport.GetStateDown(SteamVR_Input_Sources.RightHand))
+        {
+            //Vector3 pos = new Vector3(PointerR.TeleportPos.x, transform.position.y+.1f, PointerR.TeleportPos.z); //get the teleport position
+
+            //check if the position has a spot for the player to stand on
+            if (Physics.Raycast(pos, -transform.up, out var hit, 3f))//doesnt work???
+            {
+                if (hit.collider != null && Vector3.Distance(hit.point, pos) >= CharController.height -.1f)
+                {
+                    transform.position = pos;
+                }
+                Debug.DrawRay(pos, -transform.up * CharController.height);
+                //Debug.Log(Vector3.Distance(hit.point, pos) + "Distance between two objects");
+                //Debug.Log(CharController.height + "distance min");
+            }
+        }
+
+
+
+    }
+
+    //handles object grabbing, novement, and releasing
     private void HandleMoveObject()
     {
         try
@@ -251,7 +293,6 @@ public class VRController_1 : MonoBehaviour
             if (GrabObj.GetStateDown(SteamVR_Input_Sources.RightHand) && m_pointerR.hit.collider.gameObject.layer == 9)
             {
                 m_pointerR.defaultLength = 0f;
-                //Debug.Log("down");
                 grabbedR = m_pointerR.hit.collider.gameObject;
                 grabbedR.transform.parent = DotR.transform;
                 try
@@ -282,7 +323,8 @@ public class VRController_1 : MonoBehaviour
                     grabbedR.transform.parent = m_parent.transform;
                     grabbedR.GetComponent<BlockParent>().isGrabbed = false;
                 }
-                catch { } 
+                catch { }
+                //will reset the position of MoveInteractionBLock
                 try
                 {
                     GameObject m_parent = grabbedR.GetComponent<MoveInteractionBLock>().parent;
@@ -323,6 +365,7 @@ public class VRController_1 : MonoBehaviour
             }
         }
         catch { }
+
         try
         {
             if (GrabObj.GetStateUp(SteamVR_Input_Sources.LeftHand) && grabbedL != null)
@@ -337,6 +380,7 @@ public class VRController_1 : MonoBehaviour
                     grabbedR.GetComponent<BlockParent>().isGrabbed = false;
                 }
                 catch { }
+                //will reset the position of MoveInteractionBLock
                 try
                 {
                     GameObject m_parent = grabbedL.GetComponent<MoveInteractionBLock>().parent;

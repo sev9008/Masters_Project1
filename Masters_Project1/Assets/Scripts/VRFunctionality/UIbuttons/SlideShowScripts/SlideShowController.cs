@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// This button will control the navigation of text tutorial pages
+/// pressing left or right will increment or decrement the counter and change the page of the tutorial this script is attached to
+/// </summary>
 public class SlideShowController : MonoBehaviour
 {
     public int currslide;

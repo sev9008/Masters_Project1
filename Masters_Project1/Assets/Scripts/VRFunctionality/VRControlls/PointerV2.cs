@@ -2,7 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+/// <summary>
+/// This script is not in use
+/// This script attempted co combine the left and right vr controllers into one script.
+/// If i remember correctly, two event cameras can not be defined for the same script
+/// Thus this script had to be discarded until a better solution can eb found.
+/// For now I will continue to use pointer script instead.
+/// </summary>
 public class PointerV2 : MonoBehaviour
 {
     [SerializeField] public float defaultLengthLeft = 7.0f;

@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
+/// <summary>
+/// This button was used to move UI away from the player
+/// It is no longer in use
+/// </summary>
 public class Button_MoveAway : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public Transform Player;

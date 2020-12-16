@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
+/// <summary>
+/// Not currently in use
+/// 
+/// Cant remember what this was used for.
+/// I believe it was used originally to parent game objects to the vr controller
+/// </summary>
 public class buttonevent_parent : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public GameObject parent; 

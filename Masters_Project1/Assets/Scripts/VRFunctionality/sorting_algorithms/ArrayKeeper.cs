@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+/// <summary>
+/// This is a universal script for every algorithm
+/// It controls pushing, and poping numbers from the VR numpad to the VR Array holder
+/// </summary>
 public class ArrayKeeper : MonoBehaviour
 {
     public List<int> arr;

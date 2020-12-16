@@ -4,7 +4,12 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
+/// <summary>
+/// This script will change the color of some buttons under certain conditions
+/// if the button is being hovered by a controller event caamera, it will change color
+/// if the button is pressed it will change color
+/// if nothing is happeneing it will stay at its defualt color
+/// </summary>
 public class ButtonTransition : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler
 {
     public Color32 NormalColor = Color.white;

@@ -2,7 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
-
+/// <summary>
+/// This script will get the two event cameras attached to the vr controller.
+/// Without event cameras, VR controller can not interact with UI
+/// In additon only one event camera can be used at any given time for UI
+/// Thus another script is needed to decide when each event camera will be in use
+/// </summary>
 public class FindPointerCanvas : MonoBehaviour
 {
     public GameObject MyCamera;

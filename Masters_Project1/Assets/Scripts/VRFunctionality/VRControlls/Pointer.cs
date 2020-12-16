@@ -2,7 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+/// <summary>
+/// This script controll VR controller functions with the environment.
+/// It will shoot out a raycast and if it hits an object it will return the object information.
+/// It will also update the vr controller line to match the distance of the object that is being hit.
+/// 
+/// If that object is over the specified defualt length:
+/// it can still be selected, but the line renderer will not extend to it
+/// </summary>
 public class Pointer : MonoBehaviour
 {
     [SerializeField] public float defaultLength = 7.0f;
@@ -21,6 +28,8 @@ public class Pointer : MonoBehaviour
 
     public LayerMask raymask;
 
+    public Vector3 TeleportPos;
+
     private void Awake()
     {
         Camera = GetComponent<Camera>();
@@ -31,7 +40,6 @@ public class Pointer : MonoBehaviour
 
     private void Start()
     {
-        // current.currentInputModule does not work
         inputModule = EventSystem.current.gameObject.GetComponent<VRInputModule>();
     }
 
@@ -68,7 +76,24 @@ public class Pointer : MonoBehaviour
         RaycastHit hit;
         Ray ray = new Ray(transform.position, transform.forward);
         Physics.Raycast(ray, out hit, defaultLength, raymask);
+        
+        //check if raycast hit a wall or any type of blocker
+        int tmplayer = -1;
+        if (hit.collider != null)
+        {
+            tmplayer = hit.collider.gameObject.layer;
+        }
 
-        return hit;
+        if (tmplayer == 12)//if the raycast hit a blocker then its time to change the hit point
+        {
+            TeleportPos = hit.point - (transform.forward*3f);
+            return hit;
+        }
+        else
+        {
+            TeleportPos = hit.point;
+            TeleportPos = dot.transform.position;
+            return hit;
+        }
     }
 }

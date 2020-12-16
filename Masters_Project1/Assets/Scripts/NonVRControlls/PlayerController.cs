@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// This script provides movement to a non vr  player.
+/// It currently cannot interact with any VR buttons
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
     Camera cam;
@@ -12,7 +15,6 @@ public class PlayerController : MonoBehaviour
     float GroundDistance = 0.4f;
 
     public float speed = 10f;
-    //public Transform weapon;
 
     public LayerMask GroundMask;
     public Transform GroundCheck;
