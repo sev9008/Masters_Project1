@@ -58,7 +58,7 @@ public class EncapController : MonoBehaviour
                     Panels[i - 1].SetActive(false);
                 }
 
-                if (i == 2 || i == 3)//enable or disable the first output
+                if (i == 3 || i == 4)//enable or disable the first output
                 {
                     Output[0].SetActive(true);
                 }
@@ -67,13 +67,21 @@ public class EncapController : MonoBehaviour
                     Output[0].SetActive(false);
                 }
 
-                if (i == 4 || i == 5)//enable or disable the second output
+                if (5 < i && i < 9)//enable or disable the second output
                 {
                     Output[1].SetActive(true);
                 }
                 else
                 {
                     Output[1].SetActive(false);
+                }
+                if (9 < i && i < 13)//enable or disable the second output
+                {
+                    Output[2].SetActive(true);
+                }
+                else
+                {
+                    Output[2].SetActive(false);
                 }
 
                 Panels[i].SetActive(true);//activate the current panel
