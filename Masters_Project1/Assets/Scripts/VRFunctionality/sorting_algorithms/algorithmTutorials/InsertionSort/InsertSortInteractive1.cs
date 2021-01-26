@@ -41,6 +41,7 @@ public class InsertSortInteractive1 : MonoBehaviour
     private GameObject tempGo;
 
     public GameObject keyGo;
+    public bool IsTestMode;
 
     private void Start()
     {
@@ -63,8 +64,11 @@ public class InsertSortInteractive1 : MonoBehaviour
                 m_vRController_1.downR = false;
                 m_vRController_1.downL = false;
                 Step.text = "The block you attempted to swap was correct.";
-                corretAnswers += 1;
-                corretAnswersText.GetComponent<Text>().text = corretAnswers.ToString();
+                if (IsTestMode)
+                {
+                    corretAnswers += 1;
+                    corretAnswersText.GetComponent<Text>().text = corretAnswers.ToString();
+                }
                 b[nextToSort].GetComponentInChildren<Text>().text = b[currentSmallestIndex].GetComponentInChildren<Text>().text;
                 waitingforswap = false;
                 updatePos();
@@ -83,8 +87,11 @@ public class InsertSortInteractive1 : MonoBehaviour
                             m_vRController_1.downR = false;
                             m_vRController_1.downL = false;
                             Step.text = "The block you attempted to swap was incorrect.";
-                            incorretAnswers += 1;
-                            incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                            if (IsTestMode)
+                            {
+                                incorretAnswers += 1;
+                                incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                            }
                             updatePos();
                         }
                     }
@@ -143,9 +150,15 @@ public class InsertSortInteractive1 : MonoBehaviour
             int n = UnityEngine.Random.Range(1, 99);
             Text t = b[i].GetComponentInChildren<Text>();
             t.text = n.ToString();
+            b[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
         }
         updatePos();
         sorted = false;
+        if (IsTestMode)
+        {
+            numofGames += 1;
+            numofGamesText.GetComponent<Text>().text = numofGames.ToString();
+        }
         co = StartCoroutine(insertionSort());
     }
 
@@ -169,7 +182,10 @@ public class InsertSortInteractive1 : MonoBehaviour
         for (i = 1; i < b.Count; i++)
         {
             key = int.Parse(b[i].GetComponentInChildren<Text>().text);
-            b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+            if (!IsTestMode)
+            {
+                b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+            }
             keyGo.GetComponentInChildren<Text>().text = key.ToString();
             keypos = i;
             updatePos();
@@ -179,8 +195,11 @@ public class InsertSortInteractive1 : MonoBehaviour
             int tempval = int.Parse(b[j].GetComponentInChildren<Text>().text);
             while (j >= 0 && tempval > key)
             {
-                b[j].GetComponentInChildren<MeshRenderer>().material = Nextsort;
-                b[j + 1].GetComponentInChildren<MeshRenderer>().material = prevsort;
+                if (!IsTestMode)
+                {
+                    b[j].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                    b[j + 1].GetComponentInChildren<MeshRenderer>().material = prevsort;
+                }
                 updatePos();
                 nextToSort = j + 1;
                 currentSmallestIndex = j;
@@ -229,11 +248,11 @@ public class InsertSortInteractive1 : MonoBehaviour
             }
             else
             {
-                if (i == currentSmallestIndex)
+                if (i == currentSmallestIndex && !IsTestMode)
                 {
                     b[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
                 }
-                else if (i < nextToSort)
+                else if (i < nextToSort && !IsTestMode)
                 {
                     b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
                 }

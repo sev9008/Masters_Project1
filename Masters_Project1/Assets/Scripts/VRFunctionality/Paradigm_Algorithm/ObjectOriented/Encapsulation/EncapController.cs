@@ -29,7 +29,7 @@ public class EncapController : MonoBehaviour
         {
             co = StartCoroutine(ScopeRun());
         }
-        if (!begin)//stop the coroutine and set all panels to deactivated
+        if (!begin && co != null)//stop the coroutine and set all panels to deactivated
         {
             StopCoroutine(co);
             co = null;

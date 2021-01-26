@@ -39,10 +39,10 @@ public class FindPointerCanvas : MonoBehaviour
             MyCamera = GameObject.FindWithTag("PointerL");
             MyCanvas1.worldCamera = MyCamera.GetComponent<Camera>();
         }
-        if(Input.GetAxis("Fire1") != 0)
-        {
-            MyCamera = GameObject.FindWithTag("FPCamera");
-            MyCanvas1.worldCamera = MyCamera.GetComponent<Camera>();
-        }
+        //if(Input.GetAxis("Fire1") != 0)
+        //{
+        //    MyCamera = GameObject.FindWithTag("FPCamera");
+        //    MyCanvas1.worldCamera = MyCamera.GetComponent<Camera>();
+        //}
     }
 }

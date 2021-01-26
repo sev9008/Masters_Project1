@@ -286,7 +286,7 @@ public class VRController_1 : MonoBehaviour
     }
 
     //handles object grabbing, novement, and releasing
-    private void HandleMoveObject()
+    private void HandleMoveObject()//if an object is moveable remember to change its layer
     {
         try
         {
