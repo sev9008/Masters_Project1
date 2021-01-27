@@ -11,6 +11,7 @@ public class QuickSortInteractive1 : MonoBehaviour
     public Material Nextsort;
     public Material Unsorted;
     public Material nextLine;
+    public Material pimat;
 
     public bool sorted;
 
@@ -23,6 +24,7 @@ public class QuickSortInteractive1 : MonoBehaviour
 
     Coroutine co;
     Coroutine sho;
+    Coroutine go;
 
     public int speed;
     public int smooth;
@@ -46,6 +48,7 @@ public class QuickSortInteractive1 : MonoBehaviour
     public GameObject arrow;
 
     public bool waitingforswap;
+    public bool IsTestMode;
 
     private void Start()
     {
@@ -57,14 +60,25 @@ public class QuickSortInteractive1 : MonoBehaviour
         corretAnswers = 0;
         numofGames = 0;
         arrow.SetActive(false);
-        Begin();
+        //Begin();
     }
 
     public void Begin()
     {
-        numofGames += 1;
-        numofGamesText.GetComponent<Text>().text = numofGames.ToString();
-        Step.text = "Welcome!  This tutorial is designed to teach you play this interactive minigame." + "\n\nIf the block is red it is the pivot and will be used to test our array for swaps.";
+        try
+        {
+            StopCoroutine(co);
+            StopCoroutine(sho);
+            StopCoroutine(go);
+            updatePos();
+        }
+        catch { }
+        if (IsTestMode)
+        {
+            numofGames += 1;
+            numofGamesText.GetComponent<Text>().text = numofGames.ToString();
+        }
+        Step.text = "Welcome!  This tutorial is designed to teach you play this interactive minigame." + "\n\nIf the block is green it is the pivot and will be used to test our array for swaps.";
         for (int i = 0; i < 9; i++)
         {
             previouspi[i] = 0;
@@ -72,11 +86,12 @@ public class QuickSortInteractive1 : MonoBehaviour
             Text t = b[i].GetComponentInChildren<Text>();
             t.text = n.ToString();
             b[i].GetComponent<MoveInteractionBLock>().PairedPos = pos[i];
+            b[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
         }
         //b[0].GetComponentInChildren<Text>().text = "1";
         updatePos();
         sorted = false;
-        StartCoroutine(Quickchecksort());
+        co = StartCoroutine(Quickchecksort());
     }
 
     public void Update()
@@ -108,8 +123,11 @@ public class QuickSortInteractive1 : MonoBehaviour
                         m_vRController_1.downR = false;
                         m_vRController_1.downL = false;
                         Step.text = "Incorrect.  The block you attempted to swap was Incorrect.";
-                        incorretAnswers += 1;
-                        incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                        if (IsTestMode)
+                        {
+                            incorretAnswers += 1;
+                            incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                        }
                         updatePos();
                     }
 
@@ -131,15 +149,22 @@ public class QuickSortInteractive1 : MonoBehaviour
         ti.text = tj.text;
         tj.text = n;
         Step.text = "Correct! " + ti.text + " and " + tj.text + " will swap and index " + i + " will be locked.";
-        corretAnswers += 1;
-        corretAnswersText.GetComponent<Text>().text = corretAnswers.ToString();
-
+        if (IsTestMode)
+        {
+            corretAnswers += 1;
+            corretAnswersText.GetComponent<Text>().text = corretAnswers.ToString();
+        }
+        if (!IsTestMode)
+        {
+            b[i].GetComponentInChildren<MeshRenderer>().material = nextLine;
+            b[j].GetComponentInChildren<MeshRenderer>().material = nextLine;
+        }
         updatePos();
     }
 
     public IEnumerator Quickchecksort()
     {
-        yield return StartCoroutine(quickSort(0, b.Count - 1));
+        yield return go = StartCoroutine(quickSort(0, b.Count - 1));
         updatePos();
         sorted = true;
         EnableTrigger(0, 0);
@@ -152,9 +177,9 @@ public class QuickSortInteractive1 : MonoBehaviour
             pi = h;
             EnableTrigger(l, h);
 
-            yield return StartCoroutine(partition(l, h));
-            yield return StartCoroutine(quickSort(l, pi - 1));
-            yield return StartCoroutine(quickSort(pi + 1, h));
+            yield return sho = StartCoroutine(partition(l, h));
+            yield return sho = StartCoroutine(quickSort(l, pi - 1));
+            yield return sho = StartCoroutine(quickSort(pi + 1, h));
         }
     }
 
@@ -176,9 +201,20 @@ public class QuickSortInteractive1 : MonoBehaviour
                 {
                     waitingforswap = false;    
                 }
+
+                if (!IsTestMode && waitingforswap)
+                {
+                    b[nextToSort].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                    b[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                }
                 while (waitingforswap)
                 {
                     yield return null;
+                }
+                if (!IsTestMode)
+                {
+                    b[nextToSort].GetComponentInChildren<MeshRenderer>().material = nextLine;
+                    b[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = nextLine;
                 }
             }
         }
@@ -190,11 +226,24 @@ public class QuickSortInteractive1 : MonoBehaviour
         {
             waitingforswap = false;
         }
+        if (!IsTestMode && waitingforswap)
+        {
+            b[nextToSort].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+            b[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+        }
         while (waitingforswap)
         {
             yield return null;
         }
-        b[i + 1].GetComponentInChildren<MeshRenderer>().material = Donesort;
+        if (!IsTestMode)
+        {
+            b[nextToSort].GetComponentInChildren<MeshRenderer>().material = nextLine;
+            b[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = nextLine;
+        }
+        if (!IsTestMode)
+        {
+            b[i + 1].GetComponentInChildren<MeshRenderer>().material = Donesort;
+        }
         previouspi[i + 1] = 1;
         pi = i + 1;
     }
@@ -218,7 +267,10 @@ public class QuickSortInteractive1 : MonoBehaviour
                 b[i].GetComponent<BoxCollider>().enabled = false;
                 b[i].GetComponent<MoveInteractionBLock>().enabled = true;
                 pos[i].GetComponent<BoxCollider>().enabled = false;
-                b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+                if (!IsTestMode)
+                {
+                    b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+                }
             }
             else
             {
@@ -229,7 +281,10 @@ public class QuickSortInteractive1 : MonoBehaviour
                     b[i].GetComponent<MoveInteractionBLock>().enabled = true;
                     b[i].GetComponent<BoxCollider>().enabled = true;
                     pos[i].GetComponent<BoxCollider>().enabled = false;
-                    b[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                    if (!IsTestMode)
+                    {
+                        b[i].GetComponentInChildren<MeshRenderer>().material = pimat;
+                    }
                     //previouspi[i] = 1;
                 }
                 else if (i >= l && i <= h)
@@ -237,7 +292,10 @@ public class QuickSortInteractive1 : MonoBehaviour
                     b[i].GetComponent<BoxCollider>().enabled = true;
                     pos[i].GetComponent<BoxCollider>().enabled = false;
                     b[i].GetComponent<MoveInteractionBLock>().enabled = true;
-                    b[i].GetComponentInChildren<MeshRenderer>().material = nextLine;
+                    if (!IsTestMode)
+                    {
+                        b[i].GetComponentInChildren<MeshRenderer>().material = nextLine;
+                    }
                 }
                 else
                 {
