@@ -48,6 +48,11 @@ public class InsertSortInteractive1 : MonoBehaviour
         //Begin();
     }
 
+    private void OnEnable()
+    {
+        Begin();
+    }
+
     public void Update()
     {
         if (sorted)

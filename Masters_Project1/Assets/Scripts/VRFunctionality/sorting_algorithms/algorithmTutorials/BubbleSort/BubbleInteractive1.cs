@@ -31,6 +31,7 @@ public class BubbleInteractive1 : MonoBehaviour
     public Text incorretAnswersText;
     public Text numofGamesText;
     public GameObject arrow;
+    public bool IsTestMode;
 
     public bool waitingforswap;
 
@@ -43,13 +44,22 @@ public class BubbleInteractive1 : MonoBehaviour
         corretAnswers = 0;
         numofGames = 0;
         arrow.SetActive(false);
+        //Begin();
+    }
+
+    private void OnEnable()
+    {
         Begin();
     }
 
     public void Begin()
     {
-        numofGames += 1;
-        numofGamesText.GetComponent<Text>().text = numofGames.ToString();
+        StopAllCoroutines();
+        if (IsTestMode)
+        {
+            numofGames += 1;
+            numofGamesText.GetComponent<Text>().text = numofGames.ToString();
+        }
         Step.text = "Welcome!  This tutorial is designed to teach you play this interactive minigame." + "\nIf the block is Green it is Sorted and can not be interacted with." + "\nIf a block is white or non colored, It must be swapped with the smallest adjacent value from the unsorted array.";
         for (int i = 0; i < 9; i++)
         {
@@ -57,6 +67,7 @@ public class BubbleInteractive1 : MonoBehaviour
             Text t = b[i].GetComponentInChildren<Text>();
             t.text = n.ToString();
             b[i].GetComponent<MoveInteractionBLock>().PairedPos = pos[i];
+            b[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
         }
         updatePos();
         sorted = false;
@@ -94,8 +105,11 @@ public class BubbleInteractive1 : MonoBehaviour
                         m_vRController_1.downR = false;
                         m_vRController_1.downL = false;
                         Step.text = "Incorrect.  The block you attempted to swap was not the smallest value in the unsorted array.";
-                        incorretAnswers += 1;
-                        incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                        if (IsTestMode)
+                        {
+                            incorretAnswers += 1;
+                            incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                        }
                         updatePos();
                     }
                 }
@@ -107,6 +121,12 @@ public class BubbleInteractive1 : MonoBehaviour
         m_vRController_1.downR = false;
         m_vRController_1.downL = false;
 
+        if (!IsTestMode)
+        {
+            b[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+            b[nextToSort].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+        }
+
         Text ti = b[i].GetComponentInChildren<Text>();
         Text tj = b[j].GetComponentInChildren<Text>();
 
@@ -115,8 +135,11 @@ public class BubbleInteractive1 : MonoBehaviour
         ti.text = tj.text;
         tj.text = n;
         Step.text = "Correct! " + ti.text + " and " + tj.text + " will swap and index " + i + " will be locked.";
-        corretAnswers += 1;
-        corretAnswersText.GetComponent<Text>().text = corretAnswers.ToString();
+        if (IsTestMode)
+        {
+            corretAnswers += 1;
+            corretAnswersText.GetComponent<Text>().text = corretAnswers.ToString();
+        }
 
         updatePos();
     }
@@ -159,6 +182,11 @@ public class BubbleInteractive1 : MonoBehaviour
                     {
                         waitingforswap = false;
                     }
+                    else if (!IsTestMode)
+                    {
+                        b[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                        b[nextToSort].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                    }
                     while (waitingforswap)
                     {
                         yield return null;
@@ -182,7 +210,10 @@ public class BubbleInteractive1 : MonoBehaviour
                 b[i].GetComponent<BoxCollider>().enabled = false;
                 b[i].GetComponent<MoveInteractionBLock>().enabled = true;
                 pos[i].GetComponent<BoxCollider>().enabled = false;
-                b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+                if (!IsTestMode)
+                {
+                    b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+                }
             }
             else
             {
@@ -191,14 +222,20 @@ public class BubbleInteractive1 : MonoBehaviour
                     b[i].GetComponent<BoxCollider>().enabled = true;
                     pos[i].GetComponent<BoxCollider>().enabled = false;
                     b[i].GetComponent<MoveInteractionBLock>().enabled = true;
-                    b[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                    if (!IsTestMode)
+                    {
+                        b[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                    }
                 }
                 else if (i >= maxsort)
                 {
                     b[i].GetComponent<MoveInteractionBLock>().enabled = true;
                     b[i].GetComponent<BoxCollider>().enabled = true;
                     pos[i].GetComponent<BoxCollider>().enabled = false;
-                    b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+                    if (!IsTestMode)
+                    {
+                        b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+                    }
                 }
                 else
                 {

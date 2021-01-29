@@ -37,6 +37,7 @@ public class SlesortInteractive1 : MonoBehaviour
     public int currentSmallestIndex;
     public int nextToSort;
     public float dist1;
+    public bool IsTestMode;
 
     private void Start()
     {
@@ -47,6 +48,11 @@ public class SlesortInteractive1 : MonoBehaviour
         corretAnswers = 0;
         numofGames = 0;
         arrow.SetActive(false);
+        //Begin();
+    }
+
+    private void OnEnable()
+    {
         Begin();
     }
 
@@ -82,8 +88,11 @@ public class SlesortInteractive1 : MonoBehaviour
                         m_vRController_1.downR = false;
                         m_vRController_1.downL = false;
                         Step.text = "Incorrect.  The block you attempted to swap was not the smallest value in the unsorted array.";
-                        incorretAnswers += 1;
-                        incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                        if (IsTestMode)
+                        {
+                            incorretAnswers += 1;
+                            incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                        }
                         updatePos();
                     }
                 }
@@ -91,10 +100,13 @@ public class SlesortInteractive1 : MonoBehaviour
         }
     }
 
-        public void Begin()
+    public void Begin()
     {
-        numofGames += 1;
-        numofGamesText.GetComponent<Text>().text = numofGames.ToString();
+        if (IsTestMode)
+        {
+            numofGames += 1;
+            numofGamesText.GetComponent<Text>().text = numofGames.ToString();
+        }
         Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Selection Sort." + "\nIf the block is blue it is Sorted and can not be interacted with." + "\nIf a block is red It must be swapped with the smallest value from the unsorted array.";
         for (int i = 0; i < 9; i++)
         {
@@ -102,6 +114,8 @@ public class SlesortInteractive1 : MonoBehaviour
             Text t = b[i].GetComponentInChildren<Text>();
             t.text = n.ToString();
             b[i].GetComponent<MoveInteractionBLock>().PairedPos = pos[i];
+            b[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+
         }
         //b[0].GetComponentInChildren<Text>().text = "1";
         updatePos();
@@ -109,7 +123,7 @@ public class SlesortInteractive1 : MonoBehaviour
         checksort();
     }
 
-    public void checksort()
+    public void checksort()//might want to change this in the future to amtch the actual algorithm, even though it takes less compuation.
     {
         step = 0;
         for (int i = 0; i < 9; i++)
@@ -132,6 +146,7 @@ public class SlesortInteractive1 : MonoBehaviour
             step++;
         }
         sorted = true;
+        EnableTrigger(1);
     }
 
     public void EnableTrigger(int j)
@@ -151,7 +166,10 @@ public class SlesortInteractive1 : MonoBehaviour
                 if (i == j - 1)
                 {
                     b[i].GetComponent<MoveInteractionBLock>().enabled = true;
-                    b[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                    if (!IsTestMode)
+                    {
+                        b[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                    }
                     b[i].GetComponent<BoxCollider>().enabled = false;
                     pos[i].GetComponent<BoxCollider>().enabled = true;
 
@@ -164,7 +182,10 @@ public class SlesortInteractive1 : MonoBehaviour
                     b[i].GetComponent<BoxCollider>().enabled = false;
                     b[i].GetComponent<MoveInteractionBLock>().enabled = true;
                     pos[i].GetComponent<BoxCollider>().enabled = false;
-                    b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+                    if (!IsTestMode)
+                    {
+                        b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+                    }
                 }
                 else
                 {
@@ -175,24 +196,32 @@ public class SlesortInteractive1 : MonoBehaviour
                 }
             }
         }
-
-        //get the currect smallest value in the unsorted array
-        currentSmallest = 101;
-        for (int i = j; i < 9; i++)
+        if (!sorted)
         {
-            float ti;
-            float.TryParse(b[i].GetComponentInChildren<Text>().text, out ti);
-
-            if ( currentSmallest > ti)
+            //get the currect smallest value in the unsorted array
+            currentSmallest = 101;
+            for (int i = j; i < 9; i++)
             {
-                currentSmallest = ti;
-                currentSmallestIndex = i;
+                float ti;
+                float.TryParse(b[i].GetComponentInChildren<Text>().text, out ti);
+
+                if (currentSmallest > ti)
+                {
+                    currentSmallest = ti;
+                    currentSmallestIndex = i;
+                }
+            }
+            if (!IsTestMode)
+            {
+                b[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = Nextsort;
             }
         }
     }
 
     public void SwapValues(int i, int j)
     {
+        b[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+        b[nextToSort].GetComponentInChildren<MeshRenderer>().material = Unsorted;
         m_vRController_1.downR = false;
         m_vRController_1.downL = false;
 
@@ -204,8 +233,11 @@ public class SlesortInteractive1 : MonoBehaviour
         ti.text = tj.text;
         tj.text = n;
         Step.text = "Correct! " + ti.text + " and " + tj.text + " will swap and index " + i + " will be locked.";
-        corretAnswers += 1;
-        corretAnswersText.GetComponent<Text>().text = corretAnswers.ToString();
+        if (IsTestMode)
+        {
+            corretAnswers += 1;
+            corretAnswersText.GetComponent<Text>().text = corretAnswers.ToString();
+        }
 
         updatePos();
 

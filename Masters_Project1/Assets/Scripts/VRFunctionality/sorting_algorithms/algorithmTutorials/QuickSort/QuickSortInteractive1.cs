@@ -63,6 +63,11 @@ public class QuickSortInteractive1 : MonoBehaviour
         //Begin();
     }
 
+    private void OnEnable()
+    {
+        Begin();
+    }
+
     public void Begin()
     {
         try
