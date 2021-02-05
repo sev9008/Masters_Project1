@@ -20,6 +20,7 @@ public class VRController_1 : MonoBehaviour
     public SteamVR_Action_Boolean Movepress = null;
     public SteamVR_Action_Vector2 MoveValue = null;
     public SteamVR_Action_Boolean teleport = null;
+    public SteamVR_Action_Boolean CloseHighlight = null;
 
     public SlesortInteractive1 slesortInteractive;
     public InsertSortInteractive1 insertSortInteractive1;
@@ -46,8 +47,10 @@ public class VRController_1 : MonoBehaviour
 
     public bool downR;
     public bool downL;
+    public bool ActiveHighlight;
 
     public Pointer PointerR;
+    public DotHighlightTip dotHighlightTip;
 
     private void Awake()
     {
@@ -72,6 +75,7 @@ public class VRController_1 : MonoBehaviour
         SnapRotation();
         HandleMoveObject();
         Teleport();
+        HilightController();
 
         //if the player has grabbed an object:
         //set the grabbed object's parent to the controller
@@ -397,5 +401,32 @@ public class VRController_1 : MonoBehaviour
             }
         }
         catch { }
+    }
+
+    /// <summary>
+    /// this function controlls whether the tip higlighter is active or not.  it it mainly just a toggle button.  
+    /// It interacts with test highlight that should be found at the top level of all tutorials, and DotHighlightTip which is found on the Dot connected to teh cotnroller pointer
+    /// </summary>
+    private void HilightController()
+    {
+        if (CloseHighlight.GetStateDown(SteamVR_Input_Sources.RightHand) && dotHighlightTip.TipIsActive)//turn off highlight
+        {
+            Debug.Log("off");
+            ActiveHighlight = false;
+        }
+        else if (CloseHighlight.GetStateDown(SteamVR_Input_Sources.RightHand) && !dotHighlightTip.TipIsActive)//turn on highlight
+        {
+            Debug.Log("on");
+            ActiveHighlight = true;
+        }
+
+        if (ActiveHighlight)//if true turn on
+        {
+            dotHighlightTip.TipIsActive = true;
+        }        
+        else 
+        {
+            dotHighlightTip.TipIsActive = false;
+        }
     }
 }

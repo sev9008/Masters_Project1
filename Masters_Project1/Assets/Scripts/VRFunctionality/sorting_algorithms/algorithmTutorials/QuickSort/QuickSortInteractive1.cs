@@ -52,7 +52,7 @@ public class QuickSortInteractive1 : MonoBehaviour
 
     private void Start()
     {
-        previouspi = new int[9];
+        //previouspi = new int[9];
         corretAnswersText.GetComponentInChildren<Text>().text = "0";
         incorretAnswersText.GetComponentInChildren<Text>().text = "0";
         numofGamesText.GetComponentInChildren<Text>().text = "0";
@@ -65,6 +65,7 @@ public class QuickSortInteractive1 : MonoBehaviour
 
     private void OnEnable()
     {
+        previouspi = new int[9];
         Begin();
     }
 
