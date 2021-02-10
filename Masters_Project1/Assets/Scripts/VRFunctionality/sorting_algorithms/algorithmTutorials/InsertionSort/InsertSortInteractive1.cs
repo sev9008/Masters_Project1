@@ -203,7 +203,7 @@ public class InsertSortInteractive1 : MonoBehaviour
                 if (!IsTestMode)
                 {
                     b[j].GetComponentInChildren<MeshRenderer>().material = Nextsort;
-                    b[j + 1].GetComponentInChildren<MeshRenderer>().material = prevsort;
+                    b[j + 1].GetComponentInChildren<MeshRenderer>().material = Nextsort;
                 }
                 updatePos();
                 nextToSort = j + 1;
@@ -212,6 +212,11 @@ public class InsertSortInteractive1 : MonoBehaviour
                 while (waitingforswap)
                 {
                     yield return null;
+                }
+                if (!IsTestMode)
+                {
+                    b[j].GetComponentInChildren<MeshRenderer>().material = prevsort;
+                    b[j + 1].GetComponentInChildren<MeshRenderer>().material = prevsort;
                 }
                 //b[j + 1].GetComponentInChildren<Text>().text = b[j].GetComponentInChildren<Text>().text;
                 j = j - 1;
@@ -223,6 +228,12 @@ public class InsertSortInteractive1 : MonoBehaviour
                 }
                 yield return new WaitForSeconds(speed);
             }
+            if (!IsTestMode)
+            {
+                //b[j].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                keyGo.GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                b[j + 1].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+            }
             nextToSort = j + 1;
             currentSmallestIndex = 2000;
             waitingforswap = true;
@@ -230,7 +241,13 @@ public class InsertSortInteractive1 : MonoBehaviour
             {
                 yield return null;
             }
-           // b[j + 1].GetComponentInChildren<Text>().text = key.ToString();
+            if (!IsTestMode)
+            {
+                //b[j].GetComponentInChildren<MeshRenderer>().material = prevsort;
+                keyGo.GetComponentInChildren<MeshRenderer>().material = Unsorted;
+                b[j + 1].GetComponentInChildren<MeshRenderer>().material = prevsort;
+            }
+            // b[j + 1].GetComponentInChildren<Text>().text = key.ToString();
             yield return new WaitForSeconds(speed);
             for (int p = 0; p < b.Count; p++)
             {

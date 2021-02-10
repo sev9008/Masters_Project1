@@ -48,9 +48,6 @@ public class selsort_arrayholder : MonoBehaviour
 
     public bool manual;
 
-
-
-
     private void Start()
     {
         paused = false;
@@ -264,13 +261,13 @@ public class selsort_arrayholder : MonoBehaviour
                 image1.SetActive(false);
                 image2.SetActive(true);
                 image3.SetActive(false);
-                if (!manual)
-                {
-                    yield return new WaitForSeconds(speed);
-                }
                 if (manual)
                 {
                     paused = true;
+                }
+                if (!manual)
+                {
+                    yield return new WaitForSeconds(speed);
                 }
                 while (paused && manual)
                 {
@@ -296,12 +293,11 @@ public class selsort_arrayholder : MonoBehaviour
                     iMin_Text.text = "iMin = " + iMin.ToString();
                     Display(arr3, arr3.Count, i, j, iMin);
                     Step.text = "iMin = " + j;
-                    if (!manual)
-                    {
-                        yield return new WaitForSeconds(speed);
-                    }
                 }
-
+                if (!manual)
+                {
+                    yield return new WaitForSeconds(speed);
+                }
                 if (manual)
                 {
                     paused = true;
