@@ -7,6 +7,7 @@ public class DotHighlightTip : MonoBehaviour
 {
     public bool TipIsActive;
     public GameObject TipObj;
+    public GameObject DeacObj;
     public bool InRangeTut;
     public Text text;
     private void Start()
@@ -23,15 +24,18 @@ public class DotHighlightTip : MonoBehaviour
         if (TipIsActive && !TipObj.activeInHierarchy && InRangeTut)
         {
             TipObj.SetActive(true);
+            DeacObj.SetActive(false);
         }
         else if (TipIsActive && !TipObj.activeInHierarchy && !InRangeTut)
         {
             TipObj.SetActive(true);
+            DeacObj.SetActive(false);
             text.text = "No tutorial in range";
         }
         else if (!TipIsActive && TipObj.activeInHierarchy)
         {
             TipObj.SetActive(false);
+            DeacObj.SetActive(true);
         }
     }
 }

@@ -7,7 +7,7 @@ public class TestHighlight : MonoBehaviour
     public GameObject RDot;
     private DotHighlightTip dotHighlightTip;
     public string TutorialInformation;
-
+    public float distance = 1f;
     private void Start()
     {
         dotHighlightTip = RDot.GetComponent<DotHighlightTip>();
@@ -17,7 +17,7 @@ public class TestHighlight : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (Vector3.Distance(RDot.transform.position, transform.position) < 1)
+        if (Vector3.Distance(RDot.transform.position, transform.position) < distance)
         {
             dotHighlightTip.InRangeTut = true;
             Debug.Log("change text");
@@ -28,5 +28,11 @@ public class TestHighlight : MonoBehaviour
         {
             dotHighlightTip.InRangeTut = false;
         }
+    }
+    void OnDrawGizmos()
+    {
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(transform.position, distance);
     }
 }
