@@ -3,7 +3,28 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Pointer
+  - Camera
+  - Dot
+  - DotCan
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - Moveable
+  - PointerL
+  - PointerR
+  - DotCanR
+  - DotCanL
+  - Table
+  - FPCamera
+  - UI
   layers:
   - Default
   - TransparentFX
@@ -13,11 +34,11 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - SelectInteractive
+  - Moveable
+  - ignorePointer
+  - Ground
+  - Blockers
   - 
   - 
   - 
