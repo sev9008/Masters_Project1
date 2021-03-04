@@ -257,11 +257,12 @@ public class MergeSortInteractive1 : MonoBehaviour
     {
         for (int i = 0; i < 9; i++)
         {
-            bclone[i].transform.position = pos[i].transform.position;
             b[i].GetComponent<RectTransform>().anchoredPosition = pos[i].GetComponent<RectTransform>().anchoredPosition;
             bclone[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(pos[i].GetComponent<RectTransform>().anchoredPosition.x, pos[i].GetComponent<RectTransform>().anchoredPosition.y + 50);
             b[i].transform.position = pos[i].transform.position;
             b[i].transform.rotation = pos[i].transform.rotation;
+            bclone[i].transform.position = pos[i].transform.position;
+            bclone[i].transform.position = new Vector3(bclone[i].transform.position.x, bclone[i].transform.position.y+.3f, bclone[i].transform.position.z);
             bclone[i].transform.rotation = pos[i].transform.rotation;
             //b[i].GetComponent<MoveInteractionBLock>().PairedPos = pos[i];
         }
