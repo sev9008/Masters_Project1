@@ -13,13 +13,13 @@ public class EncapPause : MonoBehaviour, IPointerDownHandler
     {
         if (encapController.manual)
         {
-            encapController.manual = true;
+            encapController.manual = false;
             txt.text = "Resume";
         }
 
         else if (!encapController.manual)
         {
-            encapController.manual = false;
+            encapController.manual = true;
             txt.text = "Pause";
         }
     }

@@ -13,13 +13,13 @@ public class OOverloadingStart : MonoBehaviour, IPointerDownHandler
     {
         if (oOverloadingController.begin)
         {
-            oOverloadingController.begin = true;
+            oOverloadingController.begin = false;
             txt.text = "Start";
         }
 
         else if (!oOverloadingController.begin)
         {
-            oOverloadingController.begin = false;
+            oOverloadingController.begin = true;
             txt.text = "Stop";
         }
     }

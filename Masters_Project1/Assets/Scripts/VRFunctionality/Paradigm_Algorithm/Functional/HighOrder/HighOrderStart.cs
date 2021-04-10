@@ -13,13 +13,13 @@ public class HighOrderStart : MonoBehaviour, IPointerDownHandler
     {
         if (abstractController.begin)
         {
-            abstractController.begin = true;
+            abstractController.begin = false;
             txt.text = "Start";
         }
 
         else if (!abstractController.begin)
         {
-            abstractController.begin = false;
+            abstractController.begin = true;
             txt.text = "Stop";
         }
     }

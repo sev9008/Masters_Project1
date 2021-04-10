@@ -13,13 +13,13 @@ public class ScopeStart : MonoBehaviour, IPointerDownHandler
     {
         if (scopeController.begin)
         {
-            scopeController.begin = true;
+            scopeController.begin = false;
             txt.text = "Start";
         }
 
         else if (!scopeController.begin)
         {
-            scopeController.begin = false;
+            scopeController.begin = true;
             txt.text = "Stop";
         }
     }

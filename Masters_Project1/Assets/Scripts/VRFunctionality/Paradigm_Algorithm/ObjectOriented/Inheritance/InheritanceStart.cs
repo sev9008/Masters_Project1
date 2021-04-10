@@ -13,13 +13,13 @@ public class InheritanceStart : MonoBehaviour, IPointerDownHandler
     {
         if (inheritanceController.begin)
         {
-            inheritanceController.begin = true;
+            inheritanceController.begin = false;
             txt.text = "Start";
         }
 
         else if (!inheritanceController.begin)
         {
-            inheritanceController.begin = false;
+            inheritanceController.begin = true;
             txt.text = "Stop";
         }
     }

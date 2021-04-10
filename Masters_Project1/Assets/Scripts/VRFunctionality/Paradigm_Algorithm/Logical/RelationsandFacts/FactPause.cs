@@ -13,13 +13,13 @@ public class FactPause : MonoBehaviour, IPointerDownHandler
     {
         if (abstractController.manual)
         {
-            abstractController.manual = true;
+            abstractController.manual = false;
             txt.text = "Resume";
         }
 
         else if (!abstractController.manual)
         {
-            abstractController.manual = false;
+            abstractController.manual = true;
             txt.text = "Pause";
         }
     }

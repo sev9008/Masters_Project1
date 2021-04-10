@@ -13,13 +13,13 @@ public class ScopePause : MonoBehaviour, IPointerDownHandler
     {
         if (scopeController.manual)
         {
-            scopeController.manual = true;
+            scopeController.manual = false;
             txt.text = "Resume";
         }
 
         else if (!scopeController.manual)
         {
-            scopeController.manual = false;
+            scopeController.manual = true;
             txt.text = "Pause";
         }
     }

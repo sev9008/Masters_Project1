@@ -13,13 +13,13 @@ public class EncapStart : MonoBehaviour, IPointerDownHandler
     {
         if (encapController.begin)
         {
-            encapController.begin = true;
+            encapController.begin = false;
             txt.text = "Start";
         }
 
         else if (!encapController.begin)
         {
-            encapController.begin = false;
+            encapController.begin = true;
             txt.text = "Stop";
         }
     }
