@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class RulePause : MonoBehaviour
+public class RulePause : MonoBehaviour, IPointerDownHandler
 {
     public RuleController abstractController;
     public Text txt;

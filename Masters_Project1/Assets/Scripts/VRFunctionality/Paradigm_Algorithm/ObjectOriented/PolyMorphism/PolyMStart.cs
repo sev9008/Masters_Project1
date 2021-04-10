@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PolyMStart : MonoBehaviour
+public class PolyMStart : MonoBehaviour, IPointerDownHandler
 {
     public PolyMController polyMController;
     public Text txt;
@@ -13,13 +13,13 @@ public class PolyMStart : MonoBehaviour
     {
         if (polyMController.begin)
         {
-            polyMController.begin = true;
+            polyMController.begin = false;
             txt.text = "Start";
         }
 
         else if (!polyMController.begin)
         {
-            polyMController.begin = false;
+            polyMController.begin = true;
             txt.text = "Stop";
         }
     }

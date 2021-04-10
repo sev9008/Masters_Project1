@@ -110,7 +110,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4440237143182994}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -1.4094681e-16, y: 17.214016, z: 1.0617541e-15}
 --- !u!33 &33857619770077470
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -170,6 +170,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4440237143182994}
   - component: {fileID: 111851950654465268}
+  - component: {fileID: 646236077}
   m_Layer: 0
   m_Name: Door 1
   m_TagString: Untagged
@@ -203,7 +204,7 @@ Animation:
   m_GameObject: {fileID: 1232292593265428}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 980d9c88be14912439e822077f418a16, type: 3}
+  m_Animation: {fileID: 0}
   m_Animations:
   - {fileID: 7400000, guid: 980d9c88be14912439e822077f418a16, type: 3}
   - {fileID: 7400002, guid: 980d9c88be14912439e822077f418a16, type: 3}
@@ -211,6 +212,21 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &646236077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232292593265428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8de2aa0023d26484186171087ddad4fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Ani: {fileID: 111851950654465268}
+  Open: 1
+  Close: 0
 --- !u!1 &1237617103275034
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,7 +338,7 @@ Transform:
   - {fileID: 4764826155211548}
   m_Father: {fileID: 4440237143182994}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -1.4094702e-16, y: -17.214027, z: -1.0617544e-15}
 --- !u!33 &33914892959612464
 MeshFilter:
   m_ObjectHideFlags: 0

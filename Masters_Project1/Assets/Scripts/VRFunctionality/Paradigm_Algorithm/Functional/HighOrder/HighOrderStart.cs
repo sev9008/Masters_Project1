@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class HighOrderStart : MonoBehaviour
+public class HighOrderStart : MonoBehaviour, IPointerDownHandler
 {
     public HighOrderController abstractController;
     public Text txt;

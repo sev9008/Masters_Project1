@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class FOverloadStart : MonoBehaviour
+public class FOverloadStart : MonoBehaviour, IPointerDownHandler
 {
     public FOverloadController fOverloadController;
     public Text txt;

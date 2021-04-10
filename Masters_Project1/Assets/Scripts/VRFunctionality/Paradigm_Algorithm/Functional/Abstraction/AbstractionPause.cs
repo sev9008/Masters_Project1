@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class AbstractionPause : MonoBehaviour
+public class AbstractionPause : MonoBehaviour, IPointerDownHandler
 {
     public AbstractionController abstractController;
     public Text txt;

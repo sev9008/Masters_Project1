@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class FactStart : MonoBehaviour
+public class FactStart : MonoBehaviour, IPointerDownHandler
 {
     public FactController abstractController;
     public Text txt;

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class FuncInheritanceStart : MonoBehaviour
+public class FuncInheritanceStart : MonoBehaviour, IPointerDownHandler
 {
     public FuncInheritanceController abstractController;
     public Text txt;

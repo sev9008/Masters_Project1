@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class LazyEvaluationStart : MonoBehaviour
+public class LazyEvaluationStart : MonoBehaviour, IPointerDownHandler
 {
     public LazyEvaluationController abstractController;
     public Text txt;

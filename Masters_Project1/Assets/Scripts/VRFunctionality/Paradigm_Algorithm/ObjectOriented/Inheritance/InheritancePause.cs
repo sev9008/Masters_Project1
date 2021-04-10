@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InheritancePause : MonoBehaviour
+public class InheritancePause : MonoBehaviour, IPointerDownHandler
 {
     public InheritanceController inheritanceController;
     public Text txt;

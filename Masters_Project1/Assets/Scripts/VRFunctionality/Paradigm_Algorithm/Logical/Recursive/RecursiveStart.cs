@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class RecursiveStart : MonoBehaviour
+public class RecursiveStart : MonoBehaviour, IPointerDownHandler
 {
     public RecursiveController abstractController;
     public Text txt;

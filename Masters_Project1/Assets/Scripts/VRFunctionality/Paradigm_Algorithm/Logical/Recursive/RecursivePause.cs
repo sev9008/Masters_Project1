@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class RecursivePause : MonoBehaviour
+public class RecursivePause : MonoBehaviour, IPointerDownHandler
 {
     public RecursiveController abstractController;
     public Text txt;

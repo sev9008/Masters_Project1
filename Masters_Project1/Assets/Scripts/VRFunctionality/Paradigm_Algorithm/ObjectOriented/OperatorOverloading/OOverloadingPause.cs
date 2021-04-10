@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class OOverloadingPause : MonoBehaviour
+public class OOverloadingPause : MonoBehaviour, IPointerDownHandler
 {
     public OOverloadingController oOverloadingController;
     public Text txt;

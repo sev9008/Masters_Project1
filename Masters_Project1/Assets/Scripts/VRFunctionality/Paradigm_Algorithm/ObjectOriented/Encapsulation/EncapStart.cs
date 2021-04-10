@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class EncapStart : MonoBehaviour
+public class EncapStart : MonoBehaviour, IPointerDownHandler
 {
     public EncapController encapController;
     public Text txt;

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class StatelessStart : MonoBehaviour
+public class StatelessStart : MonoBehaviour, IPointerDownHandler
 {
     public StatelessController abstractController;
     public Text txt;

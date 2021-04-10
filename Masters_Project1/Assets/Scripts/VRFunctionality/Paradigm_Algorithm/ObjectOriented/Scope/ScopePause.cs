@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ScopePause : MonoBehaviour
+public class ScopePause : MonoBehaviour, IPointerDownHandler
 {
     public ScopeController scopeController;
     public Text txt;

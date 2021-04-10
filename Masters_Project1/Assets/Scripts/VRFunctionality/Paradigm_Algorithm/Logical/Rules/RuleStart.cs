@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class RuleStart : MonoBehaviour
+public class RuleStart : MonoBehaviour, IPointerDownHandler
 {
     public RuleController abstractController;
     public Text txt;

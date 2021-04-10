@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class AbstractStart : MonoBehaviour
+public class AbstractStart : MonoBehaviour, IPointerDownHandler
 {
     public AbstractController abstractController;
     public Text txt;

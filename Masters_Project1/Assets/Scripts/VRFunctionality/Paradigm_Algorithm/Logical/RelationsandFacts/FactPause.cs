@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class FactPause : MonoBehaviour
+public class FactPause : MonoBehaviour, IPointerDownHandler
 {
     public FactController abstractController;
     public Text txt;

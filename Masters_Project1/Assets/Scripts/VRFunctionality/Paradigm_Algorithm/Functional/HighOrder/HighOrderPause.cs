@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class HighOrderPause : MonoBehaviour
+public class HighOrderPause : MonoBehaviour, IPointerDownHandler
 {
     public HighOrderController abstractController;
     public Text txt;
