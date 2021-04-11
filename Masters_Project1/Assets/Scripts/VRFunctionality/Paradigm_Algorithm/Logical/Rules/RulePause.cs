@@ -8,7 +8,6 @@ public class RulePause : MonoBehaviour, IPointerDownHandler
 {
     public RuleController abstractController;
     public Text txt;
-
     public void OnPointerDown(PointerEventData eventData)
     {
         if (abstractController.manual)

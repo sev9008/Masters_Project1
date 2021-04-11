@@ -23,5 +23,4 @@ public class RecursiveStart : MonoBehaviour, IPointerDownHandler
             txt.text = "Stop";
         }
     }
-        
 }
