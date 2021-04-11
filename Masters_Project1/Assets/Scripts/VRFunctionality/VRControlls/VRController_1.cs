@@ -265,19 +265,22 @@ public class VRController_1 : MonoBehaviour
 
     private void Teleport()
     {
-        Vector3 pos = new Vector3(PointerR.TeleportPos.x, CharController.height, PointerR.TeleportPos.z); //get the teleport position
-        Debug.DrawRay(pos, -transform.up * 3, Color.red);
+        Vector3 pos = new Vector3(PointerR.TeleportPos.x, CharController.height+4f, PointerR.TeleportPos.z); //get the teleport position
+        Debug.DrawRay(pos, -transform.up * 10, Color.red);
 
         if (teleport.GetStateDown(SteamVR_Input_Sources.RightHand))
         {
             //Vector3 pos = new Vector3(PointerR.TeleportPos.x, transform.position.y+.1f, PointerR.TeleportPos.z); //get the teleport position
 
             //check if the position has a spot for the player to stand on
-            if (Physics.Raycast(pos, -transform.up, out var hit, 3f))//doesnt work???
+            if (Physics.Raycast(pos, -transform.up, out var hit, 10f))
             {
                 if (hit.collider != null && Vector3.Distance(hit.point, pos) >= CharController.height -.1f)
                 {
-                    transform.position = pos;
+                    //transform.position = pos;
+                    Vector3 NewPos = new Vector3(hit.point.x, hit.point.y+ CharController.height, hit.point.z);
+                    transform.position = NewPos;
+
                 }
                 Debug.DrawRay(pos, -transform.up * CharController.height);
                 //Debug.Log(Vector3.Distance(hit.point, pos) + "Distance between two objects");
