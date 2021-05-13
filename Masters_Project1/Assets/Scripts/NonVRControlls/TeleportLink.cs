@@ -20,6 +20,7 @@ public class TeleportLink : MonoBehaviour
         {
             //Debug.Log("hit");
             Player.transform.position = TeleportTo.position;
+            Player.transform.rotation = TeleportTo.rotation;
         }
     }
 }
