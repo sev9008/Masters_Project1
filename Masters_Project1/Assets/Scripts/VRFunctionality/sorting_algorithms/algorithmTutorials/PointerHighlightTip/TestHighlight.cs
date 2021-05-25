@@ -20,7 +20,7 @@ public class TestHighlight : MonoBehaviour
         if (Vector3.Distance(RDot.transform.position, transform.position) < distance)
         {
             dotHighlightTip.InRangeTut = true;
-            Debug.Log("change text");
+            //Debug.Log("change text");
             dotHighlightTip.text.text = TutorialInformation;
             //change the text of the highlight here
         }

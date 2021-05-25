@@ -13,7 +13,7 @@ public class BubbleInteractive2 : MonoBehaviour
 
     public bool sorted;
 
-    public Text Step;
+    //public Text Step;
 
     public VRController_1 m_vRController_1;
 
@@ -44,7 +44,7 @@ public class BubbleInteractive2 : MonoBehaviour
     {
         if (sorted)
         {
-            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Selction Sort Operates." + "\nThe Algorithm locks the positions that have already been sorted, and chooses the next smallest element to swap.";
+            //Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Selction Sort Operates." + "\nThe Algorithm locks the positions that have already been sorted, and chooses the next smallest element to swap.";
             IndexToSwap = 0;
             NextSmallesIndex = 9;
         }
@@ -76,7 +76,7 @@ public class BubbleInteractive2 : MonoBehaviour
             updatePos();
         }
         catch { }
-        Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Bubble Sort.";
+        //Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Bubble Sort.";
         for (int i = 0; i < 9; i++)
         {
             int n = UnityEngine.Random.Range(1, 99);
@@ -156,12 +156,12 @@ public class BubbleInteractive2 : MonoBehaviour
     }
     public IEnumerator Bubblechecksort()
     {
-        Step.text = "Bubble Sort is relatively easy.  Dimply check if the firt value is greater than the right value.  If it is then swap them.";
-        yield return new WaitForSeconds(speed);
-        Step.text = "After you swap check the next vlue you jsut swapped and the third value. Perform the swap if needed and repeat these steps until you hit the end of the array. ";
-        yield return new WaitForSeconds(speed);
-        Step.text = "Once you hit the end of the array, return to the front and repeat the above steps.";
-        yield return new WaitForSeconds(speed);
+        //Step.text = "Bubble Sort is relatively easy.  Dimply check if the firt value is greater than the right value.  If it is then swap them.";
+        //yield return new WaitForSeconds(speed);
+        //Step.text = "After you swap check the next vlue you jsut swapped and the third value. Perform the swap if needed and repeat these steps until you hit the end of the array. ";
+        //yield return new WaitForSeconds(speed);
+        //Step.text = "Once you hit the end of the array, return to the front and repeat the above steps.";
+        //yield return new WaitForSeconds(speed);
 
         yield return sho = StartCoroutine(BubbleSort());
         updatePos();

@@ -8,15 +8,16 @@ public class MergeInteractive2 : MonoBehaviour
     public List<GameObject> b;
     public List<GameObject> bclone;
     public List<GameObject> pos;
-    public Material Donesort;
-    public Material Rmat;
-    public Material Unsorted;
-    public Material Lmat;
-    public Material Goodmat;
+
+    public Material Donesort;//blue
+    public Material Rmat;//red
+    public Material Unsorted;//white
+    public Material Lmat;//yellow
+    public Material Goodmat;//green
 
     public bool sorted;
 
-    public Text Step;
+    //public Text Step;
 
     public VRController_1 m_vRController_1;
 
@@ -56,7 +57,7 @@ public class MergeInteractive2 : MonoBehaviour
         if (sorted)
         {
             //EnableTrigger();
-            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Merge Sort Operates." + "\nThe Algorithm splits the array into halves and sorts each half one at a time.";
+            //Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Merge Sort Operates." + "\nThe Algorithm splits the array into halves and sorts each half one at a time.";
         }
         if (moving)
         {
@@ -121,10 +122,10 @@ public class MergeInteractive2 : MonoBehaviour
             updatePos();
         }
         catch { }
-        Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Merge Sort.";
+        //Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Merge Sort.";
         for (int i = 0; i < 9; i++)
         {
-            int n = UnityEngine.Random.Range(1, 99);
+            int n = Random.Range(1, 99);
             Text t = b[i].GetComponentInChildren<Text>();
             t.text = n.ToString();
 
@@ -233,24 +234,24 @@ public class MergeInteractive2 : MonoBehaviour
 
     public IEnumerator Mergechecksort()
     {
-        Step.text = "First merge sort will divide the array into multiple parts." + "\nFirst we will work on the first 2 elements.  Slowly progressign through the first half of the array.";
-        yield return new WaitForSeconds(speed);
-        Step.text = "Next we will find the middle point and right most idnex.  This wills erve as the second half of our array." + "\nWe will use the same steps as before and slowly swap elements that are out of place";
-        yield return new WaitForSeconds(speed);
-        Step.text = "Finally we will finish by merging both the left and right halves of the array and sorting them." + "\nLets see how this works";
-        yield return new WaitForSeconds(speed);
+        //Step.text = "First merge sort will divide the array into multiple parts." + "\nFirst we will work on the first 2 elements.  Slowly progressign through the first half of the array.";
+        //yield return new WaitForSeconds(speed);
+        //Step.text = "Next we will find the middle point and right most idnex.  This wills erve as the second half of our array." + "\nWe will use the same steps as before and slowly swap elements that are out of place";
+        //yield return new WaitForSeconds(speed);
+        //Step.text = "Finally we will finish by merging both the left and right halves of the array and sorting them." + "\nLets see how this works";
+        //yield return new WaitForSeconds(speed);
 
         yield return lo = StartCoroutine(mergeSort(0, b.Count - 1));
         updatePos();
         sorted = true;
-        EnableTrigger(0, 9);
+        EnableTrigger(200, 200);
     }
 
     public IEnumerator mergeSort(int l, int r)
     {
         if (l < r)
         {
-            int m = l + (r - l) / 2;
+            int m = l + (r - l) / 2;//find the midpoint of the array
 
             EnableTrigger(-1, -1);
             for (int i = 0; i < bclone.Count; i++)//disable all bclones since they are not needed here
@@ -262,7 +263,7 @@ public class MergeInteractive2 : MonoBehaviour
             {
                 if (i >= l && i <= m)
                 {
-                    b[i].GetComponentInChildren<MeshRenderer>().material = Goodmat;
+                    b[i].GetComponentInChildren<MeshRenderer>().material = Lmat;
                 }
                 else
                 {
@@ -282,7 +283,7 @@ public class MergeInteractive2 : MonoBehaviour
             {
                 if (i >= m+1 && i <= r)
                 {
-                    b[i].GetComponentInChildren<MeshRenderer>().material = Goodmat;
+                    b[i].GetComponentInChildren<MeshRenderer>().material = Rmat;
                 }
                 else
                 {
@@ -350,7 +351,8 @@ public class MergeInteractive2 : MonoBehaviour
                 //L[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
                 yield return  sho = StartCoroutine(SwapAnimation(k, i));
                 b[k].GetComponentInChildren<Text>().text = L[i].GetComponentInChildren<Text>().text;
-                b[k].GetComponentInChildren<MeshRenderer>().material = Goodmat;
+                b[k].GetComponentInChildren<MeshRenderer>().material = Donesort;
+                L[i].SetActive(false);
                 //b[k] = L[i];
                 i++;
             }
@@ -360,8 +362,8 @@ public class MergeInteractive2 : MonoBehaviour
                 //R[j].GetComponentInChildren<MeshRenderer>().material = Nextsort;
                 yield return sho = StartCoroutine(SwapAnimation(k, j));
                 b[k].GetComponentInChildren<Text>().text = R[j].GetComponentInChildren<Text>().text;
-                b[k].GetComponentInChildren<MeshRenderer>().material = Goodmat;
-
+                b[k].GetComponentInChildren<MeshRenderer>().material = Donesort;
+                R[j].SetActive(false);
                 //b[k] = R[j];
                 j++;
             }
@@ -374,7 +376,8 @@ public class MergeInteractive2 : MonoBehaviour
             //L[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
             yield return sho = StartCoroutine(SwapAnimation(k, i));
             b[k].GetComponentInChildren<Text>().text = L[i].GetComponentInChildren<Text>().text;
-            b[k].GetComponentInChildren<MeshRenderer>().material = Goodmat;
+            b[k].GetComponentInChildren<MeshRenderer>().material = Donesort;
+            L[i].SetActive(false);
             //b[k] = L[i];
             i++;
             k++;
@@ -385,7 +388,8 @@ public class MergeInteractive2 : MonoBehaviour
             //R[j].GetComponentInChildren<MeshRenderer>().material = Nextsort;
             yield return sho = StartCoroutine(SwapAnimation(k, j));
             b[k].GetComponentInChildren<Text>().text = R[j].GetComponentInChildren<Text>().text;
-            b[k].GetComponentInChildren<MeshRenderer>().material = Goodmat;
+            b[k].GetComponentInChildren<MeshRenderer>().material = Donesort;
+            R[j].SetActive(false);
             //b[k] = R[j];
             j++;
             k++;
@@ -404,12 +408,19 @@ public class MergeInteractive2 : MonoBehaviour
 
     public void EnableTrigger(int l, int h)
     {
-        //Debug.Log(l + " " + h);
+        if (l == 200 && h == 200)
+        {
+            for (int i = 0; i < b.Count; i++)
+            {
+                b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+            }
+        }
+
         for (int i = 0; i < b.Count; i++)
         {
             if (i >= l && i <= h)
             {
-                b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+                b[i].GetComponentInChildren<MeshRenderer>().material = Goodmat;
             }
             else if (l == -1 && h == -1)
             {

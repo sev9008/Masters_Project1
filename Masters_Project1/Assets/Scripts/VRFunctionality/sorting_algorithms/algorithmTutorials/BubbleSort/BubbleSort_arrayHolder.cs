@@ -138,7 +138,7 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 		{
 			int maxsteparr = arr3.Count - i;
 			itextstep1.text = "i = " + i;
-			imageController(1);
+			imageController(0);
 			Display(arr3, arr3.Count, -20, maxsteparr);
 
 			Step.text = "Increment j and resume checking for swaps.";
@@ -151,7 +151,7 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 			{
 				structarr[currentstrucstep].oldarr.Add(arr3[tempnum]);
 			}
-			structarr[currentstrucstep].activeImage = 4;
+			structarr[currentstrucstep].activeImage = 0;
 			structarr[currentstrucstep].steptxt = Step.text;
 			structarr[currentstrucstep].jval = -20;
 			structarr[currentstrucstep].maxstep = maxsteparr;
@@ -182,7 +182,7 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 			for (j = 0; j < arr3.Count - i - 1; j++)
 			{
 				jtextstep1.text = "j = " + j;
-				imageController(2);
+				imageController(1);
 				Display(arr3, arr3.Count, j, maxsteparr);
 
 				Step.text = "Increment j and resume checking for swaps.";
@@ -195,7 +195,7 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 				{
 					structarr[currentstrucstep].oldarr.Add(arr3[tempnum]);
 				}
-				structarr[currentstrucstep].activeImage = 4;
+				structarr[currentstrucstep].activeImage = 1;
 				structarr[currentstrucstep].steptxt = Step.text;
 				structarr[currentstrucstep].jval = j;
 				structarr[currentstrucstep].maxstep = maxsteparr;
@@ -232,7 +232,7 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 					swapped = true;
 
 					Display(arr3, arr3.Count, j, maxsteparr);
-					imageController(3);
+					imageController(2);
 					currentstrucstep++;
 					maxstrucstep++;
 					var c = new MyStruct();
@@ -242,7 +242,7 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 					{
 						structarr[currentstrucstep].oldarr.Add(arr3[tempnum]);
 					}
-					structarr[currentstrucstep].activeImage = 4;
+					structarr[currentstrucstep].activeImage = 2;
 					structarr[currentstrucstep].steptxt = Step.text;
 					structarr[currentstrucstep].jval = j;
 					structarr[currentstrucstep].maxstep = maxsteparr;
@@ -274,7 +274,7 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 			if (swapped == false)
 			{
 				Step.text = "No swaps occured.  The algorithm is complete";
-				imageController(4);
+				imageController(3);
 
 				currentstrucstep++;
 				maxstrucstep++;
@@ -285,7 +285,7 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 				{
 					structarr[currentstrucstep].oldarr.Add(arr3[tempnum]);
 				}
-				structarr[currentstrucstep].activeImage = 4;
+				structarr[currentstrucstep].activeImage = 3;
 				structarr[currentstrucstep].steptxt = Step.text;
 				structarr[currentstrucstep].maxstep = maxsteparr;
 				m_selectionAni.ShowGraph(arr3);
