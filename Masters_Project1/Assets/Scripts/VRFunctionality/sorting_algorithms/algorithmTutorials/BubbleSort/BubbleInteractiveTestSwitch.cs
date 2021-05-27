@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+//switches interactive 1 between test mode and guindance mode
 public class BubbleInteractiveTestSwitch : MonoBehaviour, IPointerDownHandler
 {
     public BubbleInteractive1 slesortInteractive1;

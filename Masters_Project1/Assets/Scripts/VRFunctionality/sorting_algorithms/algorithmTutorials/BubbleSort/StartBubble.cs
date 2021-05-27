@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// this starts our script.  It will get the array from array keeper and send it to array holder.
+/// It also controls what coroutines are running
+/// </summary>
 public class StartBubble : MonoBehaviour, IPointerDownHandler
 {
     public ArrayKeeper arrayKeeper;

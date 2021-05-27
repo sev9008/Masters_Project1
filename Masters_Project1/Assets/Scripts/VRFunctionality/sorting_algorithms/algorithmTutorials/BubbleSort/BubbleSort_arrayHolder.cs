@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// This is the never ending source of confusion.
+/// prepare because this script is a wall of code, but the code works
+/// 
+/// this script performs the main sort algorithm.  It also keeps track of every step and move.
+/// </summary>
 public class BubbleSort_arrayHolder : MonoBehaviour
 {
 	public GameObject[] b;
@@ -39,15 +45,8 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 	public Text jtextstep1;
 	public Text ifstep1;
 
-	private void Start()
-	{
-		paused = false;
-		manual = false;
-
-		structarr = new List<MyStruct>();
-	}
 	[Serializable]
-	public class MyStruct
+	public class MyStruct//this struct holds all of the previous steps.  Its really not very good for memory, but it works out weel for what we need.
 	{
 		public List<int> oldarr;
 		public int activeImage;
@@ -57,19 +56,24 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 		public int maxstep;
 	}
 
+	private void Start()
+	{
+		paused = false;
+		manual = false;
+
+		structarr = new List<MyStruct>();//init the struct
+	}
+
 	public void Update()
 	{
-		speed = slider.value;
+		speed = slider.value;//update the slider value
 	}
 	public void Display(List<int> arr2, int size, int j, int i)
 	{
-		//size = size - 1;
 		Txt_Text.text = "";
-		//int Tmpsize = size - 1;
 		for (int n = 0; n < size; n++)
 		{
 			b[n].SetActive(true);
-			//Debug.Log(l + " < " + n + " < "+ r);
 			if (n == j || n == j+1)
 			{
 				b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
@@ -91,7 +95,7 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 	public IEnumerator Bubble()
 	{
 		running = true;
-		for (int n = 0; n < structarr.Count; n++)
+		for (int n = 0; n < structarr.Count; n++)//reset all the data in the struct
 		{
 			structarr[n].oldarr.Clear();
 			structarr[n].activeImage = -1;
@@ -100,19 +104,19 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 			structarr[n].jval = -20;
 			structarr[n].maxstep = 100;
 		}
-		for (int k = 0; k < b.Length; k++)
+		for (int k = 0; k < b.Length; k++)//set all blocks to false
 		{
 			b[k].SetActive(false);
 		}
-		structarr.Clear();
+		structarr.Clear();//seems redundant.  dont actually know if the above is needed
 		structarr = new List<MyStruct>();
 		currentstrucstep = -1;
 		maxstrucstep = -1;
-		m_selectionAni.ShowGraph(arr3);
-		Display(arr3, arr3.Count, -20, 100);
+		m_selectionAni.ShowGraph(arr3);//display the current array on our graph
+		Display(arr3, arr3.Count, -20, 100);//activate the blocks and set their mats
 		Step.text = "Start at the beggining fo the array and begin checking for swaps.";
 
-		if (!manual)
+		if (!manual)//you will see these next three case statements alot.  thses control whether the animation is paused or unpaused.  then you can resume, press next, or press previous
 		{
 			yield return new WaitForSeconds(speed);
 		}
@@ -122,12 +126,12 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 		}
 		while (paused && manual)
 		{
-			if (next && currentstrucstep >= maxstrucstep)
+			if (next && currentstrucstep >= maxstrucstep)//if the current step is the the last step we ahve saved in ours truct then just unpause and proceed
 			{
 				next = false;
 				paused = false;
 			}
-			else if (next || previous)
+			else if (next || previous)//if sturct arr has moves stored and we are not on the last step in out sturct, then transition to change step.
 			{
 				yield return StartCoroutine(changeStep());
 			}
@@ -142,7 +146,7 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 			Display(arr3, arr3.Count, -20, maxsteparr);
 
 			Step.text = "Increment j and resume checking for swaps.";
-			currentstrucstep++;
+			currentstrucstep++;//this will add the current step to the array.  its a wall of code but you will see it alot
 			maxstrucstep++;
 			var a = new MyStruct();
 			structarr.Add(a);
@@ -157,7 +161,8 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 			structarr[currentstrucstep].maxstep = maxsteparr;
 			m_selectionAni.ShowGraph(arr3);
 			Step.text = "this loop will iterate over j and j+1";
-			if (!manual)
+
+			if (!manual)//descsibed above
 			{
 				yield return new WaitForSeconds(speed);
 			}
@@ -186,7 +191,7 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 				Display(arr3, arr3.Count, j, maxsteparr);
 
 				Step.text = "Increment j and resume checking for swaps.";
-				currentstrucstep++;
+				currentstrucstep++;//same stuff we have seen basically every time there is a step or change in the array we are gonna have to run these lines.  Thats why you seem them repeated so much.  It also difficult to make a function out of it.
 				maxstrucstep++;
 				var b = new MyStruct();
 				structarr.Add(b);
@@ -231,7 +236,7 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 					arr3[j + 1] = temp;
 					swapped = true;
 
-					Display(arr3, arr3.Count, j, maxsteparr);
+					Display(arr3, arr3.Count, j, maxsteparr);//same stuff we have seen
 					imageController(2);
 					currentstrucstep++;
 					maxstrucstep++;
@@ -276,7 +281,7 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 				Step.text = "No swaps occured.  The algorithm is complete";
 				imageController(3);
 
-				currentstrucstep++;
+				currentstrucstep++;//same stuff we have seen
 				maxstrucstep++;
 				var d = new MyStruct();
 				structarr.Add(d);
@@ -318,7 +323,7 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 		Step.text = "Finished";
 	}
 
-	public IEnumerator changeStep()
+	public IEnumerator changeStep()//if next or previous is pressed then this algorithm takes over.  it will display the current step and attempt to continue the animation 
 	{
 		resume:
 		if (previous && currentstrucstep > 0)
@@ -372,7 +377,7 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 		}
 	}
 
-	public void imageController(int k)
+	public void imageController(int k)//control the active image
 	{
 		for (int i = 0; i < image.Length; i++)
 		{

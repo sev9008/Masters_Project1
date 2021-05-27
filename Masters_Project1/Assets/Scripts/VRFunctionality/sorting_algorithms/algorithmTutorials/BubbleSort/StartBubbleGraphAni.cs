@@ -5,6 +5,9 @@ using UnityEngine.EventSystems;
 
 public class StartBubbleGraphAni : MonoBehaviour, IPointerDownHandler
 {
+    /// <summary>
+    /// old graph function controller.  not used anymore
+    /// </summary>
     public BubbleSortAni thirdDselectionani;
     public List<int> arr1;
     public int size;

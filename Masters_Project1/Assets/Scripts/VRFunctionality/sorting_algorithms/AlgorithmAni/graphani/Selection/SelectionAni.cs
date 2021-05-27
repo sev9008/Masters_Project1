@@ -4,6 +4,12 @@ using System.Drawing;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// this script was meant to be utilized for selection, but i found that its rather resuable for my specific case.
+/// 
+/// This script was originally devloped as a masters project from a different student at a different college.  Using his logic as a basis I have rewritten and the script to perfrom for my usecase.
+/// It works remarkably well
+/// </summary>
 public class SelectionAni : MonoBehaviour
 {
     [SerializeField] private Sprite circleSprite;

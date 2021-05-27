@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// this script will perform all 5 sorting algorithms.
+/// it is designed to display how fast they are in comperison with each other.
+/// </summary>
 public class SortAniCompare : MonoBehaviour
 {
     public List<GameObject> selectionSortArr;
@@ -22,6 +26,8 @@ public class SortAniCompare : MonoBehaviour
 
     int pi;
 
+    public bool reverse;
+
     void Start()
     {
         selectFinished.SetActive(false);
@@ -31,10 +37,10 @@ public class SortAniCompare : MonoBehaviour
         mergeFinished.SetActive(false);
 
         //speed = 1f;
-        //Begin();
+        Begin();
     }
 
-    void Update()
+    void Update()//change the scale of the object to match the value inside of it.  ie a box with value 90 will be bigger than a box with value 10
     {
         speed = slider.value;
         for (int x = 0; x < selectionSortArr.Count; x++)
@@ -56,7 +62,7 @@ public class SortAniCompare : MonoBehaviour
         }
     }
 
-    public void Begin()
+    public void Begin()//start all coroutines and begin runnin each algorithm simultaneously
     {
 
         try
@@ -74,6 +80,10 @@ public class SortAniCompare : MonoBehaviour
         for (int i = 0; i < 9; i++)
         {
             int n = UnityEngine.Random.Range(1, 99);
+            if (reverse)
+            {
+                n = (9 - i) * 10;
+            }
             Text c = selectionSortArr[i].GetComponentInChildren<Text>();
             Text b = insertionSortArr[i].GetComponentInChildren<Text>();
             Text a = bubbleSortArr[i].GetComponentInChildren<Text>();
@@ -118,6 +128,7 @@ public class SortAniCompare : MonoBehaviour
                 selectionSortArr[i].GetComponentInChildren<Text>().text = selectionSortArr[iMin].GetComponentInChildren<Text>().text;
                 selectionSortArr[iMin].GetComponentInChildren<Text>().text = temp3.ToString();
             }
+            yield return new WaitForSeconds(speed);
         }
         selectFinished.SetActive(true);
     }    
@@ -139,6 +150,7 @@ public class SortAniCompare : MonoBehaviour
                 }
                 yield return new WaitForSeconds(speed);
             }
+            yield return new WaitForSeconds(speed);
         }
         bubbleFinished.SetActive(true);
     }
@@ -164,6 +176,7 @@ public class SortAniCompare : MonoBehaviour
                 yield return new WaitForSeconds(speed);
             }
             insertionSortArr[j + 1].GetComponentInChildren<Text>().text = key.ToString();
+            yield return new WaitForSeconds(speed);
         }
         insertFinished.SetActive(true);
     }

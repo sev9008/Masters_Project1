@@ -137,8 +137,6 @@ public class MergeSortInteractive1 : MonoBehaviour
 
         if (waitingforswap && ((L.Length > 0 && Larray) || (R.Length > 0 && !Larray)))//wonky
         {
-            float dist2 = 100;
-            float dist3 = 100;
             if (Larray)
             {
                 Step.text = "The Algorithm is ready to swap values.  Perform the swap.";
