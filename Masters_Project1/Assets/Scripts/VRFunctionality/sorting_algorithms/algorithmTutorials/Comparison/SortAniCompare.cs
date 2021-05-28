@@ -77,7 +77,7 @@ public class SortAniCompare : MonoBehaviour
         quickFinished.SetActive(false);
         mergeFinished.SetActive(false);
 
-        for (int i = 0; i < 9; i++)
+        for (int i = 0; i < 90; i++)
         {
             int n = UnityEngine.Random.Range(1, 99);
             if (reverse)
