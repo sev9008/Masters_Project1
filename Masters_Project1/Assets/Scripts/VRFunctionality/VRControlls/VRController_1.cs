@@ -310,7 +310,7 @@ public class VRController_1 : MonoBehaviour
                 catch { }
                 try 
                 {
-                    slesortInteractive.arrow.SetActive(true);
+                    //slesortInteractive.arrow.SetActive(true);
                 }
                 catch { }
                 downR = true;
@@ -337,7 +337,7 @@ public class VRController_1 : MonoBehaviour
                     GameObject m_parent = grabbedR.GetComponent<MoveInteractionBLock>().parent;
                     grabbedR.transform.parent = m_parent.transform;
                     slesortInteractive.updatePos();
-                    slesortInteractive.arrow.SetActive(false);
+                    //slesortInteractive.arrow.SetActive(false);
                     insertSortInteractive1.updatePos();
                     quickSortInteractive1.updatePos();
                     bubbleSortInteractive1.updatePos();
@@ -365,7 +365,7 @@ public class VRController_1 : MonoBehaviour
                 catch { }
                 try
                 {
-                    slesortInteractive.arrow.SetActive(true);
+                    //slesortInteractive.arrow.SetActive(true);
                 }
                 catch { }
                 downL = true;
@@ -393,7 +393,7 @@ public class VRController_1 : MonoBehaviour
                     GameObject m_parent = grabbedL.GetComponent<MoveInteractionBLock>().parent;
                     grabbedL.transform.parent = m_parent.transform;
                     slesortInteractive.updatePos();
-                    slesortInteractive.arrow.SetActive(false);
+                    //slesortInteractive.arrow.SetActive(false);
                     insertSortInteractive1.updatePos();
                     quickSortInteractive1.updatePos();
                     bubbleSortInteractive1.updatePos();

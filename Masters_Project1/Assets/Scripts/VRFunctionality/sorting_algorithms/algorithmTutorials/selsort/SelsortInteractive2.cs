@@ -8,128 +8,50 @@ public class SelsortInteractive2 : MonoBehaviour
 {
     public List<GameObject> b;
     public List<GameObject> pos;
-
-    public bool running;
-
-    [SerializeField] public int speed;
-    [SerializeField] public float smooth;
-    public bool moving;
-
-    private Vector2 targetTransform;
-
-    private Vector2 targetTransform2;
-    private int tempnumi;
-    private int tempnumj;
-
     public Material Donesort;
     public Material Nextsort;
-    public Material smallest;
-    public Material checksmall;
+    public Material GoodSort;
     public Material Unsorted;
 
-    private bool sorted;
+    public bool sorted;
 
-    public GameObject arrow;
+    //public VRController_1 m_vRController_1;
 
-    public Text step;
-    public int dontchange;
+    public int NextSmallesIndex;
+    public int IndexToSwap;
 
-    public Coroutine co1;
-    public Coroutine co2;
+    Coroutine co;
+    Coroutine sho;
+    Coroutine lo;
+
+    public int speed;
+    public int smooth;
+    public int tempnumi;
+    public int tempnumj;
+
+    public bool moving;
+
+    public Vector2 targetTransform;
+    public Vector2 targetTransform2;
 
     private void Start()
     {
-        //Begin();
-    }
-
-    public void Begin()
-    {
-        try
-        {
-            moving = false;
-            StopCoroutine(co1);
-            StopCoroutine(co2);
-            updatePos();
-        }
-        catch { }
-        arrow.SetActive(true);
-        for (int i = 0; i < 9; i++)
-        {
-            int n = UnityEngine.Random.Range(1, 99);
-            Text t = b[i].GetComponentInChildren<Text>();
-            t.text = n.ToString();
-        }
-        updatePos();
-        checksort();
-        co1 = StartCoroutine(SelectionInteractive2());
-    }
-
-    public void updatePos()
-    {
-        for (int i = 0; i < 9; i++)
-        {
-            b[i].GetComponent<RectTransform>().anchoredPosition = pos[i].GetComponent<RectTransform>().anchoredPosition;
-            b[i].transform.position = pos[i].transform.position;
-            b[i].transform.rotation = pos[i].transform.rotation;
-        }
-    }
-
-    public IEnumerator SelectionInteractive2()
-    {
-        running = true;
-        int i, j;
-        float n, m;
-        int iMin = 0;
-        for (i = 0; i < b.Count - 1; i++)
-        {
-            iMin = i;
-            for (j = i + 1; j < b.Count; j++)
-            {
-                float.TryParse(b[j].GetComponentInChildren<Text>().text, out n);
-                float.TryParse(b[iMin].GetComponentInChildren<Text>().text, out m);
-                if (j != dontchange)
-                {
-                    b[j].GetComponentInChildren<MeshRenderer>().material = checksmall;
-                    step.text = "Checking for new smallest";
-                }
-                if (n < m)
-                {
-                    if (iMin != i)
-                    {
-                        if (iMin != dontchange)
-                        {
-                            b[iMin].GetComponentInChildren<MeshRenderer>().material = checksmall;
-                        }
-                    }
-                    iMin = j;
-                    b[j].GetComponentInChildren<MeshRenderer>().material = smallest;
-                    step.text = "Replace the current smallest value";
-                }
-                yield return new WaitForSeconds(speed);
-                if (b[j].GetComponentInChildren<MeshRenderer>().material == checksmall)
-                {
-                    b[j].GetComponentInChildren<MeshRenderer>().material = Unsorted;
-                }
-            }
-            if (iMin != i)
-            {
-                step.text = "Swap the smallest value with our left most unsorted index.";
-                co2 = StartCoroutine(SwapAnimation(i, iMin));
-                yield return co2;
-            }
-        }
-        sorted = true;
-        //EnableTrigger(0);
-        yield return new WaitForSeconds(speed);
-        running = false;
-        arrow.SetActive(false);
+        moving = false;
     }
 
     public void Update()
     {
-        if (moving)
+        if (sorted)
         {
-
+            IndexToSwap = 0;
+            NextSmallesIndex = 9;
+        }
+        if (moving)//this will move the blocks when the corutine tells us to move them
+        {
+            if (tempnumi == tempnumj)
+            {
+                moving = false;
+            }
             b[tempnumi].GetComponent<RectTransform>().anchoredPosition = Vector3.MoveTowards(b[tempnumi].GetComponent<RectTransform>().anchoredPosition, targetTransform, Time.deltaTime * smooth);
 
             b[tempnumj].GetComponent<RectTransform>().anchoredPosition = Vector3.MoveTowards(b[tempnumj].GetComponent<RectTransform>().anchoredPosition, targetTransform2, Time.deltaTime * smooth);
@@ -139,16 +61,72 @@ public class SelsortInteractive2 : MonoBehaviour
                 moving = false;
             }
         }
-
-        if (sorted)
-        {
-            EnableTrigger(0);
-            step.text = "The array is now Sorted!" + "\nThis is Generally how Selction Sort Operates." + "\nThe Algorithm locks the positions that have already been sorted, and chooses the next smallest element to swap.";
-            sorted = false;
-        }
     }
 
-    public IEnumerator SwapAnimation(int i, int j)
+    public void Begin()//this will begin the algorithm and start swapping
+    {
+        try//attempt to stop the coroutines if they are currently running.  It gets wierd if multiple coroutines start running.  Also takes alot out of the pc.  be careful with this.
+        {
+            moving = false;
+            StopCoroutine(co);
+            StopCoroutine(sho);
+            StopCoroutine(lo);
+            updatePos();
+        }
+        catch { }
+
+        for (int i = 0; i < 9; i++)
+        {
+            int n = UnityEngine.Random.Range(1, 99);
+            Text t = b[i].GetComponentInChildren<Text>();
+            t.text = n.ToString();
+        }
+        updatePos();
+        sorted = false;
+        co = StartCoroutine(Selectionchecksort());
+    }
+    public void updatePos()
+    {
+        for (int i = 0; i < 9; i++)
+        {
+            b[i].GetComponent<RectTransform>().anchoredPosition = pos[i].GetComponent<RectTransform>().anchoredPosition;
+            b[i].transform.position = pos[i].transform.position;
+            b[i].transform.rotation = pos[i].transform.rotation;
+        }
+    }
+    public void EnableTrigger(int jval, int ival, int iMinVal)//will cahnge the material of certain blocks depending on their values
+    {
+        for (int i = 0; i < b.Count; i++)
+        {
+            if (sorted)
+            {
+                b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+            }
+            else
+            {
+                if (i == iMinVal || i == ival)
+                {
+                    b[i].GetComponentInChildren<MeshRenderer>().material = GoodSort;//set imin to green
+                }
+
+                else if (i == jval)
+                {
+                    b[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;//set j and i to red
+                }
+
+                else if (i < ival && ival != -1)
+                {
+                    b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;//set every sorted value to blue
+                }
+
+                else
+                {
+                    b[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;//set unsorted to white
+                }
+            }
+        }
+    }
+    public IEnumerator SwapAnimation(int i, int j)//performs the sawp.  simple gives them a new tranform position.  update() performs the actual movement.
     {
         tempnumi = i;
         tempnumj = j;
@@ -157,6 +135,7 @@ public class SelsortInteractive2 : MonoBehaviour
         float tran4 = pos[j].GetComponent<RectTransform>().anchoredPosition.y - 50f;
         targetTransform = new Vector3(pos[i].GetComponent<RectTransform>().anchoredPosition.x, tran3);
         targetTransform2 = new Vector3(pos[j].GetComponent<RectTransform>().anchoredPosition.x, tran4);
+        Debug.Log("run swap");
         moving = true;
         while (moving == true)
         {
@@ -180,66 +159,44 @@ public class SelsortInteractive2 : MonoBehaviour
         {
             yield return null;
         }
-        GameObject tempgo = b[i];
-        b[i] = b[j];
-        b[j] = tempgo;
-        checksort();
-        yield return new WaitForSeconds(speed);
+    }
+    public IEnumerator Selectionchecksort()//begins the algorithm //this is my response to the halting problem.  just put it in a coroutine 
+    {
+        yield return sho = StartCoroutine(SelectionSort());//this will stop this coroutine until the new function has finished.  It is extremely helpful for when you want to know exactly when a function ends
+        updatePos();
+        sorted = true;
+        EnableTrigger(-1,-1,-1);
     }
 
-    public void EnableTrigger(int j)
+    public IEnumerator SelectionSort()//this is the holy grail.  jk its just the bubble sort algorithm.  with some added code
     {
-        j += 1;
-        for (int i = 0; i < 9; i++)
+        int i, j, iMin;
+        for (i = 0; i < b.Count - 1; i++)
         {
-            if (sorted)
+            iMin = i;
+            for (j = i + 1; j < b.Count; j++)
             {
-                arrow.SetActive(false);
-                b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
-            }
-            else
-            {
-                if (i < j)
-                {
-                    if (i == j - 1)
-                    {
-                        b[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
-                        dontchange = i;
-                        arrow.transform.position = b[i].transform.position;
-                        arrow.GetComponent<RectTransform>().anchoredPosition = new Vector2(arrow.GetComponent<RectTransform>().anchoredPosition.x, arrow.GetComponent<RectTransform>().anchoredPosition.y + 40);
-                    }
-                    else 
-                    {
-                        b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
-                    }
-                }
-                else
-                {
-                    b[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
-                }
-            }
-        }
-    }
-    public void checksort()
-    {
-        int step = 0;
-        for (int i = 0; i < 9; i++)
-        {
-            for (int j = i + 1; j < 9; j++)
-            {
-                Text ti = b[i].GetComponentInChildren<Text>();
-                Text tj = b[j].GetComponentInChildren<Text>();
-                int n = Convert.ToInt32(ti.text);
-                int m = Convert.ToInt32(tj.text);
 
-                if (n > m)
+                float.TryParse(b[j].GetComponentInChildren<Text>().text, out float temp1);
+                float.TryParse(b[iMin].GetComponentInChildren<Text>().text, out float temp2);
+                if (temp1 < temp2)
                 {
-                    sorted = false;
-                    EnableTrigger(step);
-                    return;
+                    iMin = j;
                 }
+                EnableTrigger(j, i ,iMin);
+
+                yield return new WaitForSeconds(speed);
             }
-            step++;
+            if (iMin != i)
+            {
+                EnableTrigger(-1, i, iMin);
+                yield return lo = StartCoroutine(SwapAnimation(i, iMin));//stop the algorithm until the swap has been made.  in this case the swap occurs automatically.  however another function eprforms it
+                GameObject temp3 = b[i];
+                b[i] = b[iMin];
+                b[iMin] = temp3;
+
+                yield return new WaitForSeconds(speed);
+            }
         }
     }
 }
