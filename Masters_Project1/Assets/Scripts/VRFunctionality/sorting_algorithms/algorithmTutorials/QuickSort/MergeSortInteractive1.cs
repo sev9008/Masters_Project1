@@ -65,7 +65,7 @@ public class MergeSortInteractive1 : MonoBehaviour
 
     private void OnEnable()
     {
-        Begin();
+        //Begin();
     }
 
     public void Begin()

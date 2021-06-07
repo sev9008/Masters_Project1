@@ -7,11 +7,12 @@ public class QuickSortInteractive1 : MonoBehaviour
 {
     public List<GameObject> b;
     public List<GameObject> pos;
-    public Material Donesort;
-    public Material Nextsort;
-    public Material Unsorted;
-    public Material nextLine;
-    public Material pimat;
+
+    public Material Donesort;//blue
+    public Material NextSort;//red for swaps
+    public Material Unsorted;//white
+    public Material Recurs;//yellow for recursion
+    public Material Goodmat;//green for pivot
 
     public bool sorted;
 
@@ -32,8 +33,6 @@ public class QuickSortInteractive1 : MonoBehaviour
     private Vector2 targetTransform;
     private Vector2 targetTransform2;
     private int pi;
-
-    private int[] previouspi;
 
     public int currentSmallestIndex;
     public int nextToSort;
@@ -65,8 +64,7 @@ public class QuickSortInteractive1 : MonoBehaviour
 
     private void OnEnable()
     {
-        previouspi = new int[9];
-        Begin();
+        //Begin();
     }
 
     public void Begin()
@@ -87,8 +85,7 @@ public class QuickSortInteractive1 : MonoBehaviour
         Step.text = "Welcome!  This tutorial is designed to teach you play this interactive minigame." + "\n\nIf the block is green it is the pivot and will be used to test our array for swaps.";
         for (int i = 0; i < 9; i++)
         {
-            previouspi[i] = 0;
-            int n = UnityEngine.Random.Range(1, 99);
+            int n = Random.Range(1, 99);
             Text t = b[i].GetComponentInChildren<Text>();
             t.text = n.ToString();
             b[i].GetComponent<MoveInteractionBLock>().PairedPos = pos[i];
@@ -162,8 +159,8 @@ public class QuickSortInteractive1 : MonoBehaviour
         }
         if (!IsTestMode)
         {
-            b[i].GetComponentInChildren<MeshRenderer>().material = nextLine;
-            b[j].GetComponentInChildren<MeshRenderer>().material = nextLine;
+            b[i].GetComponentInChildren<MeshRenderer>().material = Recurs;
+            b[j].GetComponentInChildren<MeshRenderer>().material = Recurs;
         }
         updatePos();
     }
@@ -210,8 +207,8 @@ public class QuickSortInteractive1 : MonoBehaviour
 
                 if (!IsTestMode && waitingforswap)
                 {
-                    b[nextToSort].GetComponentInChildren<MeshRenderer>().material = Nextsort;
-                    b[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                    b[nextToSort].GetComponentInChildren<MeshRenderer>().material = NextSort;
+                    b[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = NextSort;
                 }
                 while (waitingforswap)
                 {
@@ -219,8 +216,8 @@ public class QuickSortInteractive1 : MonoBehaviour
                 }
                 if (!IsTestMode)
                 {
-                    b[nextToSort].GetComponentInChildren<MeshRenderer>().material = nextLine;
-                    b[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = nextLine;
+                    b[nextToSort].GetComponentInChildren<MeshRenderer>().material = Recurs;
+                    b[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = Recurs;
                 }
             }
         }
@@ -234,8 +231,8 @@ public class QuickSortInteractive1 : MonoBehaviour
         }
         if (!IsTestMode && waitingforswap)
         {
-            b[nextToSort].GetComponentInChildren<MeshRenderer>().material = Nextsort;
-            b[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+            b[nextToSort].GetComponentInChildren<MeshRenderer>().material = NextSort;
+            b[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = NextSort;
         }
         while (waitingforswap)
         {
@@ -243,14 +240,9 @@ public class QuickSortInteractive1 : MonoBehaviour
         }
         if (!IsTestMode)
         {
-            b[nextToSort].GetComponentInChildren<MeshRenderer>().material = nextLine;
-            b[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = nextLine;
+            b[nextToSort].GetComponentInChildren<MeshRenderer>().material = Recurs;
+            b[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = Recurs;
         }
-        if (!IsTestMode)
-        {
-            b[i + 1].GetComponentInChildren<MeshRenderer>().material = Donesort;
-        }
-        previouspi[i + 1] = 1;
         pi = i + 1;
     }
 
@@ -280,16 +272,14 @@ public class QuickSortInteractive1 : MonoBehaviour
             }
             else
             {
-                if (previouspi[i] == 1)
-                { }
-                else if (i == pi)
+                if (i == pi)
                 {
                     b[i].GetComponent<MoveInteractionBLock>().enabled = true;
                     b[i].GetComponent<BoxCollider>().enabled = true;
                     pos[i].GetComponent<BoxCollider>().enabled = false;
                     if (!IsTestMode)
                     {
-                        b[i].GetComponentInChildren<MeshRenderer>().material = pimat;
+                        b[i].GetComponentInChildren<MeshRenderer>().material = Goodmat;
                     }
                     //previouspi[i] = 1;
                 }
@@ -300,7 +290,7 @@ public class QuickSortInteractive1 : MonoBehaviour
                     b[i].GetComponent<MoveInteractionBLock>().enabled = true;
                     if (!IsTestMode)
                     {
-                        b[i].GetComponentInChildren<MeshRenderer>().material = nextLine;
+                        b[i].GetComponentInChildren<MeshRenderer>().material = Recurs;
                     }
                 }
                 else

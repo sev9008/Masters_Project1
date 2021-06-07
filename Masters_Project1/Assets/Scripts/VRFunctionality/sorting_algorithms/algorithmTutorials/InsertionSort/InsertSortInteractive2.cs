@@ -17,7 +17,7 @@ public class InsertSortInteractive2 : MonoBehaviour
 
     public Text Step;
 
-    public VRController_1 m_vRController_1;
+    //public VRController_1 m_vRController_1;
 
     public int NextSmallesIndex;
     public int IndexToSwap;
@@ -39,6 +39,7 @@ public class InsertSortInteractive2 : MonoBehaviour
 
     private void Start()
     {
+        moving = false;
         //Begin();
     }
 
@@ -47,7 +48,7 @@ public class InsertSortInteractive2 : MonoBehaviour
         if (sorted)
         {
             EnableTrigger();
-            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Insertion Sort Operates." + "\nThe Algorithm iterates thorugh the array and shifts the smallest values to the front.";
+            //Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Insertion Sort Operates." + "\nThe Algorithm iterates thorugh the array and shifts the smallest values to the front.";
             IndexToSwap = 0;
             NextSmallesIndex = 9;
         }
@@ -94,14 +95,14 @@ public class InsertSortInteractive2 : MonoBehaviour
     }
     public IEnumerator insertionSort()
     {
-        Step.text = "Insertion Sort will sort the array by locking the elft msot values until it is adjacent to a smaller value.";
-        yield return new WaitForSeconds(speed);
-        Step.text = "First iterate through the array until the left index is larger than the right index 'M'.";
-        yield return new WaitForSeconds(speed);
-        Step.text = "Swap these values, and continue to swap until 'M' is in its sorted position.";
-        yield return new WaitForSeconds(speed);
-        Step.text = "Resume swapping at the index where the previous swap began and repeat these steps until the array is sorted.";
-        yield return new WaitForSeconds(speed);
+        //Step.text = "Insertion Sort will sort the array by locking the elft msot values until it is adjacent to a smaller value.";
+        //yield return new WaitForSeconds(speed);
+        //Step.text = "First iterate through the array until the left index is larger than the right index 'M'.";
+        //yield return new WaitForSeconds(speed);
+        //Step.text = "Swap these values, and continue to swap until 'M' is in its sorted position.";
+        //yield return new WaitForSeconds(speed);
+        //Step.text = "Resume swapping at the index where the previous swap began and repeat these steps until the array is sorted.";
+        //yield return new WaitForSeconds(speed);
 
         keyGo.SetActive(true);
 
@@ -132,14 +133,15 @@ public class InsertSortInteractive2 : MonoBehaviour
                 }
                 yield return new WaitForSeconds(speed);
             }
+            keyGo.GetComponentInChildren<MeshRenderer>().material = Nextsort;
             yield return StartCoroutine(SwapAnimation(j+1, -1));
-
+            updatePos();
             b[j + 1].GetComponentInChildren<Text>().text = key.ToString();
-            yield return new WaitForSeconds(speed);
             for (int p = 0; p < b.Count; p++)
             {
                 b[p].GetComponentInChildren<MeshRenderer>().material = Unsorted;
             }
+            yield return new WaitForSeconds(speed);
         }
         keyGo.SetActive(false);
         updatePos();

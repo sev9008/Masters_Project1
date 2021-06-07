@@ -65,7 +65,7 @@ public class SlesortInteractive1 : MonoBehaviour
     }
     private void OnEnable()
     {
-        Begin();
+        //Begin();
     }
 
     public void Update()//needs testing
@@ -93,9 +93,6 @@ public class SlesortInteractive1 : MonoBehaviour
                     float dist3 = Vector3.Distance(b[currentSmallestIndex].transform.position, b[i].transform.position);
                     if (dist2 < .04 || dist3 < .04)
                     {
-                        Debug.Log(dist2 + "   " + dist3);
-                        Debug.Log(currentSmallestIndex + nextToSort + i);
-
                         m_vRController_1.downR = false;
                         m_vRController_1.downL = false;//this will force the player to drop the block
                         Step.text = "Incorrect.  The block you attempted to swap was not the smallest value in the unsorted array.";

@@ -34,13 +34,22 @@ public class ArrayKeeper : MonoBehaviour
 
     public void randomNum()
     {
-        arr.Clear();
-        size = 29;
-        for (int i = 0; i < size; i++)
+        //arr.Clear();
+        if (size < 30)
         {
-            int n = UnityEngine.Random.Range(1, 99);
-            arr.Add(n);
+            for (int i = 0; i < 5; i++)
+            {
+                int n = UnityEngine.Random.Range(1, 99);
+                if (size < 30)
+                {
+                    arr.Add(n);
+                    size += 1;
+                }
+            }
         }
+
+
+
         Display();
     }
 

@@ -62,7 +62,7 @@ public class BubbleInteractive1 : MonoBehaviour
     //when the player enters the room generate an array.
     private void OnEnable()
     {
-        Begin();
+        //Begin();
     }
 
     //begin the pre algorithm phase.  this is where we will generate the array and reset the gamestate.  THis will also be called when restart or begin test is called
