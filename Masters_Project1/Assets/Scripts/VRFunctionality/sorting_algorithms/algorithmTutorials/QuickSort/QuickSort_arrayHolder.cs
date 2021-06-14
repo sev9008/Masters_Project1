@@ -31,12 +31,17 @@ public class QuickSort_arrayHolder : MonoBehaviour
     public bool running;
     public SelectionAni m_selectionAni;
 
-    public Material pivotmat;
-    public Material imat;
-    public Material jmat;
-    public Material hmat;
-    public Material lmat;
-    public Material Normalmat;
+    //public Material pivotmat;
+    //public Material imat;
+    //public Material jmat;
+    //public Material hmat;
+    //public Material lmat;
+    //public Material Normalmat;
+    public Material Donesort;//blue
+    public Material NextSort;//red for swaps
+    public Material Unsorted;//white
+    public Material Recurs;//yellow for recursion
+    public Material Goodmat;//green for pivot
 
     public Text PivotText;
     public Text iText;
@@ -77,35 +82,32 @@ public class QuickSort_arrayHolder : MonoBehaviour
         for (int n = 0; n < size; n++)
         {
             b[n].SetActive(true);
+            Debug.Log(pivot);
             if (n == pivot)
             {
                 b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
-                b[n].GetComponentInChildren<MeshRenderer>().material = pivotmat;
-            }
-            else if (n == i)
-            {
-                b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
-                b[n].GetComponentInChildren<MeshRenderer>().material = imat;
+                b[n].GetComponentInChildren<MeshRenderer>().material = Goodmat;
             }
             else if (n == j)
             {
                 b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
-                b[n].GetComponentInChildren<MeshRenderer>().material = jmat;
-            }
-            else if (n == h)
-            {
-                b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
-                b[n].GetComponentInChildren<MeshRenderer>().material = hmat;
+                b[n].GetComponentInChildren<MeshRenderer>().material = NextSort;
             }            
-            else if (n == l)
+            else if (n == i)
             {
                 b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
-                b[n].GetComponentInChildren<MeshRenderer>().material = lmat;
+                b[n].GetComponentInChildren<MeshRenderer>().material = NextSort;
+            }
+            else if (n >= l && n <= h)
+            {
+                b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
+                b[n].GetComponentInChildren<MeshRenderer>().material = Recurs;
+
             }
             else
             {
                 b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
-                b[n].GetComponentInChildren<MeshRenderer>().material = Normalmat;
+                b[n].GetComponentInChildren<MeshRenderer>().material = Unsorted;
             }
         }
     }
@@ -321,7 +323,7 @@ public class QuickSort_arrayHolder : MonoBehaviour
         structarr[currentstrucstep].h = h;
         structarr[currentstrucstep].l = l;
         m_selectionAni.ShowGraph(arr3);
-        Display(arr3, arr3.Count, pivot, i, -20, l, h);
+        Display(arr3, arr3.Count, pivot, -20, -20, l, h);
         if (!manual)
         {
             yield return new WaitForSeconds(speed);
@@ -353,6 +355,9 @@ public class QuickSort_arrayHolder : MonoBehaviour
                 jText.text = "j = " + j.ToString();
                 Step.text = "Swap " + arr[i] + " and " + arr[j];
 
+                b[i].GetComponentInChildren<MeshRenderer>().material = NextSort;
+                b[j].GetComponentInChildren<MeshRenderer>().material = NextSort;
+
                 int temp = arr[i];
                 arr[i] = arr[j];
                 arr[j] = temp;
@@ -376,7 +381,7 @@ public class QuickSort_arrayHolder : MonoBehaviour
                 structarr[currentstrucstep].l = l;
 
                 imageController(4);
-                Display(arr3, arr3.Count, pivot, i, j, l, h);
+                Display(arr3, arr3.Count, h, i, j, l, h);
                 m_selectionAni.ShowGraph(arr3);
                 if (!manual)
                 {
@@ -403,6 +408,9 @@ public class QuickSort_arrayHolder : MonoBehaviour
         }
         Step.text = "Swap " + arr[i + 1] + " and " + arr[h] + " to get the new pivot and return this value";
 
+        b[i+1].GetComponentInChildren<MeshRenderer>().material = NextSort;
+        b[h].GetComponentInChildren<MeshRenderer>().material = NextSort;
+
         int temp1 = arr[i + 1];
         arr[i + 1] = arr[h];
         arr[h] = temp1;
@@ -427,7 +435,7 @@ public class QuickSort_arrayHolder : MonoBehaviour
         structarr[currentstrucstep].l = l;
 
         imageController(5);
-        Display(arr3, arr3.Count, pivot, i, -20, l, h);
+        Display(arr3, arr3.Count, h, i+1, h, l, h);
         m_selectionAni.ShowGraph(arr3);
         if (!manual)
         {
@@ -468,6 +476,7 @@ public class QuickSort_arrayHolder : MonoBehaviour
             }
         }
     }
+
     public IEnumerator changeStep()
     {
         resume:
