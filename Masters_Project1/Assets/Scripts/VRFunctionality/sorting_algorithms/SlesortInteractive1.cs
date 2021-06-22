@@ -30,6 +30,9 @@ public class SlesortInteractive1 : MonoBehaviour
     public Text Step;
 
     public VRController_1 m_vRController_1;
+    public NonVRControlls m_vRController_2;
+
+
     public int currentSmallestIndex;
     public int nextToSort;
     private float dist1;
@@ -95,6 +98,8 @@ public class SlesortInteractive1 : MonoBehaviour
                     {
                         m_vRController_1.downR = false;
                         m_vRController_1.downL = false;//this will force the player to drop the block
+                        m_vRController_2.down = false;
+
                         Step.text = "Incorrect.  The block you attempted to swap was not the smallest value in the unsorted array.";
                         if (IsTestMode)
                         {
@@ -179,6 +184,8 @@ public class SlesortInteractive1 : MonoBehaviour
     {
         m_vRController_1.downR = false;
         m_vRController_1.downL = false;
+        m_vRController_2.down = false;
+
 
         if (!IsTestMode)//change the materials jsut in case 
         {

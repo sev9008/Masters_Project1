@@ -25,6 +25,7 @@ TagManager:
   - Table
   - FPCamera
   - UI
+  - RDot
   layers:
   - Default
   - TransparentFX

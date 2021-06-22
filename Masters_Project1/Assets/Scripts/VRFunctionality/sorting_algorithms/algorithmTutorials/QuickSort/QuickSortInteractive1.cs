@@ -19,6 +19,7 @@ public class QuickSortInteractive1 : MonoBehaviour
     public Text Step;
 
     public VRController_1 m_vRController_1;
+    public NonVRControlls m_vRController_2;
 
     public int NextSmallesIndex;
     public int IndexToSwap;
@@ -125,6 +126,7 @@ public class QuickSortInteractive1 : MonoBehaviour
                     {
                         m_vRController_1.downR = false;
                         m_vRController_1.downL = false;
+                        m_vRController_2.down = false;
                         Step.text = "Incorrect.  The block you attempted to swap was Incorrect.";
                         if (IsTestMode)
                         {
@@ -143,6 +145,7 @@ public class QuickSortInteractive1 : MonoBehaviour
     {
         m_vRController_1.downR = false;
         m_vRController_1.downL = false;
+        m_vRController_2.down = false;
 
         Text ti = b[i].GetComponentInChildren<Text>();
         Text tj = b[j].GetComponentInChildren<Text>();

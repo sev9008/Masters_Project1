@@ -41,6 +41,7 @@ public class Pointer : MonoBehaviour
     private void Start()
     {
         inputModule = EventSystem.current.gameObject.GetComponent<VRInputModule>();
+
     }
 
     private void Update()
@@ -52,9 +53,11 @@ public class Pointer : MonoBehaviour
     {
         // Use default or distance
         PointerEventData data = inputModule.Data;
+
         hit = CreateRaycast();
 
         // If nothing is hit, set do default length
+
         colliderDistance = hit.distance == 0 ? defaultLength : hit.distance;
         canvasDistance = data.pointerCurrentRaycast.distance == 0 ? defaultLength : data.pointerCurrentRaycast.distance;
         // Get the closest one

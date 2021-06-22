@@ -19,6 +19,7 @@ public class InsertSortInteractive1 : MonoBehaviour
     public Text Step;
 
     public VRController_1 m_vRController_1;
+    public NonVRControlls m_vRController_2;
 
     public int currentSmallestIndex;
     public int nextToSort;
@@ -74,6 +75,8 @@ public class InsertSortInteractive1 : MonoBehaviour
             {
                 m_vRController_1.downR = false;
                 m_vRController_1.downL = false;
+                m_vRController_2.down = false;
+
                 Step.text = "The block you attempted to swap was correct.";
                 if (IsTestMode)
                 {
@@ -97,6 +100,8 @@ public class InsertSortInteractive1 : MonoBehaviour
                         {
                             m_vRController_1.downR = false;
                             m_vRController_1.downL = false;
+                            m_vRController_2.down = false;
+
                             Step.text = "The block you attempted to swap was incorrect.";
                             if (IsTestMode)
                             {
@@ -117,6 +122,8 @@ public class InsertSortInteractive1 : MonoBehaviour
             {
                 m_vRController_1.downR = false;
                 m_vRController_1.downL = false;
+                m_vRController_2.down = false;
+
                 if (IsTestMode)
                 {
                     corretAnswers += 1;
@@ -139,6 +146,8 @@ public class InsertSortInteractive1 : MonoBehaviour
                         {
                             m_vRController_1.downR = false;
                             m_vRController_1.downL = false;
+                            m_vRController_2.down = false;
+
                             Step.text = "The block you attempted to swap was incorrect.";
                             if (IsTestMode)
                             {
