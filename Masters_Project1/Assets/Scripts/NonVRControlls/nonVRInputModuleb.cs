@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 /// <summary>
 /// This script utilizes the unity even system to process pressing and releasing on the VR controller
 /// </summary>
@@ -7,6 +9,8 @@ public class nonVRInputModuleb : BaseInputModule
 {
     [SerializeField] private NonVRPointer pointer = null;
     public PointerEventData Data { get; private set; } = null;
+
+    private float timer;
 
     protected override void Start()
     {
@@ -16,12 +20,21 @@ public class nonVRInputModuleb : BaseInputModule
 
     public override void Process()
     {
+
+
+        timer = 0;
+        //these enxt two lines are cuasing problems ;(
         eventSystem.RaycastAll(Data, m_RaycastResultCache);
-        Data.pointerCurrentRaycast = FindFirstRaycast(m_RaycastResultCache);
 
-        HandlePointerExitAndEnter(Data, Data.pointerCurrentRaycast.gameObject);
+        var temp = FindFirstRaycast(m_RaycastResultCache);
+        if (temp.isValid)
+        {
+            Data.pointerCurrentRaycast = temp;
 
-        ExecuteEvents.Execute(Data.pointerDrag, Data, ExecuteEvents.dragHandler);
+            HandlePointerExitAndEnter(Data, Data.pointerCurrentRaycast.gameObject);
+
+            ExecuteEvents.Execute(Data.pointerDrag, Data, ExecuteEvents.dragHandler);
+        }
     }
 
     public void Press()

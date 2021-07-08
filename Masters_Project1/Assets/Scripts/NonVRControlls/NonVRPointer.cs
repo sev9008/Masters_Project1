@@ -26,8 +26,6 @@ public class NonVRPointer : MonoBehaviour
     {
         Camera = GetComponent<Camera>();
         Camera.enabled = false;
-
-        //lineRenderer = GetComponent<LineRenderer>();
     }
 
     private void Start()
@@ -47,10 +45,18 @@ public class NonVRPointer : MonoBehaviour
 
         hit = CreateRaycast();
 
-        // If nothing is hit, set do default length
+        //Debug.Log("HIT DIST" + hit.distance);
+        //Debug.Log("DEF LEN" + defaultLength);
+        
+        //this is the one that is screwing up
+        //Debug.Log("DATA DIST" + data.pointerCurrentRaycast.distance);
 
+        // If nothing is hit, set do default length
         colliderDistance = hit.distance == 0 ? defaultLength : hit.distance;
+
+        //data.pointerCurrentRaycast.distanc CAUSES AN ERROR.  FOR SOME REASON IT KEEPS GOING FROM 0 TO ACTUAL HIT DISTANCE
         canvasDistance = data.pointerCurrentRaycast.distance == 0 ? defaultLength : data.pointerCurrentRaycast.distance;
+
         // Get the closest one
         float targetLength = Mathf.Min(colliderDistance, canvasDistance);
 
@@ -59,7 +65,8 @@ public class NonVRPointer : MonoBehaviour
 
         // Set position of the dot
         dot.transform.position = endPosition;
-        Debug.Log(endPosition);
+
+        //Debug.Log(hit.collider.gameObject);
     }
 
     private RaycastHit CreateRaycast()
@@ -68,6 +75,22 @@ public class NonVRPointer : MonoBehaviour
         Ray ray = new Ray(transform.position, transform.forward);
         Physics.Raycast(ray, out hit, defaultLength, raymask);
         Debug.DrawRay(transform.position, transform.forward* defaultLength, Color.green);
-        return hit;
+
+
+        //check if raycast hit a wall or any type of blocker
+        int tmplayer = -1;
+        if (hit.collider != null)
+        {
+            tmplayer = hit.collider.gameObject.layer;
+        }
+
+        if (tmplayer == 12)//if the raycast hit a blocker then its time to change the hit point
+        {
+            return hit;
+        }
+        else
+        {
+            return hit;
+        }
     }
 }
