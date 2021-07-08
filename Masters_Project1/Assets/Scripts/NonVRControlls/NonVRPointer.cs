@@ -11,8 +11,8 @@ public class NonVRPointer : MonoBehaviour
     //public Camera Camera { get; private set; } = null;
     public Camera Camera { get; private set; } = null;
 
-    public LineRenderer lineRenderer = null;
-    public VRInputModule inputModule = null;
+    //public LineRenderer lineRenderer = null;
+    public nonVRInputModule inputModule = null;
 
     private float colliderDistance;
     private float canvasDistance;
@@ -21,20 +21,18 @@ public class NonVRPointer : MonoBehaviour
 
     public LayerMask raymask;
 
-    public Vector3 TeleportPos;
 
     private void Awake()
     {
         Camera = GetComponent<Camera>();
         Camera.enabled = false;
 
-        lineRenderer = GetComponent<LineRenderer>();
+        //lineRenderer = GetComponent<LineRenderer>();
     }
 
     private void Start()
     {
-        inputModule = EventSystem.current.gameObject.GetComponent<VRInputModule>();
-
+        inputModule = EventSystem.current.gameObject.GetComponent<nonVRInputModule>();
     }
 
     private void Update()
@@ -61,10 +59,7 @@ public class NonVRPointer : MonoBehaviour
 
         // Set position of the dot
         dot.transform.position = endPosition;
-
-        // Set linerenderer
-        lineRenderer.SetPosition(0, transform.position);
-        lineRenderer.SetPosition(1, endPosition);
+        Debug.Log(endPosition);
     }
 
     private RaycastHit CreateRaycast()
@@ -73,24 +68,6 @@ public class NonVRPointer : MonoBehaviour
         Ray ray = new Ray(transform.position, transform.forward);
         Physics.Raycast(ray, out hit, defaultLength, raymask);
         Debug.DrawRay(transform.position, transform.forward* defaultLength, Color.green);
-
-        //check if raycast hit a wall or any type of blocker
-        int tmplayer = -1;
-        if (hit.collider != null)
-        {
-            tmplayer = hit.collider.gameObject.layer;
-        }
-
-        if (tmplayer == 12)//if the raycast hit a blocker then its time to change the hit point
-        {
-            TeleportPos = hit.point - (transform.forward * 3f);
-            return hit;
-        }
-        else
-        {
-            TeleportPos = hit.point;
-            TeleportPos = dot.transform.position;
-            return hit;
-        }
+        return hit;
     }
 }

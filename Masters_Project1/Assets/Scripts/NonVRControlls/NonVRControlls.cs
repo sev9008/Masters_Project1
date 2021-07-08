@@ -17,7 +17,7 @@ public class NonVRControlls : MonoBehaviour
     public BubbleInteractive1 bubbleSortInteractive1;
     public MergeSortInteractive1 mergeSortInteractive1;
 
-    public Pointer m_pointer;
+    public NonVRPointer m_pointer;
 
     public GameObject grabbed;
     public GameObject Dot;
@@ -25,7 +25,7 @@ public class NonVRControlls : MonoBehaviour
     public bool down;
     public bool ActiveHighlight;
 
-    public Pointer PointerR;
+    public NonVRPointer PointerR;
     public DotHighlightTip dotHighlightTip;
 
     private void Start()

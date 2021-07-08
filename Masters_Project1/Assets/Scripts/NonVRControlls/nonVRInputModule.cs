@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class nonVRInputModule : VRInputModule
+public class nonVRInputModule : nonVRInputModuleb
 {
-
     public override void Process()
     {
         base.Process();
