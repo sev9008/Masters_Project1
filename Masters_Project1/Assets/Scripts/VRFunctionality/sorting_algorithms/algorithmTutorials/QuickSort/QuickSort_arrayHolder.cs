@@ -31,12 +31,6 @@ public class QuickSort_arrayHolder : MonoBehaviour
     public bool running;
     public SelectionAni m_selectionAni;
 
-    //public Material pivotmat;
-    //public Material imat;
-    //public Material jmat;
-    //public Material hmat;
-    //public Material lmat;
-    //public Material Normalmat;
     public Material Donesort;//blue
     public Material NextSort;//red for swaps
     public Material Unsorted;//white
@@ -82,7 +76,7 @@ public class QuickSort_arrayHolder : MonoBehaviour
         for (int n = 0; n < size; n++)
         {
             b[n].SetActive(true);
-            Debug.Log(pivot);
+            //Debug.Log(pivot);
             if (n == pivot)
             {
                 b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
@@ -145,6 +139,10 @@ public class QuickSort_arrayHolder : MonoBehaviour
         imageController(-1);
         ArrStep.text = "";
         Step.text = "Finished";
+        for (int n = 0; n < arr3.Count; n++)
+        {
+            b[n].GetComponentInChildren<MeshRenderer>().material = Donesort;
+        }
         running = false;
     }
     public IEnumerator quickSort(List<int> arr, int l, int h)
@@ -157,7 +155,7 @@ public class QuickSort_arrayHolder : MonoBehaviour
             LText.text = "L = " + l.ToString();
             HText.text = "H = " + h.ToString();
             ifText1.text = l.ToString() + " < " + h.ToString();
-            Step.text = "Find the pivot and create partitions";
+            Step.text = "Find the pivot by performing partition";
             imageController(0);
 
             currentstrucstep++;
@@ -303,7 +301,7 @@ public class QuickSort_arrayHolder : MonoBehaviour
         iText.text = "i = " + i.ToString();
 
         imageController(3);
-        Step.text = "start with new pivot at " + pivot;
+        Step.text = "Set intial pitot to arr[h], set i to L-1, and set j to L";
 
         currentstrucstep++;
         maxstrucstep++;
@@ -353,7 +351,7 @@ public class QuickSort_arrayHolder : MonoBehaviour
                 i++;
                 iText.text = "i = " + i.ToString();
                 jText.text = "j = " + j.ToString();
-                Step.text = "Swap " + arr[i] + " and " + arr[j];
+                Step.text = "While j < h: if arr[j] < pivot, then increment i and swap arr[i] and arr[j]";
 
                 b[i].GetComponentInChildren<MeshRenderer>().material = NextSort;
                 b[j].GetComponentInChildren<MeshRenderer>().material = NextSort;
@@ -406,7 +404,7 @@ public class QuickSort_arrayHolder : MonoBehaviour
                 }
             }
         }
-        Step.text = "Swap " + arr[i + 1] + " and " + arr[h] + " to get the new pivot and return this value";
+        Step.text = "Swap arr[i+1] and arr[h] to get the new pivot and return this value";
 
         b[i+1].GetComponentInChildren<MeshRenderer>().material = NextSort;
         b[h].GetComponentInChildren<MeshRenderer>().material = NextSort;
