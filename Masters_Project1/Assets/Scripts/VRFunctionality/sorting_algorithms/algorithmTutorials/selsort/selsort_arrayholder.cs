@@ -19,9 +19,6 @@ public class selsort_arrayholder : MonoBehaviour
 
     public Slider slider;
 
-    public GameObject image1;
-    public GameObject image2;
-    public GameObject image3;
     public bool paused;
     public bool running;
 
@@ -46,6 +43,8 @@ public class selsort_arrayholder : MonoBehaviour
     public GameObject jholder;
     public GameObject iMinholder;
 
+    public GameObject[] image;
+
     public bool manual;
 
     private void Start()
@@ -56,7 +55,11 @@ public class selsort_arrayholder : MonoBehaviour
     [Serializable] public class MyStruct
     {
         public List<int> oldarr;
-        public int i_value;
+        public int activeImage;
+        public string steptxt;
+        public int jval;
+        public int ival;
+        public int iMinval;
     }
     //[SerializeField] private MyStruct struc;
 
@@ -67,9 +70,9 @@ public class selsort_arrayholder : MonoBehaviour
 
     public void Display(List<int> arr2, int size, int i, int j, int iMin)
     {
-        iholder.SetActive(false);
-        jholder.SetActive(false);
-        iMinholder.SetActive(false);
+        iholder.SetActive(true);
+        jholder.SetActive(true);
+        iMinholder.SetActive(true);
         Txt_Text.text = "";
         for (int n = 0; n < size; n++)
         {
@@ -80,14 +83,12 @@ public class selsort_arrayholder : MonoBehaviour
                 {
                     b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
                     b[n].GetComponentInChildren<MeshRenderer>().material = imat;
-                    iholder.SetActive(true);
                     iholder.GetComponent<RectTransform>().anchoredPosition = new Vector2(b[n].GetComponent<RectTransform>().anchoredPosition.x, b[n].GetComponent<RectTransform>().anchoredPosition.y+12);
                 }
                 else if (n == iMin)
                 {
                     b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
                     b[n].GetComponentInChildren<MeshRenderer>().material = jmat;
-                    iMinholder.SetActive(true);
                     iMinholder.GetComponent<RectTransform>().anchoredPosition = new Vector2(b[n].GetComponent<RectTransform>().anchoredPosition.x, b[n].GetComponent<RectTransform>().anchoredPosition.y + 12);
                 }
                 else 
@@ -102,21 +103,18 @@ public class selsort_arrayholder : MonoBehaviour
                 {
                     b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
                     b[n].GetComponentInChildren<MeshRenderer>().material = imat;
-                    iholder.SetActive(true);
                     iholder.GetComponent<RectTransform>().anchoredPosition = new Vector2(b[n].GetComponent<RectTransform>().anchoredPosition.x, b[n].GetComponent<RectTransform>().anchoredPosition.y +12);
                 }
                 else if (n == iMin)
                 {
                     b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
                     b[n].GetComponentInChildren<MeshRenderer>().material = iMinmat;
-                    iMinholder.SetActive(true);
                     iMinholder.GetComponent<RectTransform>().anchoredPosition = new Vector2(b[n].GetComponent<RectTransform>().anchoredPosition.x, b[n].GetComponent<RectTransform>().anchoredPosition.y + 12);
                 }
                 else if (n == j)
                 {
                     b[n].GetComponentInChildren<Text>().text = arr2[n].ToString();
                     b[n].GetComponentInChildren<MeshRenderer>().material = jmat;
-                    jholder.SetActive(true);
                     jholder.GetComponent<RectTransform>().anchoredPosition = new Vector2(b[n].GetComponent<RectTransform>().anchoredPosition.x, b[n].GetComponent<RectTransform>().anchoredPosition.y + 12);
                 }
                 else 
@@ -130,104 +128,81 @@ public class selsort_arrayholder : MonoBehaviour
 
     public IEnumerator Selection()
     {
+        running = true;
+
+        for (int n = 0; n < structarr.Count; n++)//reset all the data in the struct
+        {
+            structarr[n].oldarr.Clear();
+            structarr[n].activeImage = -1;
+            structarr[n].steptxt = "";
+            structarr[n].jval = -1;
+            structarr[n].ival = -1;
+            structarr[n].iMinval = -1;
+        }
+        for (int k = 0; k < b.Length; k++)//set all blocks to false
+        {
+            b[k].SetActive(false);
+        }
+        structarr.Clear();//seems redundant.  dont actually know if the above is needed
+        structarr = new List<MyStruct>();
+        currentstrucstep = -1;
+        maxstrucstep = -1;
+        m_selectionAni.ShowGraph(arr3);//display the current array on our graph
+        Display(arr3, arr3.Count, 0, -1, -1);
+        Step.text = "We will begin by initializing j, i, and iMin";
+        if (!manual)//you will see these next three case statements alot.  thses control whether the animation is paused or unpaused.  then you can resume, press next, or press previous
+        {
+            yield return new WaitForSeconds(speed);
+        }
         if (manual)
         {
             paused = true;
         }
-        for (int k = 0; k < b.Length; k++)
+        while (paused && manual)
         {
-            b[k].SetActive(false);
+            if (next && currentstrucstep >= maxstrucstep)//if the current step is the the last step we ahve saved in ours truct then just unpause and proceed
+            {
+                next = false;
+                paused = false;
+            }
+            else if (next || previous)//if sturct arr has moves stored and we are not on the last step in out sturct, then transition to change step.
+            {
+                yield return StartCoroutine(changeStep());
+            }
+            yield return null;
         }
-        //clear struct
-        for (int n = 0; n < structarr.Count; n++)
-        {
-            structarr[n].oldarr.Clear();
-            structarr[n].i_value = -1;
-        }
-        
-        structarr.Clear();
-        structarr = new List<MyStruct>();
-        currentstrucstep = -1;
-        maxstrucstep = -1;
-        running = true;
-        m_selectionAni.ShowGraph(arr3);
+        yield return new WaitForSeconds(speed);
+
         int i, j;
         int iMin;
         for (i = 0; i < arr3.Count - 1; i++)
         {
-            i_Text.text = "i = " + i.ToString();
-            Display(arr3, arr3.Count, i, -1, -1);
-            if (!manual)
-            {
-                yield return new WaitForSeconds(speed);
-            }
-            if (currentstrucstep == maxstrucstep)
-            {
-                currentstrucstep++;
-                maxstrucstep++;
-                Debug.Log("addnew");
-                var c = new MyStruct();
-                structarr.Add(c);
-                structarr[currentstrucstep].oldarr = new List<int>(arr3.Count);
-                for (int tempnum = 0; tempnum < arr3.Count; tempnum++)
-                {
-                    structarr[currentstrucstep].oldarr.Add(arr3[tempnum]);
-                }
-                structarr[currentstrucstep].i_value = i;
-            }
-            
-            resume:
-            
-            if (previous && next)
-            {
-                previous = false;
-                next = false;
-            }
-            if (previous && currentstrucstep > 0)
-            {
-                currentstrucstep--;
-                PressedPrevious();
-                previous = false;
-                i = structarr[currentstrucstep].i_value;
-            }
-            else if (previous && currentstrucstep <= 0)
-            {
-                Step.text = "Cant go back any further";
-                if (!manual)
-                {
-                    yield return new WaitForSeconds(speed);
-                }
-            }
-
-            if (next && currentstrucstep < maxstrucstep)
-            {
-                currentstrucstep++;
-                PressedNext();
-                next = false;
-                i = structarr[currentstrucstep].i_value;
-            }
-            else if (next && currentstrucstep >= maxstrucstep)
-            {
-                Step.text = "Cant go forward any further";
-                if (!manual)
-                {
-                    yield return new WaitForSeconds(speed);
-                }
-            }
-            previous = false;
-            next = false;
-            
-            m_selectionAni.ShowGraph(arr3);
-            Display(arr3, arr3.Count, i, -1, -1);
             iMin = i;
-            iMin_Text.text = "iMin = " + iMin.ToString();
 
-            image1.SetActive(true);
-            image2.SetActive(false);
-            image3.SetActive(false);
-            Step.text = "increment i = " + i + ", reset iMin";
+            imageController(0);
+            Step.text = "increment i and set iMin = " + i;
+            j_Text.text = " ";
+            i_Text.text = "i = " + i.ToString();
+            iMin_Text.text = "iMin = " + iMin.ToString();
+            m_selectionAni.ShowGraph(arr3);
             Display(arr3, arr3.Count, i, -1, iMin);
-            if (!manual)
+
+            currentstrucstep++;//this will add the current step to the array.  its a wall of code but you will see it alot
+            maxstrucstep++;
+            var b = new MyStruct();
+            structarr.Add(b);
+            structarr[currentstrucstep].oldarr = new List<int>(arr3.Count);
+            for (int tempnum = 0; tempnum < arr3.Count; tempnum++)
+            {
+                structarr[currentstrucstep].oldarr.Add(arr3[tempnum]);
+            }
+            structarr[currentstrucstep].activeImage = 0;
+            structarr[currentstrucstep].steptxt = Step.text;
+            structarr[currentstrucstep].jval = -1;
+            structarr[currentstrucstep].ival = i;
+            structarr[currentstrucstep].iMinval = iMin;
+            m_selectionAni.ShowGraph(arr3);
+            if (!manual)//descsibed above
             {
                 yield return new WaitForSeconds(speed);
             }
@@ -237,52 +212,61 @@ public class selsort_arrayholder : MonoBehaviour
             }
             while (paused && manual)
             {
-                if (previous && currentstrucstep > 0)
-                {
-                    goto resume;
-                }
-                if (next && currentstrucstep < maxstrucstep)
-                {
-                    goto resume;
-                }
-                else if (next && currentstrucstep >= maxstrucstep)
+                if (next && currentstrucstep >= maxstrucstep)
                 {
                     next = false;
                     paused = false;
+                }
+                else if (next || previous)
+                {
+                    yield return StartCoroutine(changeStep());
                 }
                 yield return null;
             }
 
             for (j = i + 1; j < arr3.Count; j++)
             {
+                imageController(1);
+                Step.text = "Increment j = " + j + " and swap if arr[j] < arr[iMin]";
                 j_Text.text = "j = " + j.ToString();
+                i_Text.text = "i = " + i.ToString();
+                iMin_Text.text = "iMin = " + iMin.ToString();
+                m_selectionAni.ShowGraph(arr3);
                 Display(arr3, arr3.Count, i, j, iMin);
-                Step.text = "Increment j = " + j;
-                image1.SetActive(false);
-                image2.SetActive(true);
-                image3.SetActive(false);
+
+                currentstrucstep++;//this will add the current step to the array.  its a wall of code but you will see it alot
+                maxstrucstep++;
+                var c = new MyStruct();
+                structarr.Add(c);
+                structarr[currentstrucstep].oldarr = new List<int>(arr3.Count);
+                for (int tempnum = 0; tempnum < arr3.Count; tempnum++)
+                {
+                    structarr[currentstrucstep].oldarr.Add(arr3[tempnum]);
+                }
+                structarr[currentstrucstep].activeImage = 1;
+                structarr[currentstrucstep].steptxt = Step.text;
+                structarr[currentstrucstep].jval = j;
+                structarr[currentstrucstep].ival = i;
+                structarr[currentstrucstep].iMinval = iMin;
+                m_selectionAni.ShowGraph(arr3);
+                if (!manual)//descsibed above
+                {
+                    yield return new WaitForSeconds(speed);
+                }
                 if (manual)
                 {
                     paused = true;
                 }
-                if (!manual)
-                {
-                    yield return new WaitForSeconds(speed);
-                }
                 while (paused && manual)
                 {
-                    if (previous && currentstrucstep > 0)
-                    {
-                        goto resume;
-                    }
-                    if (next && currentstrucstep < maxstrucstep)
-                    {
-                        goto resume;
-                    }
-                    else if (next && currentstrucstep >= maxstrucstep)
+                    if (next && currentstrucstep >= maxstrucstep)
                     {
                         next = false;
                         paused = false;
+                    }
+                    else if (next || previous)
+                    {
+                        yield return StartCoroutine(changeStep());
                     }
                     yield return null;
                 }
@@ -290,49 +274,84 @@ public class selsort_arrayholder : MonoBehaviour
                 if (arr3[j] < arr3[iMin])
                 {
                     iMin = j;
+
+                    imageController(1);
+                    Step.text = "arr[f] < arr[iMin] so set iMin to j Set iMin to " + j;
+                    j_Text.text = "j = " + j.ToString();
+                    i_Text.text = "i = " + i.ToString();
                     iMin_Text.text = "iMin = " + iMin.ToString();
+                    m_selectionAni.ShowGraph(arr3);
                     Display(arr3, arr3.Count, i, j, iMin);
-                    Step.text = "iMin = " + j;
-                }
-                if (!manual)
-                {
-                    yield return new WaitForSeconds(speed);
-                }
-                if (manual)
-                {
-                    paused = true;
-                }
-                while (paused && manual)
-                {
-                    if (previous && currentstrucstep > 0)
+
+                    currentstrucstep++;//this will add the current step to the array.  its a wall of code but you will see it alot
+                    maxstrucstep++;
+                    var d = new MyStruct();
+                    structarr.Add(d);
+                    structarr[currentstrucstep].oldarr = new List<int>(arr3.Count);
+                    for (int tempnum = 0; tempnum < arr3.Count; tempnum++)
                     {
-                        goto resume;
+                        structarr[currentstrucstep].oldarr.Add(arr3[tempnum]);
                     }
-                    if (next && currentstrucstep < maxstrucstep)
+                    structarr[currentstrucstep].activeImage = 1;
+                    structarr[currentstrucstep].steptxt = Step.text;
+                    structarr[currentstrucstep].jval = j;
+                    structarr[currentstrucstep].ival = i;
+                    structarr[currentstrucstep].iMinval = iMin;
+                    m_selectionAni.ShowGraph(arr3);
+                    if (!manual)//descsibed above
                     {
-                        goto resume;
+                        yield return new WaitForSeconds(speed);
                     }
-                    else if (next && currentstrucstep >= maxstrucstep)
+                    if (manual)
                     {
-                        next = false;
-                        paused = false;
+                        paused = true;
                     }
-                    yield return null;
+                    while (paused && manual)
+                    {
+                        if (next && currentstrucstep >= maxstrucstep)
+                        {
+                            next = false;
+                            paused = false;
+                        }
+                        else if (next || previous)
+                        {
+                            yield return StartCoroutine(changeStep());
+                        }
+                        yield return null;
+                    }
                 }
             }
+
             if (iMin != i)
             {
                 int temp = arr3[i];
                 arr3[i] = arr3[iMin];
                 arr3[iMin] = temp;
 
-                Step.text = "Swap i = " + arr3[i] + " and iMin = " + arr3[iMin];
+                imageController(2);
+                Step.text = "Swap arr[i] and arr[iMin].  arr[i] = " + arr3[iMin] + ". arr[iMin] = " + arr3[i];
+                j_Text.text = "j = " + j.ToString();
+                i_Text.text = "i = " + i.ToString();
+                iMin_Text.text = "iMin = " + iMin.ToString();
                 m_selectionAni.ShowGraph(arr3);
                 Display(arr3, arr3.Count, iMin, j, i);
-                image1.SetActive(false);
-                image2.SetActive(false);
-                image3.SetActive(true);
-                if (!manual)
+
+                currentstrucstep++;//this will add the current step to the array.  its a wall of code but you will see it alot
+                maxstrucstep++;
+                var e = new MyStruct();
+                structarr.Add(e);
+                structarr[currentstrucstep].oldarr = new List<int>(arr3.Count);
+                for (int tempnum = 0; tempnum < arr3.Count; tempnum++)
+                {
+                    structarr[currentstrucstep].oldarr.Add(arr3[tempnum]);
+                }
+                structarr[currentstrucstep].activeImage = 2;
+                structarr[currentstrucstep].steptxt = Step.text;
+                structarr[currentstrucstep].jval = j;
+                structarr[currentstrucstep].ival = i;
+                structarr[currentstrucstep].iMinval = iMin;
+                m_selectionAni.ShowGraph(arr3);
+                if (!manual)//descsibed above
                 {
                     yield return new WaitForSeconds(speed);
                 }
@@ -342,51 +361,140 @@ public class selsort_arrayholder : MonoBehaviour
                 }
                 while (paused && manual)
                 {
-                    if (previous && currentstrucstep > 0)
-                    {
-                        goto resume;
-                    }
-                    if (next && currentstrucstep < maxstrucstep)
-                    {
-                        goto resume;
-                    }
-                    else if (next && currentstrucstep >= maxstrucstep)
+                    if (next && currentstrucstep >= maxstrucstep)
                     {
                         next = false;
                         paused = false;
+                    }
+                    else if (next || previous)
+                    {
+                        yield return StartCoroutine(changeStep());
                     }
                     yield return null;
                 }
             }
         }
-        Step.text = "Finished";
-        Display(arr3, arr3.Count, -1, -1, -1);
-        image1.SetActive(false);
-        image2.SetActive(false);
-        image3.SetActive(false);
+        running = false;
+
+        imageController(-1);
+        Step.text = "The array is now Sorted";
+        j_Text.text = "";
+        i_Text.text = "";
+        iMin_Text.text = "";
         m_selectionAni.ShowGraph(arr3);
-        if (!manual)
+        Display(arr3, arr3.Count, -1, -1, -1);
+        currentstrucstep++;//this will add the current step to the array.  its a wall of code but you will see it alot
+        maxstrucstep++;
+        var a = new MyStruct();
+        structarr.Add(a);
+        structarr[currentstrucstep].oldarr = new List<int>(arr3.Count);
+        for (int tempnum = 0; tempnum < arr3.Count; tempnum++)
+        {
+            structarr[currentstrucstep].oldarr.Add(arr3[tempnum]);
+        }
+        structarr[currentstrucstep].activeImage = -1;
+        structarr[currentstrucstep].steptxt = Step.text;
+        structarr[currentstrucstep].jval = -1;
+        structarr[currentstrucstep].ival = -1;
+        structarr[currentstrucstep].iMinval = -1;
+        m_selectionAni.ShowGraph(arr3);
+        if (!manual)//descsibed above
         {
             yield return new WaitForSeconds(speed);
         }
-        running = false;
+        if (manual)
+        {
+            paused = true;
+        }
+        while (paused && manual)
+        {
+            if (next && currentstrucstep >= maxstrucstep)
+            {
+                next = false;
+                paused = false;
+            }
+            else if (next || previous)
+            {
+                yield return StartCoroutine(changeStep());
+            }
+            yield return null;
+        }
+
+        for (int n = 0; n < arr3.Count; n++)
+        {
+            b[n].GetComponentInChildren<MeshRenderer>().material = jmat;
+        }
     }
 
-    public void PressedPrevious()
+    public IEnumerator changeStep()//if next or previous is pressed then this algorithm takes over.  it will display the current step and attempt to continue the animation 
     {
-        arr3.Clear();
-        for (int i = 0; i < structarr[currentstrucstep].oldarr.Count; i++)
+        resume:
+        if (previous && currentstrucstep > 0)
         {
-            arr3.Add(structarr[currentstrucstep].oldarr[i]);
+            currentstrucstep--;
+            previous = false;
         }
-    }    
-    
-    public void PressedNext()
-    {
-        arr3.Clear();
-        for (int i = 0; i < structarr[currentstrucstep].oldarr.Count; i++)
+        else if (next && currentstrucstep != maxstrucstep || currentstrucstep != maxstrucstep)
         {
-            arr3.Add(structarr[currentstrucstep].oldarr[i]);
+            currentstrucstep++;
+            next = false;
+        }
+
+        imageController(structarr[currentstrucstep].activeImage);
+        Step.text = structarr[currentstrucstep].steptxt;
+        j_Text.text = structarr[currentstrucstep].jval.ToString();
+        i_Text.text = structarr[currentstrucstep].ival.ToString();
+        iMin_Text.text = structarr[currentstrucstep].iMinval.ToString();
+        m_selectionAni.ShowGraph(structarr[currentstrucstep].oldarr);
+        Display(structarr[currentstrucstep].oldarr, structarr[currentstrucstep].oldarr.Count, structarr[currentstrucstep].ival, structarr[currentstrucstep].jval, structarr[currentstrucstep].iMinval);
+
+        if (manual)
+        {
+            paused = true;
+        }
+        while (paused && manual)
+        {
+            if (next && currentstrucstep >= maxstrucstep)
+            {
+                next = false;
+                paused = false;
+            }
+            else if (previous && currentstrucstep > 0)
+            {
+                goto resume;
+            }
+            else if (next && currentstrucstep < maxstrucstep)
+            {
+                goto resume;
+            }
+            yield return null;
+        }
+        if (!manual)
+        {
+            yield return new WaitForSeconds(speed);
+            if (currentstrucstep >= maxstrucstep)
+            {
+                paused = false;
+            }
+            else if (currentstrucstep >= 0 && currentstrucstep < maxstrucstep)
+            {
+                goto resume;
+            }
+        }
+    }
+
+    public void imageController(int k)//control the active image
+    {
+        for (int i = 0; i < image.Length; i++)
+        {
+            if (i == k)
+            {
+                image[i].SetActive(true);
+            }
+            else
+            {
+                image[i].SetActive(false);
+            }
         }
     }
 

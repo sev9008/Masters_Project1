@@ -114,7 +114,7 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 		maxstrucstep = -1;
 		m_selectionAni.ShowGraph(arr3);//display the current array on our graph
 		Display(arr3, arr3.Count, -20, 100);//activate the blocks and set their mats
-		Step.text = "Start at the beggining fo the array and begin checking for swaps.";
+		Step.text = "Start by setting j to 0 and i to 0.  We will increment j and check index j and j+1.  If j > j+1 then swap the indexes";
 
 		if (!manual)//you will see these next three case statements alot.  thses control whether the animation is paused or unpaused.  then you can resume, press next, or press previous
 		{
@@ -137,6 +137,7 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 			}
 			yield return null;
 		}
+
 		int i, j;
 		for (i = 0; i < arr3.Count - 1; i++)
 		{
@@ -145,7 +146,7 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 			imageController(0);
 			Display(arr3, arr3.Count, -20, maxsteparr);
 
-			Step.text = "Increment j and resume checking for swaps.";
+			Step.text = "We will increment j and begin checking ig j > j+1";
 			currentstrucstep++;//this will add the current step to the array.  its a wall of code but you will see it alot
 			maxstrucstep++;
 			var a = new MyStruct();
@@ -160,8 +161,6 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 			structarr[currentstrucstep].jval = -20;
 			structarr[currentstrucstep].maxstep = maxsteparr;
 			m_selectionAni.ShowGraph(arr3);
-			Step.text = "this loop will iterate over j and j+1";
-
 			if (!manual)//descsibed above
 			{
 				yield return new WaitForSeconds(speed);
@@ -190,7 +189,7 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 				imageController(1);
 				Display(arr3, arr3.Count, j, maxsteparr);
 
-				Step.text = "Increment j and resume checking for swaps.";
+				Step.text = "We will increment j and check if j > j+1";
 				currentstrucstep++;//same stuff we have seen basically every time there is a step or change in the array we are gonna have to run these lines.  Thats why you seem them repeated so much.  It also difficult to make a function out of it.
 				maxstrucstep++;
 				var b = new MyStruct();
@@ -229,7 +228,7 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 				ifstep1.text = arr3[j] + " > " + arr3[j + 1];
 				if (arr3[j] > arr3[j + 1])
 				{
-					Step.text = arr3[j] + " > " + arr3[j + 1] + " the algorithm will perform a swap.";
+					Step.text = "Since " + arr3[j] + " > " + arr3[j + 1] + " the algorithm will perform a swap.";
 
 					int temp = arr3[j];
 					arr3[j] = arr3[j + 1];
@@ -240,8 +239,8 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 					imageController(2);
 					currentstrucstep++;
 					maxstrucstep++;
-					var c = new MyStruct();
-					structarr.Add(c);
+					var d = new MyStruct();
+					structarr.Add(d);
 					structarr[currentstrucstep].oldarr = new List<int>(arr3.Count);
 					for (int tempnum = 0; tempnum < arr3.Count; tempnum++)
 					{
@@ -274,6 +273,46 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 						yield return null;
 					}
 				}
+			}
+
+			Step.text = "We will increment i and lock element " + (arr3.Count - i - 1);
+
+			Display(arr3, arr3.Count, j, maxsteparr);//same stuff we have seen
+			imageController(2);
+			currentstrucstep++;
+			maxstrucstep++;
+			var c = new MyStruct();
+			structarr.Add(c);
+			structarr[currentstrucstep].oldarr = new List<int>(arr3.Count);
+			for (int tempnum = 0; tempnum < arr3.Count; tempnum++)
+			{
+				structarr[currentstrucstep].oldarr.Add(arr3[tempnum]);
+			}
+			structarr[currentstrucstep].activeImage = 2;
+			structarr[currentstrucstep].steptxt = Step.text;
+			structarr[currentstrucstep].jval = j;
+			structarr[currentstrucstep].maxstep = maxsteparr;
+			m_selectionAni.ShowGraph(arr3);
+			if (!manual)
+			{
+				yield return new WaitForSeconds(speed);
+			}
+			if (manual)
+			{
+				paused = true;
+			}
+			while (paused && manual)
+			{
+				if (next && currentstrucstep >= maxstrucstep)
+				{
+					next = false;
+					paused = false;
+				}
+				else if (next || previous)
+				{
+					yield return StartCoroutine(changeStep());
+				}
+				yield return null;
 			}
 
 			if (swapped == false)
@@ -321,6 +360,10 @@ public class BubbleSort_arrayHolder : MonoBehaviour
 		}
 		imageController(-1);
 		Step.text = "Finished";
+		for (int n = 0; n < arr3.Count; n++)
+		{
+			b[n].GetComponentInChildren<MeshRenderer>().material = Sortedmat;
+		}
 	}
 
 	public IEnumerator changeStep()//if next or previous is pressed then this algorithm takes over.  it will display the current step and attempt to continue the animation 
