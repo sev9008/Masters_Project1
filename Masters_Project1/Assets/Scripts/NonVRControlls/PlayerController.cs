@@ -24,13 +24,12 @@ public class PlayerController : MonoBehaviour
     {
         cam = Camera.main;
         charController = GetComponent<CharacterController>();
-        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
 
 
         Grounded = Physics.CheckSphere(GroundCheck.position, GroundDistance, GroundMask, QueryTriggerInteraction.Ignore);

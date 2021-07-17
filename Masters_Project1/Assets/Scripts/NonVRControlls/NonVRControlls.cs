@@ -28,6 +28,8 @@ public class NonVRControlls : MonoBehaviour
     public NonVRPointer PointerR;
     public DotHighlightTip dotHighlightTip;
 
+    public GameObject QuitOBj;
+
     private void Start()
     {
         XRSettings.LoadDeviceByName("");
@@ -38,6 +40,7 @@ public class NonVRControlls : MonoBehaviour
     {
         HandleMoveObject();
         HilightController();
+        quitApplciation();
 
         //if the player has grabbed an object:
         //set the grabbed object's parent to the controller
@@ -164,6 +167,44 @@ public class NonVRControlls : MonoBehaviour
         else
         {
             dotHighlightTip.TipIsActive = false;
+        }
+    }
+
+    private void quitApplciation()
+    { 
+        if(Input.GetButtonDown("Quit"))
+        {
+            QuitOBj.SetActive(true);
+            StartCoroutine(waitForKeyPress());
+        }
+    }
+
+    private IEnumerator waitForKeyPress()
+    {
+        bool done = false;
+        while (!done) // essentially a "while true", but with a bool to break out naturally
+        {
+            if (Input.GetButtonUp("Quit"))
+            {
+                done = true;
+            }
+            yield return null; // wait until next frame, then continue execution from here (loop continues)
+        }
+
+
+        done = false;
+        while (!done) // essentially a "while true", but with a bool to break out naturally
+        {
+            if (Input.GetButtonDown("Quit"))
+            {
+                Application.Quit();
+            }
+            else if (Input.GetButtonDown("CancelQuit"))
+            {
+                QuitOBj.SetActive(false);
+                done = true; // breaks the loop
+            }
+            yield return null; // wait until next frame, then continue execution from here (loop continues)
         }
     }
 }
