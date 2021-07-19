@@ -172,7 +172,7 @@ public class MergeSortInteractive1 : MonoBehaviour
                 dist1 = Vector3.Distance(b[nextToSort].transform.position, R[currentSmallestIndex].transform.position);
                 if (dist1 < .04)
                 {
-                    Debug.Log("Swap");
+                    //Debug.Log("Swap");
                     m_vRController_1.downR = false;
                     m_vRController_1.downL = false;
                     m_vRController_2.down = false;
@@ -238,12 +238,12 @@ public class MergeSortInteractive1 : MonoBehaviour
                     break;
                 }
 
-                Debug.Log(i + ", " + j);
+                //Debug.Log(i + ", " + j);
 
                 //if (i != nextToSort && j != currentSmallestIndex)
                 if (i != nextToSort)
                 {
-                    Debug.Log("hmmmmm?");
+                    //Debug.Log("hmmmmm?");
 
                     if (dist2 < .04 || dist3 < .04)
                     {

@@ -53,7 +53,7 @@ public class QuickSortInteractive2 : MonoBehaviour
     {
         if (sorted)
         {
-            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Quick Sort Operates." + "\nThe Algorithm repeatedly sorts the array around the pivot.  If a value is less than the pviot it will remain on the left branch, otherwise values are compared and swapped until the array is sorted";
+            //Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Quick Sort Operates." + "\nThe Algorithm repeatedly sorts the array around the pivot.  If a value is less than the pviot it will remain on the left branch, otherwise values are compared and swapped until the array is sorted";
             IndexToSwap = 0;
             NextSmallesIndex = 9;
         }
@@ -99,8 +99,7 @@ public class QuickSortInteractive2 : MonoBehaviour
         co = StartCoroutine(Quick());
     }
 
-    
-    public void updatePos()
+        public void updatePos()
     {
         for (int i = 0; i < 9; i++)
         {

@@ -45,10 +45,14 @@ public class QuickSortInteractive1 : MonoBehaviour
     public Text corretAnswersText;
     public Text incorretAnswersText;
     public Text numofGamesText;
-    public GameObject arrow;
+    //public GameObject arrow;
 
     public bool waitingforswap;
     public bool IsTestMode;
+    
+    public GameObject igo;
+    public GameObject jgo;
+    public GameObject pigo;
 
     private void Start()
     {
@@ -59,7 +63,7 @@ public class QuickSortInteractive1 : MonoBehaviour
         incorretAnswers = 0;
         corretAnswers = 0;
         numofGames = 0;
-        arrow.SetActive(false);
+        //arrow.SetActive(false);
         //Begin();
     }
 
@@ -191,14 +195,46 @@ public class QuickSortInteractive1 : MonoBehaviour
 
     public IEnumerator partition(int l, int h)
     {
+        if (!IsTestMode)
+        {
+            igo.SetActive(true);
+            jgo.SetActive(true);
+            pigo.SetActive(true);
+        }
+        else
+        {
+            igo.SetActive(false);
+            jgo.SetActive(false);
+            pigo.SetActive(false);
+        }    
         float.TryParse(b[h].GetComponentInChildren<Text>().text, out float pivot);
         int i = (l - 1);
         for (int j = l; j <= h - 1; j++)
         {
+            if (!IsTestMode)
+            {
+                if (i >= 0)
+                {
+                    igo.transform.position = new Vector3(b[i].transform.position.x, b[i].transform.position.y + .2f, b[i].transform.position.z);
+                }
+                else
+                {
+                    igo.transform.position = new Vector3(b[0].transform.position.x - .2f, b[0].transform.position.y + .2f, b[0].transform.position.z);
+                }
+                jgo.transform.position = new Vector3(b[j].transform.position.x, b[j].transform.position.y + .2f, b[j].transform.position.z);
+                pigo.transform.position = new Vector3(b[h].transform.position.x, b[h].transform.position.y + .2f, b[h].transform.position.z);
+            }
+
+            //yield return new WaitForSeconds(1);
             float.TryParse(b[j].GetComponentInChildren<Text>().text, out float temp);
             if (temp < pivot)
             {
                 i++;
+
+                if (!IsTestMode)
+                {
+                    igo.transform.position = new Vector3(b[i].transform.position.x, b[i].transform.position.y + .2f, b[i].transform.position.z);
+                }
 
                 nextToSort = i;
                 currentSmallestIndex = j;
