@@ -12,6 +12,7 @@ public class Button_CancelQuit : MonoBehaviour, IPointerDownHandler
         if (QuitObj.activeInHierarchy)
         {
             QuitObj.SetActive(false);
+            
         }
     }
 }

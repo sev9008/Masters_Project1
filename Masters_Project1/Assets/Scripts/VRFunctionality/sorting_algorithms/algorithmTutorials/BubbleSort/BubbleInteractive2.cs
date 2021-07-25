@@ -161,6 +161,7 @@ public class BubbleInteractive2 : MonoBehaviour
         sorted = true;
         EnableTrigger(-1, -1);
     }
+    
     public IEnumerator BubbleSort()//this is the holy grail.  jk its just the bubble sort algorithm.  with some added code
     {
         bool swapped = false;

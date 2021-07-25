@@ -47,7 +47,7 @@ public class NonVRPointer : MonoBehaviour
 
         //Debug.Log("HIT DIST" + hit.distance);
         //Debug.Log("DEF LEN" + defaultLength);
-        
+
         //this is the one that is screwing up
         //Debug.Log("DATA DIST" + data.pointerCurrentRaycast.distance);
 
@@ -66,7 +66,7 @@ public class NonVRPointer : MonoBehaviour
         // Set position of the dot
         dot.transform.position = endPosition;
 
-        //Debug.Log(hit.collider.gameObject);
+        Debug.Log(hit.collider.gameObject);
     }
 
     private RaycastHit CreateRaycast()
@@ -84,13 +84,6 @@ public class NonVRPointer : MonoBehaviour
             tmplayer = hit.collider.gameObject.layer;
         }
 
-        if (tmplayer == 12)//if the raycast hit a blocker then its time to change the hit point
-        {
-            return hit;
-        }
-        else
-        {
-            return hit;
-        }
+        return hit;
     }
 }

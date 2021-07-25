@@ -4,35 +4,31 @@ using UnityEngine;
 
 public class DoorAnimator : MonoBehaviour
 {
-    public Animation Ani;
-    private bool Open;
-    private bool Close;
+    //public Animation Ani;
+    public Animator animator;
+    public bool Open;
+    public bool Close;
 
     void Update()
     {
-        if (Open)
-        {
-            Ani.Play("Open");
-            Open = false;
-        }
-        if (Close)
-        {
-            Ani.Play("Close");
-            Close = false;
-        }
+
     }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && !animator.GetCurrentAnimatorStateInfo(0).IsName("Open"))
         {
-            Open = true;
+            Debug.Log("IsOpen");
+            animator.SetTrigger("Open");
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && !animator.GetCurrentAnimatorStateInfo(0).IsName("Close"))
         {
-            Close = true;
+            Debug.Log("CLose");
+            animator.SetTrigger("Close");
         }
     }
 }

@@ -69,6 +69,7 @@ public class InsertSortInteractive2 : MonoBehaviour
             moving = false;
             StopCoroutine(co);
             StopCoroutine(sho);
+            StopAllCoroutines();
             updatePos();
         }
         catch { }
@@ -109,44 +110,55 @@ public class InsertSortInteractive2 : MonoBehaviour
         int i, key, j;
         for (i = 1; i < b.Count; i++)
         {
+            //set key value to b[i]
             key = int.Parse(b[i].GetComponentInChildren<Text>().text);
-            b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
-            keyGo.GetComponentInChildren<Text>().text = key.ToString();
-            keyGo.GetComponent<RectTransform>().anchoredPosition = new Vector2(b[i].GetComponent<RectTransform>().anchoredPosition.x, b[i].GetComponent<RectTransform>().anchoredPosition.y - 50);
+            keyGo.GetComponentInChildren<Text>().text = key.ToString();//set the box that represents key to key value
+            keyGo.GetComponent<RectTransform>().anchoredPosition = new Vector2(b[i].GetComponent<RectTransform>().anchoredPosition.x, b[i].GetComponent<RectTransform>().anchoredPosition.y - 50);//set the position
 
             j = i - 1;
 
-            int tempval = int.Parse(b[j].GetComponentInChildren<Text>().text);
+            int tempval = int.Parse(b[j].GetComponentInChildren<Text>().text);//this will get a string to an int
             while (j >= 0 && tempval > key)
             {
-                b[j].GetComponentInChildren<MeshRenderer>().material = Nextsort;
-                b[j+1].GetComponentInChildren<MeshRenderer>().material = prevsort;
-                yield return StartCoroutine(SwapAnimation(j + 1, j));
-                updatePos();
-                b[j + 1].GetComponentInChildren<Text>().text = b[j].GetComponentInChildren<Text>().text;
+
+                b[j].GetComponentInChildren<MeshRenderer>().material = Nextsort;//change the mesh for the values to be swapped
+                b[j+1].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+
+                yield return StartCoroutine(SwapAnimation(j + 1, j));//start the swap animation
+                updatePos();//update the pos of our game objects
+
+                b[j + 1].GetComponentInChildren<MeshRenderer>().material = prevsort;//set material of swapped objects
+
+                b[j + 1].GetComponentInChildren<Text>().text = b[j].GetComponentInChildren<Text>().text;//reset values of swapped objects
                 j = j - 1;
 
-                if (j >= 0)//use this otherwise tmepval will throw an error
+                if (j >= 0)//use this to update our tempval since b[j] has changed
                 {
                     tempval = int.Parse(b[j].GetComponentInChildren<Text>().text);
-                    Debug.Log(tempval);
                 }
                 yield return new WaitForSeconds(speed);
             }
+
+            //swap the key with b[j] only if they arent the same number
             keyGo.GetComponentInChildren<MeshRenderer>().material = Nextsort;
-            yield return StartCoroutine(SwapAnimation(j+1, -1));
-            updatePos();
-            b[j + 1].GetComponentInChildren<Text>().text = key.ToString();
-            for (int p = 0; p < b.Count; p++)
+            int tempint = int.Parse(b[j+1].GetComponentInChildren<Text>().text);
+            if (tempint != key)
             {
+                yield return StartCoroutine(SwapAnimation(j + 1, -1));
+                updatePos();
+                b[j + 1].GetComponentInChildren<Text>().text = key.ToString();
+            }
+
+            //reset the material color
+            for (int p = 0; p < b.Count; p++)
+            { 
                 b[p].GetComponentInChildren<MeshRenderer>().material = Unsorted;
             }
-            yield return new WaitForSeconds(speed);
+            keyGo.GetComponentInChildren<MeshRenderer>().material = Unsorted;
         }
         keyGo.SetActive(false);
         updatePos();
         sorted = true;
-        yield return new WaitForSeconds(speed);
     }
 
     public void EnableTrigger()

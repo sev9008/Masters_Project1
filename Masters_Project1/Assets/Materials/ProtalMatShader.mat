@@ -13,7 +13,7 @@ Material:
   m_ShaderKeywords: 
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
+  m_DoubleSidedGI: 1
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
@@ -30,4 +30,4 @@ Material:
     - Vector1_DBD89F7B: 2.5
     - Vector1_F6ECA24: 0.5
     m_Colors:
-    - Color_206B1B9D: {r: 0.5803922, g: 3.7019608, b: 1.0352942, a: 1}
+    - Color_206B1B9D: {r: 0.5155687, g: 3.4072366, b: 4.68495, a: 1}

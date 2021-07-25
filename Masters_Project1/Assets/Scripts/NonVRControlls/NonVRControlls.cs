@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.XR;
 
 public class NonVRControlls : MonoBehaviour
@@ -18,6 +19,7 @@ public class NonVRControlls : MonoBehaviour
     public MergeSortInteractive1 mergeSortInteractive1;
 
     public NonVRPointer m_pointer;
+    public GameObject pointobj;
 
     public GameObject grabbed;
     public GameObject Dot;
@@ -25,19 +27,58 @@ public class NonVRControlls : MonoBehaviour
     public bool down;
     public bool ActiveHighlight;
 
-    public NonVRPointer PointerR;
     public DotHighlightTip dotHighlightTip;
 
     public GameObject QuitOBj;
+    public Camera cam;
+    CharacterController charController;
+    bool Grounded;
+    Vector3 Velocity;
+    float GroundDistance = 0.4f;
+    public float speed = 10f;
+    public LayerMask GroundMask;
+    public Transform GroundCheck;
+    public float MoveSpeed = 5;
 
+    public bool Quitmode = false;
+
+    public RaycastHit hit;
+
+    public LayerMask raymask;
+
+    public nonVRInputModule nonVRInputModule;
+    public MouteInputModule mouteInputModule;
+    public float objdistance;
+
+    private void Awake()
+    {
+        cam = Camera.main;
+    }
     private void Start()
     {
         XRSettings.LoadDeviceByName("");
         XRSettings.enabled = false;
         Debug.Log("XRDisabled");
+
+        charController = GetComponent<CharacterController>();
     }
     private void Update()
     {
+        if (QuitOBj.activeInHierarchy)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            pointobj.SetActive(false);
+            nonVRInputModule.enabled = false;
+            mouteInputModule.enabled = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            pointobj.SetActive(true);
+            nonVRInputModule.enabled = true;
+            mouteInputModule.enabled = false;
+        }
+
         HandleMoveObject();
         HilightController();
         quitApplciation();
@@ -50,8 +91,9 @@ public class NonVRControlls : MonoBehaviour
         if (down)
         {
             m_pointer.defaultLength = 0f;
+
             grabbed.transform.position = m_pointer.transform.position;
-            grabbed.transform.position = grabbed.transform.position + (m_pointer.transform.forward * 1.5f);
+            grabbed.transform.position = grabbed.transform.position + (m_pointer.transform.forward * 1);
             grabbed.transform.rotation = new Quaternion(0, 0, 0, 0);
             try
             {
@@ -82,6 +124,34 @@ public class NonVRControlls : MonoBehaviour
             catch { }
             grabbed = null;
         }
+
+        Grounded = Physics.CheckSphere(GroundCheck.position, GroundDistance, GroundMask, QueryTriggerInteraction.Ignore);
+        if (!Grounded)
+        {
+            Grounded = charController.isGrounded;
+        }
+        Movement();
+    }
+
+    void Movement()
+    {
+        if (!Grounded)
+        {
+            Velocity += Vector3.up * Gravity * Time.deltaTime; // increases fall gravity for better feel
+        }
+        else
+        {
+            Velocity = Vector3.up * 0;
+        }
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
+
+        //transform.right and transform.forward uses local coords instead of world coords
+        Vector3 move = transform.right * x + transform.forward * z;
+
+        //Debug.Log(Velocity);
+        charController.Move(Velocity * Time.deltaTime);
+        charController.Move(move * MoveSpeed * Time.deltaTime);
     }
 
 
@@ -92,9 +162,13 @@ public class NonVRControlls : MonoBehaviour
         {
             if (Input.GetButtonDown("Fire1") && m_pointer.hit.collider.gameObject.layer == 9)
             {
+                
                 m_pointer.defaultLength = 0f;
                 grabbed = m_pointer.hit.collider.gameObject;
                 grabbed.transform.parent = Dot.transform;
+
+                //objdistance = Vector3.Distance(transform.position, grabbed.transform.position);
+
                 try
                 {
                     grabbed.GetComponent<BlockParent>().gravity = false;
@@ -170,41 +244,55 @@ public class NonVRControlls : MonoBehaviour
         }
     }
 
+
     private void quitApplciation()
-    { 
-        if(Input.GetButtonDown("Quit"))
+    {
+        if (Input.GetButtonDown("Quit") && !QuitOBj.activeInHierarchy)
         {
             QuitOBj.SetActive(true);
-            StartCoroutine(waitForKeyPress());
-        }
-    }
-
-    private IEnumerator waitForKeyPress()
-    {
-        bool done = false;
-        while (!done) // essentially a "while true", but with a bool to break out naturally
+        }        
+        else if (Input.GetButtonDown("Quit") && QuitOBj.activeInHierarchy)
         {
-            if (Input.GetButtonUp("Quit"))
-            {
-                done = true;
-            }
-            yield return null; // wait until next frame, then continue execution from here (loop continues)
-        }
-
-
-        done = false;
-        while (!done) // essentially a "while true", but with a bool to break out naturally
-        {
-            if (Input.GetButtonDown("Quit"))
-            {
-                Application.Quit();
-            }
-            else if (Input.GetButtonDown("CancelQuit"))
-            {
-                QuitOBj.SetActive(false);
-                done = true; // breaks the loop
-            }
-            yield return null; // wait until next frame, then continue execution from here (loop continues)
+            QuitOBj.SetActive(false);
         }
     }
 }
+
+//    private void quitApplciation()
+//    { 
+//        if(Input.GetButtonDown("Quit"))
+//        {
+//            QuitOBj.SetActive(true);
+//            StartCoroutine(waitForKeyPress());
+//        }
+//    }
+
+//    private IEnumerator waitForKeyPress()
+//    {
+//        bool done = false;
+//        while (!done) // essentially a "while true", but with a bool to break out naturally
+//        {
+//            if (Input.GetButtonUp("Quit"))
+//            {
+//                done = true;
+//            }
+//            yield return null; // wait until next frame, then continue execution from here (loop continues)
+//        }
+
+
+//        done = false;
+//        while (!done) // essentially a "while true", but with a bool to break out naturally
+//        {
+//            if (Input.GetButtonDown("Quit"))
+//            {
+//                Application.Quit();
+//            }
+//            else if (Input.GetButtonDown("CancelQuit"))
+//            {
+//                QuitOBj.SetActive(false);
+//                done = true; // breaks the loop
+//            }
+//            yield return null; // wait until next frame, then continue execution from here (loop continues)
+//        }
+//    }
+//

@@ -191,10 +191,9 @@ public class SortAniCompareV2 : MonoBehaviour
 
                 if (temp1 < temp2)
                 {
-                    iMin = j;
+                    iMin = j; 
                 }
                 Debug.Log("RUN");
-
                 yield return new WaitForSeconds(speed);
             }
             if (iMin != i)
@@ -267,8 +266,13 @@ public class SortAniCompareV2 : MonoBehaviour
         {
             int m = l + (r - l) / 2;
             yield return mergeSort(l, m);
+            yield return new WaitForSeconds(speed);
+
             yield return mergeSort(m + 1, r);
+            yield return new WaitForSeconds(speed);
+
             yield return mergePartition(l, m, r);
+            yield return new WaitForSeconds(speed);
         }
     }
 
@@ -284,11 +288,13 @@ public class SortAniCompareV2 : MonoBehaviour
         {
             float.TryParse(mergeSortArr[l + a].GetComponentInChildren<Text>().text, out float temp);
             L[a] = temp;
+            yield return new WaitForSeconds(speed);
         }
         for (int b = 0; b < n2; b++)
         {
             float.TryParse(mergeSortArr[m + 1 + b].GetComponentInChildren<Text>().text, out float temp2);
             R[b] = temp2;
+            yield return new WaitForSeconds(speed);
         }
 
         int i = 0;
@@ -339,8 +345,13 @@ public class SortAniCompareV2 : MonoBehaviour
         {
             pi = h;
             yield return StartCoroutine(quickPartition(l, h));
+            yield return new WaitForSeconds(speed);
+
             yield return StartCoroutine(quickSort(l, pi - 1));
+            yield return new WaitForSeconds(speed);
+
             yield return StartCoroutine(quickSort(pi + 1, h));
+            yield return new WaitForSeconds(speed);
         }
     }
 
