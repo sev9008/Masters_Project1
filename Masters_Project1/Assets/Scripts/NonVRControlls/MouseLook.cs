@@ -13,11 +13,6 @@ public class MouseLook : MonoBehaviour
     public Transform PlayerBody;
     public GameObject QuitOBj;
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         float mouseX = 0;

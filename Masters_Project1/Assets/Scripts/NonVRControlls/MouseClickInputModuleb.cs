@@ -15,11 +15,6 @@ public class MouseClickInputModuleb : BaseInputModule
 
         eventSystem.RaycastAll(Data, m_RaycastResultCache);
 
-        //foreach (RaycastResult result in m_RaycastResultCache)
-        //{
-        //    Debug.Log("Hit " + result.gameObject.name);
-        //}
-
         var temp = FindFirstRaycast(m_RaycastResultCache);
 
         if (temp.isValid)

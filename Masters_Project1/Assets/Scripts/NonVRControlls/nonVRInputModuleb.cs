@@ -20,10 +20,11 @@ public class nonVRInputModuleb : BaseInputModule
 
     public override void Process()
     {
-
+        //thoguht this would work but it keeps updating the position.  Its kindof wierd.  wish i knew how this behaved mroe. 
+        //Data = new PointerEventData(eventSystem);
+        //Data.position = new Vector2(pointer.Camera.pixelWidth / 2, pointer.Camera.pixelHeight / 2);
 
         timer = 0;
-        //these enxt two lines are cuasing problems ;(
         eventSystem.RaycastAll(Data, m_RaycastResultCache);
 
         var temp = FindFirstRaycast(m_RaycastResultCache);

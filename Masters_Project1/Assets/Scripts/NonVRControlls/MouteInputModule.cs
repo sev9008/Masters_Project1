@@ -10,13 +10,11 @@ public class MouteInputModule : MouseClickInputModuleb
 
         if (Input.GetButtonDown("Fire1"))
         {
-            //Debug.Log("true");
             Press();
         }
 
         if (Input.GetButtonUp("Fire1"))
         {
-            //Debug.Log("false");
             Release();
         }
     }

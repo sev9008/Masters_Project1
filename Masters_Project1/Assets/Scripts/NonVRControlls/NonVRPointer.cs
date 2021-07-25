@@ -9,8 +9,7 @@ public class NonVRPointer : MonoBehaviour
     [SerializeField] private GameObject dot = null;
 
     //public Camera Camera { get; private set; } = null;
-    public Camera Camera { get; private set; } = null;
-
+    public Camera Camera;
     //public LineRenderer lineRenderer = null;
     public nonVRInputModule inputModule = null;
 
@@ -24,7 +23,6 @@ public class NonVRPointer : MonoBehaviour
 
     private void Awake()
     {
-        Camera = GetComponent<Camera>();
         Camera.enabled = false;
     }
 
@@ -66,7 +64,7 @@ public class NonVRPointer : MonoBehaviour
         // Set position of the dot
         dot.transform.position = endPosition;
 
-        Debug.Log(hit.collider.gameObject);
+        //Debug.Log(hit.collider.gameObject);
     }
 
     private RaycastHit CreateRaycast()
@@ -74,7 +72,7 @@ public class NonVRPointer : MonoBehaviour
         RaycastHit hit;
         Ray ray = new Ray(transform.position, transform.forward);
         Physics.Raycast(ray, out hit, defaultLength, raymask);
-        Debug.DrawRay(transform.position, transform.forward* defaultLength, Color.green);
+        //Debug.DrawRay(transform.position, transform.forward* defaultLength, Color.green);
 
 
         //check if raycast hit a wall or any type of blocker
