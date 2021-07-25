@@ -145,9 +145,12 @@ public class NonVRControlls : MonoBehaviour
         }
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
-
+        Vector3 move = new Vector3(0, 0, 0);
         //transform.right and transform.forward uses local coords instead of world coords
-        Vector3 move = transform.right * x + transform.forward * z;
+        if (!QuitOBj.activeInHierarchy)
+        {
+            move = transform.right * x + transform.forward * z;
+        }
 
         //Debug.Log(Velocity);
         charController.Move(Velocity * Time.deltaTime);
