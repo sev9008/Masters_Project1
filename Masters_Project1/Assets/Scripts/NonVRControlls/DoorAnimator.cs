@@ -5,6 +5,26 @@ using UnityEngine;
 public class DoorAnimator : MonoBehaviour
 {
     public Animator animator;
+    public GameObject Player;
+    bool IsOpen;
+
+    private void Start()
+    {
+        Player = GameObject.FindGameObjectWithTag("Player");
+    }
+
+    private void Update()
+    {
+        if (IsOpen)
+        {
+            if (Vector3.Distance(transform.position, Player.transform.position) > 10)
+            {
+                animator.SetTrigger("Close");
+                animator.ResetTrigger("Open");
+                Debug.Log("Close");
+            }
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -12,6 +32,7 @@ public class DoorAnimator : MonoBehaviour
         {
             animator.SetTrigger("Open");
             animator.ResetTrigger("Close");
+            IsOpen = true;
         }
     }
 
@@ -21,6 +42,7 @@ public class DoorAnimator : MonoBehaviour
         {
             animator.SetTrigger("Close");
             animator.ResetTrigger("Open");
+            IsOpen = false;
         }
     }
 }

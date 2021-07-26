@@ -4,6 +4,10 @@
    "app_key" : "application.generated.unity.masters_project1.exe",
    "bindings" : {
       "/actions/buggy" : {
+         "chords" : [],
+         "haptics" : [],
+         "poses" : [],
+         "skeleton" : [],
          "sources" : [
             {
                "inputs" : {
@@ -138,16 +142,6 @@
                "path" : "/user/hand/left/input/trigger"
             },
             {
-               "inputs" : {},
-               "mode" : "dpad",
-               "parameters" : {
-                  "deadzone_pct" : "90",
-                  "overlap_pct" : "15",
-                  "sub_mode" : "click"
-               },
-               "path" : "/user/hand/left/input/trackpad"
-            },
-            {
                "inputs" : {
                   "pull" : {
                      "output" : "/actions/default/in/squeeze"
@@ -221,10 +215,23 @@
                },
                "mode" : "trackpad",
                "path" : "/user/hand/left/input/trackpad"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/default/in/togglequitmenu"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/application_menu"
             }
          ]
       },
       "/actions/platformer" : {
+         "chords" : [],
+         "haptics" : [],
+         "poses" : [],
+         "skeleton" : [],
          "sources" : [
             {
                "inputs" : {
@@ -267,8 +274,8 @@
    },
    "category" : "steamvr_input",
    "controller_type" : "vive_controller",
-   "description" : "test1",
-   "name" : "Saved Masters_Project1 [Testing] configuration for Vive Controller",
+   "description" : "For CSVRLR",
+   "name" : "CSVRLR BIndings",
    "options" : {},
    "simulated_actions" : []
 }

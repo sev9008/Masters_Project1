@@ -21,6 +21,7 @@ public class VRController_1 : MonoBehaviour
     public SteamVR_Action_Vector2 MoveValue = null;
     public SteamVR_Action_Boolean teleport = null;
     public SteamVR_Action_Boolean CloseHighlight = null;
+    public SteamVR_Action_Boolean QuitMenuButton = null;
 
     public SlesortInteractive1 slesortInteractive;
     public InsertSortInteractive1 insertSortInteractive1;
@@ -51,6 +52,8 @@ public class VRController_1 : MonoBehaviour
 
     public Pointer PointerR;
     public DotHighlightTip dotHighlightTip;
+    public GameObject QuitOBj;
+
 
     private void Awake()
     {
@@ -76,6 +79,7 @@ public class VRController_1 : MonoBehaviour
         HandleMoveObject();
         Teleport();
         HilightController();
+        quitApplciation();
 
         //if the player has grabbed an object:
         //set the grabbed object's parent to the controller
@@ -430,6 +434,21 @@ public class VRController_1 : MonoBehaviour
         else 
         {
             dotHighlightTip.TipIsActive = false;
+        }
+    }
+
+    /// <summary>
+    /// this function willa ctivate or deativate the quit menu.
+    /// </summary>
+    private void quitApplciation()
+    {
+        if ((QuitMenuButton.GetStateDown(SteamVR_Input_Sources.LeftHand) || QuitMenuButton.GetStateDown(SteamVR_Input_Sources.RightHand)) && !QuitOBj.activeInHierarchy)
+        {
+            QuitOBj.SetActive(true);
+        }
+        else if ((QuitMenuButton.GetStateDown(SteamVR_Input_Sources.LeftHand) || QuitMenuButton.GetStateDown(SteamVR_Input_Sources.RightHand)) && QuitOBj.activeInHierarchy)
+        {
+            QuitOBj.SetActive(false);
         }
     }
 }
