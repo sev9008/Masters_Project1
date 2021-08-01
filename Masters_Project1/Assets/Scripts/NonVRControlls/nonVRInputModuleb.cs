@@ -32,9 +32,15 @@ public class nonVRInputModuleb : BaseInputModule
         {
             Data.pointerCurrentRaycast = temp;
 
+            Debug.Log("possible GO" + Data.pointerCurrentRaycast.gameObject);
+
             HandlePointerExitAndEnter(Data, Data.pointerCurrentRaycast.gameObject);
 
             ExecuteEvents.Execute(Data.pointerDrag, Data, ExecuteEvents.dragHandler);
+        }
+        else
+        {
+            //Debug.Log("nothing found");
         }
     }
 
@@ -42,6 +48,7 @@ public class nonVRInputModuleb : BaseInputModule
     {
         Data.pointerPressRaycast = Data.pointerCurrentRaycast;
 
+        Debug.Log("GO that was pressed" + Data.pointerPressRaycast.gameObject);
         Data.pointerPress = ExecuteEvents.GetEventHandler<IPointerClickHandler>(Data.pointerPressRaycast.gameObject);
         Data.pointerDrag = ExecuteEvents.GetEventHandler<IDragHandler>(Data.pointerPressRaycast.gameObject);
 

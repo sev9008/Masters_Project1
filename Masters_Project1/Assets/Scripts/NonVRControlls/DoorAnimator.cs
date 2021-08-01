@@ -19,10 +19,19 @@ public class DoorAnimator : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, Player.transform.position) > 10)
             {
-                animator.SetTrigger("Close");
-                animator.ResetTrigger("Open");
-                Debug.Log("Close");
+                //animator.SetTrigger("Close");
+                //animator.ResetTrigger("Open");
+                animator.SetBool("OpenBool", false);
+                animator.SetBool("CloseBool", true);
+                //Debug.Log("Close");
             }
+        }
+
+        if (animator.GetBool("OpenBool") == true && animator.GetBool("CloseBool") == true)
+        {
+            animator.SetBool("OpenBool", false);
+            animator.SetBool("CloseBool", false);
+            //Debug.Log("Reset animation");
         }
     }
 
@@ -30,9 +39,12 @@ public class DoorAnimator : MonoBehaviour
     {
         if (other.tag == "Player" && !animator.GetCurrentAnimatorStateInfo(0).IsName("OpenDoor"))
         {
-            animator.SetTrigger("Open");
-            animator.ResetTrigger("Close");
+            //animator.SetTrigger("Open");
+            //animator.ResetTrigger("Close");
+            animator.SetBool("OpenBool", true);
+            animator.SetBool("CloseBool", false);
             IsOpen = true;
+            //Debug.Log("Opentrigger");
         }
     }
 
@@ -40,9 +52,12 @@ public class DoorAnimator : MonoBehaviour
     {
         if (other.tag == "Player" && !animator.GetCurrentAnimatorStateInfo(0).IsName("CloseDoor"))
         {
-            animator.SetTrigger("Close");
-            animator.ResetTrigger("Open");
+            //animator.SetTrigger("Close");
+            //animator.ResetTrigger("Open");
+            animator.SetBool("OpenBool", false);
+            animator.SetBool("CloseBool", true);
             IsOpen = false;
+            //Debug.Log("CLoseTrigger");
         }
     }
 }

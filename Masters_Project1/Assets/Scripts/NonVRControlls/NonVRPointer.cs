@@ -28,7 +28,7 @@ public class NonVRPointer : MonoBehaviour
 
     private void Start()
     {
-        inputModule = EventSystem.current.gameObject.GetComponent<nonVRInputModule>();
+        //inputModule = EventSystem.current.gameObject.GetComponent<nonVRInputModule>();
     }
 
     private void Update()

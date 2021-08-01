@@ -52,13 +52,15 @@ public class NonVRControlls : MonoBehaviour
 
     private void Awake()
     {
-        cam = Camera.main;
+        //cam = Camera.main;
     }
     private void Start()
     {
         XRSettings.LoadDeviceByName("");
         XRSettings.enabled = false;
         Debug.Log("XRDisabled");
+
+        Debug.LogError("start");
 
         charController = GetComponent<CharacterController>();
     }
@@ -228,12 +230,12 @@ public class NonVRControlls : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire2") && dotHighlightTip.TipIsActive)//turn off highlight
         {
-            Debug.Log("off");
+            //Debug.Log("off");
             ActiveHighlight = false;
         }
         else if (Input.GetButtonDown("Fire2") && !dotHighlightTip.TipIsActive)//turn on highlight
         {
-            Debug.Log("on");
+            //Debug.Log("on");
             ActiveHighlight = true;
         }
 

@@ -10,11 +10,13 @@ public class nonVRInputModule : nonVRInputModuleb
 
         if (Input.GetButtonDown("Fire1"))
         {
+            //Debug.Log("button press");
             Press();
         }
 
         if (Input.GetButtonUp("Fire1"))
         {
+            //Debug.Log("button release");
             Release();
         }
     }
