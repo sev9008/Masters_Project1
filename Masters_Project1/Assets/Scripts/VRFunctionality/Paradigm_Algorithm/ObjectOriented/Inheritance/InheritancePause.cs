@@ -14,13 +14,13 @@ public class InheritancePause : MonoBehaviour, IPointerDownHandler
         if (inheritanceController.manual)
         {
             inheritanceController.manual = false;
-            txt.text = "Resume";
+            txt.text = "Pause";
         }
 
         else if (!inheritanceController.manual)
         {
             inheritanceController.manual = true;
-            txt.text = "Pause";
+            txt.text = "Resume";
         }
     }
 }

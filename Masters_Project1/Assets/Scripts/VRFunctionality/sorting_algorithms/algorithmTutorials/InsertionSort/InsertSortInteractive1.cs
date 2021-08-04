@@ -179,6 +179,7 @@ public class InsertSortInteractive1 : MonoBehaviour
             t.text = n.ToString();
             b[i].GetComponent<MoveInteractionBLock>().PairedPos = pos[i];
             b[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+            keyGo.GetComponentInChildren<MeshRenderer>().material = Unsorted;
         }
         updatePos();
         sorted = false;

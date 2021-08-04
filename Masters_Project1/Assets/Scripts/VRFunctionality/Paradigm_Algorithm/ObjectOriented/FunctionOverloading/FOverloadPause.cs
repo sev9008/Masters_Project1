@@ -14,13 +14,13 @@ public class FOverloadPause : MonoBehaviour, IPointerDownHandler
         if (fOverloadController.manual)
         {
             fOverloadController.manual = false;
-            txt.text = "Resume";
+            txt.text = "Pause";
         }
 
         else if (!fOverloadController.manual)
         {
             fOverloadController.manual = true;
-            txt.text = "Pause";
+            txt.text = "Resume";
         }
     }
 }

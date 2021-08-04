@@ -7,20 +7,17 @@ using UnityEngine.UI;
 public class MergeInteractiveTestSwitch : MonoBehaviour, IPointerDownHandler
 {
     public MergeSortInteractive1 slesortInteractive1;
-    public Text txt;
+    public Text txtTest;
+    public Text txtGuide;
 
     public void OnPointerDown(PointerEventData eventData)
     {
         if (slesortInteractive1.IsTestMode == false)
         {
             slesortInteractive1.IsTestMode = true;
-            txt.text = "End Test";
         }
-        else if (slesortInteractive1.IsTestMode == true)
-        {
-            slesortInteractive1.IsTestMode = false;
-            txt.text = "Start Test";
-        }
+        txtTest.text = "Restart";
+        txtGuide.text = "Start Guide";
         slesortInteractive1.Begin();
     }
 }

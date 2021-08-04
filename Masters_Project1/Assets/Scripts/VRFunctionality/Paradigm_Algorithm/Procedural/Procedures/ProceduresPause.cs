@@ -14,13 +14,13 @@ public class ProceduresPause : MonoBehaviour, IPointerDownHandler
         if (abstractController.manual)
         {
             abstractController.manual = false;
-            txt.text = "Resume";
+            txt.text = "Pause";
         }
 
         else if (!abstractController.manual)
         {
             abstractController.manual = true;
-            txt.text = "Pause";
+            txt.text = "Resume";
         }
     }
 }

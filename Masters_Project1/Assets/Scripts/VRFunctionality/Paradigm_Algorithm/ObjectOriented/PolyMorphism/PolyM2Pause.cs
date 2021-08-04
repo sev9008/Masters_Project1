@@ -14,13 +14,13 @@ public class PolyM2Pause : MonoBehaviour, IPointerDownHandler
         if (polyMController.manual)
         {
             polyMController.manual = false;
-            txt.text = "Resume";
+            txt.text = "Pause";
         }
 
         else if (!polyMController.manual)
         {
             polyMController.manual = true;
-            txt.text = "Pause";
+            txt.text = "Resume";
         }
     }
 }
