@@ -114,14 +114,18 @@ public class NonVRControlls : MonoBehaviour
             {
                 grabbed.GetComponent<BlockParent>().gravity = true;
                 GameObject m_parent = grabbed.GetComponent<BlockParent>().parent;
-                grabbed.transform.parent = m_parent.transform;
+                //grabbed.transform.parent = m_parent.transform;
+                grabbed.transform.SetParent(m_parent.transform);
+
                 grabbed.GetComponent<BlockParent>().isGrabbed = false;
             }
             catch { }
             try//use this for MoveInteractionBLock script which does not utilize a rigid body.
             {
                 GameObject m_parent = grabbed.GetComponent<MoveInteractionBLock>().parent;
-                grabbed.transform.parent = m_parent.transform;
+                //grabbed.transform.parent = m_parent.transform;
+                grabbed.transform.SetParent(m_parent.transform);
+
             }
             catch { }
             grabbed = null;
@@ -170,7 +174,10 @@ public class NonVRControlls : MonoBehaviour
                 
                 m_pointer.defaultLength = 0f;
                 grabbed = m_pointer.hit.collider.gameObject;
-                grabbed.transform.parent = Dot.transform;
+                //grabbed.transform.parent = Dot.transform;
+                grabbed.transform.SetParent(Dot.transform);
+
+                grabbed.transform.SetParent(Dot.transform);
 
                 //objdistance = Vector3.Distance(transform.position, grabbed.transform.position);
 
@@ -199,7 +206,9 @@ public class NonVRControlls : MonoBehaviour
                 {
                     grabbed.GetComponent<BlockParent>().gravity = true;
                     GameObject m_parent = grabbed.GetComponent<BlockParent>().parent;
-                    grabbed.transform.parent = m_parent.transform;
+                    //grabbed.transform.parent = m_parent.transform;
+                    grabbed.transform.SetParent(m_parent.transform);
+
                     grabbed.GetComponent<BlockParent>().isGrabbed = false;
                 }
                 catch { }
@@ -207,7 +216,8 @@ public class NonVRControlls : MonoBehaviour
                 try
                 {
                     GameObject m_parent = grabbed.GetComponent<MoveInteractionBLock>().parent;
-                    grabbed.transform.parent = m_parent.transform;
+                    //grabbed.transform.parent = m_parent.transform;
+                    grabbed.transform.SetParent(m_parent.transform);
                     slesortInteractive.updatePos();
                     //slesortInteractive.arrow.SetActive(false);
                     insertSortInteractive1.updatePos();

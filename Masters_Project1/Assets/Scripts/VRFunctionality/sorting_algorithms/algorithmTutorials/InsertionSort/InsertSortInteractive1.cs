@@ -198,7 +198,9 @@ public class InsertSortInteractive1 : MonoBehaviour
             b[i].GetComponent<RectTransform>().anchoredPosition = pos[i].GetComponent<RectTransform>().anchoredPosition;
             b[i].transform.position = pos[i].transform.position;
             b[i].transform.rotation = pos[i].transform.rotation;
-            keyGo.transform.parent = this.gameObject.transform;
+            //keyGo.transform.parent = this.gameObject.transform;
+            keyGo.transform.SetParent(this.gameObject.transform);
+
             keyGo.transform.rotation = pos[keypos].transform.rotation;
             keyGo.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(b[keypos].GetComponent<RectTransform>().anchoredPosition3D.x, b[keypos].GetComponent<RectTransform>().anchoredPosition3D.y + 50, b[keypos].GetComponent<RectTransform>().anchoredPosition3D.z);
         }
