@@ -8,17 +8,19 @@ public class MergeSortInteractive1 : MonoBehaviour
     public List<GameObject> b;
     public List<GameObject> bclone;
     public List<GameObject> pos;
-    public Material Donesort;
-    public Material Rmat;
-    public Material Unsorted;
-    public Material greenmat;
-    public Material Lmat;
+
+    public Material Donesort;//blue
+    public Material Rmat;//red
+    public Material Unsorted;//white
+    public Material Lmat;//yellow
+    public Material Goodmat;//green
 
     public bool sorted;
 
     public Text Step;
 
     public VRController_1 m_vRController_1;
+    public NonVRControlls m_vRController_2;
 
     public int speed;
     public int smooth;
@@ -64,7 +66,7 @@ public class MergeSortInteractive1 : MonoBehaviour
 
     private void OnEnable()
     {
-        Begin();
+        //Begin();
     }
 
     public void Begin()
@@ -78,70 +80,64 @@ public class MergeSortInteractive1 : MonoBehaviour
         Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Merge Sort." + "\nIf a block is green It must be swapped with the other green block.";
         for (int i = 0; i < 9; i++)
         {
-            int n = UnityEngine.Random.Range(1, 99);
+            int n = Random.Range(1, 99);
             Text t = b[i].GetComponentInChildren<Text>();
             t.text = n.ToString();
-            //b[i].GetComponent<MoveInteractionBLock>().PairedPos = pos[i];
+
             bclone[i].GetComponentInChildren<Text>().text = b[i].GetComponentInChildren<Text>().text;
-            b[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
         }
         updatePos();
         sorted = false;
         StartCoroutine(Mergechecksort());
     }
 
-    public void Update()//needs testing
+    public void Update()
     {
         if (sorted)
         {
             Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Merge Sort Operates." + "\nThe Algorithm splits the array into halves and sorts each half one at a time.";
             sorted = false;
         }
-
+       
         if (waitingforswap2)
         {
-            for (int i = 0; i < b.Count; i++)
+            if (b[MergeLIndex].GetComponent<MergeInter1_RecursionBlockTEst>().pressed && b[MergeRIndex].GetComponent<MergeInter1_RecursionBlockTEst>().pressed)//correct
             {
-                if (i == MergeLIndex || i == MergeRIndex)//test to see if the palyer clicked the correct indexes
+                ResetClickedBlock();
+                if (IsTestMode)
                 {
-                    if (b[MergeLIndex].GetComponent<MergeInter1_RecursionBlockTEst>().pressed && b[MergeRIndex].GetComponent<MergeInter1_RecursionBlockTEst>().pressed)//correct
-                    {
-                        b[MergeLIndex].GetComponent<MergeInter1_RecursionBlockTEst>().pressed = false;
-                        b[MergeRIndex].GetComponent<MergeInter1_RecursionBlockTEst>().pressed = false;
-                        EnableTrigger(-1, -1);
-                        if (IsTestMode)
-                        {
-                            corretAnswers += 1;
-                            corretAnswersText.GetComponent<Text>().text = corretAnswers.ToString();
-                        }
-                        //Step.text = "The block you attempted to selected was correct.";
-                        waitingforswap2 = false;
-                        return;
-                    }
+                    corretAnswers += 1;
+                    corretAnswersText.GetComponent<Text>().text = corretAnswers.ToString();
                 }
-                else if(i != MergeLIndex && i != MergeRIndex)//test to see if the palyer clicked the incorrect indexes
+                Step.text = "The blocks you selected are correct.";
+                waitingforswap2 = false;
+                return;
+            }
+            else
+            {
+                for (int i = 0; i < b.Count; i++)
                 {
-                    if (b[i].GetComponent<MergeInter1_RecursionBlockTEst>().pressed)//incorrect
+                    if (i != MergeLIndex && i != MergeRIndex)
                     {
-                        b[i].GetComponent<MergeInter1_RecursionBlockTEst>().pressed = false;
-                        EnableTrigger(-1, -1);
-                        if (IsTestMode)
+                        if (b[i].GetComponent<MergeInter1_RecursionBlockTEst>().pressed)//incorrect if a button was pressed and it does not match the correct buttons
                         {
-                            incorretAnswers += 1;
-                            incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                            ResetClickedBlock();
+                            if (IsTestMode)
+                            {
+                                incorretAnswers += 1;
+                                incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                            }
+                            Step.text = "The block you attempted to select were incorrect." + i;
+                            //displayRecursion = true;
+                            return;
                         }
-                        //Step.text = "The block you attempted selected was incorrect.";
-                        displayRecursion = true;
-                        return;
                     }
                 }
             }
         }
 
-            //needs to be worked on
-        if (waitingforswap && ((L.Length > 0 && Larray) || (R.Length > 0 && !Larray)))
+        if (waitingforswap && ((L.Length > 0 && Larray) || (R.Length > 0 && !Larray)))//wonky
         {
-            float dist2;
             if (Larray)
             {
                 Step.text = "The Algorithm is ready to swap values.  Perform the swap.";
@@ -151,6 +147,8 @@ public class MergeSortInteractive1 : MonoBehaviour
                     Debug.Log("Swap");
                     m_vRController_1.downR = false;
                     m_vRController_1.downL = false;
+                    m_vRController_2.down = false;
+
                     Step.text = "The block you attempted to swap was correct.";
                     if (IsTestMode)
                     {
@@ -164,31 +162,9 @@ public class MergeSortInteractive1 : MonoBehaviour
                     updatePos();
                     return;
                 }
-                else 
+                else
                 {
-                    for (int i = 0; i < b.Count; i++)
-                    {
-                        for (int j = 0; j < L.Length; j++)
-                        {
-                            dist2 = Vector3.Distance(b[i].transform.position, L[j].transform.position);
-                            if (i != nextToSort && j != currentSmallestIndex)
-                            {
-                                if (dist2 < .04)
-                                {
-                                    m_vRController_1.downR = false;
-                                    m_vRController_1.downL = false;
-                                    Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
-                                    if (IsTestMode)
-                                    {
-                                        incorretAnswers += 1;
-                                        incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
-                                    }
-                                    updatePos();
-                                    return;
-                                }
-                            }
-                        }
-                    }
+                    CheckIncorrectSwap();
                 }
             }
             else
@@ -196,9 +172,11 @@ public class MergeSortInteractive1 : MonoBehaviour
                 dist1 = Vector3.Distance(b[nextToSort].transform.position, R[currentSmallestIndex].transform.position);
                 if (dist1 < .04)
                 {
-                    Debug.Log("Swap");
+                    //Debug.Log("Swap");
                     m_vRController_1.downR = false;
                     m_vRController_1.downL = false;
+                    m_vRController_2.down = false;
+
                     if (IsTestMode)
                     {
                         corretAnswers += 1;
@@ -213,29 +191,7 @@ public class MergeSortInteractive1 : MonoBehaviour
                 }
                 else
                 {
-                    for (int i = 0; i < b.Count; i++)
-                    {
-                        for (int j = 0; j < R.Length; j++)
-                        {
-                            dist2 = Vector3.Distance(b[i].transform.position, R[j].transform.position);
-                            if (i != nextToSort && j != currentSmallestIndex)
-                            {
-                                if (dist2 < .04)
-                                {
-                                    m_vRController_1.downR = false;
-                                    m_vRController_1.downL = false;
-                                    Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
-                                    if (IsTestMode)
-                                    {
-                                        incorretAnswers += 1;
-                                        incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
-                                    }
-                                    updatePos();
-                                    return;
-                                }
-                            }
-                        }
-                    }
+                    CheckIncorrectSwap();
                 }
             }
         }
@@ -246,10 +202,83 @@ public class MergeSortInteractive1 : MonoBehaviour
             {
                 if (i >= DisplayMergeLIndex && i <= DisplayMergeRIndex)
                 {
-                    b[i].GetComponentInChildren<MeshRenderer>().material = Lmat;
+                    if (!IsTestMode)
+                    {
+                        b[i].GetComponentInChildren<MeshRenderer>().material = Lmat;
+                    }
                     displayRecursion = false;
                 }
             }
+        }
+    }
+
+    private void CheckIncorrectSwap()
+    {
+        float dist2 = 200;
+        float dist3 = 200;
+        for (int i = 0; i < b.Count; i++)
+        {
+            for (int j = 0; j < b.Count; j++)
+            {
+                if (j < R.Length)
+                {
+                    dist2 = Vector3.Distance(b[i].transform.position, R[j].transform.position);
+                }
+                else dist2 = 200;
+
+                if (j < L.Length)
+                {
+                    dist3 = Vector3.Distance(b[i].transform.position, L[j].transform.position);
+                }
+                else dist3 = 200;
+
+
+                if (j >= L.Length && j >= R.Length)
+                {
+                    break;
+                }
+
+                //Debug.Log(i + ", " + j);
+
+                //if (i != nextToSort && j != currentSmallestIndex)
+                if (i != nextToSort)
+                {
+                    //Debug.Log("hmmmmm?");
+
+                    if (dist2 < .04 || dist3 < .04)
+                    {
+                        Debug.Log(i + ", " + j + " Incorrect");
+
+                        m_vRController_1.downR = false;
+                        m_vRController_1.downL = false;
+                        m_vRController_2.down = false;
+
+                        Step.text = "Incorrect.  The block you attempted to swap was incorrect.";
+                        if (IsTestMode)
+                        {
+                            incorretAnswers += 1;
+                            incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                        }
+                        updatePos();
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    private void ResetClickedBlock()
+    {
+        for (int i = 0; i < b.Count; i++)
+        {
+            b[i].GetComponent<MergeInter1_RecursionBlockTEst>().pressed = false;
+            b[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+            if (!IsTestMode)
+            {
+                b[MergeLIndex].GetComponentInChildren<MeshRenderer>().material = Goodmat;
+                b[MergeRIndex].GetComponentInChildren<MeshRenderer>().material = Goodmat;
+            }
+
         }
     }
 
@@ -299,8 +328,8 @@ public class MergeSortInteractive1 : MonoBehaviour
             }
             if (!IsTestMode)
             {
-                b[MergeLIndex].GetComponentInChildren<MeshRenderer>().material = greenmat;
-                b[MergeRIndex].GetComponentInChildren<MeshRenderer>().material = greenmat;
+                b[MergeLIndex].GetComponentInChildren<MeshRenderer>().material = Goodmat;
+                b[MergeRIndex].GetComponentInChildren<MeshRenderer>().material = Goodmat;
             }
             while (waitingforswap2)
             {
@@ -332,8 +361,8 @@ public class MergeSortInteractive1 : MonoBehaviour
             }
             if (!IsTestMode)
             {
-                b[MergeLIndex].GetComponentInChildren<MeshRenderer>().material = greenmat;
-                b[MergeRIndex].GetComponentInChildren<MeshRenderer>().material = greenmat;
+                b[MergeLIndex].GetComponentInChildren<MeshRenderer>().material = Goodmat;
+                b[MergeRIndex].GetComponentInChildren<MeshRenderer>().material = Goodmat;
             }
             while (waitingforswap2)
             {
@@ -365,8 +394,8 @@ public class MergeSortInteractive1 : MonoBehaviour
             }
             if (!IsTestMode)
             {
-                b[MergeLIndex].GetComponentInChildren<MeshRenderer>().material = greenmat;
-                b[MergeRIndex].GetComponentInChildren<MeshRenderer>().material = greenmat;
+                b[MergeLIndex].GetComponentInChildren<MeshRenderer>().material = Goodmat;
+                b[MergeRIndex].GetComponentInChildren<MeshRenderer>().material = Goodmat;
             }
             while (waitingforswap2)
             {
@@ -408,13 +437,19 @@ public class MergeSortInteractive1 : MonoBehaviour
         {
             L[i] = bclone[l + i];
             bclone[l + i].SetActive(true);
-            bclone[l + i].GetComponentInChildren<MeshRenderer>().material = Lmat;
+            if (!IsTestMode)
+            {
+                bclone[l + i].GetComponentInChildren<MeshRenderer>().material = Lmat;
+            }
         }
         for (j = 0; j < n2; j++)
         {
             R[j] = bclone[m + 1 + j];
             bclone[m + 1 + j].SetActive(true);
-            bclone[m + 1 + j].GetComponentInChildren<MeshRenderer>().material = Rmat;
+            if (!IsTestMode)
+            {
+                bclone[m + 1 + j].GetComponentInChildren<MeshRenderer>().material = Rmat;
+            }
         }
         i = 0;
         j = 0;
@@ -440,13 +475,19 @@ public class MergeSortInteractive1 : MonoBehaviour
                 }
                 else if (!IsTestMode)
                 {
-                    b[nextToSort].GetComponentInChildren<MeshRenderer>().material = greenmat;
-                    L[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = greenmat;
+                    b[nextToSort].GetComponentInChildren<MeshRenderer>().material = Goodmat;
+                    L[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = Goodmat;
                 }
                 while (waitingforswap)
                 {
                     yield return null;
                 }
+
+                if (!IsTestMode)
+                {
+                    b[k].GetComponentInChildren<MeshRenderer>().material = Donesort;
+                }
+                L[i].SetActive(false);
 
                 i++;
             }
@@ -465,13 +506,20 @@ public class MergeSortInteractive1 : MonoBehaviour
                 }
                 else if(!IsTestMode)
                 {
-                    b[nextToSort].GetComponentInChildren<MeshRenderer>().material = greenmat;
-                    R[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = greenmat;
+                    b[nextToSort].GetComponentInChildren<MeshRenderer>().material = Goodmat;
+                    R[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = Goodmat;
                 }
                 while (waitingforswap)
                 {
                     yield return null;
                 }
+
+                if (!IsTestMode)
+                {
+                    b[k].GetComponentInChildren<MeshRenderer>().material = Donesort;
+                }
+                R[j].SetActive(false);
+
                 j++;
             }
             EnableTrigger(l, r);
@@ -493,13 +541,19 @@ public class MergeSortInteractive1 : MonoBehaviour
             }
             else if(!IsTestMode)
             {
-                b[nextToSort].GetComponentInChildren<MeshRenderer>().material = greenmat;
-                L[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = greenmat;
+                b[nextToSort].GetComponentInChildren<MeshRenderer>().material = Goodmat;
+                L[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = Goodmat;
             }
             while (waitingforswap)
             {
                 yield return null;
             }
+
+            if (!IsTestMode)
+            {
+                b[k].GetComponentInChildren<MeshRenderer>().material = Donesort;
+            }
+            L[i].SetActive(false);
 
             i++;
             k++;
@@ -521,13 +575,19 @@ public class MergeSortInteractive1 : MonoBehaviour
             }
             else if(!IsTestMode)
             {
-                b[nextToSort].GetComponentInChildren<MeshRenderer>().material = greenmat;
-                R[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = greenmat;
+                b[nextToSort].GetComponentInChildren<MeshRenderer>().material = Goodmat;
+                R[currentSmallestIndex].GetComponentInChildren<MeshRenderer>().material = Goodmat;
             }
             while (waitingforswap)
             {
                 yield return null;
             }
+
+            if (!IsTestMode)
+            {
+                b[k].GetComponentInChildren<MeshRenderer>().material = Donesort;
+            }
+            R[j].SetActive(false);
 
             j++;
             k++;

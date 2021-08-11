@@ -19,6 +19,7 @@ public class InsertSortInteractive1 : MonoBehaviour
     public Text Step;
 
     public VRController_1 m_vRController_1;
+    public NonVRControlls m_vRController_2;
 
     public int currentSmallestIndex;
     public int nextToSort;
@@ -45,12 +46,17 @@ public class InsertSortInteractive1 : MonoBehaviour
 
     private void Start()
     {
-        //Begin();
+        corretAnswersText.GetComponentInChildren<Text>().text = "0";
+        incorretAnswersText.GetComponentInChildren<Text>().text = "0";
+        numofGamesText.GetComponentInChildren<Text>().text = "0";
+        incorretAnswers = 0;
+        corretAnswers = 0;
+        numofGames = 0;
     }
 
     private void OnEnable()
     {
-        Begin();
+        //Begin();
     }
 
     public void Update()
@@ -59,6 +65,7 @@ public class InsertSortInteractive1 : MonoBehaviour
         {
             EnableTrigger();
             Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Insertion Sort Operates." + "\nThe Algorithm iterates thorugh the array and shifts the smallest values to the front.";
+            sorted = false;
         }
         if (waitingforswap && currentSmallestIndex != 2000)
         {
@@ -68,6 +75,8 @@ public class InsertSortInteractive1 : MonoBehaviour
             {
                 m_vRController_1.downR = false;
                 m_vRController_1.downL = false;
+                m_vRController_2.down = false;
+
                 Step.text = "The block you attempted to swap was correct.";
                 if (IsTestMode)
                 {
@@ -91,6 +100,8 @@ public class InsertSortInteractive1 : MonoBehaviour
                         {
                             m_vRController_1.downR = false;
                             m_vRController_1.downL = false;
+                            m_vRController_2.down = false;
+
                             Step.text = "The block you attempted to swap was incorrect.";
                             if (IsTestMode)
                             {
@@ -111,8 +122,13 @@ public class InsertSortInteractive1 : MonoBehaviour
             {
                 m_vRController_1.downR = false;
                 m_vRController_1.downL = false;
-                Step.text = "The block you attempted to swap was correct.";
-                corretAnswers += 1;
+                m_vRController_2.down = false;
+
+                if (IsTestMode)
+                {
+                    corretAnswers += 1;
+                    corretAnswersText.GetComponent<Text>().text = corretAnswers.ToString();
+                }
                 corretAnswersText.GetComponent<Text>().text = corretAnswers.ToString();
                 b[nextToSort].GetComponentInChildren<Text>().text = keyGo.GetComponentInChildren<Text>().text;
                 waitingforswap = false;
@@ -125,13 +141,19 @@ public class InsertSortInteractive1 : MonoBehaviour
                     if (i != nextToSort)
                     {
                         dist1 = Vector3.Distance(b[i].transform.position, keyGo.transform.position);
-                        if (dist1 < .04)
+                        dist2 = Vector3.Distance(b[i].transform.position, b[nextToSort].transform.position);
+                        if (dist1 < .04 || dist2 < .04)
                         {
                             m_vRController_1.downR = false;
                             m_vRController_1.downL = false;
+                            m_vRController_2.down = false;
+
                             Step.text = "The block you attempted to swap was incorrect.";
-                            incorretAnswers += 1;
-                            incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                            if (IsTestMode)
+                            {
+                                incorretAnswers += 1;
+                                incorretAnswersText.GetComponent<Text>().text = incorretAnswers.ToString();
+                            }
                             updatePos();
                         }
                     }
@@ -155,7 +177,9 @@ public class InsertSortInteractive1 : MonoBehaviour
             int n = UnityEngine.Random.Range(1, 99);
             Text t = b[i].GetComponentInChildren<Text>();
             t.text = n.ToString();
+            b[i].GetComponent<MoveInteractionBLock>().PairedPos = pos[i];
             b[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+            keyGo.GetComponentInChildren<MeshRenderer>().material = Unsorted;
         }
         updatePos();
         sorted = false;
@@ -174,7 +198,9 @@ public class InsertSortInteractive1 : MonoBehaviour
             b[i].GetComponent<RectTransform>().anchoredPosition = pos[i].GetComponent<RectTransform>().anchoredPosition;
             b[i].transform.position = pos[i].transform.position;
             b[i].transform.rotation = pos[i].transform.rotation;
-            keyGo.transform.parent = this.gameObject.transform;
+            //keyGo.transform.parent = this.gameObject.transform;
+            keyGo.transform.SetParent(this.gameObject.transform);
+
             keyGo.transform.rotation = pos[keypos].transform.rotation;
             keyGo.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(b[keypos].GetComponent<RectTransform>().anchoredPosition3D.x, b[keypos].GetComponent<RectTransform>().anchoredPosition3D.y + 50, b[keypos].GetComponent<RectTransform>().anchoredPosition3D.z);
         }
@@ -215,8 +241,8 @@ public class InsertSortInteractive1 : MonoBehaviour
                 }
                 if (!IsTestMode)
                 {
-                    b[j].GetComponentInChildren<MeshRenderer>().material = prevsort;
-                    b[j + 1].GetComponentInChildren<MeshRenderer>().material = prevsort;
+                    b[j].GetComponentInChildren<MeshRenderer>().material = Donesort;
+                    b[j + 1].GetComponentInChildren<MeshRenderer>().material = Donesort;
                 }
                 //b[j + 1].GetComponentInChildren<Text>().text = b[j].GetComponentInChildren<Text>().text;
                 j = j - 1;
@@ -245,7 +271,7 @@ public class InsertSortInteractive1 : MonoBehaviour
             {
                 //b[j].GetComponentInChildren<MeshRenderer>().material = prevsort;
                 keyGo.GetComponentInChildren<MeshRenderer>().material = Unsorted;
-                b[j + 1].GetComponentInChildren<MeshRenderer>().material = prevsort;
+                b[j + 1].GetComponentInChildren<MeshRenderer>().material = Donesort;
             }
             // b[j + 1].GetComponentInChildren<Text>().text = key.ToString();
             yield return new WaitForSeconds(speed);
@@ -262,25 +288,28 @@ public class InsertSortInteractive1 : MonoBehaviour
 
     public void EnableTrigger()
     {
-        for (int i = 0; i < b.Count; i++)
+        if (!IsTestMode)
         {
-            if (sorted)
+            for (int i = 0; i < b.Count; i++)
             {
-                b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
-            }
-            else
-            {
-                if (i == currentSmallestIndex && !IsTestMode)
-                {
-                    b[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
-                }
-                else if (i < nextToSort && !IsTestMode)
+                if (sorted)
                 {
                     b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
                 }
                 else
                 {
-                    b[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+                    if (i == currentSmallestIndex && !IsTestMode)
+                    {
+                        b[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                    }
+                    else if (i < nextToSort && !IsTestMode)
+                    {
+                        b[i].GetComponentInChildren<MeshRenderer>().material = Donesort;
+                    }
+                    else
+                    {
+                        b[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
+                    }
                 }
             }
         }

@@ -22,40 +22,42 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        cam = Camera.main;
-        charController = GetComponent<CharacterController>();
-        //Cursor.lockState = CursorLockMode.Locked;
+        //cam = Camera.main;
+        //charController = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Grounded = Physics.CheckSphere(GroundCheck.position, GroundDistance, GroundMask, QueryTriggerInteraction.Ignore);
-        if (!Grounded)
-        {
-            Grounded = charController.isGrounded;
-        }
-        Movement();
+        //Cursor.lockState = CursorLockMode.Locked;
+
+
+        //Grounded = Physics.CheckSphere(GroundCheck.position, GroundDistance, GroundMask, QueryTriggerInteraction.Ignore);
+        //if (!Grounded)
+        //{
+        //    Grounded = charController.isGrounded;
+        //}
+        //Movement();
     }
 
-    void Movement()
-    {
-        if (!Grounded)
-        {
-            Velocity += Vector3.up * Gravity  * Time.deltaTime; // increases fall gravity for better feel
-        }
-        else
-        {
-            Velocity = Vector3.up * 0;
-        }
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+    //void Movement()
+    //{
+    //    if (!Grounded)
+    //    {
+    //        Velocity += Vector3.up * Gravity  * Time.deltaTime; // increases fall gravity for better feel
+    //    }
+    //    else
+    //    {
+    //        Velocity = Vector3.up * 0;
+    //    }
+    //    float x = Input.GetAxis("Horizontal");
+    //    float z = Input.GetAxis("Vertical");
 
-        //transform.right and transform.forward uses local coords instead of world coords
-        Vector3 move = transform.right * x + transform.forward * z;
+    //    //transform.right and transform.forward uses local coords instead of world coords
+    //    Vector3 move = transform.right * x + transform.forward * z;
 
-        //Debug.Log(Velocity);
-        charController.Move(Velocity * Time.deltaTime);
-        charController.Move(move * MoveSpeed * Time.deltaTime);
-    }
+    //    //Debug.Log(Velocity);
+    //    charController.Move(Velocity * Time.deltaTime);
+    //    charController.Move(move * MoveSpeed * Time.deltaTime);
+    //}
 }

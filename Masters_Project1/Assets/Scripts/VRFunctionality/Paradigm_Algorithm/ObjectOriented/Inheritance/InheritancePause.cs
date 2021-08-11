@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InheritancePause : MonoBehaviour
+public class InheritancePause : MonoBehaviour, IPointerDownHandler
 {
     public InheritanceController inheritanceController;
     public Text txt;
@@ -13,14 +13,14 @@ public class InheritancePause : MonoBehaviour
     {
         if (inheritanceController.manual)
         {
-            inheritanceController.manual = true;
-            txt.text = "Resume";
+            inheritanceController.manual = false;
+            txt.text = "Pause";
         }
 
         else if (!inheritanceController.manual)
         {
-            inheritanceController.manual = false;
-            txt.text = "Pause";
+            inheritanceController.manual = true;
+            txt.text = "Resume";
         }
     }
 }

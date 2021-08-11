@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// this script is a game.
+/// players must pick up blocks and set them in the correct position.
+/// It is not currently being used in this project.
+/// Would not recomend using as it most likely isnt bug tested.
+/// </summary>
 public class BubbleGameController : MonoBehaviour
 {
     public GameObject[] b;

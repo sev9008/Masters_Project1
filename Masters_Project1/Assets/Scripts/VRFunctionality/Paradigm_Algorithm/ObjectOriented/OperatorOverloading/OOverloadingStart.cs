@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class OOverloadingStart : MonoBehaviour
+public class OOverloadingStart : MonoBehaviour, IPointerDownHandler
 {
     public OOverloadingController oOverloadingController;
     public Text txt;
@@ -13,13 +13,13 @@ public class OOverloadingStart : MonoBehaviour
     {
         if (oOverloadingController.begin)
         {
-            oOverloadingController.begin = true;
+            oOverloadingController.begin = false;
             txt.text = "Start";
         }
 
         else if (!oOverloadingController.begin)
         {
-            oOverloadingController.begin = false;
+            oOverloadingController.begin = true;
             txt.text = "Stop";
         }
     }

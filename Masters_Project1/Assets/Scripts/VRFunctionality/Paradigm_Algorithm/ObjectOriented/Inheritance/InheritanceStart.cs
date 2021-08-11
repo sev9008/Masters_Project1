@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InheritanceStart : MonoBehaviour
+public class InheritanceStart : MonoBehaviour, IPointerDownHandler
 {
     public InheritanceController inheritanceController;
     public Text txt;
@@ -13,13 +13,13 @@ public class InheritanceStart : MonoBehaviour
     {
         if (inheritanceController.begin)
         {
-            inheritanceController.begin = true;
+            inheritanceController.begin = false;
             txt.text = "Start";
         }
 
         else if (!inheritanceController.begin)
         {
-            inheritanceController.begin = false;
+            inheritanceController.begin = true;
             txt.text = "Stop";
         }
     }

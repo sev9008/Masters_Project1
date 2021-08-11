@@ -8,10 +8,12 @@ public class QuickSortInteractive2 : MonoBehaviour
 {
     public List<GameObject> b;
     public List<GameObject> pos;
-    public Material Donesort;
-    public Material Nextsort;
-    public Material Unsorted;
-    public Material nextLine;
+
+    public Material Donesort;//blue
+    public Material NextSort;//red for swaps
+    public Material Unsorted;//white
+    public Material Recurs;//yellow for recursion
+    public Material Goodmat;//green for pivot
 
     public bool sorted;
 
@@ -38,21 +40,20 @@ public class QuickSortInteractive2 : MonoBehaviour
     public Vector2 targetTransform2;
     public int pi;
 
-    public int[] previouspi;
+    public GameObject igo;
+    public GameObject jgo;
+    
 
     private void Start()
     {
-        previouspi = new int[9];
         moving = false;
-        //Begin();
     }
 
     public void Update()
     {
         if (sorted)
         {
-            //EnableTrigger();
-            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Quick Sort Operates." + "\nThe Algorithm repeatedly sorts the array around the pivot.  If a value is less than the pviot it will remain on the left branch, otherwise values are compared and swapped until the array is sorted";
+            //Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Quick Sort Operates." + "\nThe Algorithm repeatedly sorts the array around the pivot.  If a value is less than the pviot it will remain on the left branch, otherwise values are compared and swapped until the array is sorted";
             IndexToSwap = 0;
             NextSmallesIndex = 9;
         }
@@ -85,11 +86,11 @@ public class QuickSortInteractive2 : MonoBehaviour
             updatePos();
         }
         catch { }
-        Step.text = "Welcome!  This tutorial is designed to teach you play this interactive minigame." + "\n\nIf the block is red it is the pivot and will be used to test our array for swaps.";
+        //Step.text = "Welcome!  This tutorial is designed to teach you play this interactive minigame." + "\n\nIf the block is red it is the pivot and will be used to test our array for swaps.";
         for (int i = 0; i < 9; i++)
         {
-            previouspi[i] = 0;
-            int n = UnityEngine.Random.Range(1, 99);
+            //previouspi[i] = 0;
+            int n = Random.Range(1, 99);
             Text t = b[i].GetComponentInChildren<Text>();
             t.text = n.ToString();
         }
@@ -98,8 +99,7 @@ public class QuickSortInteractive2 : MonoBehaviour
         co = StartCoroutine(Quick());
     }
 
-    
-    public void updatePos()
+        public void updatePos()
     {
         for (int i = 0; i < 9; i++)
         {
@@ -119,21 +119,20 @@ public class QuickSortInteractive2 : MonoBehaviour
             }
             else
             {
-                if (previouspi[i] == 1)
-                { }
-                else if (i == pi)
+                if (i == pi)
                 {
-                    b[i].GetComponentInChildren<MeshRenderer>().material = Nextsort;
+                    b[i].GetComponentInChildren<MeshRenderer>().material = Goodmat;
                     //previouspi[i] = 1;
                 }
                 else if (i >= l && i <=h)
                 {
-                    b[i].GetComponentInChildren<MeshRenderer>().material = nextLine;
+                    b[i].GetComponentInChildren<MeshRenderer>().material = Recurs;
                 }
                 else
                 {
                     b[i].GetComponentInChildren<MeshRenderer>().material = Unsorted;
                 }
+
             }
         }
     }
@@ -141,12 +140,12 @@ public class QuickSortInteractive2 : MonoBehaviour
 
     public IEnumerator Quick()
     {
-        Step.text = "First Quick sort will choose the last element as our pivot." + "\nThen our algorithm will swap values on the laft with any value smaller than our pivot.  It does this until all elements greater than the pivot are in the right half of our array";
-        yield return new WaitForSeconds(speed);
-        Step.text = "Quicksort will now swap the first value greater than it, from the left most index first, with the pivot." + "\n It will nowe repeat the above steps to the left and the to the right of the pivot we jsut swapped.";
-        yield return new WaitForSeconds(speed);        
-        Step.text = "It will repeat these steps until the eniter array is sorted.";
-        yield return new WaitForSeconds(speed);
+        //Step.text = "First Quick sort will choose the last element as our pivot." + "\nThen our algorithm will swap values on the laft with any value smaller than our pivot.  It does this until all elements greater than the pivot are in the right half of our array";
+        //yield return new WaitForSeconds(speed);
+        //Step.text = "Quicksort will now swap the first value greater than it, from the left most index first, with the pivot." + "\n It will nowe repeat the above steps to the left and the to the right of the pivot we jsut swapped.";
+        //yield return new WaitForSeconds(speed);        
+        //Step.text = "It will repeat these steps until the eniter array is sorted.";
+        //yield return new WaitForSeconds(speed);
 
 
         yield return sho = StartCoroutine(quickSort(0, b.Count - 1));
@@ -174,23 +173,46 @@ public class QuickSortInteractive2 : MonoBehaviour
         int i = (l - 1);
         for (int j = l; j <= h-1; j++)
         {
+            if (i >= 0)
+            {
+                igo.transform.position = new Vector3(b[i].transform.position.x, b[i].transform.position.y + .2f, b[i].transform.position.z);
+            }
+            else
+            {
+                igo.transform.position = new Vector3(b[0].transform.position.x - .2f, b[0].transform.position.y + .2f, b[0].transform.position.z);
+            }
+
+            jgo.transform.position = new Vector3(b[j].transform.position.x, b[j].transform.position.y + .2f, b[j].transform.position.z);
+            b[j].GetComponentInChildren<MeshRenderer>().material = NextSort;
+            yield return new WaitForSeconds(speed);
+
             float.TryParse(b[j].GetComponentInChildren<Text>().text, out float temp);
             if (temp < pivot)
             {
                 i++;
+                igo.transform.position = new Vector3(b[i].transform.position.x, b[i].transform.position.y + .2f, b[i].transform.position.z);
+                b[i].GetComponentInChildren<MeshRenderer>().material = NextSort;
+
                 yield return bo = StartCoroutine(SwapAnimation(i, j));
                 GameObject temp3 = b[i];
                 b[i] = b[j];
                 b[j] = temp3;
+                EnableTrigger(l, h);
+                yield return new WaitForSeconds(speed);
             }
+            b[j].GetComponentInChildren<MeshRenderer>().material = Recurs;
+
         }
+        yield return new WaitForSeconds(speed);
+
+        b[i+1].GetComponentInChildren<MeshRenderer>().material = NextSort;
         yield return bo = StartCoroutine(SwapAnimation(i+1, h));
         GameObject temp1 = b[i + 1];
         b[i + 1] = b[h];
         b[h] = temp1;
-        b[i+1].GetComponentInChildren<MeshRenderer>().material = Donesort;
-        previouspi[i+1] = 1;
+
         pi = i + 1;
+        EnableTrigger(l, h);
         yield return new WaitForSeconds(speed);
     }
     public IEnumerator SwapAnimation(int i, int j)

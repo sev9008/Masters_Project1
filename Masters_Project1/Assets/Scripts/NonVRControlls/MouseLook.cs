@@ -11,16 +11,17 @@ public class MouseLook : MonoBehaviour
     float xRotation = 0f; 
     float MouseSensitivity = 100f;
     public Transform PlayerBody;
-
-    void Start()
-    {
-        
-    }
+    public GameObject QuitOBj;
 
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * MouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * MouseSensitivity * Time.deltaTime;
+        float mouseX = 0;
+        float mouseY = 0;
+        if (!QuitOBj.activeInHierarchy)
+        {
+            mouseX = Input.GetAxis("Mouse X") * MouseSensitivity * Time.deltaTime;
+            mouseY = Input.GetAxis("Mouse Y") * MouseSensitivity * Time.deltaTime;
+        }
 
         xRotation -= mouseY;
 

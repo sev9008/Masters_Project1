@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// old graph function.  nnot used anymore
+/// </summary>
 public class BubbleSortAni : MonoBehaviour
 {
     public GameObject box;
     private RectTransform graphContainer;
-
-    //public List<int> arr;
-    //public int size;
 
     public float speed;
 

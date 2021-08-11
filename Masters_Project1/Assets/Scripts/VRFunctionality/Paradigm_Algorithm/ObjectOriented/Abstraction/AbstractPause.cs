@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class AbstractPause : MonoBehaviour
+public class AbstractPause : MonoBehaviour, IPointerDownHandler
 {
     public AbstractController abstractController;
     public Text txt;
@@ -13,14 +13,14 @@ public class AbstractPause : MonoBehaviour
     {
         if (abstractController.manual)
         {
-            abstractController.manual = true;
-            txt.text = "Resume";
+            abstractController.manual = false;
+            txt.text = "Pause";
         }
 
         else if (!abstractController.manual)
         {
-            abstractController.manual = false;
-            txt.text = "Pause";
+            abstractController.manual = true;
+            txt.text = "Resume";
         }
     }
 }

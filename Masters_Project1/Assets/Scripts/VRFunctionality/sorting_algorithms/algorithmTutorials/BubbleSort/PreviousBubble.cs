@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// previous button for the array holder script
+/// </summary>
 public class PreviousBubble : MonoBehaviour, IPointerDownHandler
 {
     public BubbleSort_arrayHolder m_InsertSort_arrayHolder;

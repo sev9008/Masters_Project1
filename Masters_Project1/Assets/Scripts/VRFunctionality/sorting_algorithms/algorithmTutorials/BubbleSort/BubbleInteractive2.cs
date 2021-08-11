@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// This tutorial is designed to show the user the rythm of the sorting algorithm.
+/// it will automatically sort the array. but its a unique way from looking at the algorithm as it performs.
+/// </summary>
 public class BubbleInteractive2 : MonoBehaviour
 {
     public List<GameObject> b;
@@ -12,8 +16,6 @@ public class BubbleInteractive2 : MonoBehaviour
     public Material Unsorted;
 
     public bool sorted;
-
-    public Text Step;
 
     public VRController_1 m_vRController_1;
 
@@ -37,18 +39,16 @@ public class BubbleInteractive2 : MonoBehaviour
     private void Start()
     {
         moving = false;
-        //Begin();
     }
 
     public void Update()
     {
         if (sorted)
         {
-            Step.text = "Congrats!  The array is now Sorted!" + "\nThis is Generally how Selction Sort Operates." + "\nThe Algorithm locks the positions that have already been sorted, and chooses the next smallest element to swap.";
             IndexToSwap = 0;
             NextSmallesIndex = 9;
         }
-        if (moving)
+        if (moving)//this will move the blocks when the corutine tells us to move them
         {
             if (tempnumi == tempnumj)
             {
@@ -65,9 +65,9 @@ public class BubbleInteractive2 : MonoBehaviour
         }
     }
 
-    public void Begin()
+    public void Begin()//this will begin the algorithm and start swapping
     {
-        try
+        try//attempt to stop the coroutines if they are currently running.  It gets wierd if multiple coroutines start running.  Also takes alot out of the pc.  be careful with this.
         {
             moving = false;
             StopCoroutine(co);
@@ -76,7 +76,7 @@ public class BubbleInteractive2 : MonoBehaviour
             updatePos();
         }
         catch { }
-        Step.text = "Welcome!  This interactive minigame is designed to teach you how to perform Bubble Sort.";
+
         for (int i = 0; i < 9; i++)
         {
             int n = UnityEngine.Random.Range(1, 99);
@@ -96,7 +96,7 @@ public class BubbleInteractive2 : MonoBehaviour
             b[i].transform.rotation = pos[i].transform.rotation;
         }
     }
-    public void EnableTrigger(int maxsort, int j)
+    public void EnableTrigger(int maxsort, int j)//will cahnge the material of certain blocks depending on their values
     {
         for (int i = 0; i < b.Count; i++)
         {
@@ -121,7 +121,7 @@ public class BubbleInteractive2 : MonoBehaviour
             }
         }
     }
-    public IEnumerator SwapAnimation(int i, int j)
+    public IEnumerator SwapAnimation(int i, int j)//performs the sawp.  simple gives them a new tranform position.  update() performs the actual movement.
     {
         tempnumi = i;
         tempnumj = j;
@@ -154,21 +154,15 @@ public class BubbleInteractive2 : MonoBehaviour
             yield return null;
         }
     }
-    public IEnumerator Bubblechecksort()
+    public IEnumerator Bubblechecksort()//begins the algorithm //this is my response to the halting problem.  just put it in a coroutine 
     {
-        Step.text = "Bubble Sort is relatively easy.  Dimply check if the firt value is greater than the right value.  If it is then swap them.";
-        yield return new WaitForSeconds(speed);
-        Step.text = "After you swap check the next vlue you jsut swapped and the third value. Perform the swap if needed and repeat these steps until you hit the end of the array. ";
-        yield return new WaitForSeconds(speed);
-        Step.text = "Once you hit the end of the array, return to the front and repeat the above steps.";
-        yield return new WaitForSeconds(speed);
-
-        yield return sho = StartCoroutine(BubbleSort());
+        yield return sho = StartCoroutine(BubbleSort());//this will stop this coroutine until the new function has finished.  It is extremely helpful for when you want to know exactly when a function ends
         updatePos();
         sorted = true;
         EnableTrigger(-1, -1);
     }
-    public IEnumerator BubbleSort()
+    
+    public IEnumerator BubbleSort()//this is the holy grail.  jk its just the bubble sort algorithm.  with some added code
     {
         bool swapped = false;
         int i, j;
@@ -184,7 +178,7 @@ public class BubbleInteractive2 : MonoBehaviour
                 if (temp > temp2)
                 {
                     EnableTrigger(b.Count - i, j);
-                    yield return  lo = StartCoroutine(SwapAnimation(j, j+1));
+                    yield return  lo = StartCoroutine(SwapAnimation(j, j+1));//stop the algorithm until the swap has been made.  in this case the swap occurs automatically.  however another function eprforms it
                     GameObject temp3 = b[j];
                     b[j] = b[j + 1];
                     b[j + 1] = temp3;

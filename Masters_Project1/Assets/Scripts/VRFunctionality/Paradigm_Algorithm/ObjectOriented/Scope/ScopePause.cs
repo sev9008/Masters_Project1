@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ScopePause : MonoBehaviour
+public class ScopePause : MonoBehaviour, IPointerDownHandler
 {
     public ScopeController scopeController;
     public Text txt;
@@ -13,14 +13,14 @@ public class ScopePause : MonoBehaviour
     {
         if (scopeController.manual)
         {
-            scopeController.manual = true;
-            txt.text = "Resume";
+            scopeController.manual = false;
+            txt.text = "Pause";
         }
 
         else if (!scopeController.manual)
         {
-            scopeController.manual = false;
-            txt.text = "Pause";
+            scopeController.manual = true;
+            txt.text = "Resume";
         }
     }
 }

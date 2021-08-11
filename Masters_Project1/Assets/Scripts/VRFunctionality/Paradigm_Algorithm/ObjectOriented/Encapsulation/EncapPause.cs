@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class EncapPause : MonoBehaviour
+public class EncapPause : MonoBehaviour, IPointerDownHandler
 {
     public EncapController encapController;
     public Text txt;
@@ -13,14 +13,14 @@ public class EncapPause : MonoBehaviour
     {
         if (encapController.manual)
         {
-            encapController.manual = true;
-            txt.text = "Resume";
+            encapController.manual = false;
+            txt.text = "Pause";
         }
 
         else if (!encapController.manual)
         {
-            encapController.manual = false;
-            txt.text = "Pause";
+            encapController.manual = true;
+            txt.text = "Resume";
         }
     }
 }

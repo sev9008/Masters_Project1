@@ -66,14 +66,6 @@ public class AbstractController : MonoBehaviour
                 {
                     Output[0].SetActive(false);
                 }
-                if (i == 4)//enable or disable the first output
-                {
-                    Output[1].SetActive(true);
-                }
-                else
-                {
-                    Output[1].SetActive(false);
-                }
 
                 Panels[i].SetActive(true);//activate the current panel
 

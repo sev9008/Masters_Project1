@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class StartCompare : MonoBehaviour, IPointerDownHandler
 {
-    public SortAniCompare selsortInteractive2;
+    public SortAniCompareV2 selsortInteractive2;
     public void OnPointerDown(PointerEventData eventData)
     {
         selsortInteractive2.Begin();

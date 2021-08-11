@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// play button for the array holder script
+/// </summary>
 public class Play_BubbleSort : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public BubbleSort_arrayHolder M_bubbleSort_ArrayHolder;

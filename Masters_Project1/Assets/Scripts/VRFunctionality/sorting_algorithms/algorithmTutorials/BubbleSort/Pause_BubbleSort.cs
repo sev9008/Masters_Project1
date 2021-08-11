@@ -4,11 +4,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// puase button for the array holder script
+/// </summary>
 public class Pause_BubbleSort : MonoBehaviour, IPointerDownHandler
 {
     public BubbleSort_arrayHolder M_quickSort_arrayHolder;
     public Text txt;
-
 
     public void OnPointerDown(PointerEventData eventData)
     {

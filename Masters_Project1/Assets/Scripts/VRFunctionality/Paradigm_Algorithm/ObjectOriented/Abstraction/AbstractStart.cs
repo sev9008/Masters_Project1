@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class AbstractStart : MonoBehaviour
+public class AbstractStart : MonoBehaviour, IPointerDownHandler
 {
     public AbstractController abstractController;
     public Text txt;
@@ -13,13 +13,13 @@ public class AbstractStart : MonoBehaviour
     {
         if (abstractController.begin)
         {
-            abstractController.begin = true;
+            abstractController.begin = false;
             txt.text = "Start";
         }
 
         else if (!abstractController.begin)
         {
-            abstractController.begin = false;
+            abstractController.begin = true;
             txt.text = "Stop";
         }
     }

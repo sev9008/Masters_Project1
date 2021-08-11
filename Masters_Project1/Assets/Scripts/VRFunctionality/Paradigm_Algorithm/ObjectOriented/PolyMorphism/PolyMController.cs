@@ -57,13 +57,22 @@ public class PolyMController : MonoBehaviour
                     Panels[i - 1].SetActive(false);
                 }
 
-                if (i == 7 || i == 10)//enable or disable the first output
+                if (i == 8)//enable or disable the first output
                 {
                     Output[0].SetActive(true);
                 }
                 else
                 {
                     Output[0].SetActive(false);
+                }
+
+                if (i == 11)//enable or disable the first output
+                {
+                    Output[1].SetActive(true);
+                }
+                else
+                {
+                    Output[1].SetActive(false);
                 }
 
                 Panels[i].SetActive(true);//activate the current panel

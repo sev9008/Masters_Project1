@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class TestHighlight : MonoBehaviour
 {
-    public GameObject RDot;
+    private GameObject RDot;
     private DotHighlightTip dotHighlightTip;
     public string TutorialInformation;
     public float distance = 1f;
     private void Start()
     {
+        RDot = GameObject.FindGameObjectWithTag("RDot");
         dotHighlightTip = RDot.GetComponent<DotHighlightTip>();
     }
     /// <summary>
@@ -20,7 +21,7 @@ public class TestHighlight : MonoBehaviour
         if (Vector3.Distance(RDot.transform.position, transform.position) < distance)
         {
             dotHighlightTip.InRangeTut = true;
-            Debug.Log("change text");
+            //Debug.Log("change text");
             dotHighlightTip.text.text = TutorialInformation;
             //change the text of the highlight here
         }

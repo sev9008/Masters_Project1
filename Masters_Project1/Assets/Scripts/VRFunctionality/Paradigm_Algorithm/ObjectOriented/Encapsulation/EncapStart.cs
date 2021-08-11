@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class EncapStart : MonoBehaviour
+public class EncapStart : MonoBehaviour, IPointerDownHandler
 {
     public EncapController encapController;
     public Text txt;
@@ -13,13 +13,13 @@ public class EncapStart : MonoBehaviour
     {
         if (encapController.begin)
         {
-            encapController.begin = true;
+            encapController.begin = false;
             txt.text = "Start";
         }
 
         else if (!encapController.begin)
         {
-            encapController.begin = false;
+            encapController.begin = true;
             txt.text = "Stop";
         }
     }

@@ -21,6 +21,7 @@ public class VRController_1 : MonoBehaviour
     public SteamVR_Action_Vector2 MoveValue = null;
     public SteamVR_Action_Boolean teleport = null;
     public SteamVR_Action_Boolean CloseHighlight = null;
+    public SteamVR_Action_Boolean QuitMenuButton = null;
 
     public SlesortInteractive1 slesortInteractive;
     public InsertSortInteractive1 insertSortInteractive1;
@@ -51,6 +52,8 @@ public class VRController_1 : MonoBehaviour
 
     public Pointer PointerR;
     public DotHighlightTip dotHighlightTip;
+    public GameObject QuitOBj;
+
 
     private void Awake()
     {
@@ -76,6 +79,7 @@ public class VRController_1 : MonoBehaviour
         HandleMoveObject();
         Teleport();
         HilightController();
+        quitApplciation();
 
         //if the player has grabbed an object:
         //set the grabbed object's parent to the controller
@@ -105,14 +109,17 @@ public class VRController_1 : MonoBehaviour
             {
                 grabbedR.GetComponent<BlockParent>().gravity = true;
                 GameObject m_parent = grabbedR.GetComponent<BlockParent>().parent;
-                grabbedR.transform.parent = m_parent.transform;
+                //grabbedR.transform.parent = m_parent.transform;
+                grabbedR.transform.SetParent(m_parent.transform);
+
                 grabbedR.GetComponent<BlockParent>().isGrabbed = false;
             }
             catch { }
             try//use this for MoveInteractionBLock script which does not utilize a rigid body.
             {
                 GameObject m_parent = grabbedR.GetComponent<MoveInteractionBLock>().parent;
-                grabbedR.transform.parent = m_parent.transform;
+                //grabbedR.transform.parent = m_parent.transform;
+                grabbedR.transform.SetParent(m_parent.transform);
             }
             catch { }
             grabbedR = null;
@@ -139,14 +146,18 @@ public class VRController_1 : MonoBehaviour
             {
                 grabbedL.GetComponent<BlockParent>().gravity = true;
                 GameObject m_parent = grabbedL.GetComponent<BlockParent>().parent;
-                grabbedL.transform.parent = m_parent.transform;
-                grabbedR.GetComponent<BlockParent>().isGrabbed = false;
+                //grabbedL.transform.parent = m_parent.transform;
+                grabbedL.transform.SetParent(m_parent.transform);
+
+                grabbedL.GetComponent<BlockParent>().isGrabbed = false;
             }
             catch { }
             try
             {
                 GameObject m_parent = grabbedL.GetComponent<MoveInteractionBLock>().parent;
-                grabbedL.transform.parent = m_parent.transform;
+                //grabbedL.transform.parent = m_parent.transform;
+                grabbedL.transform.SetParent(m_parent.transform);
+
             }
             catch { }
             grabbedL = null;
@@ -265,19 +276,22 @@ public class VRController_1 : MonoBehaviour
 
     private void Teleport()
     {
-        Vector3 pos = new Vector3(PointerR.TeleportPos.x, CharController.height, PointerR.TeleportPos.z); //get the teleport position
-        Debug.DrawRay(pos, -transform.up * 3, Color.red);
+        Vector3 pos = new Vector3(PointerR.TeleportPos.x, CharController.height+4f, PointerR.TeleportPos.z); //get the teleport position
+        Debug.DrawRay(pos, -transform.up * 10, Color.red);
 
         if (teleport.GetStateDown(SteamVR_Input_Sources.RightHand))
         {
             //Vector3 pos = new Vector3(PointerR.TeleportPos.x, transform.position.y+.1f, PointerR.TeleportPos.z); //get the teleport position
 
             //check if the position has a spot for the player to stand on
-            if (Physics.Raycast(pos, -transform.up, out var hit, 3f))//doesnt work???
+            if (Physics.Raycast(pos, -transform.up, out var hit, 10f))
             {
                 if (hit.collider != null && Vector3.Distance(hit.point, pos) >= CharController.height -.1f)
                 {
-                    transform.position = pos;
+                    //transform.position = pos;
+                    Vector3 NewPos = new Vector3(hit.point.x, hit.point.y+ CharController.height, hit.point.z);
+                    transform.position = NewPos;
+
                 }
                 Debug.DrawRay(pos, -transform.up * CharController.height);
                 //Debug.Log(Vector3.Distance(hit.point, pos) + "Distance between two objects");
@@ -298,7 +312,9 @@ public class VRController_1 : MonoBehaviour
             {
                 m_pointerR.defaultLength = 0f;
                 grabbedR = m_pointerR.hit.collider.gameObject;
-                grabbedR.transform.parent = DotR.transform;
+                //grabbedR.transform.parent = DotR.transform;
+                grabbedR.transform.SetParent(DotR.transform);
+
                 try
                 {
                     grabbedR.GetComponent<BlockParent>().gravity = false;
@@ -307,7 +323,7 @@ public class VRController_1 : MonoBehaviour
                 catch { }
                 try 
                 {
-                    slesortInteractive.arrow.SetActive(true);
+                    //slesortInteractive.arrow.SetActive(true);
                 }
                 catch { }
                 downR = true;
@@ -324,7 +340,9 @@ public class VRController_1 : MonoBehaviour
                 {
                     grabbedR.GetComponent<BlockParent>().gravity = true;
                     GameObject m_parent = grabbedR.GetComponent<BlockParent>().parent;
-                    grabbedR.transform.parent = m_parent.transform;
+                    //grabbedR.transform.parent = m_parent.transform;
+                    grabbedR.transform.SetParent(m_parent.transform);
+
                     grabbedR.GetComponent<BlockParent>().isGrabbed = false;
                 }
                 catch { }
@@ -332,9 +350,11 @@ public class VRController_1 : MonoBehaviour
                 try
                 {
                     GameObject m_parent = grabbedR.GetComponent<MoveInteractionBLock>().parent;
-                    grabbedR.transform.parent = m_parent.transform;
+                    //grabbedR.transform.parent = m_parent.transform;
+                    grabbedR.transform.SetParent(m_parent.transform);
+
                     slesortInteractive.updatePos();
-                    slesortInteractive.arrow.SetActive(false);
+                    //slesortInteractive.arrow.SetActive(false);
                     insertSortInteractive1.updatePos();
                     quickSortInteractive1.updatePos();
                     bubbleSortInteractive1.updatePos();
@@ -353,7 +373,9 @@ public class VRController_1 : MonoBehaviour
                 m_pointerL.defaultLength= 0f;
                 Debug.Log("down");
                 grabbedL = m_pointerL.hit.collider.gameObject;
-                grabbedL.transform.parent = DotL.transform;
+                //grabbedL.transform.parent = DotL.transform;
+                grabbedL.transform.SetParent(DotL.transform);
+
                 try
                 {
                     grabbedL.GetComponent<BlockParent>().gravity = false;
@@ -362,7 +384,7 @@ public class VRController_1 : MonoBehaviour
                 catch { }
                 try
                 {
-                    slesortInteractive.arrow.SetActive(true);
+                    //slesortInteractive.arrow.SetActive(true);
                 }
                 catch { }
                 downL = true;
@@ -380,17 +402,21 @@ public class VRController_1 : MonoBehaviour
                 {
                     grabbedL.GetComponent<BlockParent>().gravity = true;
                     GameObject m_parent = grabbedL.GetComponent<BlockParent>().parent;
-                    grabbedL.transform.parent = m_parent.transform;
-                    grabbedR.GetComponent<BlockParent>().isGrabbed = false;
+                    //grabbedL.transform.parent = m_parent.transform;
+                    grabbedL.transform.SetParent(m_parent.transform);
+
+                    grabbedL.GetComponent<BlockParent>().isGrabbed = false;
                 }
                 catch { }
                 //will reset the position of MoveInteractionBLock
                 try
                 {
                     GameObject m_parent = grabbedL.GetComponent<MoveInteractionBLock>().parent;
-                    grabbedL.transform.parent = m_parent.transform;
+                    //grabbedL.transform.parent = m_parent.transform;
+                    grabbedL.transform.SetParent(m_parent.transform);
+
                     slesortInteractive.updatePos();
-                    slesortInteractive.arrow.SetActive(false);
+                    //slesortInteractive.arrow.SetActive(false);
                     insertSortInteractive1.updatePos();
                     quickSortInteractive1.updatePos();
                     bubbleSortInteractive1.updatePos();
@@ -427,6 +453,21 @@ public class VRController_1 : MonoBehaviour
         else 
         {
             dotHighlightTip.TipIsActive = false;
+        }
+    }
+
+    /// <summary>
+    /// this function willa ctivate or deativate the quit menu.
+    /// </summary>
+    private void quitApplciation()
+    {
+        if ((QuitMenuButton.GetStateDown(SteamVR_Input_Sources.LeftHand) || QuitMenuButton.GetStateDown(SteamVR_Input_Sources.RightHand)) && !QuitOBj.activeInHierarchy)
+        {
+            QuitOBj.SetActive(true);
+        }
+        else if ((QuitMenuButton.GetStateDown(SteamVR_Input_Sources.LeftHand) || QuitMenuButton.GetStateDown(SteamVR_Input_Sources.RightHand)) && QuitOBj.activeInHierarchy)
+        {
+            QuitOBj.SetActive(false);
         }
     }
 }
