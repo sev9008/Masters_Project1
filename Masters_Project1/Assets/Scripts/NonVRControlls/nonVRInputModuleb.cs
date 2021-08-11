@@ -10,8 +10,6 @@ public class nonVRInputModuleb : BaseInputModule
     [SerializeField] private NonVRPointer pointer = null;
     public PointerEventData Data { get; private set; } = null;
 
-    private float timer;
-
     protected override void Start()
     {
         Data = new PointerEventData(eventSystem);
@@ -20,27 +18,22 @@ public class nonVRInputModuleb : BaseInputModule
 
     public override void Process()
     {
-        //thoguht this would work but it keeps updating the position.  Its kindof wierd.  wish i knew how this behaved mroe. 
-        //Data = new PointerEventData(eventSystem);
-        //Data.position = new Vector2(pointer.Camera.pixelWidth / 2, pointer.Camera.pixelHeight / 2);
-
-        timer = 0;
         eventSystem.RaycastAll(Data, m_RaycastResultCache);
 
         var temp = FindFirstRaycast(m_RaycastResultCache);
+
         if (temp.isValid)
         {
             Data.pointerCurrentRaycast = temp;
-
-            //Debug.Log("possible GO" + Data.pointerCurrentRaycast.gameObject);
 
             HandlePointerExitAndEnter(Data, Data.pointerCurrentRaycast.gameObject);
 
             ExecuteEvents.Execute(Data.pointerDrag, Data, ExecuteEvents.dragHandler);
         }
-        else
+
+        for (int i = 0; i < m_RaycastResultCache.Count; i++)
         {
-            //Debug.Log("nothing found");
+            //Debug.Log(m_RaycastResultCache[i]);
         }
     }
 
