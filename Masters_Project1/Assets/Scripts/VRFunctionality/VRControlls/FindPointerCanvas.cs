@@ -29,28 +29,20 @@ public class FindPointerCanvas : MonoBehaviour
 
     private void Update()
     {
-        try
+        if (GrabObj.GetStateDown(SteamVR_Input_Sources.RightHand))
         {
-            if (GrabObj.GetStateDown(SteamVR_Input_Sources.RightHand))
-            {
-                MyCamera = GameObject.FindWithTag("PointerR");
-                MyCanvas1.worldCamera = MyCamera.GetComponent<Camera>();
-            }
-            if (GrabObj.GetStateDown(SteamVR_Input_Sources.LeftHand))
-            {
-                MyCamera = GameObject.FindWithTag("PointerL");
-                MyCanvas1.worldCamera = MyCamera.GetComponent<Camera>();
-            }
-            if (Input.GetAxis("Fire1") != 0)
-            {
-                MyCamera = GameObject.FindWithTag("PointerR");
-                MyCanvas1.worldCamera = MyCamera.GetComponent<Camera>();
-            }
+            MyCamera = GameObject.FindWithTag("PointerR");
+            MyCanvas1.worldCamera = MyCamera.GetComponent<Camera>();
         }
-        catch 
+        if (GrabObj.GetStateDown(SteamVR_Input_Sources.LeftHand))
         {
-            Debug.LogError("Quit menu is open or fatal camera error occured.");
-            MyCanvas1.worldCamera = null;
+            MyCamera = GameObject.FindWithTag("PointerL");
+            MyCanvas1.worldCamera = MyCamera.GetComponent<Camera>();
+        }
+        if (Input.GetAxis("Fire1") != 0)
+        {
+            MyCamera = GameObject.FindWithTag("PointerR");
+            MyCanvas1.worldCamera = MyCamera.GetComponent<Camera>();
         }
 
     }

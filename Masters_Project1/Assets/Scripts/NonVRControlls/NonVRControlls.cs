@@ -56,12 +56,6 @@ public class NonVRControlls : MonoBehaviour
     }
     private void Start()
     {
-        XRSettings.LoadDeviceByName("");
-        XRSettings.enabled = false;
-        Debug.Log("XRDisabled");
-
-        Debug.LogError("start");
-
         charController = GetComponent<CharacterController>();
     }
     private void Update()

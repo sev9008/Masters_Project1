@@ -70,3 +70,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 Masters_Project1/Library/
+
+Masters_Project1/Logs/
+
+Masters_Project1/obj/
