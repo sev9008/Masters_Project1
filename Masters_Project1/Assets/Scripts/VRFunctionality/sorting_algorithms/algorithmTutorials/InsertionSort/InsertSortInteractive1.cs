@@ -250,7 +250,7 @@ public class InsertSortInteractive1 : MonoBehaviour
                 if (j >= 0)//use this otherwise tmepval will throw an error
                 {
                     tempval = int.Parse(b[j].GetComponentInChildren<Text>().text);
-                    Debug.Log(tempval);
+                    //Debug.Log(tempval);
                 }
                 yield return new WaitForSeconds(speed);
             }

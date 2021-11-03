@@ -10,12 +10,12 @@ public class RuleStart : MonoBehaviour, IPointerDownHandler
     public Text txt;
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("test");
+        //Debug.Log("test");
         if (abstractController.begin)
         {
             abstractController.begin = false;
             txt.text = "Start";
-            Debug.Log("test2");
+            //Debug.Log("test2");
         }
 
         else if (!abstractController.begin)

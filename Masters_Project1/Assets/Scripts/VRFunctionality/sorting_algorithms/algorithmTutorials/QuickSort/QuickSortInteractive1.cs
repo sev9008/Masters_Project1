@@ -115,7 +115,7 @@ public class QuickSortInteractive1 : MonoBehaviour
             dist1 = Vector3.Distance(b[nextToSort].transform.position, b[currentSmallestIndex].transform.position);
             if (dist1 < .04)
             {
-                Debug.Log("Swap");
+                //Debug.Log("Swap");
                 SwapValues(nextToSort, currentSmallestIndex);
                 waitingforswap = false;
             }

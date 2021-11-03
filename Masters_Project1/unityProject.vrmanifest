@@ -1,0 +1,16 @@
+{
+  "source": "Unity",
+  "applications": [
+    {
+      "app_key": "application.generated.unity.masterspackageimport.exe",
+      "launch_type": "url",
+      "url": "steam://launch/",
+      "action_manifest_path": "C:\\Projects\\GithubProjects\\Masters_Project1\\Masters_Project1\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "strings": {
+        "en_us": {
+          "name": "MastersPackageImport [Testing]"
+        }
+      }
+    }
+  ]
+}

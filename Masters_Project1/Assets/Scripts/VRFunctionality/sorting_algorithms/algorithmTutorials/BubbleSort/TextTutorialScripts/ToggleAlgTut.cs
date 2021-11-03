@@ -8,7 +8,7 @@ public class ToggleAlgTut : MonoBehaviour, IPointerDownHandler
     public TutorialActiveController tuttogglecontrol;
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("hit1");
+        //Debug.Log("hit1");
         if (tuttogglecontrol.algTut)
         {
             tuttogglecontrol.algTut = false;
