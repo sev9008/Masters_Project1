@@ -4,3 +4,5 @@
 # This project is a virtual reality learning center.  It provides tutorials and guides for different topics in Computer Science
 #
 # Current rooms include: sorting algorithm tutorials, paradigm tutorials, lecture hall
+#
+# See CSVIL.PDF for a conference paper involving the project.
