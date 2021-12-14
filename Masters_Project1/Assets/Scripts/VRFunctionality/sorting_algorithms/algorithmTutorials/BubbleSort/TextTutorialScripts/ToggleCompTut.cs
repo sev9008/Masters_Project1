@@ -8,7 +8,7 @@ public class ToggleCompTut : MonoBehaviour, IPointerDownHandler
     public TutorialActiveController tuttogglecontrol;
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("hit2");
+        //Debug.Log("hit2");
 
         if (tuttogglecontrol.compTut)
         {

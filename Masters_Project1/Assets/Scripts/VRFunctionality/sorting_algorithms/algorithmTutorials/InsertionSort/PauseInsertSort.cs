@@ -12,13 +12,13 @@ public class PauseInsertSort : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (M_InsertSort_arrayHolder.manual)
+        if (M_InsertSort_arrayHolder.paused)
         {
             M_InsertSort_arrayHolder.manual = false;
-            txt.text = "Auto";
+            txt.text = "Pause";
         }
 
-        else if (!M_InsertSort_arrayHolder.manual)
+        else if (!M_InsertSort_arrayHolder.paused)
         {
             M_InsertSort_arrayHolder.manual = true;
             txt.text = "Resume";

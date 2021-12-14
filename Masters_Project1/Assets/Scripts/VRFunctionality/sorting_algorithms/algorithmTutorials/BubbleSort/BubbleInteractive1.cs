@@ -176,7 +176,7 @@ public class BubbleInteractive1 : MonoBehaviour
 
     public IEnumerator Bubblechecksort()//this is my response to the halting problem.  just put it in a coroutine 
     {
-        Step.text = "To perform Bubble Sort go through the array from elft to right.  If the left value is larger than the right value swap them, and perform the same steps for the next index.";
+        Step.text = "To perform Bubble Sort go through the array from left to right.  If the left value is larger than the right value swap them, and perform the same steps for the next index.";
 
         yield return StartCoroutine(BubbleSort());//this will stop this coroutine until the new function has finished.  It is extremely helpful for when you want to know exactly when a function ends
         updatePos();

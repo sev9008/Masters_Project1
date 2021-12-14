@@ -13,16 +13,16 @@ public class Button_pause : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (M_selsort_Arrayholder.manual)
+        if (M_selsort_Arrayholder.paused)
         {
             M_selsort_Arrayholder.manual = false;
-            txt.text = "Auto";
+            txt.text = "Pause";
         }
 
-        else if (!M_selsort_Arrayholder.manual)
+        else if (!M_selsort_Arrayholder.paused)
         {
             M_selsort_Arrayholder.manual = true;
-            txt.text = "Manual";
+            txt.text = "Resume";
         }
     }
 }

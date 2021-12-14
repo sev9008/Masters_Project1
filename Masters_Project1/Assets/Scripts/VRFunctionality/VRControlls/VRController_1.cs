@@ -15,9 +15,9 @@ public class VRController_1 : MonoBehaviour
     public float rotateincr = 5f;
     private Vector3 Velocity;
 
-    public SteamVR_Action_Boolean RotatePress = null;
+    public SteamVR_Action_Boolean RotateLeft = null;
+    public SteamVR_Action_Boolean RotateRight = null;
     public SteamVR_Action_Boolean GrabObj = null;
-    public SteamVR_Action_Boolean Movepress = null;
     public SteamVR_Action_Vector2 MoveValue = null;
     public SteamVR_Action_Boolean teleport = null;
     public SteamVR_Action_Boolean CloseHighlight = null;
@@ -32,8 +32,8 @@ public class VRController_1 : MonoBehaviour
     private float Speed = 0.0f;
 
     private CharacterController CharController = null;
-    private Transform CameraRig = null;
-    private Transform Head = null;
+    public Transform CameraRig;
+    public Transform Head;
 
     public GameObject Spawnpos;
     public GameObject CanvasObject;
@@ -62,12 +62,8 @@ public class VRController_1 : MonoBehaviour
 
     private void Start()
     {
-        try//if steam VR is not connected this will through a critical error
-        {
-            CameraRig = SteamVR_Render.Top().origin;
-            Head = SteamVR_Render.Top().head;
-        }
-        catch { }
+        //CameraRig = SteamVR_Render.Top().origin;
+        Head = SteamVR_Render.Top().head;
     }
 
     private void Update()
@@ -258,14 +254,16 @@ public class VRController_1 : MonoBehaviour
     {
         float snapValue = 0.0f;
 
-        if (RotatePress.GetStateDown(SteamVR_Input_Sources.LeftHand))
+        if (RotateLeft.GetStateDown(SteamVR_Input_Sources.RightHand) || RotateLeft.GetStateDown(SteamVR_Input_Sources.LeftHand))
         {
             snapValue = -Mathf.Abs(rotateincr);
+            Debug.Log("rotatedec");
         }
 
-        if (RotatePress.GetStateDown(SteamVR_Input_Sources.RightHand))
+        if (RotateRight.GetStateDown(SteamVR_Input_Sources.RightHand) || RotateRight.GetStateDown(SteamVR_Input_Sources.LeftHand))
         {
             snapValue = Mathf.Abs(rotateincr);
+            Debug.Log("rotateincr");
         }
         try
         {

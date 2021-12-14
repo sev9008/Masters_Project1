@@ -12,13 +12,13 @@ public class PauseQuickSort : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (M_quickSort_arrayHolder.manual)
+        if (M_quickSort_arrayHolder.paused)
         {
             M_quickSort_arrayHolder.manual = false;
             txt.text = "Pause";
         }
 
-        else if (!M_quickSort_arrayHolder.manual)
+        else if (!M_quickSort_arrayHolder.paused)
         {
             M_quickSort_arrayHolder.manual = true;
             txt.text = "Resume";

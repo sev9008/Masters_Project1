@@ -53,16 +53,21 @@ public class NonVRPointer : MonoBehaviour
         colliderDistance = hit.distance == 0 ? defaultLength : hit.distance;
 
         //data.pointerCurrentRaycast.distanc CAUSES AN ERROR.  FOR SOME REASON IT KEEPS GOING FROM 0 TO ACTUAL HIT DISTANCE
-        canvasDistance = data.pointerCurrentRaycast.distance == 0 ? defaultLength : data.pointerCurrentRaycast.distance;
+        try
+        {
+            canvasDistance = data.pointerCurrentRaycast.distance == 0 ? defaultLength : data.pointerCurrentRaycast.distance;
 
-        // Get the closest one
-        float targetLength = Mathf.Min(colliderDistance, canvasDistance);
 
-        // Default
-        Vector3 endPosition = transform.position + (transform.forward * targetLength);
+            // Get the closest one
+            float targetLength = Mathf.Min(colliderDistance, canvasDistance);
 
-        // Set position of the dot
-        dot.transform.position = endPosition;
+            // Default
+            Vector3 endPosition = transform.position + (transform.forward * targetLength);
+
+            // Set position of the dot
+            dot.transform.position = endPosition;
+        }
+        catch { Debug.Log("possible error if this log keeps repeating?"); }
 
         //Debug.Log(hit.collider.gameObject);
     }

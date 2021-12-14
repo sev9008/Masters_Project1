@@ -48,7 +48,7 @@ public class StartQuickSort : MonoBehaviour, IPointerDownHandler
     }
     public IEnumerator startani()
     {
-        Debug.Log("hit");
+        //Debug.Log("hit");
         m_insertSort_ArrayHolder.arr3.Clear();
         for (int i = 0; i < arr2.Count; i++)
         {
